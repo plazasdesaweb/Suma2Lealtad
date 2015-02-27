@@ -1,0 +1,1137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SumaBDModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="SumaBDModelStoreContainer">
+          <EntitySet Name="Afiliacion" EntityType="SumaBDModel.Store.Afiliacion" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="AfiliadoInteres" EntityType="SumaBDModel.Store.AfiliadoInteres" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Auditoria" EntityType="SumaBDModel.Store.Auditoria" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Customer" EntityType="SumaBDModel.Store.Customer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Interes" EntityType="SumaBDModel.Store.Interes" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="LogError" EntityType="SumaBDModel.Store.LogError" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Menu" EntityType="SumaBDModel.Store.Menu" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nacionalidad" EntityType="SumaBDModel.Store.Nacionalidad" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ObjetoAuditoria" EntityType="SumaBDModel.Store.ObjetoAuditoria" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Ocupacion" EntityType="SumaBDModel.Store.Ocupacion" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="OperacionAuditoria" EntityType="SumaBDModel.Store.OperacionAuditoria" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="RazonAcreditacion" EntityType="SumaBDModel.Store.RazonAcreditacion" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="RazonBloqueo" EntityType="SumaBDModel.Store.RazonBloqueo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="RazonRechazo" EntityType="SumaBDModel.Store.RazonRechazo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Rol" EntityType="SumaBDModel.Store.Rol" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="RolPermiso" EntityType="SumaBDModel.Store.RolPermiso" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Store" EntityType="SumaBDModel.Store.Store" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Usuario" EntityType="SumaBDModel.Store.Usuario" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UtilityValues" EntityType="SumaBDModel.Store.UtilityValues" store:Type="Tables" store:Schema="dbo" store:Name="UtilityValues">
+            <DefiningQuery>SELECT 
+      [UtilityValues].[id] AS [id], 
+      [UtilityValues].[codigoitem] AS [codigoitem], 
+      [UtilityValues].[descitem] AS [descitem], 
+      [UtilityValues].[tabla] AS [tabla], 
+      [UtilityValues].[orden] AS [orden]
+      FROM [dbo].[UtilityValues] AS [UtilityValues]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Afiliacion_AfiliadoInteres" Association="SumaBDModel.Store.FK_Afiliacion_AfiliadoInteres">
+            <End Role="AfiliadoInteres" EntitySet="AfiliadoInteres" />
+            <End Role="Afiliacion" EntitySet="Afiliacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Afiliacion_Customer" Association="SumaBDModel.Store.FK_Afiliacion_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Afiliacion" EntitySet="Afiliacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Afiliacion_Nacionalidad" Association="SumaBDModel.Store.FK_Afiliacion_Nacionalidad">
+            <End Role="Nacionalidad" EntitySet="Nacionalidad" />
+            <End Role="Afiliacion" EntitySet="Afiliacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Afiliacion_Ocupacion" Association="SumaBDModel.Store.FK_Afiliacion_Ocupacion">
+            <End Role="Ocupacion" EntitySet="Ocupacion" />
+            <End Role="Afiliacion" EntitySet="Afiliacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Afiliacion_RazonBloqueo" Association="SumaBDModel.Store.FK_Afiliacion_RazonBloqueo">
+            <End Role="RazonBloqueo" EntitySet="RazonBloqueo" />
+            <End Role="Afiliacion" EntitySet="Afiliacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Afiliacion_RazonRechazo" Association="SumaBDModel.Store.FK_Afiliacion_RazonRechazo">
+            <End Role="RazonRechazo" EntitySet="RazonRechazo" />
+            <End Role="Afiliacion" EntitySet="Afiliacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Afiliacion_Store" Association="SumaBDModel.Store.FK_Afiliacion_Store">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="Afiliacion" EntitySet="Afiliacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AfiliadoInteres_Interes" Association="SumaBDModel.Store.FK_AfiliadoInteres_Interes">
+            <End Role="Interes" EntitySet="Interes" />
+            <End Role="AfiliadoInteres" EntitySet="AfiliadoInteres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Auditoria_ObjetoAuditoria" Association="SumaBDModel.Store.FK_Auditoria_ObjetoAuditoria">
+            <End Role="ObjetoAuditoria" EntitySet="ObjetoAuditoria" />
+            <End Role="Auditoria" EntitySet="Auditoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Auditoria_OperacionAuditoria1" Association="SumaBDModel.Store.FK_Auditoria_OperacionAuditoria1">
+            <End Role="OperacionAuditoria" EntitySet="OperacionAuditoria" />
+            <End Role="Auditoria" EntitySet="Auditoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Auditoria_Usuario" Association="SumaBDModel.Store.FK_Auditoria_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Auditoria" EntitySet="Auditoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Permiso_Menu" Association="SumaBDModel.Store.FK_Permiso_Menu">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="RolPermiso" EntitySet="RolPermiso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Permiso_Rol" Association="SumaBDModel.Store.FK_Permiso_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="RolPermiso" EntitySet="RolPermiso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Rol" Association="SumaBDModel.Store.FK_Usuario_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Afiliacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="IdAfiliado" Type="int" Nullable="false" />
+          <Property Name="FechaSolicitud" Type="smalldatetime" />
+          <Property Name="FechaAfiliacion" Type="smalldatetime" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" />
+          <Property Name="Estatus" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="IdRazonBloqueo" Type="tinyint" Nullable="false" />
+          <Property Name="IdRazonRechazo" Type="tinyint" />
+          <Property Name="IdOcupacion" Type="tinyint" />
+          <Property Name="IdNacionalidad" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="AfiliadoInteres">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="IdAfiliado" Type="int" Nullable="false" />
+          <Property Name="IdInteres" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Auditoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="smallint" Nullable="false" />
+          <Property Name="IdObjeto" Type="smallint" Nullable="false" />
+          <Property Name="IdOperacion" Type="tinyint" Nullable="false" />
+          <Property Name="Fecha" Type="smalldatetime" Nullable="false" />
+          <Property Name="Datos" Type="xml" />
+          <Property Name="DatosOriginales" Type="xml" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="varchar" MaxLength="100" />
+          <Property Name="type" Type="tinyint" Nullable="false" />
+          <Property Name="docnumber" Type="varchar" MaxLength="16" />
+          <Property Name="name" Type="varchar" MaxLength="40" />
+          <Property Name="phone1" Type="varchar" MaxLength="16" />
+          <Property Name="phone2" Type="varchar" MaxLength="16" />
+          <Property Name="password" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="questionid" Type="int" />
+          <Property Name="answer" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Interes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LogError">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="100" />
+          <Property Name="Controlador" Type="varchar" MaxLength="50" />
+          <Property Name="Accion" Type="varchar" MaxLength="50" />
+          <Property Name="Error" Type="varchar" MaxLength="2000" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" Nullable="false" />
+          <Property Name="Texto" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="IdPadre" Type="int" />
+          <Property Name="Controlador" Type="varchar" MaxLength="50" />
+          <Property Name="Accion" Type="varchar" MaxLength="50" />
+          <Property Name="Orden" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nacionalidad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ObjetoAuditoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Ocupacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="OperacionAuditoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="RazonAcreditacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="RazonBloqueo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="NivelRol" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RazonRechazo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="NivelRol" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Nivel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RolPermiso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="IdRol" Type="tinyint" Nullable="false" />
+          <Property Name="IdMenu" Type="smallint" Nullable="false" />
+          <Property Name="NivelPermiso" Type="tinyint" Nullable="false" />
+          <Property Name="NombreNivel" Type="varchar" MaxLength="23" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Clave" Type="varchar" MaxLength="1000" />
+          <Property Name="Nombres" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Apellidos" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="NombreCompleto" Type="varchar" Nullable="false" MaxLength="101" StoreGeneratedPattern="Computed" />
+          <Property Name="NombreEstatus" Type="varchar" Nullable="false" MaxLength="8" StoreGeneratedPattern="Computed" />
+          <Property Name="IdRol" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'Suma.dbo.UtilityValues' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="UtilityValues">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="codigoitem" />
+            <PropertyRef Name="descitem" />
+            <PropertyRef Name="tabla" />
+            <PropertyRef Name="orden" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="codigoitem" Type="nvarchar" Nullable="false" MaxLength="5" />
+          <Property Name="descitem" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="tabla" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="orden" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Afiliacion_AfiliadoInteres">
+          <End Role="AfiliadoInteres" Type="SumaBDModel.Store.AfiliadoInteres" Multiplicity="1" />
+          <End Role="Afiliacion" Type="SumaBDModel.Store.Afiliacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AfiliadoInteres">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Afiliacion">
+              <PropertyRef Name="IdAfiliado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Afiliacion_Customer">
+          <End Role="Customer" Type="SumaBDModel.Store.Customer" Multiplicity="1" />
+          <End Role="Afiliacion" Type="SumaBDModel.Store.Afiliacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Afiliacion">
+              <PropertyRef Name="IdAfiliado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Afiliacion_Nacionalidad">
+          <End Role="Nacionalidad" Type="SumaBDModel.Store.Nacionalidad" Multiplicity="0..1" />
+          <End Role="Afiliacion" Type="SumaBDModel.Store.Afiliacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nacionalidad">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Afiliacion">
+              <PropertyRef Name="IdNacionalidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Afiliacion_Ocupacion">
+          <End Role="Ocupacion" Type="SumaBDModel.Store.Ocupacion" Multiplicity="0..1" />
+          <End Role="Afiliacion" Type="SumaBDModel.Store.Afiliacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ocupacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Afiliacion">
+              <PropertyRef Name="IdOcupacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Afiliacion_RazonBloqueo">
+          <End Role="RazonBloqueo" Type="SumaBDModel.Store.RazonBloqueo" Multiplicity="1" />
+          <End Role="Afiliacion" Type="SumaBDModel.Store.Afiliacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RazonBloqueo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Afiliacion">
+              <PropertyRef Name="IdRazonBloqueo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Afiliacion_RazonRechazo">
+          <End Role="RazonRechazo" Type="SumaBDModel.Store.RazonRechazo" Multiplicity="0..1" />
+          <End Role="Afiliacion" Type="SumaBDModel.Store.Afiliacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RazonRechazo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Afiliacion">
+              <PropertyRef Name="IdRazonRechazo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Afiliacion_Store">
+          <End Role="Store" Type="SumaBDModel.Store.Store" Multiplicity="0..1" />
+          <End Role="Afiliacion" Type="SumaBDModel.Store.Afiliacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Afiliacion">
+              <PropertyRef Name="IdSucursal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AfiliadoInteres_Interes">
+          <End Role="Interes" Type="SumaBDModel.Store.Interes" Multiplicity="1" />
+          <End Role="AfiliadoInteres" Type="SumaBDModel.Store.AfiliadoInteres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Interes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AfiliadoInteres">
+              <PropertyRef Name="IdInteres" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Auditoria_ObjetoAuditoria">
+          <End Role="ObjetoAuditoria" Type="SumaBDModel.Store.ObjetoAuditoria" Multiplicity="1" />
+          <End Role="Auditoria" Type="SumaBDModel.Store.Auditoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObjetoAuditoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Auditoria">
+              <PropertyRef Name="IdObjeto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Auditoria_OperacionAuditoria1">
+          <End Role="OperacionAuditoria" Type="SumaBDModel.Store.OperacionAuditoria" Multiplicity="1" />
+          <End Role="Auditoria" Type="SumaBDModel.Store.Auditoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OperacionAuditoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Auditoria">
+              <PropertyRef Name="IdOperacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Auditoria_Usuario">
+          <End Role="Usuario" Type="SumaBDModel.Store.Usuario" Multiplicity="1" />
+          <End Role="Auditoria" Type="SumaBDModel.Store.Auditoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Auditoria">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Permiso_Menu">
+          <End Role="Menu" Type="SumaBDModel.Store.Menu" Multiplicity="1" />
+          <End Role="RolPermiso" Type="SumaBDModel.Store.RolPermiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RolPermiso">
+              <PropertyRef Name="IdMenu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Permiso_Rol">
+          <End Role="Rol" Type="SumaBDModel.Store.Rol" Multiplicity="1" />
+          <End Role="RolPermiso" Type="SumaBDModel.Store.RolPermiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RolPermiso">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Rol">
+          <End Role="Rol" Type="SumaBDModel.Store.Rol" Multiplicity="1" />
+          <End Role="Usuario" Type="SumaBDModel.Store.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SumaBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Afiliacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdAfiliado" Type="Int32" Nullable="false" />
+          <Property Name="FechaSolicitud" Type="DateTime" Precision="0" />
+          <Property Name="FechaAfiliacion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IdSucursal" Type="Int32" />
+          <Property Name="Estatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="IdRazonBloqueo" Type="Byte" Nullable="false" />
+          <Property Name="IdRazonRechazo" Type="Byte" />
+          <Property Name="IdOcupacion" Type="Byte" />
+          <Property Name="IdNacionalidad" Type="Byte" />
+          <NavigationProperty Name="AfiliadoIntere" Relationship="Self.FK_Afiliacion_AfiliadoInteres" FromRole="Afiliacion" ToRole="AfiliadoInteres" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Afiliacion_Customer" FromRole="Afiliacion" ToRole="Customer" />
+          <NavigationProperty Name="Nacionalidad" Relationship="Self.FK_Afiliacion_Nacionalidad" FromRole="Afiliacion" ToRole="Nacionalidad" />
+          <NavigationProperty Name="Ocupacion" Relationship="Self.FK_Afiliacion_Ocupacion" FromRole="Afiliacion" ToRole="Ocupacion" />
+          <NavigationProperty Name="RazonBloqueo" Relationship="Self.FK_Afiliacion_RazonBloqueo" FromRole="Afiliacion" ToRole="RazonBloqueo" />
+          <NavigationProperty Name="RazonRechazo" Relationship="Self.FK_Afiliacion_RazonRechazo" FromRole="Afiliacion" ToRole="RazonRechazo" />
+          <NavigationProperty Name="Store" Relationship="Self.FK_Afiliacion_Store" FromRole="Afiliacion" ToRole="Store" />
+        </EntityType>
+        <EntityType Name="AfiliadoInteres">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdAfiliado" Type="Int32" Nullable="false" />
+          <Property Name="IdInteres" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Afiliacions" Relationship="Self.FK_Afiliacion_AfiliadoInteres" FromRole="AfiliadoInteres" ToRole="Afiliacion" />
+          <NavigationProperty Name="Intere" Relationship="Self.FK_AfiliadoInteres_Interes" FromRole="AfiliadoInteres" ToRole="Interes" />
+        </EntityType>
+        <EntityType Name="Auditoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int16" Nullable="false" />
+          <Property Name="IdObjeto" Type="Int16" Nullable="false" />
+          <Property Name="IdOperacion" Type="Byte" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Datos" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DatosOriginales" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ObjetoAuditoria" Relationship="Self.FK_Auditoria_ObjetoAuditoria" FromRole="Auditoria" ToRole="ObjetoAuditoria" />
+          <NavigationProperty Name="OperacionAuditoria" Relationship="Self.FK_Auditoria_OperacionAuditoria1" FromRole="Auditoria" ToRole="OperacionAuditoria" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Auditoria_Usuario" FromRole="Auditoria" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="Byte" Nullable="false" />
+          <Property Name="docnumber" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="phone1" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="phone2" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="questionid" Type="Int32" />
+          <Property Name="answer" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Afiliacions" Relationship="Self.FK_Afiliacion_Customer" FromRole="Customer" ToRole="Afiliacion" />
+        </EntityType>
+        <EntityType Name="Interes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AfiliadoInteres" Relationship="Self.FK_AfiliadoInteres_Interes" FromRole="Interes" ToRole="AfiliadoInteres" />
+        </EntityType>
+        <EntityType Name="LogError">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Usuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Controlador" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Accion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Error" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" />
+          <Property Name="Texto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdPadre" Type="Int32" />
+          <Property Name="Controlador" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Accion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Orden" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="RolPermisoes" Relationship="Self.FK_Permiso_Menu" FromRole="Menu" ToRole="RolPermiso" />
+        </EntityType>
+        <EntityType Name="Nacionalidad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Afiliacions" Relationship="Self.FK_Afiliacion_Nacionalidad" FromRole="Nacionalidad" ToRole="Afiliacion" />
+        </EntityType>
+        <EntityType Name="ObjetoAuditoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Auditorias" Relationship="Self.FK_Auditoria_ObjetoAuditoria" FromRole="ObjetoAuditoria" ToRole="Auditoria" />
+        </EntityType>
+        <EntityType Name="Ocupacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Afiliacions" Relationship="Self.FK_Afiliacion_Ocupacion" FromRole="Ocupacion" ToRole="Afiliacion" />
+        </EntityType>
+        <EntityType Name="OperacionAuditoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Auditorias" Relationship="Self.FK_Auditoria_OperacionAuditoria1" FromRole="OperacionAuditoria" ToRole="Auditoria" />
+        </EntityType>
+        <EntityType Name="RazonAcreditacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RazonBloqueo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NivelRol" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Afiliacions" Relationship="Self.FK_Afiliacion_RazonBloqueo" FromRole="RazonBloqueo" ToRole="Afiliacion" />
+        </EntityType>
+        <EntityType Name="RazonRechazo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NivelRol" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Afiliacions" Relationship="Self.FK_Afiliacion_RazonRechazo" FromRole="RazonRechazo" ToRole="Afiliacion" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nivel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RolPermisoes" Relationship="Self.FK_Permiso_Rol" FromRole="Rol" ToRole="RolPermiso" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usuario_Rol" FromRole="Rol" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="RolPermiso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdRol" Type="Byte" Nullable="false" />
+          <Property Name="IdMenu" Type="Int16" Nullable="false" />
+          <Property Name="NivelPermiso" Type="Byte" Nullable="false" />
+          <Property Name="NombreNivel" Type="String" MaxLength="23" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Menu" Relationship="Self.FK_Permiso_Menu" FromRole="RolPermiso" ToRole="Menu" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK_Permiso_Rol" FromRole="RolPermiso" ToRole="Rol" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Afiliacions" Relationship="Self.FK_Afiliacion_Store" FromRole="Store" ToRole="Afiliacion" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Clave" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="NombreCompleto" Type="String" MaxLength="101" FixedLength="false" Unicode="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="NombreEstatus" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="IdRol" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Auditorias" Relationship="Self.FK_Auditoria_Usuario" FromRole="Usuario" ToRole="Auditoria" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK_Usuario_Rol" FromRole="Usuario" ToRole="Rol" />
+        </EntityType>
+        <Association Name="FK_Afiliacion_AfiliadoInteres">
+          <End Role="AfiliadoInteres" Type="SumaBDModel.AfiliadoInteres" Multiplicity="1" />
+          <End Role="Afiliacion" Type="Self.Afiliacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AfiliadoInteres">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Afiliacion">
+              <PropertyRef Name="IdAfiliado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Afiliacion_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Afiliacion" Type="Self.Afiliacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Afiliacion">
+              <PropertyRef Name="IdAfiliado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Afiliacion_Nacionalidad">
+          <End Role="Nacionalidad" Type="Self.Nacionalidad" Multiplicity="0..1" />
+          <End Role="Afiliacion" Type="Self.Afiliacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nacionalidad">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Afiliacion">
+              <PropertyRef Name="IdNacionalidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Afiliacion_Ocupacion">
+          <End Role="Ocupacion" Type="Self.Ocupacion" Multiplicity="0..1" />
+          <End Role="Afiliacion" Type="Self.Afiliacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ocupacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Afiliacion">
+              <PropertyRef Name="IdOcupacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Afiliacion_RazonBloqueo">
+          <End Role="RazonBloqueo" Type="Self.RazonBloqueo" Multiplicity="1" />
+          <End Role="Afiliacion" Type="Self.Afiliacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RazonBloqueo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Afiliacion">
+              <PropertyRef Name="IdRazonBloqueo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Afiliacion_RazonRechazo">
+          <End Role="RazonRechazo" Type="Self.RazonRechazo" Multiplicity="0..1" />
+          <End Role="Afiliacion" Type="Self.Afiliacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RazonRechazo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Afiliacion">
+              <PropertyRef Name="IdRazonRechazo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Afiliacion_Store">
+          <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+          <End Role="Afiliacion" Type="Self.Afiliacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Afiliacion">
+              <PropertyRef Name="IdSucursal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AfiliadoInteres_Interes">
+          <End Role="Interes" Type="SumaBDModel.Interes" Multiplicity="1" />
+          <End Role="AfiliadoInteres" Type="SumaBDModel.AfiliadoInteres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Interes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AfiliadoInteres">
+              <PropertyRef Name="IdInteres" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Auditoria_ObjetoAuditoria">
+          <End Role="ObjetoAuditoria" Type="Self.ObjetoAuditoria" Multiplicity="1" />
+          <End Role="Auditoria" Type="Self.Auditoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObjetoAuditoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Auditoria">
+              <PropertyRef Name="IdObjeto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Auditoria_OperacionAuditoria1">
+          <End Role="OperacionAuditoria" Type="Self.OperacionAuditoria" Multiplicity="1" />
+          <End Role="Auditoria" Type="Self.Auditoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OperacionAuditoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Auditoria">
+              <PropertyRef Name="IdOperacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Auditoria_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Auditoria" Type="Self.Auditoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Auditoria">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Permiso_Menu">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
+          <End Role="RolPermiso" Type="Self.RolPermiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RolPermiso">
+              <PropertyRef Name="IdMenu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Permiso_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="RolPermiso" Type="Self.RolPermiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RolPermiso">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SumaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Afiliaciones" EntityType="Self.Afiliacion" />
+          <EntitySet Name="AfiliadoIntereses" EntityType="SumaBDModel.AfiliadoInteres" />
+          <EntitySet Name="Auditorias" EntityType="Self.Auditoria" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Intereses" EntityType="SumaBDModel.Interes" />
+          <EntitySet Name="LogErrors" EntityType="Self.LogError" />
+          <EntitySet Name="Menus" EntityType="Self.Menu" />
+          <EntitySet Name="Nacionalidades" EntityType="Self.Nacionalidad" />
+          <EntitySet Name="ObjetoAuditorias" EntityType="Self.ObjetoAuditoria" />
+          <EntitySet Name="Ocupaciones" EntityType="Self.Ocupacion" />
+          <EntitySet Name="OperacionAuditorias" EntityType="Self.OperacionAuditoria" />
+          <EntitySet Name="RazonAcreditaciones" EntityType="Self.RazonAcreditacion" />
+          <EntitySet Name="RazonBloqueos" EntityType="Self.RazonBloqueo" />
+          <EntitySet Name="RazonRechazos" EntityType="Self.RazonRechazo" />
+          <EntitySet Name="Roles" EntityType="Self.Rol" />
+          <EntitySet Name="RolPermisos" EntityType="Self.RolPermiso" />
+          <EntitySet Name="Stores" EntityType="Self.Store" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Afiliacion_AfiliadoInteres" Association="Self.FK_Afiliacion_AfiliadoInteres">
+            <End Role="AfiliadoInteres" EntitySet="AfiliadoIntereses" />
+            <End Role="Afiliacion" EntitySet="Afiliaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Afiliacion_Customer" Association="Self.FK_Afiliacion_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Afiliacion" EntitySet="Afiliaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Afiliacion_Nacionalidad" Association="Self.FK_Afiliacion_Nacionalidad">
+            <End Role="Nacionalidad" EntitySet="Nacionalidades" />
+            <End Role="Afiliacion" EntitySet="Afiliaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Afiliacion_Ocupacion" Association="Self.FK_Afiliacion_Ocupacion">
+            <End Role="Ocupacion" EntitySet="Ocupaciones" />
+            <End Role="Afiliacion" EntitySet="Afiliaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Afiliacion_RazonBloqueo" Association="Self.FK_Afiliacion_RazonBloqueo">
+            <End Role="RazonBloqueo" EntitySet="RazonBloqueos" />
+            <End Role="Afiliacion" EntitySet="Afiliaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Afiliacion_RazonRechazo" Association="Self.FK_Afiliacion_RazonRechazo">
+            <End Role="RazonRechazo" EntitySet="RazonRechazos" />
+            <End Role="Afiliacion" EntitySet="Afiliaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Afiliacion_Store" Association="Self.FK_Afiliacion_Store">
+            <End Role="Store" EntitySet="Stores" />
+            <End Role="Afiliacion" EntitySet="Afiliaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AfiliadoInteres_Interes" Association="Self.FK_AfiliadoInteres_Interes">
+            <End Role="Interes" EntitySet="Intereses" />
+            <End Role="AfiliadoInteres" EntitySet="AfiliadoIntereses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Auditoria_ObjetoAuditoria" Association="Self.FK_Auditoria_ObjetoAuditoria">
+            <End Role="ObjetoAuditoria" EntitySet="ObjetoAuditorias" />
+            <End Role="Auditoria" EntitySet="Auditorias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Auditoria_OperacionAuditoria1" Association="Self.FK_Auditoria_OperacionAuditoria1">
+            <End Role="OperacionAuditoria" EntitySet="OperacionAuditorias" />
+            <End Role="Auditoria" EntitySet="Auditorias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Auditoria_Usuario" Association="Self.FK_Auditoria_Usuario">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Auditoria" EntitySet="Auditorias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Permiso_Menu" Association="Self.FK_Permiso_Menu">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="RolPermiso" EntitySet="RolPermisos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Permiso_Rol" Association="Self.FK_Permiso_Rol">
+            <End Role="Rol" EntitySet="Roles" />
+            <End Role="RolPermiso" EntitySet="RolPermisos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
+            <End Role="Rol" EntitySet="Roles" />
+            <End Role="Usuario" EntitySet="Usuarios" />
+          </AssociationSet>
+          <EntitySet Name="UtilityValues" EntityType="SumaBDModel.UtilityValue" />
+        </EntityContainer>
+        <EntityType Name="UtilityValue">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="codigoitem" />
+            <PropertyRef Name="descitem" />
+            <PropertyRef Name="tabla" />
+            <PropertyRef Name="orden" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="codigoitem" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="descitem" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="tabla" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="orden" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SumaBDModelStoreContainer" CdmEntityContainer="SumaEntities">
+          <EntitySetMapping Name="Afiliaciones">
+            <EntityTypeMapping TypeName="SumaBDModel.Afiliacion">
+              <MappingFragment StoreEntitySet="Afiliacion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdAfiliado" ColumnName="IdAfiliado" />
+                <ScalarProperty Name="FechaSolicitud" ColumnName="FechaSolicitud" />
+                <ScalarProperty Name="FechaAfiliacion" ColumnName="FechaAfiliacion" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+                <ScalarProperty Name="IdRazonBloqueo" ColumnName="IdRazonBloqueo" />
+                <ScalarProperty Name="IdRazonRechazo" ColumnName="IdRazonRechazo" />
+                <ScalarProperty Name="IdOcupacion" ColumnName="IdOcupacion" />
+                <ScalarProperty Name="IdNacionalidad" ColumnName="IdNacionalidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AfiliadoIntereses">
+            <EntityTypeMapping TypeName="SumaBDModel.AfiliadoInteres">
+              <MappingFragment StoreEntitySet="AfiliadoInteres">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdAfiliado" ColumnName="IdAfiliado" />
+                <ScalarProperty Name="IdInteres" ColumnName="IdInteres" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Auditorias">
+            <EntityTypeMapping TypeName="SumaBDModel.Auditoria">
+              <MappingFragment StoreEntitySet="Auditoria">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdObjeto" ColumnName="IdObjeto" />
+                <ScalarProperty Name="IdOperacion" ColumnName="IdOperacion" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Datos" ColumnName="Datos" />
+                <ScalarProperty Name="DatosOriginales" ColumnName="DatosOriginales" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="SumaBDModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="docnumber" ColumnName="docnumber" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="phone1" ColumnName="phone1" />
+                <ScalarProperty Name="phone2" ColumnName="phone2" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="questionid" ColumnName="questionid" />
+                <ScalarProperty Name="answer" ColumnName="answer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Intereses">
+            <EntityTypeMapping TypeName="SumaBDModel.Interes">
+              <MappingFragment StoreEntitySet="Interes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogErrors">
+            <EntityTypeMapping TypeName="SumaBDModel.LogError">
+              <MappingFragment StoreEntitySet="LogError">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Controlador" ColumnName="Controlador" />
+                <ScalarProperty Name="Accion" ColumnName="Accion" />
+                <ScalarProperty Name="Error" ColumnName="Error" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menus">
+            <EntityTypeMapping TypeName="SumaBDModel.Menu">
+              <MappingFragment StoreEntitySet="Menu">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Texto" ColumnName="Texto" />
+                <ScalarProperty Name="IdPadre" ColumnName="IdPadre" />
+                <ScalarProperty Name="Controlador" ColumnName="Controlador" />
+                <ScalarProperty Name="Accion" ColumnName="Accion" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Nacionalidades">
+            <EntityTypeMapping TypeName="SumaBDModel.Nacionalidad">
+              <MappingFragment StoreEntitySet="Nacionalidad">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ObjetoAuditorias">
+            <EntityTypeMapping TypeName="SumaBDModel.ObjetoAuditoria">
+              <MappingFragment StoreEntitySet="ObjetoAuditoria">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ocupaciones">
+            <EntityTypeMapping TypeName="SumaBDModel.Ocupacion">
+              <MappingFragment StoreEntitySet="Ocupacion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OperacionAuditorias">
+            <EntityTypeMapping TypeName="SumaBDModel.OperacionAuditoria">
+              <MappingFragment StoreEntitySet="OperacionAuditoria">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RazonAcreditaciones">
+            <EntityTypeMapping TypeName="SumaBDModel.RazonAcreditacion">
+              <MappingFragment StoreEntitySet="RazonAcreditacion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RazonBloqueos">
+            <EntityTypeMapping TypeName="SumaBDModel.RazonBloqueo">
+              <MappingFragment StoreEntitySet="RazonBloqueo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NivelRol" ColumnName="NivelRol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RazonRechazos">
+            <EntityTypeMapping TypeName="SumaBDModel.RazonRechazo">
+              <MappingFragment StoreEntitySet="RazonRechazo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NivelRol" ColumnName="NivelRol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="SumaBDModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RolPermisos">
+            <EntityTypeMapping TypeName="SumaBDModel.RolPermiso">
+              <MappingFragment StoreEntitySet="RolPermiso">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
+                <ScalarProperty Name="NivelPermiso" ColumnName="NivelPermiso" />
+                <ScalarProperty Name="NombreNivel" ColumnName="NombreNivel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stores">
+            <EntityTypeMapping TypeName="SumaBDModel.Store">
+              <MappingFragment StoreEntitySet="Store">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="SumaBDModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="NombreCompleto" ColumnName="NombreCompleto" />
+                <ScalarProperty Name="NombreEstatus" ColumnName="NombreEstatus" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UtilityValues">
+            <EntityTypeMapping TypeName="SumaBDModel.UtilityValue">
+              <MappingFragment StoreEntitySet="UtilityValues">
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="tabla" ColumnName="tabla" />
+                <ScalarProperty Name="descitem" ColumnName="descitem" />
+                <ScalarProperty Name="codigoitem" ColumnName="codigoitem" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,233 @@
+﻿@model Suma2Lealtad.Models.AfiliadoWeb
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-7 col-md-offset-2">
+
+            <div class="panel panel-default">
+
+                <div class="panel-heading clearfix panel-gradient">
+                    <h3 class="panel-title">Afiliado / Agregar Nuevo Afiliado</h3>
+                </div>
+
+                <div class="panel-body">
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+    
+    
+                        @Html.HiddenFor(model => model.id)
+    
+                        <div class="form-group" id="seccion1">
+
+                            <div class="editor-label col-md-4 control-label">
+                                Correo Electrónico :
+                            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.email)
+                            </div>@*
+    
+            <div class="editor-label col-md-4 control-label">
+                Tipo :
+            </div>
+            <div class="editor-field col-md-8"> 
+                @Html.TextBoxFor(model => model.type, new {@class="form-control" })
+                @Html.ValidationMessageFor(model => model.type)
+            </div>*@
+
+                            @Html.HiddenFor(model => model.type)
+
+                            <div class="editor-label col-md-4 control-label">
+                                Número Documento :
+                            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.docnumber, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.docnumber)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Nombre :
+                            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.name)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Telf. Primario :
+                            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.phone1, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.phone1)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Telf. Secundario :
+                            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.phone2, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.phone2)
+                            </div>
+
+                        </div>
+            
+                        <!-- SilverLight -->
+                        <div class="form-group" id="seccion2">
+                            @{Html.RenderPartial("SilverlightEscaner");}
+                            <!-- SECCION PARA VERIFICAR OPERACIONES ESCANER-->
+                            <p id="ElementoControl" style="visibility: hidden"></p>
+                            <script src="~/Scripts/jquery-2.1.1.min.js"></script>
+                            <script>
+                                $(document).ready(function () {
+                                    $("#seccion2").hide();
+                                    $("#seccion3").hide();
+                                    $("#boton2").hide();
+                                    $("#boton3").hide();
+                                });
+
+                                function Siguiente() {
+                                    $("#seccion1").hide();
+                                    $("#seccion2").show();
+                                    $("#boton1").hide();
+                                    $("#boton2").show();
+                                }
+
+                                function Siguiente2() {
+                                    if (VerificarElementoControl("ElementoControl", "Escaneada") == false) {
+                                        alert("Error: Debe escanear el documento de identificación para continuar.");
+                                    }
+                                    else {
+                                        $("#seccion2").hide();
+                                        $("#seccion3").show();
+                                        $("#boton2").hide();
+                                        $("#boton3").show();
+                                    }
+                                }
+
+                                function VerificarElementoControl(ElementoControl, ValorDeControl) {
+                                    if (document.getElementById(ElementoControl).innerHTML == ValorDeControl)
+                                        return true;
+                                    else
+                                        return false;
+                                }
+                            </script>
+                            <!-- FIN SECCION PARA VERIFICAR OPERACIONES -->
+                        </div>
+
+
+                        <!-- SilverLight -->
+                        <div class="form-group" id="seccion3">
+
+                            <div class="editor-label col-md-4 control-label">
+                                Sucursal :
+                            </div>
+                            <div class="editor-field col-md-8">
+                                <select class="form-control" id="select0">
+                                    <option>Seleccionar</option>
+                                    <option>Prado</option>
+                                    <option>Cafetal</option>
+                                    <option>Samanes</option>
+                                    <option>Avila</option>
+                                    <option>Galerias</option>
+                                    <option>Lagunita</option>
+                                    <option>Cedros</option>
+                                    <option>Centro Plazas</option>
+                                    <option>Vista Alegre</option>
+                                    <option>Cafetal</option>
+                                    <option>Los Naranjos</option>
+                                    <option>Valle Arriba</option>
+                                    <option>El Parral</option>
+                                    <option>Veracruz</option>
+                                    <option>Los Chaguaramos</option>
+                                    <option>Buenaventura</option>
+                                    <option>Guatire</option>
+                                </select>
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Ocupación :
+                            </div>
+                            <div class="editor-field col-md-8">
+                                <select class="form-control" id="select1">
+                                    <option>Seleccionar</option>
+                                    <option>Promotor</option>
+                                    <option>Administrador</option>
+                                    <option>Usuario</option>
+                                    <option>Analista</option>
+                                </select>
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Nacionalidad :
+                            </div>
+
+                            <div class="editor-field col-md-8">
+                                <select class="form-control" id="select2">
+                                    <option>Seleccionar</option>
+                                    <option>Venezolano</option>
+                                    <option>Colombiano</option>
+                                    <option>Argentino</option>
+                                    <option>Italiano</option>
+                                </select>
+                            </div>
+
+                            @*
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.questionid)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.questionid)
+                @Html.ValidationMessageFor(model => model.questionid)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.answer)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.answer)
+                @Html.ValidationMessageFor(model => model.answer)
+            </div>*@
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12 col-btn">
+                                <div class="pull-right">
+                                    <a id="boton1" href="javascript:Siguiente()" class="btn btn-success btn-md" role="button">Siguiente</a>
+                                    <a id="boton2" href="javascript:Siguiente2()" class="btn btn-success btn-md" role="button">Siguiente</a>
+                                    @*<a id="boton3" href="@Url.Action("", "")" class="btn btn-success btn-md" role="button">Guardar</a>*@
+                                    <input id="boton3" type="submit" class="btn btn-success btn-md" value="Guardar" />
+                                    <a id="boton4" href="@Url.Action("", "")" class="btn btn-danger btn-md" role="button">Cancelar</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    }
+
+                </div>
+                <!--// panel-body -->
+
+            </div>
+            <!--// panel -->
+
+        </div>
+        <!--// columns -->
+
+    </div>
+    <!--// row -->
+
+</div>
+<!--// container -->
+

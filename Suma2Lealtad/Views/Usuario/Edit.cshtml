@@ -1,0 +1,99 @@
+﻿@model Suma2Lealtad.Models.Usuario
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+<div class="row">
+			
+	<div class="col-md-7 col-md-offset-2">
+				
+	<div class="panel panel-default">
+
+	<div class="panel-heading clearfix panel-gradient">
+		<h3 class="panel-title">Usuario / Editar Registro</h3>
+	</div>
+
+	<div class="panel-body">
+
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            @Html.HiddenFor(model => model.Id)
+
+		<form class="form-horizontal" role="form">
+
+			<div class="form-group">
+
+                @Html.HiddenFor(model => model.Id)
+
+                @Html.HiddenFor(model => model.Clave)
+
+                <div class="editor-label col-md-4 control-label">
+                    Nombres :
+                </div>
+                <div class="editor-field col-md-8">
+                    @Html.TextBoxFor(model => model.Nombres, new {@class="form-control" })
+                    @Html.ValidationMessageFor(model => model.Nombres)
+                </div>
+				
+                <div class="editor-label col-md-4 control-label">
+                    Apellidos :
+                </div>
+                <div class="editor-field col-md-8">
+                    @Html.TextBoxFor(model => model.Apellidos, new {@class="form-control" })
+                    @Html.ValidationMessageFor(model => model.Apellidos)
+                </div>                	
+
+                <div class="editor-label col-md-4 control-label">
+                    Login :
+                </div>
+                <div class="editor-field col-md-8">
+                    @Html.TextBoxFor(model => model.Login, new {@class="form-control" })
+                    @Html.ValidationMessageFor(model => model.Login)
+                </div>
+
+                <div class="editor-label col-md-4 control-label">
+                    Estatus :
+                </div>
+                <div class="editor-field col-md-8">
+                    @Html.EditorFor(model => model.Activo)
+                    @Html.ValidationMessageFor(model => model.Activo)
+                </div>
+
+                <div class="editor-label col-md-4 control-label">
+                    Rol :
+                </div>
+                <div class="editor-field col-md-8">
+                    @Html.DropDownList("IdRol", String.Empty)
+                    @Html.ValidationMessageFor(model => model.IdRol)
+                </div>
+
+			</div>
+
+			<!-- buttons -->
+			<div class="form-group">
+				<div class="col-md-12 col-btn">
+					<div class="pull-right">
+						<input type="submit" class="btn btn-success btn-md" value="Guardar" />
+                        <a class="btn btn-success btn-md" href="@Url.Action("Index","Usuario")">Cancelar</a>
+					</div>
+				</div>
+			</div><!--// buttons -->
+		     
+		</form>
+                
+        }
+
+	</div><!--// panel-body -->
+
+	</div><!--// panel panel-default -->
+
+	</div><!--// columns -->			
+
+</div><!--// row -->
+
+</div><!--// container -->

@@ -1,0 +1,25 @@
+﻿<div class="panel-body">
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+	<form class="form-horizontal" role="form">
+
+		<div class="form-group">
+
+            <div class="panel-heading clearfix">
+                        
+                <div class="editor-label" align="center">   
+                    <img src=@Url.Content("~/Images/conectado.jpg") />
+                </div>
+					
+		    </div>
+
+        </div>
+		     
+	</form>
+                
+    }
+
+</div>

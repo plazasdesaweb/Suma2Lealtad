@@ -1,0 +1,71 @@
+﻿@model Suma2Lealtad.Models.Usuario
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Usuario</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Login)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Login)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Clave)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Clave)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Nombres)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Nombres)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Apellidos)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Apellidos)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Activo)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Activo)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NombreCompleto)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NombreCompleto)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NombreEstatus)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NombreEstatus)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Rol.Nombre)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Rol.Nombre)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

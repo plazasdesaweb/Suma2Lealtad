@@ -1,0 +1,103 @@
+﻿@model Suma2Lealtad.Models.Afiliacion
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Afiliacion</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IdAfiliado)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IdAfiliado)
+            @Html.ValidationMessageFor(model => model.IdAfiliado)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FechaSolicitud)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FechaSolicitud)
+            @Html.ValidationMessageFor(model => model.FechaSolicitud)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FechaAfiliacion)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FechaAfiliacion)
+            @Html.ValidationMessageFor(model => model.FechaAfiliacion)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IdSucursal)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IdSucursal)
+            @Html.ValidationMessageFor(model => model.IdSucursal)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Estatus)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Estatus)
+            @Html.ValidationMessageFor(model => model.Estatus)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IdRazonBloqueo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IdRazonBloqueo)
+            @Html.ValidationMessageFor(model => model.IdRazonBloqueo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IdRazonRechazo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IdRazonRechazo)
+            @Html.ValidationMessageFor(model => model.IdRazonRechazo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IdOcupacion)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IdOcupacion)
+            @Html.ValidationMessageFor(model => model.IdOcupacion)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IdNacionalidad)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IdNacionalidad)
+            @Html.ValidationMessageFor(model => model.IdNacionalidad)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

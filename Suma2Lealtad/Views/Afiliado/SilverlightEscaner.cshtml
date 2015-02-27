@@ -1,0 +1,32 @@
+﻿@model Suma2Lealtad.Models.AfiliadoWeb
+
+<!-- btn btn-success -->
+<div class="col-md-12 col-btn">
+    <div class="text-center">
+        <a href="javascript:Escanear()" class="btn btn-success btn-md" role="button">Escanear</a>
+        <a href="javascript:Limpiar()" class="btn btn-success btn-md" role="button">Limpiar</a>
+    </div>
+</div>
+<!--// btn btn-success -->
+
+@{
+    //DEBO SACAR LA INFO DEL NRO DEL DOCUMENTO DEL MODELO Y PASARLO COMO PARAMETRO AL HELPER SE SILVERLIGHT
+    var InitParams = "nombreArchivo=" + Model.docnumber;
+    InitParams = InitParams + "," + "idElementoHtmlControl=ElementoControl";
+}
+
+@Helpers.Silverlight(xapPath: "~/ClientBin/SumaPlazas.Dispositivos.Escaner.xap", slObjectId: "sl", customParams: @InitParams, slObjectClass: "col-md-12 col-btn")
+
+<script type="text/javascript">
+    var slcontrol = document.getElementById("sl");
+    function Escanear() {
+        if (slcontrol) {
+            slcontrol.Content.MainPage.Escanear();
+        }
+    }
+    function Limpiar() {
+        if (slcontrol) {
+            slcontrol.Content.MainPage.Limpiar();
+        }
+    }
+</script>
