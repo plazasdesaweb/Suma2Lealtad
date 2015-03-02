@@ -6,6 +6,7 @@
                     string slWidth = "100%",
                     string slHeight = "100%",
                     string divObjectTagId = "SilverlightControlHost",
+                    string divObjectClass = "",
                     string divObjectWidth = "300px",
                     string divObjectHeight = "300px",
                     string version = "5.0",
@@ -48,7 +49,7 @@
     </script>
     }
 
-    <div id="@divObjectTagId" style="height: @divObjectHeight; width:@divObjectWidth; text-align:center; margin-left: auto; margin-right: auto">
+    <div id="@divObjectTagId" class="@divObjectClass" style="height: @divObjectHeight; width:@divObjectWidth; text-align:center; margin-left: auto; margin-right: auto">
         <object id="@slObjectId" class="@slObjectClass" data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="@slWidth" height="@slHeight">
             <param name="source" value="@Href(xapPath)"/>
             <param name="onError" value="onSilverlightError" />

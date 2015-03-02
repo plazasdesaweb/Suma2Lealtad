@@ -19,7 +19,8 @@
 
                 <div class="panel-body">
 
-                    @using (Html.BeginForm())
+                    @*@using (Html.BeginForm())*@                    
+                    @using (Html.BeginForm("Index", "Afiliado", FormMethod.Post, new { enctype = "multipart/form-data" })) 
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true)
@@ -47,7 +48,7 @@
 
                             @Html.HiddenFor(model => model.type)
 
-                            <div class="editor-label col-md-4 control-label">
+                           <div class="editor-label col-md-4 control-label">
                                 Número Documento :
                             </div>
                             <div class="editor-field col-md-8">
@@ -83,9 +84,20 @@
             
                         <!-- SilverLight -->
                         <div class="form-group" id="seccion2">
+                            <div class="col-md-12">
+                                <p class="text-left">Paso 1. Escanee el documento de identidad.</p>
+                            </div>
+
                             @{Html.RenderPartial("SilverlightEscaner");}
+
+                            <div class="col-md-12">
+                                <p class="text-left">Paso 2. Seleccione el archivo escaneado para subirlo al servidor. </p>
+                                <input type="file" name="file" id="file" onchange="ActualizaElementoControl('ElementoControl','Seleccionada')"/>
+                            </div>
                             <!-- SECCION PARA VERIFICAR OPERACIONES ESCANER-->
-                            <p id="ElementoControl" style="visibility: hidden"></p>
+                            <div class="col-md-12">
+                                <p class="text-left" id="ElementoControl" style="visibility: hidden">ElementoControl</p>
+                            </div>
                             <script src="~/Scripts/jquery-2.1.1.min.js"></script>
                             <script>
                                 $(document).ready(function () {
@@ -103,14 +115,22 @@
                                 }
 
                                 function Siguiente2() {
-                                    if (VerificarElementoControl("ElementoControl", "Escaneada") == false) {
-                                        alert("Error: Debe escanear el documento de identificación para continuar.");
+                                    if (VerificarElementoControl("ElementoControl", "Escaneada") == true) {
+                                        //alert("Error: Debe escanear el documento de identificación para continuar.");
+                                        alert("Error: Debe seleccionar el archivo para cargarlo en el servidor.");
                                     }
-                                    else {
+                                    //else if (VerificarElementoControl("ElementoControl", "Seleccionada") == true) {
+                                    //    //alert("Error: Debe seleccionar el archivo para cargarlo en el servidor.");
+                                    //    alert("Error: Debe escanear el documento de identificación para continuar.");
+                                    //}
+                                    else if (VerificarElementoControl("ElementoControl", "Seleccionada") == true) {
                                         $("#seccion2").hide();
                                         $("#seccion3").show();
                                         $("#boton2").hide();
                                         $("#boton3").show();
+                                    }
+                                    else {
+                                        alert("Error: Debe completar Paso 1 y Paso 2 para continuar.");
                                     }
                                 }
 
@@ -119,6 +139,10 @@
                                         return true;
                                     else
                                         return false;
+                                }
+
+                                function ActualizaElementoControl(ElementoControl, ValorDeControl) {
+                                    document.getElementById(ElementoControl).innerHTML = ValorDeControl;
                                 }
                             </script>
                             <!-- FIN SECCION PARA VERIFICAR OPERACIONES -->

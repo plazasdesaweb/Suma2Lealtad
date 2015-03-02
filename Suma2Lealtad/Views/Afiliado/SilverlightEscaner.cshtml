@@ -1,7 +1,7 @@
 ﻿@model Suma2Lealtad.Models.AfiliadoWeb
 
 <!-- btn btn-success -->
-<div class="col-md-12 col-btn">
+<div class="col-md-12">
     <div class="text-center">
         <a href="javascript:Escanear()" class="btn btn-success btn-md" role="button">Escanear</a>
         <a href="javascript:Limpiar()" class="btn btn-success btn-md" role="button">Limpiar</a>
@@ -15,7 +15,7 @@
     InitParams = InitParams + "," + "idElementoHtmlControl=ElementoControl";
 }
 
-@Helpers.Silverlight(xapPath: "~/ClientBin/SumaPlazas.Dispositivos.Escaner.xap", slObjectId: "sl", customParams: @InitParams, slObjectClass: "col-md-12 col-btn")
+@Helpers.Silverlight(xapPath: "~/ClientBin/SumaPlazas.Dispositivos.Escaner.xap", slObjectId: "sl", customParams: @InitParams, divObjectClass: "col-md-12")
 
 <script type="text/javascript">
     var slcontrol = document.getElementById("sl");

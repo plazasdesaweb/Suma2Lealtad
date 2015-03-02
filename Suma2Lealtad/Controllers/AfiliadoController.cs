@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Suma2Lealtad.Models;
 using Suma2Lealtad.Modules;
 using Newtonsoft.Json;
+using System.Windows.Forms;
 
 namespace Suma2Lealtad.Controllers
 {
@@ -39,7 +40,8 @@ namespace Suma2Lealtad.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index( AfiliadoWeb Afiliado )
+        //public ActionResult Index(AfiliadoWeb Afiliado)
+        public ActionResult Index(AfiliadoWeb Afiliado, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
@@ -81,24 +83,45 @@ namespace Suma2Lealtad.Controllers
                     // actualizar el registro de cliente en el modelo de PlazasWeb.
                     string wsl = "updclient/{id}/{type}/{docnumber}/{name}/{phone1}/{phone2}";
                     //string wsl = "updclient/{id}/{type}/{docnumber}/{email}/{name}/{name2}/{lastname1}/{lastname2}/{phone1}/{phone2}/{birthdate}/{maritalstatus}/{gender}";
-
-                    wsl = wsl.Replace( "{id}"        , Afiliado.id          );
-                    wsl = wsl.Replace( "{type}"      , Afiliado.type + ""   );
-                    wsl = wsl.Replace( "{docnumber}" , Afiliado.docnumber   );
-                    wsl = wsl.Replace( "{email}"     , Afiliado.email       );
-                    wsl = wsl.Replace( "{name}"      , Afiliado.name        );
-                    wsl = wsl.Replace( "{name2}"     , Afiliado.name2 + ""  );
-                    wsl = wsl.Replace( "{lastname1}" , Afiliado.lastname1   );
+                    wsl = wsl.Replace("{id}", Afiliado.id);
+                    wsl = wsl.Replace("{type}", Afiliado.type + "");
+                    wsl = wsl.Replace("{docnumber}", Afiliado.docnumber);
+                    wsl = wsl.Replace("{email}", Afiliado.email);
+                    wsl = wsl.Replace("{name}", Afiliado.name);
+                    wsl = wsl.Replace("{name2}", Afiliado.name2 + "");
+                    wsl = wsl.Replace("{lastname1}", Afiliado.lastname1);
                     wsl = wsl.Replace("{lastname2}", Afiliado.lastname2 + "");
-                    wsl = wsl.Replace( "{phone1}"    , Afiliado.phone1      );
-                    wsl = wsl.Replace( "{phone2}"    , Afiliado.phone2      );
-                    wsl = wsl.Replace( "{birthdate}" , Afiliado.birthdate + "" );
-                    wsl = wsl.Replace( "{maritalstatus}", Afiliado.maritalstatus + "");
-                    wsl = wsl.Replace( "{gender}"    , Afiliado.gender + "");
-                      
-                    string resp = WSL.PlazasWeb(wsl); 
+                    wsl = wsl.Replace("{phone1}", Afiliado.phone1);
+                    wsl = wsl.Replace("{phone2}", Afiliado.phone2);
+                    wsl = wsl.Replace("{birthdate}", Afiliado.birthdate + "");
+                    wsl = wsl.Replace("{maritalstatus}", Afiliado.maritalstatus + "");
+                    wsl = wsl.Replace("{gender}", Afiliado.gender + "");
+
+                    string resp = WSL.PlazasWeb(wsl);
+                    
+                    //aqui metemos el código para subir la imagen al server
+                    if (file != null && file.ContentLength > 0)
+                        try
+                        {
+                            string path = System.IO.Path.Combine(Server.MapPath("~/Fotos"), System.IO.Path.GetFileName(file.FileName));
+                            file.SaveAs(path);
+                            //ViewBag.Message2 = "Archivo cargado.";
+                            MessageBox.Show("Archivo cargado");
+                        }
+                        catch (Exception ex)
+                        {
+                            //ViewBag.Message2 = "ERROR:" + ex.Message.ToString();
+                            MessageBox.Show("ERROR:" + ex.Message.ToString());
+                        }
+                    else
+                    {
+                        //ViewBag.Message2 = "Debe seleccionar un archivo.";
+                        MessageBox.Show("Debe seleccionar un archivo");
+                    }
 
                 }
+
+                //PENDIENTE: SI FALLA ALGUNA DE LAS ACTIVIDADES. HAY QUE DESHACER LAS ACTIVIDADES ANTERIORES EXITOSAS.
 
                 // PENDIENTE : Colocar la vista que informe al usuario, que el cliente no existe en PlazasWeb, y continuar con el flujo.
                 //return RedirectToAction("Filter");
@@ -107,6 +130,9 @@ namespace Suma2Lealtad.Controllers
             return RedirectToAction("Filter");
 
         }
+
+
+        
 
         //
         // GET: /Afiliado/Details/5
