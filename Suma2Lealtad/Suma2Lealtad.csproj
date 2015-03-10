@@ -23,7 +23,7 @@
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <SilverlightApplicationList>{113CD0B4-91A8-4E2B-BE5F-ABF0944A7FC8}|..\SumaPlazas.Dispositivos.Escaner\SumaPlazas.Dispositivos.Escaner.csproj|ClientBin|False</SilverlightApplicationList>
+    <SilverlightApplicationList>{113CD0B4-91A8-4E2B-BE5F-ABF0944A7FC8}|..\SumaPlazas.Dispositivos.Escaner\SumaPlazas.Dispositivos.Escaner.csproj|ClientBin|False,{4532CE2F-CF80-4B5C-8002-02B3D4A623DB}|..\SumaPlazas.Dispositivos.Impresora\SumaPlazas.Dispositivos.Impresora.csproj|ClientBin|False,{A4D70A80-CCBE-43FB-A0B8-0B9B1D697E56}|..\SumaPlazas.Dispositivos.PinPad\SumaPlazas.Dispositivos.PinPad.csproj|ClientBin|False</SilverlightApplicationList>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -69,19 +69,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll</HintPath>
-    </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.WebRequest" />
@@ -95,7 +91,6 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Transactions" />
@@ -194,92 +189,124 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AfiliadoController.cs" />
-    <Compile Include="Controllers\AuditoriaController.cs" />
-    <Compile Include="Controllers\BloqueoController.cs" />
+    <Compile Include="Controllers\AuditingController.cs" />
+    <Compile Include="Controllers\ChannelController.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InteresController.cs" />
+    <Compile Include="Controllers\InterestController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\MyDatabaseEntities.cs" />
-    <Compile Include="Controllers\NacionalidadController.cs" />
-    <Compile Include="Controllers\OcupacionController.cs" />
-    <Compile Include="Controllers\PermisoController.cs" />
-    <Compile Include="Controllers\RechazoController.cs" />
-    <Compile Include="Controllers\RolController.cs" />
+    <Compile Include="Controllers\OperacionesImpresoraController.cs" />
+    <Compile Include="Controllers\OperacionesPinPadController.cs" />
+    <Compile Include="Controllers\ReasonsBlockController.cs" />
+    <Compile Include="Controllers\ReasonsController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\SaldosMovimientosController.cs" />
+    <Compile Include="Controllers\SecurityLevelController.cs" />
+    <Compile Include="Controllers\StatusController.cs" />
+    <Compile Include="Controllers\TypeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\Afiliacion.cs">
-      <DependentUpon>SumaModel.tt</DependentUpon>
+    <Compile Include="Models\Affiliate.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\AfiliadoInteres.cs">
-      <DependentUpon>SumaModel.tt</DependentUpon>
+    <Compile Include="Models\AffiliateAud.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AfiliadoSuma.cs" />
     <Compile Include="Models\AfiliadoWeb.cs" />
-    <Compile Include="Models\Auditoria.cs">
-      <DependentUpon>SumaModel.tt</DependentUpon>
+    <Compile Include="Models\Auditing.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Customer.cs">
-      <DependentUpon>SumaModel.tt</DependentUpon>
+    <Compile Include="Models\Channel.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Interes.cs">
-      <DependentUpon>SumaModel.tt</DependentUpon>
+    <Compile Include="Models\CLIENTE.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LogError.cs">
-      <DependentUpon>SumaModel.tt</DependentUpon>
+    <Compile Include="Models\Company.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CompanyAffiliate.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerInterest.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FACTURA.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Interest.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Menu.cs">
-      <DependentUpon>SumaModel.tt</DependentUpon>
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Nacionalidad.cs">
-      <DependentUpon>SumaModel.tt</DependentUpon>
+    <Compile Include="Models\Movimiento.cs" />
+    <Compile Include="Models\Object.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ObjetoAuditoria.cs">
-      <DependentUpon>SumaModel.tt</DependentUpon>
+    <Compile Include="Models\Operation.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Ocupacion.cs">
-      <DependentUpon>SumaModel.tt</DependentUpon>
+    <Compile Include="Models\Order.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\OperacionAuditoria.cs">
-      <DependentUpon>SumaModel.tt</DependentUpon>
+    <Compile Include="Models\OrderDetail.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\RazonAcreditacion.cs">
-      <DependentUpon>SumaModel.tt</DependentUpon>
+    <Compile Include="Models\PARAMETRO.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\RazonBloqueo.cs">
-      <DependentUpon>SumaModel.tt</DependentUpon>
+    <Compile Include="Models\Reason.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\RazonRechazo.cs">
-      <DependentUpon>SumaModel.tt</DependentUpon>
+    <Compile Include="Models\RESTRICCIONE.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Rol.cs">
-      <DependentUpon>SumaModel.tt</DependentUpon>
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\RolPermiso.cs">
-      <DependentUpon>SumaModel.tt</DependentUpon>
+    <Compile Include="Models\Saldo.cs" />
+    <Compile Include="Models\SaldosMovimientos.cs" />
+    <Compile Include="Models\SecurityLevel.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Store.cs">
-      <DependentUpon>SumaModel.tt</DependentUpon>
+    <Compile Include="Models\SecurityMenu.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SumaModel.Context.cs">
+    <Compile Include="Models\Status.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SumaLealtad.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SumaModel.Context.tt</DependentUpon>
+      <DependentUpon>SumaLealtad.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SumaModel.cs">
+    <Compile Include="Models\SumaLealtad.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SumaModel.tt</DependentUpon>
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SumaModel.Designer.cs">
+    <Compile Include="Models\SumaLealtad.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SumaModel.edmx</DependentUpon>
+      <DependentUpon>SumaLealtad.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Usuario.cs">
-      <DependentUpon>SumaModel.tt</DependentUpon>
+    <Compile Include="Models\Type.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserRol.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Modules\AppModule.cs" />
     <Compile Include="Modules\WSL.cs" />
@@ -287,6 +314,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientBin\SumaPlazas.Dispositivos.Escaner.xap" />
+    <Content Include="ClientBin\SumaPlazas.Dispositivos.Impresora.xap" />
+    <Content Include="ClientBin\SumaPlazas.Dispositivos.PinPad.xap" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -349,26 +378,9 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <EntityDeploy Include="Models\SumaModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SumaModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <Content Include="Images\conectado.jpg" />
     <Content Include="Images\plzlogo.jpg" />
     <Content Include="Images\principal.jpg" />
-    <Content Include="Models\SumaModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SumaModel.edmx</DependentUpon>
-      <LastGenOutput>SumaModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\SumaModel.edmx.diagram">
-      <DependentUpon>SumaModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\SumaModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SumaModel.edmx</DependentUpon>
-      <LastGenOutput>SumaModel.cs</LastGenOutput>
-    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
@@ -378,6 +390,23 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\html5shiv.min.js" />
     <Content Include="App_Code\Helpers.cshtml" />
+    <EntityDeploy Include="Models\SumaLealtad.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SumaLealtad.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\SumaLealtad.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SumaLealtad.edmx</DependentUpon>
+      <LastGenOutput>SumaLealtad.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\SumaLealtad.edmx.diagram">
+      <DependentUpon>SumaLealtad.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\SumaLealtad.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SumaLealtad.edmx</DependentUpon>
+      <LastGenOutput>SumaLealtad.cs</LastGenOutput>
+    </Content>
     <None Include="Properties\PublishProfiles\Suma.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
@@ -397,7 +426,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -433,40 +464,11 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Ocupacion\Index.cshtml" />
-    <Content Include="Views\Ocupacion\Create.cshtml" />
-    <Content Include="Views\Ocupacion\Edit.cshtml" />
-    <Content Include="Views\Ocupacion\Delete.cshtml" />
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Usuario\Details.cshtml" />
     <Content Include="Views\Usuario\Create.cshtml" />
     <Content Include="Views\Usuario\Edit.cshtml" />
     <Content Include="Views\Usuario\Delete.cshtml" />
-    <Content Include="Views\Rol\Index.cshtml" />
-    <Content Include="Views\Rol\Create.cshtml" />
-    <Content Include="Views\Rol\Edit.cshtml" />
-    <Content Include="Views\Rol\Delete.cshtml" />
-    <Content Include="Views\Rechazo\Index.cshtml" />
-    <Content Include="Views\Rechazo\Create.cshtml" />
-    <Content Include="Views\Rechazo\Edit.cshtml" />
-    <Content Include="Views\Rechazo\Delete.cshtml" />
-    <Content Include="Views\Bloqueo\Index.cshtml" />
-    <Content Include="Views\Bloqueo\Create.cshtml" />
-    <Content Include="Views\Bloqueo\Edit.cshtml" />
-    <Content Include="Views\Bloqueo\Delete.cshtml" />
-    <Content Include="Views\Nacionalidad\Index.cshtml" />
-    <Content Include="Views\Nacionalidad\Create.cshtml" />
-    <Content Include="Views\Nacionalidad\Edit.cshtml" />
-    <Content Include="Views\Nacionalidad\Delete.cshtml" />
-    <Content Include="Views\Permiso\Index.cshtml" />
-    <Content Include="Views\Permiso\Create.cshtml" />
-    <Content Include="Views\Permiso\Edit.cshtml" />
-    <Content Include="Views\Permiso\Delete.cshtml" />
-    <Content Include="Views\Interes\Index.cshtml" />
-    <Content Include="Views\Interes\Create.cshtml" />
-    <Content Include="Views\Interes\Edit.cshtml" />
-    <Content Include="Views\Interes\Delete.cshtml" />
-    <Content Include="Views\Auditoria\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Afiliado\Index.cshtml" />
     <Content Include="Views\Afiliado\Filter.cshtml" />
@@ -476,6 +478,67 @@
     <Content Include="Views\Afiliado\Delete.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Afiliado\SilverlightEscaner.cshtml" />
+    <Content Include="Views\Interest\Index.cshtml" />
+    <Content Include="Views\Interest\Create.cshtml" />
+    <Content Include="Views\Interest\Edit.cshtml" />
+    <Content Include="Views\Interest\Delete.cshtml" />
+    <Content Include="Views\Reasons\Index.cshtml" />
+    <Content Include="Views\Reasons\Create.cshtml" />
+    <Content Include="Views\Reasons\Edit.cshtml" />
+    <Content Include="Views\Reasons\Delete.cshtml" />
+    <Content Include="Views\ReasonsBlock\Index.cshtml" />
+    <Content Include="Views\ReasonsBlock\Create.cshtml" />
+    <Content Include="Views\ReasonsBlock\Edit.cshtml" />
+    <Content Include="Views\ReasonsBlock\Delete.cshtml" />
+    <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\Role\Create.cshtml" />
+    <Content Include="Views\Role\Edit.cshtml" />
+    <Content Include="Views\Role\Delete.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Delete.cshtml" />
+    <Content Include="Views\Company\Index.cshtml" />
+    <Content Include="Views\Company\Details.cshtml" />
+    <Content Include="Views\Company\Create.cshtml" />
+    <Content Include="Views\Company\Edit.cshtml" />
+    <Content Include="Views\Company\Delete.cshtml" />
+    <Content Include="Views\Channel\Index.cshtml" />
+    <Content Include="Views\Channel\Details.cshtml" />
+    <Content Include="Views\Channel\Create.cshtml" />
+    <Content Include="Views\Channel\Edit.cshtml" />
+    <Content Include="Views\Channel\Delete.cshtml" />
+    <Content Include="Views\Type\Index.cshtml" />
+    <Content Include="Views\Type\Details.cshtml" />
+    <Content Include="Views\Type\Create.cshtml" />
+    <Content Include="Views\Type\Edit.cshtml" />
+    <Content Include="Views\Type\Delete.cshtml" />
+    <Content Include="Views\Status\Index.cshtml" />
+    <Content Include="Views\Status\Details.cshtml" />
+    <Content Include="Views\Status\Create.cshtml" />
+    <Content Include="Views\Status\Edit.cshtml" />
+    <Content Include="Views\Status\Delete.cshtml" />
+    <Content Include="Views\Auditing\Index.cshtml" />
+    <Content Include="Views\Auditing\Details.cshtml" />
+    <Content Include="Views\Auditing\Create.cshtml" />
+    <Content Include="Views\Auditing\Edit.cshtml" />
+    <Content Include="Views\Auditing\Delete.cshtml" />
+    <Content Include="Views\SecurityLevel\Index.cshtml" />
+    <Content Include="Views\SecurityLevel\Details.cshtml" />
+    <Content Include="Views\SecurityLevel\Create.cshtml" />
+    <Content Include="Views\SecurityLevel\Edit.cshtml" />
+    <Content Include="Views\SecurityLevel\Delete.cshtml" />
+    <Content Include="Views\Menu\Index.cshtml" />
+    <Content Include="Views\Menu\Details.cshtml" />
+    <Content Include="Views\Menu\Create.cshtml" />
+    <Content Include="Views\Menu\Edit.cshtml" />
+    <Content Include="Views\Menu\Delete.cshtml" />
+    <Content Include="Views\OperacionesImpresora\Index.cshtml" />
+    <Content Include="Views\OperacionesImpresora\SilverlightImpresora.cshtml" />
+    <Content Include="Views\OperacionesPinPad\Index.cshtml" />
+    <Content Include="Views\OperacionesPinPad\SilverlightPinPad.cshtml" />
+    <Content Include="Views\SaldosMovimientos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

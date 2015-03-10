@@ -8,13 +8,13 @@ using System.Web.Mvc;
 using Suma2Lealtad.Models;
 using Suma2Lealtad.Modules;
 using Newtonsoft.Json;
-using System.Windows.Forms;
 
 namespace Suma2Lealtad.Controllers
 {
     public class AfiliadoController : Controller
     {
-        private SumaEntities db = new SumaEntities();
+
+        private LealtadEntities db = new LealtadEntities();
 
         public ActionResult Filter()
         {
@@ -23,15 +23,15 @@ namespace Suma2Lealtad.Controllers
 
         //
         // GET: /Search/
-
         public ActionResult Search(string numdoc)
         {
 
-            string resp = WSL.PlazasWeb("getclientbynumdoc/" + numdoc);
-            var Model = JsonConvert.DeserializeObject<AfiliadoWeb>(resp);
+            var Model = JsonConvert.DeserializeObject<AfiliadoSuma>(WSL.getClientByNumDoc(numdoc));
 
             TempData["MiAfiliado"] = Model;
+
             return RedirectToAction("Index", "Afiliado");
+
         }
 
         public ActionResult Index()
@@ -40,38 +40,73 @@ namespace Suma2Lealtad.Controllers
         }
 
         [HttpPost]
-        //public ActionResult Index(AfiliadoWeb Afiliado)
-        public ActionResult Index(AfiliadoWeb Afiliado, HttpPostedFileBase file)
+        public ActionResult Index(AfiliadoSuma record, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
 
-                using (SumaEntities context = new SumaEntities())
+                using (LealtadEntities context = new LealtadEntities())
                 {
 
-                    var keyword = Afiliado.docnumber;
+                    var keyword = record.docnumber;
 
-                    var result = context.Customers.SingleOrDefault(c => c.docnumber == keyword);
+                    var result = context.CLIENTES.SingleOrDefault(c => c.NRO_DOCUMENTO == keyword);
 
-                    // llenar la estructura del cliente.
-                    var afiliado = new Customer()
+                    var _clienteSuma = new CLIENTE()
                     {
-                        id = int.Parse(Afiliado.id),
-                        email = Afiliado.email,
-                        type = 1,//byte.Parse(Afiliado.type + ""),
-                        docnumber = Afiliado.docnumber,
-                        name = Afiliado.name,
-                        phone1 = Afiliado.phone1,
-                        phone2 = Afiliado.phone2,
-                        //password = Afiliado.clave,
-                        //questionid = Afiliado.questionid,
-                        //answer = Afiliado.answer
+                        TIPO_DOCUMENTO = record.type,
+                        NRO_DOCUMENTO = record.docnumber,
+                        NACIONALIDAD = record.nationality,
+                        NOMBRE_CLIENTE1 = record.name,
+                        NOMBRE_CLIENTE2 = record.name2,
+                        APELLIDO_CLIENTE1 = record.lastname1,
+                        APELLIDO_CLIENTE2 = record.lastname2,
+                        FECHA_NACIMIENTO = System.DateTime.Now,       //record.birthdate,
+                        SEXO = record.gender,
+                        EDO_CIVIL = record.maritalstatus,
+                        OCUPACION = record.occupation,
+                        TELEFONO_HAB = record.phone1,
+                        TELEFONO_OFIC = record.phone2,
+                        TELEFONO_CEL = record.phone3,
+                        E_MAIL = record.email,
+                        COD_SUCURSAL = 1,
+                        COD_ESTADO = null,
+                        COD_CIUDAD = null,
+                        COD_MUNICIPIO = null,
+                        COD_PARROQUIA = null,
+                        COD_URBANIZACION = null,
+                        FECHA_CREACION = System.DateTime.Now
+                    };
+
+                    var _affiliateSuma = new Affiliate()
+                    {
+                        id = 1,                                //context.Affiliates.Max( k => k.id) + 1,
+                        customerid = Int32.Parse(record.id),
+                        docnumber = record.docnumber,
+                        clientid = Int32.Parse(record.id),
+                        storeid = 1,
+                        channelid = 0,
+                        typeid = 0,
+                        affiliatedate = System.DateTime.Now,
+                        typedelivery = "",
+                        storeiddelivery = 1,
+                        estimateddatedelivery = System.DateTime.Now,
+                        creationdate = System.DateTime.Now,
+                        creationuserid = 2,
+                        modifieduserid = 2,
+                        modifieddate = System.DateTime.Now,
+                        statusid = 0,
+                        reasonsid = 9,
+                        comments = null
                     };
 
                     // evaluar si existe el registro en el modelo de SUMA.
                     if (result == null)
                     {
-                        context.Customers.Add(afiliado);
+                        context.CLIENTES.Add(_clienteSuma);
+
+                        context.Affiliates.Add(_affiliateSuma);
+
                         context.SaveChanges();
                     }
                     else
@@ -81,24 +116,8 @@ namespace Suma2Lealtad.Controllers
                     }
 
                     // actualizar el registro de cliente en el modelo de PlazasWeb.
-                    string wsl = "updclient/{id}/{type}/{docnumber}/{name}/{phone1}/{phone2}";
-                    //string wsl = "updclient/{id}/{type}/{docnumber}/{email}/{name}/{name2}/{lastname1}/{lastname2}/{phone1}/{phone2}/{birthdate}/{maritalstatus}/{gender}";
-                    wsl = wsl.Replace("{id}", Afiliado.id);
-                    wsl = wsl.Replace("{type}", Afiliado.type + "");
-                    wsl = wsl.Replace("{docnumber}", Afiliado.docnumber);
-                    wsl = wsl.Replace("{email}", Afiliado.email);
-                    wsl = wsl.Replace("{name}", Afiliado.name);
-                    wsl = wsl.Replace("{name2}", Afiliado.name2 + "");
-                    wsl = wsl.Replace("{lastname1}", Afiliado.lastname1);
-                    wsl = wsl.Replace("{lastname2}", Afiliado.lastname2 + "");
-                    wsl = wsl.Replace("{phone1}", Afiliado.phone1);
-                    wsl = wsl.Replace("{phone2}", Afiliado.phone2);
-                    wsl = wsl.Replace("{birthdate}", Afiliado.birthdate + "");
-                    wsl = wsl.Replace("{maritalstatus}", Afiliado.maritalstatus + "");
-                    wsl = wsl.Replace("{gender}", Afiliado.gender + "");
+                    string resp = WSL.UpdateClient(record);
 
-                    string resp = WSL.PlazasWeb(wsl);
-                    
                     //aqui metemos el código para subir la imagen al server
                     if (file != null && file.ContentLength > 0)
                         try
@@ -106,22 +125,22 @@ namespace Suma2Lealtad.Controllers
                             string path = System.IO.Path.Combine(Server.MapPath("~/Fotos"), System.IO.Path.GetFileName(file.FileName));
                             file.SaveAs(path);
                             //ViewBag.Message2 = "Archivo cargado.";
-                            MessageBox.Show("Archivo cargado");
+                            //MessageBox.Show("Archivo cargado");
                         }
                         catch (Exception ex)
                         {
                             //ViewBag.Message2 = "ERROR:" + ex.Message.ToString();
-                            MessageBox.Show("ERROR:" + ex.Message.ToString());
+                            //MessageBox.Show("ERROR:" + ex.Message.ToString());
                         }
                     else
                     {
                         //ViewBag.Message2 = "Debe seleccionar un archivo.";
-                        MessageBox.Show("Debe seleccionar un archivo");
+                        //MessageBox.Show("Debe seleccionar un archivo");
                     }
 
                 }
 
-                //PENDIENTE: SI FALLA ALGUNA DE LAS ACTIVIDADES. HAY QUE DESHACER LAS ACTIVIDADES ANTERIORES EXITOSAS.
+                //PENDIENTE: SI FALLA ALGUNA DE LAS ACTIVIDADES. HAY QUE DESHACER LAS ACTIVIDADES ANTERIORES EXITOSAS.                
 
                 // PENDIENTE : Colocar la vista que informe al usuario, que el cliente no existe en PlazasWeb, y continuar con el flujo.
                 //return RedirectToAction("Filter");
@@ -130,108 +149,5 @@ namespace Suma2Lealtad.Controllers
             return RedirectToAction("Filter");
 
         }
-
-
-        
-
-        //
-        // GET: /Afiliado/Details/5
-
-        public ActionResult Details(int id = 0)
-        {
-            Afiliacion afiliacion = db.Afiliaciones.Find(id);
-            if (afiliacion == null)
-            {
-                return HttpNotFound();
-            }
-            return View(afiliacion);
-        }
-
-        //
-        // GET: /Afiliado/Create
-
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Afiliado/Create
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Afiliacion afiliacion)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Afiliaciones.Add(afiliacion);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(afiliacion);
-        }
-
-        //
-        // GET: /Afiliado/Edit/5
-
-        public ActionResult Edit(int id = 0)
-        {
-            Afiliacion afiliacion = db.Afiliaciones.Find(id);
-            if (afiliacion == null)
-            {
-                return HttpNotFound();
-            }
-            return View(afiliacion);
-        }
-
-        //
-        // POST: /Afiliado/Edit/5
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(Afiliacion afiliacion)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(afiliacion).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(afiliacion);
-        }
-
-        //
-        // GET: /Afiliado/Delete/5
-
-        public ActionResult Delete(int id = 0)
-        {
-            Afiliacion afiliacion = db.Afiliaciones.Find(id);
-            if (afiliacion == null)
-            {
-                return HttpNotFound();
-            }
-            return View(afiliacion);
-        }
-
-        //
-        // POST: /Afiliado/Delete/5
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Afiliacion afiliacion = db.Afiliaciones.Find(id);
-            db.Afiliaciones.Remove(afiliacion);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
-        }
-
     }
 }

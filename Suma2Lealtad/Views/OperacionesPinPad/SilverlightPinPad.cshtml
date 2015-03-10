@@ -1,0 +1,39 @@
+﻿@model Suma2Lealtad.Models.AfiliadoWeb
+
+<!-- btn btn-success -->
+<div class="col-md-12 col-btn">
+    <div class="text-center">
+        <a href="javascript:CrearPin()" class="btn btn-success btn-md" role="button">Crear Pin</a>
+        <a href="javascript:CambiarPin()" class="btn btn-success btn-md" role="button">Cambiar Pin</a>
+        <a href="javascript:ReiniciarPin()" class="btn btn-success btn-md" role="button">Reiniciar Pin</a>
+    </div>
+</div>
+<!--// btn btn-success -->
+
+@{
+    //DEBO SACAR LA INFO DEL NRO DEL DOCUMENTO DEL MODELO Y PASARLO COMO PARAMETRO AL HELPER SE SILVERLIGHT
+    var InitParams = "idElementoHtmlControl=ElementoControl";
+}
+
+@Helpers.Silverlight(xapPath: "~/ClientBin/SumaPlazas.Dispositivos.PinPad.xap", slObjectId: "sl", customParams: @InitParams, divObjectClass: "col-md-12")
+
+<script type="text/javascript">
+    var slcontrol2 = document.getElementById("sl");
+    function CrearPin() {
+        if (slcontrol2) {
+            slcontrol2.Content.MainPage.CrearPin();
+        }
+    }
+
+    function CambiarPin() {
+        if (slcontrol2) {
+            slcontrol2.Content.MainPage.CambiarPin();
+        }
+    }
+
+    function ReiniciarPin() {
+        if (slcontrol2) {
+            slcontrol2.Content.MainPage.ReiniciarPin();
+        }
+    }
+</script>

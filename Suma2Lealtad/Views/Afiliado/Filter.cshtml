@@ -7,72 +7,86 @@
 
 <div class="container">
 
-<div class="row">
-			
-	<div class="col-md-7 col-md-offset-2">
-				
-	<div class="panel panel-default">
+    <div class="row">
 
-	<div class="panel-heading clearfix panel-gradient">
-		<h3 class="panel-title">Afiliado / Buscar Afiliado</h3>
-	</div>
+        <div class="col-md-7 col-md-offset-2">
 
-	<div class="panel-body">
+            <div class="panel panel-default">
 
-        <form action=@Url.Action("Search","Afiliado") name="form" method="post" onsubmit="return validatePass();">
-
-            <div class="editor-label col-md-4 control-label">
-                    Número de Documento :
-            </div>
-
-            <div class="editor-field col-md-8">            
-                <input type="text" id="numdoc" name="numdoc" maxlength="10" placeholder="V-12345678" class="form-control" required>
-                <span id="someID"></span>
-            </div>
-
-            <div class="form-group">
-			    <div class="col-md-12 col-btn">
-                    <div class="pull-right">
-                        <input type="submit" class="btn btn-success btn-md" value="Buscar" />
-                    </div>
+                <div class="panel-heading clearfix panel-gradient">
+                    <h3 class="panel-title">Afiliado / Buscar Afiliado</h3>
                 </div>
+
+                <div class="panel-body">
+
+                    <form action=@Url.Action("Search", "Afiliado") name="form" method="post" onsubmit="return validatePass();">
+
+                        <div class="editor-label col-md-4 control-label">
+                            Número de Documento :
+                        </div>
+
+                        <div class="editor-field col-md-8">
+                            <input type="text" id="numdoc" name="numdoc" value="V-12919906" maxlength="10" placeholder="V-12345678" class="form-control" required>
+                            <span id="someID"></span>
+                        </div>
+
+                        <div class="editor-label col-md-4 control-label">
+                            Correo Electrónico :
+                        </div>
+
+                        <div class="editor-field col-md-8">
+                            <input type="text" id="email" name="email" maxlength="10" placeholder="correo@ejemplo.com" class="form-control">
+                            <span id="someMail"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12 col-btn">
+                                <div class="pull-right">
+                                    <input type="submit" class="btn btn-success btn-md" value="Buscar" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </form>
+
+                </div>
+                <!--// panel-body -->
+
             </div>
+            <!--// panel -->
 
-            
-        </form>
+        </div>
+        <!--// columns -->
 
-	</div><!--// panel-body -->
+    </div>
+    <!--// row -->
 
-	</div><!--// panel -->
+    <script type="text/javascript">
 
-	</div><!--// columns -->			
+        function validatePass() {
 
-</div><!--// row -->
+            var patron1 = /^(V|E|J|G)\-\d{6,8}$/
+            //var patron2 = /^\d{6,8}$/
 
-<script type="text/javascript">
+            if (document.form.numdoc.value.search(patron1) == -1) {
+                spanMessage();
+                document.form.numdoc.focus();
+                return false;
+            }
+        }
 
-function validatePass() {
+        function spanMessage() {
 
-    var patron1=/^(V|E|J|G)\-\d{6,8}$/
-    //var patron2 = /^\d{6,8}$/
+            var span = document.getElementById('someID');
+            while (span.firstChild) {
+                span.removeChild(span.firstChild);
+            }
+            span.appendChild(document.createTextNode("* Formato de Documento incorrecto. Ejm = V-12345678"));
 
-    if (document.form.numdoc.value.search(patron1) == -1) {
-        spanMessage();
-        document.form.numdoc.focus();
-        return false;
-    }
-}
+        }
+    </script>
 
-function spanMessage() {
-
-    var span = document.getElementById('someID');
-    while (span.firstChild) {
-        span.removeChild(span.firstChild);
-    }
-    span.appendChild(document.createTextNode("* Formato de Documento incorrecto. Ejm = V-12345678"));
-
-}
-</script>
-
-</div><!--// container -->
+</div>
+<!--// container -->
 

@@ -1,0 +1,215 @@
+﻿@model Suma2Lealtad.Models.Company
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-7 col-md-offset-2">
+
+            <div class="panel panel-default">
+
+                <div class="panel-heading clearfix panel-gradient">
+                    <h3 class="panel-title">Compañia / Agregar Nuevo Registro</h3>
+                </div>
+
+                <div class="panel-body">
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+
+                        <form class="form-horizontal" role="form">
+
+                            <div class="form-group">
+
+                                <div class="editor-label col-md-4 control-label">
+                                    @*@Html.LabelFor(model => model.name)*@ Nombre :
+                                </div>
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.name)
+                                </div>
+
+                                <div class="editor-label col-md-4 control-label">
+                                    @*@Html.LabelFor(model => model.name)*@ Alias :
+                                </div>
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model.ALIAS, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ALIAS)
+                                </div>
+
+                                <div class="editor-label col-md-4 control-label">
+                                    @*@Html.LabelFor(model => model.name)*@ Rif :
+                                </div>
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model.rif, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.rif)
+                                </div>
+
+                                <div class="editor-label col-md-4 control-label">
+                                    @*@Html.LabelFor(model => model.name)*@ Dirección :
+                                </div>
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model.address, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.address)
+                                </div>
+
+                                <div class="editor-label col-md-4 control-label">
+                                    @*@Html.LabelFor(model => model.name)*@ Telefono :
+                                </div>
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model.phone, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.phone)
+                                </div>
+
+                                <div class="editor-label col-md-4 control-label">
+                                    @*@Html.LabelFor(model => model.name)*@ Email :
+                                </div>
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model.email, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.email)
+                                </div>
+
+                                <div class="editor-label col-md-4 control-label">
+                                    @*@Html.LabelFor(model => model.name)*@ Fecha Creación :
+                                </div>
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model.creationdate, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.creationdate)
+                                </div>
+
+                                <div class="editor-label col-md-4 control-label">
+                                    @*@Html.LabelFor(model => model.name)*@ Usuario ID :
+                                </div>
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model.userid, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.userid)
+                                </div>
+
+                            </div>
+
+                            <!-- btn btn-success -->
+                            <div class="form-group">
+                                <div class="col-md-12 col-btn">
+                                    <div class="pull-right">
+                                        <input type="submit" class="btn btn-success btn-md" value="Guardar" />
+                                        <a href="@Url.Action("Index", "Company")" class="btn btn-danger btn-md" role="button">Cancelar</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--// btn btn-success -->
+
+                        </form>
+                
+                    }
+
+                </div>
+                <!--// panel-body -->
+
+            </div>
+            <!--// panel -->
+
+        </div>
+        <!--// columns -->
+
+    </div>
+    <!--// row -->
+
+</div>
+<!--// container -->
+
+
+
+
+
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Company</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.name)
+            @Html.ValidationMessageFor(model => model.name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ALIAS)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ALIAS)
+            @Html.ValidationMessageFor(model => model.ALIAS)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.rif)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.rif)
+            @Html.ValidationMessageFor(model => model.rif)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.address)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.address)
+            @Html.ValidationMessageFor(model => model.address)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.phone)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.phone)
+            @Html.ValidationMessageFor(model => model.phone)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.email)
+            @Html.ValidationMessageFor(model => model.email)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.creationdate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.creationdate)
+            @Html.ValidationMessageFor(model => model.creationdate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.userid)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.userid)
+            @Html.ValidationMessageFor(model => model.userid)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace Suma2Lealtad.Models
+{
+    public class Movimiento
+    {
+        public int batchid { get; set; }
+        public string fecha { get; set; }
+        public string isodescription { get; set; }
+        public string pan { get; set; }
+        public string puntos { get; set; }
+        public string saldo { get; set; }
+        public string transcode { get; set; }
+        public string transname { get; set; }
+    }
+}

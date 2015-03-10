@@ -1,0 +1,1222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LealtadModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="LealtadModelStoreContainer">
+          <EntitySet Name="Affiliate" EntityType="LealtadModel.Store.Affiliate" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="AffiliateAud" EntityType="LealtadModel.Store.AffiliateAud" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Auditing" EntityType="LealtadModel.Store.Auditing" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Channel" EntityType="LealtadModel.Store.Channel" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CLIENTE" EntityType="LealtadModel.Store.CLIENTE" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Company" EntityType="LealtadModel.Store.Company" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CompanyAffiliate" EntityType="LealtadModel.Store.CompanyAffiliate" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CustomerInterest" EntityType="LealtadModel.Store.CustomerInterest" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FACTURA" EntityType="LealtadModel.Store.FACTURA" store:Type="Tables" store:Schema="dbo" store:Name="FACTURA">
+            <DefiningQuery>SELECT 
+      [FACTURA].[NRO_TARJETA] AS [NRO_TARJETA], 
+      [FACTURA].[SUCURSAL] AS [SUCURSAL], 
+      [FACTURA].[POS] AS [POS], 
+      [FACTURA].[FACTURA] AS [FACTURA], 
+      [FACTURA].[FECHA] AS [FECHA], 
+      [FACTURA].[HORA] AS [HORA], 
+      [FACTURA].[MONTO_FACTURA] AS [MONTO_FACTURA], 
+      [FACTURA].[FECHA_REGISTRO] AS [FECHA_REGISTRO], 
+      [FACTURA].[PUNTOS_ACRED] AS [PUNTOS_ACRED], 
+      [FACTURA].[PUNTOS_CANJE] AS [PUNTOS_CANJE], 
+      [FACTURA].[TIPO_DOCUMENTO] AS [TIPO_DOCUMENTO], 
+      [FACTURA].[NRO_DOCUMENTO] AS [NRO_DOCUMENTO]
+      FROM [dbo].[FACTURA] AS [FACTURA]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Interest" EntityType="LealtadModel.Store.Interest" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Menu" EntityType="LealtadModel.Store.Menu" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Object" EntityType="LealtadModel.Store.Object" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Operations" EntityType="LealtadModel.Store.Operations" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Order" EntityType="LealtadModel.Store.Order" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="OrderDetail" EntityType="LealtadModel.Store.OrderDetail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PARAMETROS" EntityType="LealtadModel.Store.PARAMETROS" store:Type="Tables" store:Schema="dbo" store:Name="PARAMETROS">
+            <DefiningQuery>SELECT 
+      [PARAMETROS].[ID_PARAM] AS [ID_PARAM], 
+      [PARAMETROS].[NOMBRE_PARAM] AS [NOMBRE_PARAM], 
+      [PARAMETROS].[DESCRIPCION] AS [DESCRIPCION], 
+      [PARAMETROS].[MTO_CANJE] AS [MTO_CANJE], 
+      [PARAMETROS].[PTS_CANJE] AS [PTS_CANJE], 
+      [PARAMETROS].[MTO_ACR] AS [MTO_ACR], 
+      [PARAMETROS].[PTS_ACR] AS [PTS_ACR], 
+      [PARAMETROS].[TIPO_PRE] AS [TIPO_PRE], 
+      [PARAMETROS].[TIPO_SUMA] AS [TIPO_SUMA], 
+      [PARAMETROS].[FECHA_ACT_PARAM] AS [FECHA_ACT_PARAM], 
+      [PARAMETROS].[FECHA_DESAC_PARAM] AS [FECHA_DESAC_PARAM], 
+      [PARAMETROS].[FECHA] AS [FECHA]
+      FROM [dbo].[PARAMETROS] AS [PARAMETROS]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Reasons" EntityType="LealtadModel.Store.Reasons" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="RESTRICCIONES" EntityType="LealtadModel.Store.RESTRICCIONES" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Role" EntityType="LealtadModel.Store.Role" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SecurityLevel" EntityType="LealtadModel.Store.SecurityLevel" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SecurityMenu" EntityType="LealtadModel.Store.SecurityMenu" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Status" EntityType="LealtadModel.Store.Status" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Type" EntityType="LealtadModel.Store.Type" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="User" EntityType="LealtadModel.Store.User" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserRol" EntityType="LealtadModel.Store.UserRol" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Affiliate_Channel" Association="LealtadModel.Store.FK_Affiliate_Channel">
+            <End Role="Channel" EntitySet="Channel" />
+            <End Role="Affiliate" EntitySet="Affiliate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyAffiliate_Company" Association="LealtadModel.Store.FK_CompanyAffiliate_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CompanyAffiliate" EntitySet="CompanyAffiliate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerInterest_Interest" Association="LealtadModel.Store.FK_CustomerInterest_Interest">
+            <End Role="Interest" EntitySet="Interest" />
+            <End Role="CustomerInterest" EntitySet="CustomerInterest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Company" Association="LealtadModel.Store.FK_Order_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_Order" Association="LealtadModel.Store.FK_OrderDetail_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Affiliate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="customerid" Type="int" Nullable="false" />
+          <Property Name="docnumber" Type="varchar" Nullable="false" MaxLength="16" />
+          <Property Name="clientid" Type="int" Nullable="false" />
+          <Property Name="storeid" Type="int" Nullable="false" />
+          <Property Name="channelid" Type="int" Nullable="false" />
+          <Property Name="typeid" Type="int" Nullable="false" />
+          <Property Name="affiliatedate" Type="datetime" Nullable="false" />
+          <Property Name="typedelivery" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="storeiddelivery" Type="int" />
+          <Property Name="estimateddatedelivery" Type="date" Nullable="false" />
+          <Property Name="creationdate" Type="datetime" Nullable="false" />
+          <Property Name="creationuserid" Type="int" Nullable="false" />
+          <Property Name="modifieduserid" Type="int" Nullable="false" />
+          <Property Name="modifieddate" Type="datetime" Nullable="false" />
+          <Property Name="statusid" Type="int" Nullable="false" />
+          <Property Name="reasonsid" Type="int" Nullable="false" />
+          <Property Name="comments" Type="varchar" MaxLength="120" />
+        </EntityType>
+        <EntityType Name="AffiliateAud">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="affiliateid" Type="int" Nullable="false" />
+          <Property Name="modifieduserid" Type="int" Nullable="false" />
+          <Property Name="modifieddate" Type="datetime" Nullable="false" />
+          <Property Name="statusid" Type="int" Nullable="false" />
+          <Property Name="reasonsid" Type="int" Nullable="false" />
+          <Property Name="comments" Type="varchar" MaxLength="120" />
+        </EntityType>
+        <EntityType Name="Auditing">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="objectid" Type="int" Nullable="false" />
+          <Property Name="operationsid" Type="int" Nullable="false" />
+          <Property Name="userid" Type="int" Nullable="false" />
+          <Property Name="creationdate" Type="datetime" Nullable="false" />
+          <Property Name="originaldata" Type="xml" Nullable="false" />
+          <Property Name="changedata" Type="xml" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Channel">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="TIPO_DOCUMENTO" />
+            <PropertyRef Name="NRO_DOCUMENTO" />
+          </Key>
+          <Property Name="TIPO_DOCUMENTO" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="NRO_DOCUMENTO" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="NACIONALIDAD" Type="varchar" MaxLength="50" />
+          <Property Name="NOMBRE_CLIENTE1" Type="varchar" MaxLength="100" />
+          <Property Name="NOMBRE_CLIENTE2" Type="varchar" MaxLength="100" />
+          <Property Name="APELLIDO_CLIENTE1" Type="varchar" MaxLength="100" />
+          <Property Name="APELLIDO_CLIENTE2" Type="varchar" MaxLength="100" />
+          <Property Name="FECHA_NACIMIENTO" Type="datetime" />
+          <Property Name="SEXO" Type="varchar" MaxLength="1" />
+          <Property Name="EDO_CIVIL" Type="varchar" MaxLength="1" />
+          <Property Name="OCUPACION" Type="varchar" MaxLength="30" />
+          <Property Name="TELEFONO_HAB" Type="varchar" MaxLength="15" />
+          <Property Name="TELEFONO_OFIC" Type="varchar" MaxLength="15" />
+          <Property Name="TELEFONO_CEL" Type="varchar" MaxLength="15" />
+          <Property Name="E_MAIL" Type="varchar" MaxLength="100" />
+          <Property Name="COD_SUCURSAL" Type="int" />
+          <Property Name="COD_ESTADO" Type="varchar" MaxLength="12" />
+          <Property Name="COD_CIUDAD" Type="varchar" MaxLength="12" />
+          <Property Name="COD_MUNICIPIO" Type="varchar" MaxLength="12" />
+          <Property Name="COD_PARROQUIA" Type="varchar" MaxLength="12" />
+          <Property Name="COD_URBANIZACION" Type="varchar" MaxLength="12" />
+          <Property Name="FECHA_CREACION" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="120" />
+          <Property Name="ALIAS" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="rif" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="address" Type="varchar" Nullable="false" MaxLength="120" />
+          <Property Name="phone" Type="varchar" MaxLength="25" />
+          <Property Name="email" Type="varchar" Nullable="false" MaxLength="25" />
+          <Property Name="creationdate" Type="datetime" Nullable="false" />
+          <Property Name="userid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CompanyAffiliate">
+          <Key>
+            <PropertyRef Name="affiliateid" />
+            <PropertyRef Name="companyid" />
+          </Key>
+          <Property Name="affiliateid" Type="int" Nullable="false" />
+          <Property Name="companyid" Type="int" Nullable="false" />
+          <Property Name="begindate" Type="date" Nullable="false" />
+          <Property Name="enddate" Type="date" />
+          <Property Name="comments" Type="varchar" MaxLength="120" />
+          <Property Name="active" Type="bit" />
+        </EntityType>
+        <EntityType Name="CustomerInterest">
+          <Key>
+            <PropertyRef Name="customerid" />
+            <PropertyRef Name="interestid" />
+          </Key>
+          <Property Name="customerid" Type="int" Nullable="false" />
+          <Property Name="interestid" Type="int" Nullable="false" />
+          <Property Name="comments" Type="varchar" Nullable="false" MaxLength="120" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'SumaLealtad.dbo.FACTURA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="FACTURA">
+          <Key>
+            <PropertyRef Name="NRO_TARJETA" />
+            <PropertyRef Name="SUCURSAL" />
+            <PropertyRef Name="POS" />
+            <PropertyRef Name="FACTURA" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="HORA" />
+            <PropertyRef Name="TIPO_DOCUMENTO" />
+            <PropertyRef Name="NRO_DOCUMENTO" />
+          </Key>
+          <Property Name="NRO_TARJETA" Type="numeric" Nullable="false" />
+          <Property Name="SUCURSAL" Type="int" Nullable="false" />
+          <Property Name="POS" Type="int" Nullable="false" />
+          <Property Name="FACTURA" Type="numeric" Nullable="false" />
+          <Property Name="FECHA" Type="datetime" Nullable="false" />
+          <Property Name="HORA" Type="char" Nullable="false" MaxLength="8" />
+          <Property Name="MONTO_FACTURA" Type="money" />
+          <Property Name="FECHA_REGISTRO" Type="datetime" />
+          <Property Name="PUNTOS_ACRED" Type="int" />
+          <Property Name="PUNTOS_CANJE" Type="int" />
+          <Property Name="TIPO_DOCUMENTO" Type="varchar" Nullable="false" MaxLength="1" />
+          <Property Name="NRO_DOCUMENTO" Type="varchar" Nullable="false" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="Interest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="120" />
+          <Property Name="active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="parentid" Type="int" Nullable="false" />
+          <Property Name="controller" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="actions" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="order" Type="int" Nullable="false" />
+          <Property Name="tooltips" Type="varchar" MaxLength="120" />
+        </EntityType>
+        <EntityType Name="Object">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="type" Type="varchar" Nullable="false" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="Operations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="companyid" Type="int" Nullable="false" />
+          <Property Name="totalamount" Type="money" Nullable="false" />
+          <Property Name="paymenttype" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="creationdate" Type="datetime" Nullable="false" />
+          <Property Name="creationuserid" Type="int" Nullable="false" />
+          <Property Name="processdate" Type="datetime" Nullable="false" />
+          <Property Name="comments" Type="varchar" MaxLength="120" />
+          <Property Name="status" Type="char" Nullable="false" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="orderid" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="orderid" Type="int" Nullable="false" />
+          <Property Name="customerid" Type="int" Nullable="false" />
+          <Property Name="amount" Type="money" Nullable="false" />
+          <Property Name="comments" Type="varchar" MaxLength="120" />
+          <Property Name="status" Type="char" Nullable="false" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'SumaLealtad.dbo.PARAMETROS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="PARAMETROS">
+          <Key>
+            <PropertyRef Name="ID_PARAM" />
+            <PropertyRef Name="NOMBRE_PARAM" />
+          </Key>
+          <Property Name="ID_PARAM" Type="int" Nullable="false" />
+          <Property Name="NOMBRE_PARAM" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="50" />
+          <Property Name="MTO_CANJE" Type="int" />
+          <Property Name="PTS_CANJE" Type="int" />
+          <Property Name="MTO_ACR" Type="int" />
+          <Property Name="PTS_ACR" Type="int" />
+          <Property Name="TIPO_PRE" Type="int" />
+          <Property Name="TIPO_SUMA" Type="int" />
+          <Property Name="FECHA_ACT_PARAM" Type="datetime" />
+          <Property Name="FECHA_DESAC_PARAM" Type="datetime" />
+          <Property Name="FECHA" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Reasons">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="type" Type="varchar" Nullable="false" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="RESTRICCIONES">
+          <Key>
+            <PropertyRef Name="COD_RESTRICCION" />
+          </Key>
+          <Property Name="COD_RESTRICCION" Type="int" Nullable="false" />
+          <Property Name="FECHA_ACT_REST" Type="datetime" />
+          <Property Name="FECHA_DESAC_REST" Type="datetime" />
+          <Property Name="MINTRAN_ACR" Type="tinyint" />
+          <Property Name="MAXTRAN_ACR" Type="tinyint" />
+          <Property Name="MINMONTO_ACR" Type="money" />
+          <Property Name="MAXMONTO_ACR" Type="money" />
+          <Property Name="MINTRAN_RED" Type="tinyint" />
+          <Property Name="MAXTRAN_RED" Type="tinyint" />
+          <Property Name="MINMONTO_RED" Type="money" />
+          <Property Name="MAXMONTO_RED" Type="money" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="level" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SecurityLevel">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="comments" Type="varchar" MaxLength="120" />
+        </EntityType>
+        <EntityType Name="SecurityMenu">
+          <Key>
+            <PropertyRef Name="roleid" />
+            <PropertyRef Name="menuid" />
+            <PropertyRef Name="securitylevelid" />
+          </Key>
+          <Property Name="roleid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="menuid" Type="int" Nullable="false" />
+          <Property Name="securitylevelid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Type">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="varchar" Nullable="false" MaxLength="32" />
+          <Property Name="passw" Type="varchar" Nullable="false" MaxLength="250" />
+          <Property Name="firstname" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="lastname" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="email" Type="varchar" Nullable="false" MaxLength="80" />
+          <Property Name="status" Type="char" Nullable="false" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="UserRol">
+          <Key>
+            <PropertyRef Name="userid" />
+            <PropertyRef Name="roleid" />
+          </Key>
+          <Property Name="userid" Type="int" Nullable="false" />
+          <Property Name="roleid" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Affiliate_Channel">
+          <End Role="Channel" Type="LealtadModel.Store.Channel" Multiplicity="1" />
+          <End Role="Affiliate" Type="LealtadModel.Store.Affiliate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Channel">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Affiliate">
+              <PropertyRef Name="channelid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyAffiliate_Company">
+          <End Role="Company" Type="LealtadModel.Store.Company" Multiplicity="1" />
+          <End Role="CompanyAffiliate" Type="LealtadModel.Store.CompanyAffiliate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CompanyAffiliate">
+              <PropertyRef Name="companyid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerInterest_Interest">
+          <End Role="Interest" Type="LealtadModel.Store.Interest" Multiplicity="1" />
+          <End Role="CustomerInterest" Type="LealtadModel.Store.CustomerInterest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Interest">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomerInterest">
+              <PropertyRef Name="interestid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Company">
+          <End Role="Company" Type="LealtadModel.Store.Company" Multiplicity="1" />
+          <End Role="Order" Type="LealtadModel.Store.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="companyid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_Order">
+          <End Role="Order" Type="LealtadModel.Store.Order" Multiplicity="1" />
+          <End Role="OrderDetail" Type="LealtadModel.Store.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="orderid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LealtadModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="LealtadEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Affiliates" EntityType="LealtadModel.Affiliate" />
+          <EntitySet Name="AffiliateAuds" EntityType="LealtadModel.AffiliateAud" />
+          <EntitySet Name="Auditings" EntityType="LealtadModel.Auditing" />
+          <EntitySet Name="Channels" EntityType="LealtadModel.Channel" />
+          <EntitySet Name="CLIENTES" EntityType="LealtadModel.CLIENTE" />
+          <EntitySet Name="Companies" EntityType="LealtadModel.Company" />
+          <EntitySet Name="CompanyAffiliates" EntityType="LealtadModel.CompanyAffiliate" />
+          <EntitySet Name="CustomerInterests" EntityType="LealtadModel.CustomerInterest" />
+          <EntitySet Name="FACTURAs" EntityType="LealtadModel.FACTURA" />
+          <EntitySet Name="Interests" EntityType="LealtadModel.Interest" />
+          <EntitySet Name="Menus" EntityType="LealtadModel.Menu" />
+          <EntitySet Name="Objects" EntityType="LealtadModel.Object" />
+          <EntitySet Name="Operations" EntityType="LealtadModel.Operation" />
+          <EntitySet Name="Orders" EntityType="LealtadModel.Order" />
+          <EntitySet Name="OrderDetails" EntityType="LealtadModel.OrderDetail" />
+          <EntitySet Name="PARAMETROS" EntityType="LealtadModel.PARAMETRO" />
+          <EntitySet Name="Reasons" EntityType="LealtadModel.Reason" />
+          <EntitySet Name="RESTRICCIONES" EntityType="LealtadModel.RESTRICCIONE" />
+          <EntitySet Name="Roles" EntityType="LealtadModel.Role" />
+          <EntitySet Name="SecurityLevels" EntityType="LealtadModel.SecurityLevel" />
+          <EntitySet Name="SecurityMenus" EntityType="LealtadModel.SecurityMenu" />
+          <EntitySet Name="Status" EntityType="LealtadModel.Status" />
+          <EntitySet Name="Types" EntityType="LealtadModel.Type" />
+          <EntitySet Name="Users" EntityType="LealtadModel.User" />
+          <EntitySet Name="UserRols" EntityType="LealtadModel.UserRol" />
+          <AssociationSet Name="FK_Affiliate_Channel" Association="LealtadModel.FK_Affiliate_Channel">
+            <End Role="Channel" EntitySet="Channels" />
+            <End Role="Affiliate" EntitySet="Affiliates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyAffiliate_Company" Association="LealtadModel.FK_CompanyAffiliate_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="CompanyAffiliate" EntitySet="CompanyAffiliates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Company" Association="LealtadModel.FK_Order_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerInterest_Interest" Association="LealtadModel.FK_CustomerInterest_Interest">
+            <End Role="Interest" EntitySet="Interests" />
+            <End Role="CustomerInterest" EntitySet="CustomerInterests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_Order" Association="LealtadModel.FK_OrderDetail_Order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Affiliate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="customerid" Type="Int32" Nullable="false" />
+          <Property Name="docnumber" Type="String" Nullable="false" MaxLength="16" Unicode="false" FixedLength="false" />
+          <Property Name="clientid" Type="Int32" Nullable="false" />
+          <Property Name="storeid" Type="Int32" Nullable="false" />
+          <Property Name="channelid" Type="Int32" Nullable="false" />
+          <Property Name="typeid" Type="Int32" Nullable="false" />
+          <Property Name="affiliatedate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="typedelivery" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="storeiddelivery" Type="Int32" />
+          <Property Name="estimateddatedelivery" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="creationdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="creationuserid" Type="Int32" Nullable="false" />
+          <Property Name="modifieduserid" Type="Int32" Nullable="false" />
+          <Property Name="modifieddate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="statusid" Type="Int32" Nullable="false" />
+          <Property Name="reasonsid" Type="Int32" Nullable="false" />
+          <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Channel" Relationship="LealtadModel.FK_Affiliate_Channel" FromRole="Affiliate" ToRole="Channel" />
+        </EntityType>
+        <EntityType Name="AffiliateAud">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="affiliateid" Type="Int32" Nullable="false" />
+          <Property Name="modifieduserid" Type="Int32" Nullable="false" />
+          <Property Name="modifieddate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="statusid" Type="Int32" Nullable="false" />
+          <Property Name="reasonsid" Type="Int32" Nullable="false" />
+          <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Auditing">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="objectid" Type="Int32" Nullable="false" />
+          <Property Name="operationsid" Type="Int32" Nullable="false" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="creationdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="originaldata" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="changedata" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Channel">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="25" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Affiliates" Relationship="LealtadModel.FK_Affiliate_Channel" FromRole="Channel" ToRole="Affiliate" />
+        </EntityType>
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="TIPO_DOCUMENTO" />
+            <PropertyRef Name="NRO_DOCUMENTO" />
+          </Key>
+          <Property Name="TIPO_DOCUMENTO" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="NRO_DOCUMENTO" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="NACIONALIDAD" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="NOMBRE_CLIENTE1" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="NOMBRE_CLIENTE2" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="APELLIDO_CLIENTE1" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="APELLIDO_CLIENTE2" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="FECHA_NACIMIENTO" Type="DateTime" Precision="3" />
+          <Property Name="SEXO" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+          <Property Name="EDO_CIVIL" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+          <Property Name="OCUPACION" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="TELEFONO_HAB" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="TELEFONO_OFIC" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="TELEFONO_CEL" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="E_MAIL" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="COD_SUCURSAL" Type="Int32" />
+          <Property Name="COD_ESTADO" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="COD_CIUDAD" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="COD_MUNICIPIO" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="COD_PARROQUIA" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="COD_URBANIZACION" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="FECHA_CREACION" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="120" Unicode="false" FixedLength="false" />
+          <Property Name="ALIAS" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="rif" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="120" Unicode="false" FixedLength="false" />
+          <Property Name="phone" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="25" Unicode="false" FixedLength="false" />
+          <Property Name="creationdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CompanyAffiliates" Relationship="LealtadModel.FK_CompanyAffiliate_Company" FromRole="Company" ToRole="CompanyAffiliate" />
+          <NavigationProperty Name="Orders" Relationship="LealtadModel.FK_Order_Company" FromRole="Company" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="CompanyAffiliate">
+          <Key>
+            <PropertyRef Name="affiliateid" />
+            <PropertyRef Name="companyid" />
+          </Key>
+          <Property Name="affiliateid" Type="Int32" Nullable="false" />
+          <Property Name="companyid" Type="Int32" Nullable="false" />
+          <Property Name="begindate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="enddate" Type="DateTime" Precision="0" />
+          <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="Company" Relationship="LealtadModel.FK_CompanyAffiliate_Company" FromRole="CompanyAffiliate" ToRole="Company" />
+        </EntityType>
+        <EntityType Name="CustomerInterest">
+          <Key>
+            <PropertyRef Name="customerid" />
+            <PropertyRef Name="interestid" />
+          </Key>
+          <Property Name="customerid" Type="Int32" Nullable="false" />
+          <Property Name="interestid" Type="Int32" Nullable="false" />
+          <Property Name="comments" Type="String" Nullable="false" MaxLength="120" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Interest" Relationship="LealtadModel.FK_CustomerInterest_Interest" FromRole="CustomerInterest" ToRole="Interest" />
+        </EntityType>
+        <EntityType Name="FACTURA">
+          <Key>
+            <PropertyRef Name="NRO_TARJETA" />
+            <PropertyRef Name="SUCURSAL" />
+            <PropertyRef Name="POS" />
+            <PropertyRef Name="FACTURA1" />
+            <PropertyRef Name="FECHA" />
+            <PropertyRef Name="HORA" />
+            <PropertyRef Name="TIPO_DOCUMENTO" />
+            <PropertyRef Name="NRO_DOCUMENTO" />
+          </Key>
+          <Property Name="NRO_TARJETA" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="SUCURSAL" Type="Int32" Nullable="false" />
+          <Property Name="POS" Type="Int32" Nullable="false" />
+          <Property Name="FACTURA1" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="FECHA" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="HORA" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="true" />
+          <Property Name="MONTO_FACTURA" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="FECHA_REGISTRO" Type="DateTime" Precision="3" />
+          <Property Name="PUNTOS_ACRED" Type="Int32" />
+          <Property Name="PUNTOS_CANJE" Type="Int32" />
+          <Property Name="TIPO_DOCUMENTO" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="false" />
+          <Property Name="NRO_DOCUMENTO" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Interest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="120" Unicode="false" FixedLength="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CustomerInterests" Relationship="LealtadModel.FK_CustomerInterest_Interest" FromRole="Interest" ToRole="CustomerInterest" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="parentid" Type="Int32" Nullable="false" />
+          <Property Name="controller" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="actions" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="order" Type="Int32" Nullable="false" />
+          <Property Name="tooltips" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Object">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="25" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Operation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="companyid" Type="Int32" Nullable="false" />
+          <Property Name="totalamount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="paymenttype" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="creationdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="creationuserid" Type="Int32" Nullable="false" />
+          <Property Name="processdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="Company" Relationship="LealtadModel.FK_Order_Company" FromRole="Order" ToRole="Company" />
+          <NavigationProperty Name="OrderDetails" Relationship="LealtadModel.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="orderid" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="orderid" Type="Int32" Nullable="false" />
+          <Property Name="customerid" Type="Int32" Nullable="false" />
+          <Property Name="amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="Order" Relationship="LealtadModel.FK_OrderDetail_Order" FromRole="OrderDetail" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="PARAMETRO">
+          <Key>
+            <PropertyRef Name="ID_PARAM" />
+            <PropertyRef Name="NOMBRE_PARAM" />
+          </Key>
+          <Property Name="ID_PARAM" Type="Int32" Nullable="false" />
+          <Property Name="NOMBRE_PARAM" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DESCRIPCION" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="MTO_CANJE" Type="Int32" />
+          <Property Name="PTS_CANJE" Type="Int32" />
+          <Property Name="MTO_ACR" Type="Int32" />
+          <Property Name="PTS_ACR" Type="Int32" />
+          <Property Name="TIPO_PRE" Type="Int32" />
+          <Property Name="TIPO_SUMA" Type="Int32" />
+          <Property Name="FECHA_ACT_PARAM" Type="DateTime" Precision="3" />
+          <Property Name="FECHA_DESAC_PARAM" Type="DateTime" Precision="3" />
+          <Property Name="FECHA" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Reason">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="RESTRICCIONE">
+          <Key>
+            <PropertyRef Name="COD_RESTRICCION" />
+          </Key>
+          <Property Name="COD_RESTRICCION" Type="Int32" Nullable="false" />
+          <Property Name="FECHA_ACT_REST" Type="DateTime" Precision="3" />
+          <Property Name="FECHA_DESAC_REST" Type="DateTime" Precision="3" />
+          <Property Name="MINTRAN_ACR" Type="Byte" />
+          <Property Name="MAXTRAN_ACR" Type="Byte" />
+          <Property Name="MINMONTO_ACR" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MAXMONTO_ACR" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MINTRAN_RED" Type="Byte" />
+          <Property Name="MAXTRAN_RED" Type="Byte" />
+          <Property Name="MINMONTO_RED" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MAXMONTO_RED" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="level" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SecurityLevel">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="SecurityMenu">
+          <Key>
+            <PropertyRef Name="roleid" />
+            <PropertyRef Name="menuid" />
+            <PropertyRef Name="securitylevelid" />
+          </Key>
+          <Property Name="roleid" Type="Int32" Nullable="false" />
+          <Property Name="menuid" Type="Int32" Nullable="false" />
+          <Property Name="securitylevelid" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Type">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="25" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="login" Type="String" Nullable="false" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="passw" Type="String" Nullable="false" MaxLength="250" Unicode="false" FixedLength="false" />
+          <Property Name="firstname" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="lastname" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="80" Unicode="false" FixedLength="false" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+        </EntityType>
+        <EntityType Name="UserRol">
+          <Key>
+            <PropertyRef Name="userid" />
+            <PropertyRef Name="roleid" />
+          </Key>
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="roleid" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Affiliate_Channel">
+          <End Role="Channel" Type="LealtadModel.Channel" Multiplicity="1" />
+          <End Role="Affiliate" Type="LealtadModel.Affiliate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Channel">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Affiliate">
+              <PropertyRef Name="channelid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyAffiliate_Company">
+          <End Role="Company" Type="LealtadModel.Company" Multiplicity="1" />
+          <End Role="CompanyAffiliate" Type="LealtadModel.CompanyAffiliate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CompanyAffiliate">
+              <PropertyRef Name="companyid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Company">
+          <End Role="Company" Type="LealtadModel.Company" Multiplicity="1" />
+          <End Role="Order" Type="LealtadModel.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="companyid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerInterest_Interest">
+          <End Role="Interest" Type="LealtadModel.Interest" Multiplicity="1" />
+          <End Role="CustomerInterest" Type="LealtadModel.CustomerInterest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Interest">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CustomerInterest">
+              <PropertyRef Name="interestid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_Order">
+          <End Role="Order" Type="LealtadModel.Order" Multiplicity="1" />
+          <End Role="OrderDetail" Type="LealtadModel.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="orderid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LealtadModelStoreContainer" CdmEntityContainer="LealtadEntities">
+          <EntitySetMapping Name="Affiliates">
+            <EntityTypeMapping TypeName="LealtadModel.Affiliate">
+              <MappingFragment StoreEntitySet="Affiliate">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="customerid" ColumnName="customerid" />
+                <ScalarProperty Name="docnumber" ColumnName="docnumber" />
+                <ScalarProperty Name="clientid" ColumnName="clientid" />
+                <ScalarProperty Name="storeid" ColumnName="storeid" />
+                <ScalarProperty Name="channelid" ColumnName="channelid" />
+                <ScalarProperty Name="typeid" ColumnName="typeid" />
+                <ScalarProperty Name="affiliatedate" ColumnName="affiliatedate" />
+                <ScalarProperty Name="typedelivery" ColumnName="typedelivery" />
+                <ScalarProperty Name="storeiddelivery" ColumnName="storeiddelivery" />
+                <ScalarProperty Name="estimateddatedelivery" ColumnName="estimateddatedelivery" />
+                <ScalarProperty Name="creationdate" ColumnName="creationdate" />
+                <ScalarProperty Name="creationuserid" ColumnName="creationuserid" />
+                <ScalarProperty Name="modifieduserid" ColumnName="modifieduserid" />
+                <ScalarProperty Name="modifieddate" ColumnName="modifieddate" />
+                <ScalarProperty Name="statusid" ColumnName="statusid" />
+                <ScalarProperty Name="reasonsid" ColumnName="reasonsid" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AffiliateAuds">
+            <EntityTypeMapping TypeName="LealtadModel.AffiliateAud">
+              <MappingFragment StoreEntitySet="AffiliateAud">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="affiliateid" ColumnName="affiliateid" />
+                <ScalarProperty Name="modifieduserid" ColumnName="modifieduserid" />
+                <ScalarProperty Name="modifieddate" ColumnName="modifieddate" />
+                <ScalarProperty Name="statusid" ColumnName="statusid" />
+                <ScalarProperty Name="reasonsid" ColumnName="reasonsid" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Auditings">
+            <EntityTypeMapping TypeName="LealtadModel.Auditing">
+              <MappingFragment StoreEntitySet="Auditing">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="objectid" ColumnName="objectid" />
+                <ScalarProperty Name="operationsid" ColumnName="operationsid" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="creationdate" ColumnName="creationdate" />
+                <ScalarProperty Name="originaldata" ColumnName="originaldata" />
+                <ScalarProperty Name="changedata" ColumnName="changedata" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Channels">
+            <EntityTypeMapping TypeName="LealtadModel.Channel">
+              <MappingFragment StoreEntitySet="Channel">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLIENTES">
+            <EntityTypeMapping TypeName="LealtadModel.CLIENTE">
+              <MappingFragment StoreEntitySet="CLIENTE">
+                <ScalarProperty Name="TIPO_DOCUMENTO" ColumnName="TIPO_DOCUMENTO" />
+                <ScalarProperty Name="NRO_DOCUMENTO" ColumnName="NRO_DOCUMENTO" />
+                <ScalarProperty Name="NACIONALIDAD" ColumnName="NACIONALIDAD" />
+                <ScalarProperty Name="NOMBRE_CLIENTE1" ColumnName="NOMBRE_CLIENTE1" />
+                <ScalarProperty Name="NOMBRE_CLIENTE2" ColumnName="NOMBRE_CLIENTE2" />
+                <ScalarProperty Name="APELLIDO_CLIENTE1" ColumnName="APELLIDO_CLIENTE1" />
+                <ScalarProperty Name="APELLIDO_CLIENTE2" ColumnName="APELLIDO_CLIENTE2" />
+                <ScalarProperty Name="FECHA_NACIMIENTO" ColumnName="FECHA_NACIMIENTO" />
+                <ScalarProperty Name="SEXO" ColumnName="SEXO" />
+                <ScalarProperty Name="EDO_CIVIL" ColumnName="EDO_CIVIL" />
+                <ScalarProperty Name="OCUPACION" ColumnName="OCUPACION" />
+                <ScalarProperty Name="TELEFONO_HAB" ColumnName="TELEFONO_HAB" />
+                <ScalarProperty Name="TELEFONO_OFIC" ColumnName="TELEFONO_OFIC" />
+                <ScalarProperty Name="TELEFONO_CEL" ColumnName="TELEFONO_CEL" />
+                <ScalarProperty Name="E_MAIL" ColumnName="E_MAIL" />
+                <ScalarProperty Name="COD_SUCURSAL" ColumnName="COD_SUCURSAL" />
+                <ScalarProperty Name="COD_ESTADO" ColumnName="COD_ESTADO" />
+                <ScalarProperty Name="COD_CIUDAD" ColumnName="COD_CIUDAD" />
+                <ScalarProperty Name="COD_MUNICIPIO" ColumnName="COD_MUNICIPIO" />
+                <ScalarProperty Name="COD_PARROQUIA" ColumnName="COD_PARROQUIA" />
+                <ScalarProperty Name="COD_URBANIZACION" ColumnName="COD_URBANIZACION" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="LealtadModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ALIAS" ColumnName="ALIAS" />
+                <ScalarProperty Name="rif" ColumnName="rif" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="creationdate" ColumnName="creationdate" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyAffiliates">
+            <EntityTypeMapping TypeName="LealtadModel.CompanyAffiliate">
+              <MappingFragment StoreEntitySet="CompanyAffiliate">
+                <ScalarProperty Name="affiliateid" ColumnName="affiliateid" />
+                <ScalarProperty Name="companyid" ColumnName="companyid" />
+                <ScalarProperty Name="begindate" ColumnName="begindate" />
+                <ScalarProperty Name="enddate" ColumnName="enddate" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerInterests">
+            <EntityTypeMapping TypeName="LealtadModel.CustomerInterest">
+              <MappingFragment StoreEntitySet="CustomerInterest">
+                <ScalarProperty Name="customerid" ColumnName="customerid" />
+                <ScalarProperty Name="interestid" ColumnName="interestid" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FACTURAs">
+            <EntityTypeMapping TypeName="LealtadModel.FACTURA">
+              <MappingFragment StoreEntitySet="FACTURA">
+                <ScalarProperty Name="NRO_TARJETA" ColumnName="NRO_TARJETA" />
+                <ScalarProperty Name="SUCURSAL" ColumnName="SUCURSAL" />
+                <ScalarProperty Name="POS" ColumnName="POS" />
+                <ScalarProperty Name="FACTURA1" ColumnName="FACTURA" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+                <ScalarProperty Name="HORA" ColumnName="HORA" />
+                <ScalarProperty Name="MONTO_FACTURA" ColumnName="MONTO_FACTURA" />
+                <ScalarProperty Name="FECHA_REGISTRO" ColumnName="FECHA_REGISTRO" />
+                <ScalarProperty Name="PUNTOS_ACRED" ColumnName="PUNTOS_ACRED" />
+                <ScalarProperty Name="PUNTOS_CANJE" ColumnName="PUNTOS_CANJE" />
+                <ScalarProperty Name="TIPO_DOCUMENTO" ColumnName="TIPO_DOCUMENTO" />
+                <ScalarProperty Name="NRO_DOCUMENTO" ColumnName="NRO_DOCUMENTO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Interests">
+            <EntityTypeMapping TypeName="LealtadModel.Interest">
+              <MappingFragment StoreEntitySet="Interest">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menus">
+            <EntityTypeMapping TypeName="LealtadModel.Menu">
+              <MappingFragment StoreEntitySet="Menu">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="parentid" ColumnName="parentid" />
+                <ScalarProperty Name="controller" ColumnName="controller" />
+                <ScalarProperty Name="actions" ColumnName="actions" />
+                <ScalarProperty Name="order" ColumnName="order" />
+                <ScalarProperty Name="tooltips" ColumnName="tooltips" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Objects">
+            <EntityTypeMapping TypeName="LealtadModel.Object">
+              <MappingFragment StoreEntitySet="Object">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="type" ColumnName="type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operations">
+            <EntityTypeMapping TypeName="LealtadModel.Operation">
+              <MappingFragment StoreEntitySet="Operations">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="LealtadModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="companyid" ColumnName="companyid" />
+                <ScalarProperty Name="totalamount" ColumnName="totalamount" />
+                <ScalarProperty Name="paymenttype" ColumnName="paymenttype" />
+                <ScalarProperty Name="creationdate" ColumnName="creationdate" />
+                <ScalarProperty Name="creationuserid" ColumnName="creationuserid" />
+                <ScalarProperty Name="processdate" ColumnName="processdate" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="LealtadModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetail">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="orderid" ColumnName="orderid" />
+                <ScalarProperty Name="customerid" ColumnName="customerid" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PARAMETROS">
+            <EntityTypeMapping TypeName="LealtadModel.PARAMETRO">
+              <MappingFragment StoreEntitySet="PARAMETROS">
+                <ScalarProperty Name="ID_PARAM" ColumnName="ID_PARAM" />
+                <ScalarProperty Name="NOMBRE_PARAM" ColumnName="NOMBRE_PARAM" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="MTO_CANJE" ColumnName="MTO_CANJE" />
+                <ScalarProperty Name="PTS_CANJE" ColumnName="PTS_CANJE" />
+                <ScalarProperty Name="MTO_ACR" ColumnName="MTO_ACR" />
+                <ScalarProperty Name="PTS_ACR" ColumnName="PTS_ACR" />
+                <ScalarProperty Name="TIPO_PRE" ColumnName="TIPO_PRE" />
+                <ScalarProperty Name="TIPO_SUMA" ColumnName="TIPO_SUMA" />
+                <ScalarProperty Name="FECHA_ACT_PARAM" ColumnName="FECHA_ACT_PARAM" />
+                <ScalarProperty Name="FECHA_DESAC_PARAM" ColumnName="FECHA_DESAC_PARAM" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reasons">
+            <EntityTypeMapping TypeName="LealtadModel.Reason">
+              <MappingFragment StoreEntitySet="Reasons">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="type" ColumnName="type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RESTRICCIONES">
+            <EntityTypeMapping TypeName="LealtadModel.RESTRICCIONE">
+              <MappingFragment StoreEntitySet="RESTRICCIONES">
+                <ScalarProperty Name="COD_RESTRICCION" ColumnName="COD_RESTRICCION" />
+                <ScalarProperty Name="FECHA_ACT_REST" ColumnName="FECHA_ACT_REST" />
+                <ScalarProperty Name="FECHA_DESAC_REST" ColumnName="FECHA_DESAC_REST" />
+                <ScalarProperty Name="MINTRAN_ACR" ColumnName="MINTRAN_ACR" />
+                <ScalarProperty Name="MAXTRAN_ACR" ColumnName="MAXTRAN_ACR" />
+                <ScalarProperty Name="MINMONTO_ACR" ColumnName="MINMONTO_ACR" />
+                <ScalarProperty Name="MAXMONTO_ACR" ColumnName="MAXMONTO_ACR" />
+                <ScalarProperty Name="MINTRAN_RED" ColumnName="MINTRAN_RED" />
+                <ScalarProperty Name="MAXTRAN_RED" ColumnName="MAXTRAN_RED" />
+                <ScalarProperty Name="MINMONTO_RED" ColumnName="MINMONTO_RED" />
+                <ScalarProperty Name="MAXMONTO_RED" ColumnName="MAXMONTO_RED" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="LealtadModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="level" ColumnName="level" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SecurityLevels">
+            <EntityTypeMapping TypeName="LealtadModel.SecurityLevel">
+              <MappingFragment StoreEntitySet="SecurityLevel">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SecurityMenus">
+            <EntityTypeMapping TypeName="LealtadModel.SecurityMenu">
+              <MappingFragment StoreEntitySet="SecurityMenu">
+                <ScalarProperty Name="roleid" ColumnName="roleid" />
+                <ScalarProperty Name="menuid" ColumnName="menuid" />
+                <ScalarProperty Name="securitylevelid" ColumnName="securitylevelid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="LealtadModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Types">
+            <EntityTypeMapping TypeName="LealtadModel.Type">
+              <MappingFragment StoreEntitySet="Type">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="LealtadModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="passw" ColumnName="passw" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRols">
+            <EntityTypeMapping TypeName="LealtadModel.UserRol">
+              <MappingFragment StoreEntitySet="UserRol">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="roleid" ColumnName="roleid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

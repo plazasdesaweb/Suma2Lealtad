@@ -1,0 +1,76 @@
+﻿@model Suma2Lealtad.Models.Menu
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Menu</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.name)
+            @Html.ValidationMessageFor(model => model.name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.parentid)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.parentid)
+            @Html.ValidationMessageFor(model => model.parentid)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.controller)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.controller)
+            @Html.ValidationMessageFor(model => model.controller)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.actions)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.actions)
+            @Html.ValidationMessageFor(model => model.actions)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.order)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.order)
+            @Html.ValidationMessageFor(model => model.order)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.tooltips)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.tooltips)
+            @Html.ValidationMessageFor(model => model.tooltips)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
