@@ -33,14 +33,13 @@ namespace Suma2Lealtad.Controllers
 
         }
 
-    //    public ActionResult Login()
-    //    {
-    //        ViewBag.Message = "";
+        public ActionResult Login()
+        {
+            ViewBag.Message = "";
 
-    //        return View();
-    //    }
+            return View();
+        }
 
-    //}
+    }
 
-}
 }

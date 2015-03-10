@@ -25,8 +25,7 @@ namespace Suma2Lealtad.Controllers
         // GET: /Search/
         public ActionResult Search(string numdoc)
         {
-
-            var Model = JsonConvert.DeserializeObject<AfiliadoSuma>(WSL.getClientByNumDoc(numdoc));
+            var Model = JsonConvert.DeserializeObject<AfiliadoSuma>(WSL.PlazasWeb.getClientByNumDoc(numdoc));
 
             TempData["MiAfiliado"] = Model;
 
@@ -116,7 +115,7 @@ namespace Suma2Lealtad.Controllers
                     }
 
                     // actualizar el registro de cliente en el modelo de PlazasWeb.
-                    string resp = WSL.UpdateClient(record);
+                    string resp = WSL.PlazasWeb.UpdateClient(record);
 
                     //aqui metemos el código para subir la imagen al server
                     if (file != null && file.ContentLength > 0)
