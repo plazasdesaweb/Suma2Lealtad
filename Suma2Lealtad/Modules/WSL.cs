@@ -49,7 +49,6 @@ namespace Suma2Lealtad.Modules
         //implementa los servicios cards
         public class Cards
         {
-
             // consumir los servicios asociados a Cards.
             public static string ConsumirServicioCards(string nameService)
             {
@@ -67,7 +66,7 @@ namespace Suma2Lealtad.Modules
             public static string addClient(string numdoc, string name, string phone, string address)
             {
                 string req = WSL_CARDS_ADDCLIENT;
-                req = req.Replace("{docnumber}", numdoc);
+                req = req.Replace("{numdoc}", numdoc);
                 req = req.Replace("{name}", name);
                 req = req.Replace("{phone}", phone);
                 req = req.Replace("{address}", address);
@@ -77,14 +76,14 @@ namespace Suma2Lealtad.Modules
             public static string getClient(string numdoc)
             {
                 string req = WSL_CARDS_GETCLIENT;
-                req = req.Replace("{docnumber}", numdoc);
+                req = req.Replace("{numdoc}", numdoc);
                 return ConsumirServicioCards(req);
             }
 
             public static string getBalance(string numdoc)
             {
                 string req = WSL_CARDS_GETBALANCE;
-                req = req.Replace("{docnumber}", numdoc);
+                req = req.Replace("{numdoc}", numdoc);
                 return ConsumirServicioCards(req);
             }
 
@@ -92,28 +91,28 @@ namespace Suma2Lealtad.Modules
             {
                 string req = WSL_CARDS_GETBATCH;
                 req = req.Replace("{accounttype}", accounttype);
-                req = req.Replace("{docnumber}", numdoc);
+                req = req.Replace("{numdoc}", numdoc);
                 return ConsumirServicioCards(req);
             }
 
             public static string cardPrint(string numdoc)
             {
                 string req = WSL_CARDS_CARD_PRINT;
-                req = req.Replace("{docnumber}", numdoc);
+                req = req.Replace("{numdoc}", numdoc);
                 return ConsumirServicioCards(req);
             }
 
             public static string cardActive(string numdoc)
             {
                 string req = WSL_CARDS_CARD_ACTIVE;
-                req = req.Replace("{docnumber}", numdoc);
+                req = req.Replace("{numdoc}", numdoc);
                 return ConsumirServicioCards(req);
             }
 
             public static string cardInactive(string numdoc)
             {
                 string req = WSL_CARDS_CARD_INACTIVE;
-                req = req.Replace("{docnumber}", numdoc);
+                req = req.Replace("{numdoc}", numdoc);
                 return ConsumirServicioCards(req);
             }
 
@@ -136,10 +135,10 @@ namespace Suma2Lealtad.Modules
                 }
             }
 
-            public static string getClientByNumDoc(string numdoc)
+            public static string getClientByNumDoc(string docnumber)
             {
                 string req = WSL_WEB_GETCLIENTBYNUMDOC;
-                req = req.Replace("{docnumber}", numdoc);
+                req = req.Replace("{docnumber}", docnumber);
                 return ConsumirServicioPlazasWeb(req);
             }
 
