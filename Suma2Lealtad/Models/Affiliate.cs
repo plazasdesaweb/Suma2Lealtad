@@ -30,8 +30,11 @@ namespace Suma2Lealtad.Models
         public int modifieduserid { get; set; }
         public System.DateTime modifieddate { get; set; }
         public int statusid { get; set; }
-        public int reasonsid { get; set; }
+        public Nullable<int> reasonsid { get; set; }
         public string comments { get; set; }
+        public string twitter_account { get; set; }
+        public string facebook_account { get; set; }
+        public string instagram_account { get; set; }
     
         public virtual Channel Channel { get; set; }
     }
