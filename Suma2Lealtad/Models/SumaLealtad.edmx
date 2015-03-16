@@ -54,6 +54,7 @@
           <Property Name="creationdate" Type="datetime" Nullable="false" />
           <Property Name="originaldata" Type="xml" Nullable="false" />
           <Property Name="changedata" Type="xml" Nullable="false" />
+          <Property Name="ipaddress" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Channel">
           <Key>
@@ -565,6 +566,7 @@ FROM [dbo].[PARAMETROS] AS [PARAMETROS]</DefiningQuery>
           <Property Name="creationdate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="originaldata" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="changedata" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ipaddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Channel">
           <Key>
@@ -950,6 +952,7 @@ FROM [dbo].[PARAMETROS] AS [PARAMETROS]</DefiningQuery>
           <EntitySetMapping Name="Auditings">
             <EntityTypeMapping TypeName="LealtadModel.Auditing">
               <MappingFragment StoreEntitySet="Auditing">
+                <ScalarProperty Name="ipaddress" ColumnName="ipaddress" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="objectid" ColumnName="objectid" />
                 <ScalarProperty Name="operationsid" ColumnName="operationsid" />

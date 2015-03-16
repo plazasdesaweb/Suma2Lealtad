@@ -1,5 +1,6 @@
 ﻿using Suma2Lealtad.Models;
 using Suma2Lealtad.Modules;
+using Suma2Lealtad.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Suma2Lealtad.Controllers
 {
-
+    [AuditingFilter]
     public class HomeController : Controller
     {
 
