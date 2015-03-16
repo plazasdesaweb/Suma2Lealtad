@@ -15,107 +15,57 @@ namespace SumaPlazas.Dispositivos.Impresora
 {
     public partial class MainPage : UserControl
     {
-        //HtmlElement DatosNombre;
-        //HtmlElement DatosApellido;
-        //HtmlElement DatosTarjeta;
-        //string Nombre = "";
-        //string Apellido = "";
-        //string Tarjeta = "";
-        //ProyDataCardCP60 ProyDataCardCP60 = new ProyDataCardCP60();
-        //SmartDriverDotNet SmartDriverDotNet = new SmartDriverDotNet();                
+        //objetos impresora
+        SmartDriverDotNet smartDriverDotNet;
+        ProyDataCardCP60 proyDataCardCP60;
+
+        //parámetros para la impresión
+        string nombre;
+        string apellido;
+        string nroTarjeta;
+        string track1;
+        string track2;
+        string tipoTarjeta;
+        string corporacion;
+        string fechaVencimiento;
 
         //se escribira en este elemento Htlml "Impresa", "No impresa"
         HtmlElement ElementoHtmlControl;
 
-        public MainPage(string idElementoHtmlControl)
+        public MainPage(string Nombre, string Apellido, string NroTarjeta, string Track1, string Track2, string TipoTarjeta, string Corporacion, string FechaVencimiento, string idElementoHtmlControl)
         {
+            nombre = Nombre;
+            apellido = Apellido;
+            nroTarjeta = NroTarjeta;
+            track1 = Track1;
+            track2 = Track2;
+            tipoTarjeta = TipoTarjeta;
+            corporacion = Corporacion;
+            fechaVencimiento = FechaVencimiento;
+
             ElementoHtmlControl = HtmlPage.Document.GetElementById(idElementoHtmlControl);
 
-            if (ElementoHtmlControl != null)
-            {
-                //ElementoHtmlControl.SetProperty("innerHTML", "No Escaneada");
-            }
-            else
+            if (ElementoHtmlControl == null)
             {
                 MessageBox.Show("Error: Elemento de control con id '" + idElementoHtmlControl + "' no encontrado.");
             }
 
             InitializeComponent();
             HtmlPage.RegisterScriptableObject("MainPage", this);
-
-            //try
-            //{
-            //    DatosNombre = HtmlPage.Document.GetElementById("Nombre");
-            //    DatosApellido = HtmlPage.Document.GetElementById("Apellido");
-            //    DatosTarjeta = HtmlPage.Document.GetElementById("Tarjeta");
-            //}
-            //catch (Exception ex)
-            //{
-            //    HtmlPage.Window.Alert("Error: " + ex.Message);
-            //}
         }
 
-        //private void DetectarImpresora_Click(object sender, RoutedEventArgs e)
-        //{
-        //    const string TituloMessageBox = "SumaPlazas.Dispositivos.Impresora.MainPage.DetectarImpresora_Click";
-        //    string ResultadoCP60 = "";
-        //    string ResultadoCD800 = "";
-        //    Nombre = DatosNombre.GetProperty("innerHTML").ToString();
-        //    Apellido = DatosApellido.GetProperty("innerHTML").ToString();
-        //    Tarjeta = DatosTarjeta.GetProperty("innerHTML").ToString();                        
-        //    bool PermisosElevados = Application.Current.HasElevatedPermissions;
-        //    if (PermisosElevados == true)
-        //    {
-        //        listBox1.Items.Add("Estableciendo comunicación con dispositivos...");
-        //        ResultadoCD800 = SmartDriverDotNet.EstadoImpresora();
-        //        ResultadoCP60 = ProyDataCardCP60.EstadoImpresora();
-        //        listBox1.Items.Add("Impresora detectada: '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'");
-        //        if (ResultadoCD800 != "")
-        //        {
-        //            listBox1.Items.Add("Estado: " + ResultadoCD800);
-        //            if (ResultadoCD800.ToLower() == "la impresora está respondiendo")
-        //            {
-        //                listBox1.Items.Add("Se utilizará este dispositivo para imprimir");
-        //                listBox1.Items.Add("Los datos a imprimir son: " + Nombre + " " + Apellido + " " + Tarjeta);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            listBox1.Items.Add("Estado: No es posible comunicarse con la impresora '" + SmartDriverDotNet.NombreImpresora);
-        //        }
-        //        listBox1.Items.Add("Impresora detectada: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'");
-        //        if (ResultadoCP60 != "")
-        //        {
-        //            listBox1.Items.Add("Estatus: " + ResultadoCP60);
-        //            if (ResultadoCP60.ToLower() == "la impresora está respondiendo")
-        //            {
-        //                listBox1.Items.Add("Se utilizará este dispositivo para imprimir");
-        //                listBox1.Items.Add("Los datos a imprimir son: " + Nombre + " " + Apellido + " " + Tarjeta);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            listBox1.Items.Add("Estado: No es posible comunicarse con la impresora '" + ProyDataCardCP60.NombreImpresora);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Error de Aplicación. No están configurados permisos elevados", TituloMessageBox, MessageBoxButton.OK);
-        //    }
-        //}
-
-        [ScriptableMember]
-        public string DetectarImpresora()
+        //[ScriptableMember]
+        //public string DetectarImpresora()
+        private string DetectarImpresora()
         {
-            ElementoHtmlControl.SetProperty("innerHTML", "No impresa");
             string Impresora = "";
             bool PermisosElevados = Application.Current.HasElevatedPermissions;
             if (PermisosElevados == true)
             {
                 listBox1.Items.Clear();
                 listBox1.Items.Add("Estableciendo comunicación con dispositivos...");
-                SmartDriverDotNet SmartDriverDotNet = new SmartDriverDotNet();
-                string ResultadoCD800 = SmartDriverDotNet.EstadoImpresora();
+                smartDriverDotNet = new SmartDriverDotNet();
+                string ResultadoCD800 = smartDriverDotNet.EstadoImpresora();
                 listBox1.Items.Add("Impresora detectada: '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'");
                 if (ResultadoCD800 != "")
                 {
@@ -125,12 +75,32 @@ namespace SumaPlazas.Dispositivos.Impresora
                         listBox1.Items.Add("Se utilizará este dispositivo para imprimir");
                         Impresora = SmartDriverDotNet.NombreImpresora;
                     }
+                    else
+                    {
+                        listBox1.Items.Add("Estado: No es posible comunicarse con la impresora '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'");
+                        proyDataCardCP60 = new ProyDataCardCP60();
+                        string ResultadoCP60 = proyDataCardCP60.EstadoImpresora();
+                        listBox1.Items.Add("Impresora detectada: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'");
+                        if (ResultadoCP60 != "")
+                        {
+                            listBox1.Items.Add("Estatus: " + ResultadoCP60);
+                            if (ResultadoCP60.ToLower() == "la impresora está respondiendo")
+                            {
+                                listBox1.Items.Add("Se utilizará este dispositivo para imprimir");
+                                Impresora = ProyDataCardCP60.NombreImpresora;
+                            }
+                        }
+                        else
+                        {
+                            listBox1.Items.Add("Estado: No es posible comunicarse con la impresora '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'");
+                        }
+                    }
                 }
                 else
                 {
-                    listBox1.Items.Add("Estado: No es posible comunicarse con la impresora '" + SmartDriverDotNet.NombreImpresora);
-                    ProyDataCardCP60 ProyDataCardCP60 = new ProyDataCardCP60();
-                    string ResultadoCP60 = ProyDataCardCP60.EstadoImpresora();
+                    listBox1.Items.Add("Estado: No es posible comunicarse con la impresora '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'");
+                    proyDataCardCP60 = new ProyDataCardCP60();
+                    string ResultadoCP60 = proyDataCardCP60.EstadoImpresora();
                     listBox1.Items.Add("Impresora detectada: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'");
                     if (ResultadoCP60 != "")
                     {
@@ -140,55 +110,81 @@ namespace SumaPlazas.Dispositivos.Impresora
                             listBox1.Items.Add("Se utilizará este dispositivo para imprimir");
                             Impresora = ProyDataCardCP60.NombreImpresora;
                         }
+                        else
+                        {
+                            listBox1.Items.Add("No se pudo asignar dispositivo para imprimir");
+                        }
                     }
                     else
                     {
-                        listBox1.Items.Add("Estado: No es posible comunicarse con la impresora '" + ProyDataCardCP60.NombreImpresora);
+                        listBox1.Items.Add("Estado: No es posible comunicarse con la impresora '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'");
                     }
-                }                
+                }
             }
             else
             {
                 MessageBox.Show("Error de Aplicación. No están configurados permisos elevados.", "SumaPlazas.Dispositivos.Impresora.MainPage.DetectarImpresora", MessageBoxButton.OK);
             }
-            return Impresora;           
+            return Impresora;
         }
 
-        //[ScriptableMember]
-        //public void ImprimirTarjeta()
-        //{
-        //    const string TituloMessageBox = "SumaPlazas.Dispositivos.Impresora.MainPage.ImprimirTarjeta";
-        //    //bool Resultado = false;
-        //    //string Respuesta = "";
-        //    Nombre = DatosNombre.GetProperty("innerHTML").ToString();
-        //    Apellido = DatosApellido.GetProperty("innerHTML").ToString();
-        //    Tarjeta = DatosTarjeta.GetProperty("innerHTML").ToString();
-        //    string Impresora = DetectarImpresora();
-        //    if (Impresora == ProyDataCardCP60.NombreImpresora)
-        //    {
-        //        listBox1.Items.Add("Impresora asignada: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'");
-        //        listBox1.Items.Add("Los datos a imprimir son: " + Nombre + " " + Apellido + " " + Tarjeta);
-        //        //Respuesta = MessageBox.Show("¿Se imprimió correctamente la tarjeta?", "Pregunta", MessageBoxButton.);
-        //        // if (Respuesta == "")
-        //        // { }
-        //        // else
-        //        // { }
-        //    }
-        //    else if (Impresora == SmartDriverDotNet.NombreImpresora)
-        //    {
-        //        listBox1.Items.Add("Impresora asignada: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'");
-        //        listBox1.Items.Add("Los datos a imprimir son: " + Nombre + " " + Apellido + " " + Tarjeta);            
-        //    }
-        //    else
-        //    {
-        //    MessageBox.Show("Error de Aplicación: No hay impresora disponible.", TituloMessageBox, MessageBoxButton.OK);
-        //    }
-        //}
-
-        //private void btnDetectarImpresora_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ImprimirTarjeta();
-        //}
+        [ScriptableMember]
+        public void ImprimirTarjeta()
+        {
+            bool PermisosElevados = Application.Current.HasElevatedPermissions;
+            if (PermisosElevados == true)
+            {
+                ElementoHtmlControl.SetProperty("innerHTML", "No impresa");
+                listBox1.Items.Clear();
+                string Impresora = DetectarImpresora();
+                if (Impresora == ProyDataCardCP60.NombreImpresora)
+                {
+                    listBox1.Items.Add("Impresora asignada: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'");
+                    listBox1.Items.Add("Los datos a imprimir son: " + nombre + "," + apellido + "," + nroTarjeta + "," + track1 + "," + track2 + "," + tipoTarjeta + "," + corporacion + "," + fechaVencimiento);
+                    bool Resultado = proyDataCardCP60.Imprimir(ref nombre, ref apellido, ref nroTarjeta, ref track1, ref track2, ref tipoTarjeta, ref corporacion, ref fechaVencimiento);
+                    //La pregunta la haremos en la página web, no en el silverlight
+                    //Respuesta = MessageBox.Show("¿Se imprimió correctamente la tarjeta?", "Pregunta", MessageBoxButton.);
+                    if (Resultado == true)
+                    {
+                        MessageBox.Show("Impresa");
+                        ElementoHtmlControl.SetProperty("innerHTML", "Impresa");
+                    }
+                    else
+                    {
+                        MessageBox.Show("No impresa");
+                        ElementoHtmlControl.SetProperty("innerHTML", "No impresa");
+                    }
+                }
+                else if (Impresora == SmartDriverDotNet.NombreImpresora)
+                {
+                    listBox1.Items.Add("Impresora asignada: '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'");
+                    listBox1.Items.Add("Los datos a imprimir son: " + nombre + "," + apellido + "," + nroTarjeta + "," + track1 + "," + track2 + "," + tipoTarjeta + "," + corporacion + "," + fechaVencimiento);
+                    bool Resultado = smartDriverDotNet.Imprimir(ref nombre, ref apellido, ref nroTarjeta, ref track1, ref track2, ref tipoTarjeta, ref corporacion, ref fechaVencimiento);
+                    //La pregunta la haremos en la página web, no en el silverlight
+                    //Respuesta = MessageBox.Show("¿Se imprimió correctamente la tarjeta?", "Pregunta", MessageBoxButton.);
+                    if (Resultado == true)
+                    {
+                        MessageBox.Show("Impresa");                      
+                        ElementoHtmlControl.SetProperty("innerHTML", "Impresa");
+                    }
+                    else
+                    {
+                        MessageBox.Show("No impresa"); 
+                        ElementoHtmlControl.SetProperty("innerHTML", "No impresa");
+                    }
+                }
+                else
+                {
+                    listBox1.Items.Add("Estado: No es posible comunicarse con la impresora'");
+                    //smartDriverDotNet = null;
+                    //proyDataCardCP60 = null;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Error de Aplicación. No están configurados permisos elevados.", "SumaPlazas.Dispositivos.Impresora.MainPage.ImprimirTarjeta", MessageBoxButton.OK);
+            }
+        }
 
     }
 }

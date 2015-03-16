@@ -3,23 +3,37 @@
 <!-- btn btn-success -->
 <div class="col-md-12 col-btn">
     <div class="text-center">
-        <a href="javascript:DetectarImpresora()" class="btn btn-success btn-md" role="button">Detectar Impresora</a>
-    </div>
+        <a href="javascript:ImprimirTarjeta()" class="btn btn-success btn-md" role="button">Imprimir Tarjeta</a>
+   </div>
 </div>
 <!--// btn btn-success -->
 
 @{
     //DEBO SACAR LA INFO DEL NRO DEL DOCUMENTO DEL MODELO Y PASARLO COMO PARAMETRO AL HELPER SE SILVERLIGHT
-    var InitParams = "idElementoHtmlControl=ElementoControl";
+    var InitParams = "Nombre=" + "Nombre";
+    InitParams = InitParams + "," + "Apellido=" + "Apellido";
+    InitParams = InitParams + "," + "NroTarjeta=" + "NroTarjeta";
+    InitParams = InitParams + "," + "Track1=" + "Track1";
+    InitParams = InitParams + "," + "Track2=" + "Track2";
+    InitParams = InitParams + "," + "TipoTarjeta=" + "TipoTarjeta";
+    InitParams = InitParams + "," + "Corporacion=" + "Corporacion";
+    InitParams = InitParams + "," + "FechaVencimiento=" + "FechaVencimiento";  
+    InitParams = InitParams + "," + "idElementoHtmlControl=ElementoControl";   
 }
 
 @Helpers.Silverlight(xapPath: "~/ClientBin/SumaPlazas.Dispositivos.Impresora.xap", slObjectId: "sl", divObjectWidth: "500px", customParams: @InitParams, divObjectClass: "col-md-12")
 
 <script type="text/javascript">
     var slcontrol3 = document.getElementById("sl");
-    function DetectarImpresora() {
+    function ImprimirTarjeta() {
         if (slcontrol3) {
-            slcontrol3.Content.MainPage.DetectarImpresora();
+            slcontrol3.Content.MainPage.ImprimirTarjeta();
         }
     }
+
+    //function DetectarImpresora() {
+    //    if (slcontrol3) {
+    //        slcontrol3.Content.MainPage.DetectarImpresora();
+    //    }
+    //}
 </script>

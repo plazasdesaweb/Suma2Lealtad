@@ -28,11 +28,7 @@ namespace SumaPlazas.Dispositivos.Escaner
             NombreArchivo = nombreArchivo;
             ElementoHtmlControl = HtmlPage.Document.GetElementById(idElementoHtmlControl);
 
-            if (ElementoHtmlControl != null)
-            {
-                //ElementoHtmlControl.SetProperty("innerHTML", "No Escaneada");
-            }
-            else
+            if (ElementoHtmlControl == null)
             {
                 MessageBox.Show("Error: Elemento de control con id '" + idElementoHtmlControl + "' no encontrado.");
             }

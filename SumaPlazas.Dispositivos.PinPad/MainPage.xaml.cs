@@ -23,11 +23,7 @@ namespace SumaPlazas.Dispositivos.PinPad
         {
             ElementoHtmlControl = HtmlPage.Document.GetElementById(idElementoHtmlControl);
 
-            if (ElementoHtmlControl != null)
-            {
-                //ElementoHtmlControl.SetProperty("innerHTML", "No realizado");
-            }
-            else
+            if (ElementoHtmlControl == null)
             {
                 MessageBox.Show("Error: Elemento de control con id '" + idElementoHtmlControl + "' no encontrado.");
             } 

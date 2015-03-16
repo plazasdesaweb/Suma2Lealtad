@@ -18,7 +18,7 @@ namespace Suma2Lealtad.Modules
         private const string WSL_CARDS_GETBALANCE = "getbalance/{numdoc}";
         private const string WSL_CARDS_GETBATCH = "getbatch/{accounttype}/{numdoc}";
         private const string WSL_CARDS_CARD_PRINT = "card/print/{numdoc}";
-        private const string WSL_CARDS_CARD_ACTIVE = "active/{numdoc}";
+        private const string WSL_CARDS_CARD_ACTIVE = "card/active/{numdoc}";
         private const string WSL_CARDS_CARD_INACTIVE = "card/inactive/{numdoc}";
         //servicios web
         private const string WSL_WEB_GETCLIENTBYNUMDOC = "getclientbynumdoc/{docnumber}";
@@ -50,7 +50,7 @@ namespace Suma2Lealtad.Modules
         public class Cards
         {
             // consumir los servicios asociados a Cards.
-            public static string ConsumirServicioCards(string nameService)
+            private static string ConsumirServicioCards(string nameService)
             {
                 try
                 {
