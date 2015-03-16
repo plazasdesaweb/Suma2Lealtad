@@ -35,6 +35,7 @@
         <AssociationConnector Association="LealtadModel.FK_Order_Company" ManuallyRouted="false" />
         <AssociationConnector Association="LealtadModel.FK_CustomerInterest_Interest" ManuallyRouted="false" />
         <AssociationConnector Association="LealtadModel.FK_OrderDetail_Order" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="LealtadModel.Photos_Affiliate" Width="1.5" PointX="3.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

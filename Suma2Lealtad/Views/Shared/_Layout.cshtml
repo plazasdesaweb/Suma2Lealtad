@@ -2,7 +2,7 @@
 
 <html lang="en">
 
-<head>
+  <head>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,97 +17,48 @@
       <script src="@Url.Content("~/Scripts/respond.min.js")"></script>
     <![endif]-->
 
-</head>
+  </head>
 
-<body>
+  <body>
 
     <div class="container">
+		
+	<div class="row row-plz">
 
-        <div class="row row-plz">
+		<div class="col-md-2 col-right">
+			<img src="@Url.Content("~/Images/plzlogo.jpg")" />
+		</div>
 
-            <div class="col-md-2 col-right">
-                <img src="@Url.Content("~/Images/plzlogo.jpg")" />
+		<div class="col-md-6 col-plz col-left">
+			<div class="font-plz">Administrador SUMA</div><small>V.0.0.3</small>
+		</div>
+		
+        @if (Session["username"] != null) {
+            <div class="col-md-4 col-plz col-right">   
+                <div class="row">@Html.Raw(Session["username"].ToString())</div>
+                <div class="row">@Html.Raw(Session["appdate"].ToString())</div> 
             </div>
+        }
 
-            <div class="col-md-6 col-plz col-left">
-                <div class="font-plz">Administrador SUMA</div>
-                <small>V.0.0.1</small>
-            </div>
+	</div>
 
-            <div class="col-md-4 col-right">
-                @DateTime.Now.ToString("dddd, dd MMMM yyyy")
-                <div class="row col-right" style="color: #00a160;">.</div>
-            </div>
-            <div class="col-md-4 col-right" style="top: 100px;">
-                @ViewBag.Message
-            </div>
+	<nav class="navbar navbar-default" role="navigation">
+	  <div class="container-fluid">
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+       
+                 @Html.Partial("_MenuLayout")
 
-        </div>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+    </nav>		
 
-        <nav class="navbar navbar-default" role="navigation">
-
-            <div class="container-fluid">
-
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-                    <ul class="nav navbar-nav">
-
-                        <li class="dropdown">
-
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Afiliado<span class="caret"></span></a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li>@Html.ActionLink("Datos del Afiliado", "Filter", "Afiliado")</li>
-                                <li>@Html.ActionLink("Saldos y Movimientos", "Index", "SaldosMovimientos")</li>
-                            </ul>
-
-                        </li>
-
-                        <li class="dropdown">
-
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tablas Básicas <span class="caret"></span></a>
-
-                            <ul class="dropdown-menu" role="menu">
-
-                                <li>@Html.ActionLink("Interés", "Index", "Interest")</li>
-                                <li>@Html.ActionLink("Razón de Bloqueo", "Index", "ReasonsBlock")</li>
-                                <li>@Html.ActionLink("Razón de Rechazo", "Index", "Reasons")</li>
-                                <li>@Html.ActionLink("Canal", "Index", "Channel")</li>
-                                <li>@Html.ActionLink("Tipo", "Index", "Type")</li>
-                                <li>@Html.ActionLink("Estatus", "Index", "Status")</li>
-                                <li class="divider"></li>
-                                <li>@Html.ActionLink("Usuario", "Index", "User")</li>
-                                <li>@Html.ActionLink("Rol", "Index", "Role")</li>
-                                <li>@Html.ActionLink("Permisos", "Index", "SecurityLevel")</li>
-                                <li>@Html.ActionLink("Organización", "Index", "Company")</li>
-                                <li>@Html.ActionLink("Menu", "Index", "Menu")</li>
-                                <li class="divider"></li>
-                                <li>@Html.ActionLink("Auditoría", "Index", "Auditing")</li>
-
-                            </ul>
-
-                        </li>
-
-                    </ul>
-
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Cerrar Sesión</a></li>
-                    </ul>
-
-                </div>
-                <!-- /.navbar-collapse -->
-            </div>
-            <!-- /.container-fluid -->
-
-        </nav>
-
-        @RenderBody()
+    @RenderBody()
 
     </div>
-
+      
     <script src="@Url.Content("~/Scripts/jquery-2.1.1.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
 
-</body>
+  </body>
 
 </html>

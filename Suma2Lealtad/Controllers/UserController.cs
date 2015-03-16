@@ -9,6 +9,7 @@ using Suma2Lealtad.Models;
 
 namespace Suma2Lealtad.Controllers
 {
+
     public class UserController : Controller
     {
         private LealtadEntities db = new LealtadEntities();
