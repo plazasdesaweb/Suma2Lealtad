@@ -11,6 +11,7 @@ namespace Suma2Lealtad.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Channel
     {
@@ -20,6 +21,8 @@ namespace Suma2Lealtad.Models
         }
     
         public int id { get; set; }
+
+        [Required(ErrorMessage = "* EL Nombre es requerido.")]
         public string name { get; set; }
     
         public virtual ICollection<Affiliate> Affiliates { get; set; }

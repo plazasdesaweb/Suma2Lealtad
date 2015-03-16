@@ -39,9 +39,6 @@
                                 <th>
                                     @*@Html.DisplayNameFor(model => model.)*@ order
                                 </th>
-                                <th>
-                                    @*@Html.DisplayNameFor(model => model.)*@ tooltips
-                                </th>
                                 <th class="text-center"></th>
                             </tr>
 
@@ -67,9 +64,6 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.order)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.tooltips)
                                     </td>
                                     <td class="text-right">
                                         <a href="@Url.Action("Edit", "Menu", new { id = item.id })" class="btn btn-info btn-xs">

@@ -30,20 +30,12 @@
 
                             <div class="form-group">
 
-                                <div class="editor-label">
-                                    @Html.LabelFor(model => model.name)
+                                <div class="editor-label col-md-4 control-label">
+                                    @*@Html.LabelFor(model => model.name)*@ Nombre :
                                 </div>
-                                <div class="editor-field">
-                                    @Html.EditorFor(model => model.name)
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.name)
-                                </div>
-
-                                <div class="editor-label">
-                                    @Html.LabelFor(model => model.comments)
-                                </div>
-                                <div class="editor-field">
-                                    @Html.EditorFor(model => model.comments)
-                                    @Html.ValidationMessageFor(model => model.comments)
                                 </div>
 
                             </div>

@@ -11,15 +11,33 @@ namespace Suma2Lealtad.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class User
     {
         public int id { get; set; }
+
+        [Required(ErrorMessage = "* EL Login es requerido.")]
+        [RegularExpression(@"^[a-zA-Z''-'\s]*$", ErrorMessage = "* El Login debe contener solo letras y mas de 3 caracteres.")]
+        [StringLength(30, MinimumLength = 3)]
         public string login { get; set; }
+
+        [Required(ErrorMessage = "* La Contraseña es requerida.")]
         public string passw { get; set; }
+
+        [Required(ErrorMessage = "* EL Nombre es requerido.")]
+        [RegularExpression(@"^[a-zA-Z''-'\s]*$", ErrorMessage = "* El Nombre debe contener solo letras y mas de 3 caracteres.")]
+        [StringLength(30, MinimumLength = 3)]
         public string firstname { get; set; }
+
+        [Required(ErrorMessage = "* EL Apellido es requerido.")]
+        [RegularExpression(@"^[a-zA-Z''-'\s]*$", ErrorMessage = "* El Apellido debe contener solo letras y mas de 3 caracteres.")]
+        [StringLength(30, MinimumLength = 3)]
         public string lastname { get; set; }
+
+        [Required(ErrorMessage = "* EL Correo es requerido.")]
         public string email { get; set; }
+
         public string status { get; set; }
     }
 }

@@ -5,9 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
-    Documento del afiliado: @Model.DocId
-</div>
 <br />
 <div class="container">
 
@@ -18,7 +15,7 @@
             <div class="panel panel-default">
 
                 <div class="panel-heading clearfix panel-gradient">
-                    <h3 class="panel-title">Afiliado / Saldos </h3>
+                    <h3 class="panel-title">Afiliado / Saldos - Documento del Afiliado: @Model.DocId</h3>
                 </div>
 
                 <div class="panel-body">
@@ -92,6 +89,7 @@
     <!-- btn btn-success -->
     <div class="col-md-12 col-btn">
         <div class="text-center">
+            <a href="@Url.Action("Acreditar", "SaldosMovimientos")" class="btn btn-success btn-md" role="button">Acreditar</a>          
             <a href="javascript:MovimientosSuma()" class="btn btn-success btn-md" role="button">Movimientos Suma</a>
             <a href="javascript:MovimientosPrepago()" class="btn btn-success btn-md" role="button">Movimientos Prepago</a>
             <a href="javascript:OcultarMovimientos()" class="btn btn-success btn-md" role="button">Ocultar Movimientos</a>

@@ -2,77 +2,102 @@
 
 @{
     ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<div class="container">
 
-@using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
+    <div class="row">
 
-    <fieldset>
-        <legend>Menu</legend>
+        <div class="col-md-7 col-md-offset-2">
 
-        @Html.HiddenFor(model => model.id)
+            <div class="panel panel-default">
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.name)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.name)
-            @Html.ValidationMessageFor(model => model.name)
-        </div>
+                <div class="panel-heading clearfix panel-gradient">
+                    <h3 class="panel-title">Menu / Editar Registro</h3>
+                </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.parentid)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.parentid)
-            @Html.ValidationMessageFor(model => model.parentid)
-        </div>
+                <div class="panel-body">
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.controller)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.controller)
-            @Html.ValidationMessageFor(model => model.controller)
-        </div>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.actions)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.actions)
-            @Html.ValidationMessageFor(model => model.actions)
-        </div>
+                        @Html.HiddenFor(model => model.id)
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.order)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.order)
-            @Html.ValidationMessageFor(model => model.order)
-        </div>
+                        <form class="form-horizontal" role="form">
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.tooltips)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.tooltips)
-            @Html.ValidationMessageFor(model => model.tooltips)
-        </div>
+                            <div class="form-group">
 
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    </fieldset>
-}
+                                <div class="editor-label col-md-4 control-label">
+                                    @*@Html.LabelFor(model => model.name)*@ Nombre :
+                                </div>
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.name)
+                                </div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+                                <div class="editor-label col-md-4 control-label">
+                                    @*@Html.LabelFor(model => model.name)*@ Menu :
+                                </div>
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model.parentid, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.parentid)
+                                </div>
+
+                                <div class="editor-label col-md-4 control-label">
+                                    @*@Html.LabelFor(model => model.name)*@ Controlador :
+                                </div>
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model.controller, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.controller)
+                                </div>
+
+                                <div class="editor-label col-md-4 control-label">
+                                    @*@Html.LabelFor(model => model.name)*@ Acción :
+                                </div>
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model.actions, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.actions)
+                                </div>
+
+                                <div class="editor-label col-md-4 control-label">
+                                    @*@Html.LabelFor(model => model.name)*@ Order :
+                                </div>
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model.order, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.order)
+                                </div>
+
+                            </div>
+
+                            <!-- buttons -->
+                            <div class="form-group">
+                                <div class="col-md-12 col-btn">
+                                    <div class="pull-right">
+                                        <input type="submit" class="btn btn-success btn-md" value="Guardar" />
+                                        <a class="btn btn-success btn-md" href="@Url.Action("Index", "Menu")">Cancelar</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--// buttons -->
+
+                        </form>
+                
+                    }
+
+                </div>
+                <!--// panel-body -->
+
+            </div>
+            <!--// panel -->
+
+        </div>
+        <!--// columns -->
+
+    </div>
+    <!--// row -->
+
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+<!--// container -->

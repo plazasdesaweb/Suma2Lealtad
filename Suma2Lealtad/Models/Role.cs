@@ -11,11 +11,16 @@ namespace Suma2Lealtad.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Role
     {
         public int id { get; set; }
+
+        [Required(ErrorMessage = "* EL Nombre es requerido.")]
         public string name { get; set; }
+
+        [Required(ErrorMessage = "* EL Nivel es requerido.")]
         public int level { get; set; }
     }
 }

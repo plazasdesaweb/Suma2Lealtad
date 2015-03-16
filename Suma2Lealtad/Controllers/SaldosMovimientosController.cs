@@ -18,7 +18,7 @@ namespace Suma2Lealtad.Controllers
         {
             SaldosMovimientos SaldosMovimientos = new SaldosMovimientos();
             
-            SaldosMovimientos.DocId = "V-14566318".Replace("V-","");
+            SaldosMovimientos.DocId = "V-16006920".Replace("V-","");
             //SaldosMovimientos.DocId = "V-6960635".Replace("V-", "");
             string saldosJson = WSL.Cards.getBalance(SaldosMovimientos.DocId);
             SaldosMovimientos.Saldos = (IEnumerable<Saldo>)JsonConvert.DeserializeObject<IEnumerable<Saldo>>(saldosJson);
@@ -29,6 +29,15 @@ namespace Suma2Lealtad.Controllers
             
             return View(SaldosMovimientos);
         }
-        
+
+        //
+        // GET: /SaldosMovimientos/Acreditar/
+
+        public ActionResult Acreditar(int id = 0)
+        {
+            return View(saldosmovimientos);
+        }
+
+        public IView saldosmovimientos { get; set; }
     }
 }

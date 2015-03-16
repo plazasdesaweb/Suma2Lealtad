@@ -1,6 +1,7 @@
 ﻿@model Suma2Lealtad.Models.User
 
 @{
+    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -68,21 +69,13 @@
                                     @Html.ValidationMessageFor(model => model.email)
                                 </div>
 
-                                <div class="editor-label col-md-4 control-label">
-                                    Estatus :
+@*                                <div class="editor-label col-md-4 control-label">
+                                    @Html.LabelFor(model => model.status)
                                 </div>
                                 <div class="editor-field col-md-8">
-                                    @Html.TextBoxFor(model => model.status, new { @class = "form-control" })
+                                    @Html.EditorFor(model => model.status)
                                     @Html.ValidationMessageFor(model => model.status)
-                                </div>
-
-                                @*                    <div class="editor-label col-md-4 control-label">
-                        Rol :
-                    </div>
-                    <div class="editor-field col-md-8">
-                        @Html.DropDownList("IdRol", String.Empty)
-                        @Html.ValidationMessageFor(model => model.IdRol)
-                    </div>*@
+                                </div>*@
 
                             </div>
 

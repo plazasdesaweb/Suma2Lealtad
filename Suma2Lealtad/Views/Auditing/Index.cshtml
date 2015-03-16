@@ -24,13 +24,13 @@
                         <thead>
 
                             <tr>
-                                <th>Login/Usuario
+                                <th>Usuario
                                 </th>
-                                <th>Perfil
+                                <th>Fecha
+                                </th>
+                                <th>Controlador
                                 </th>
                                 <th>Acción
-                                </th>
-                                <th>Fecha/Hora
                                 </th>
                             </tr>
 
@@ -42,16 +42,16 @@
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.objectid)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.operationsid)
-                                    </td>
-                                    <td>
                                         @Html.DisplayFor(modelItem => item.userid)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.creationdate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.originaldata)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.changedata)
                                     </td>
                                 </tr>
                             }

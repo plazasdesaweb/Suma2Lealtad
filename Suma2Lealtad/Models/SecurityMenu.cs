@@ -11,11 +11,17 @@ namespace Suma2Lealtad.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class SecurityMenu
     {
+        [Required(ErrorMessage = "* EL Rol es requerido.")]
         public int roleid { get; set; }
+
+        [Required(ErrorMessage = "* EL Menu es requerido.")]
         public int menuid { get; set; }
+
+        [Required(ErrorMessage = "* EL Nivel de Seguridad es requerido.")]
         public int securitylevelid { get; set; }
     }
 }

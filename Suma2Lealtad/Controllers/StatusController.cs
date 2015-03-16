@@ -51,7 +51,14 @@ namespace Suma2Lealtad.Controllers
         {
             if (ModelState.IsValid)
             {
-                status.id = db.Channels.Max(c => c.id) + 1;
+                if (db.Status.Count() > 0)
+                {
+                    status.id = db.Status.Max(c => c.id) + 1;
+                }
+                else
+                {
+                    status.id = 1;
+                }
                 db.Status.Add(status);
                 db.SaveChanges();
                 return RedirectToAction("Index");

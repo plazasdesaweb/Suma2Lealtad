@@ -26,8 +26,6 @@
                             <tr>
                                 <th>Nombre
                                 </th>
-                                <th>Comentarios
-                                </th>
                                 <th class="text-center"></th>
                             </tr>
 
@@ -40,9 +38,6 @@
                                 <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.comments)
                                     </td>
                                     <td class="text-right">
                                         <a href="@Url.Action("Edit", "SecurityLevel", new { id = item.id })" class="btn btn-info btn-xs">

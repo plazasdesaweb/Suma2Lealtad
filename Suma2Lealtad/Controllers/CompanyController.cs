@@ -51,7 +51,16 @@ namespace Suma2Lealtad.Controllers
         {
             if (ModelState.IsValid)
             {
-                company.id = db.Channels.Max(c => c.id) + 1;
+                if (db.Companies.Count() > 0)
+                {
+                    company.id = db.Companies.Max(c => c.id) + 1;
+                }
+                else
+                {
+                    company.id = 1;
+                }
+                company.userid = 1; //provisional sesion
+                company.creationdate = System.DateTime.Now;
                 db.Companies.Add(company);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -82,6 +91,8 @@ namespace Suma2Lealtad.Controllers
         {
             if (ModelState.IsValid)
             {
+                company.userid = 1; //provisional sesion
+                company.creationdate = System.DateTime.Now;
                 db.Entry(company).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

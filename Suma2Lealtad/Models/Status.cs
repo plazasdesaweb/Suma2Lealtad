@@ -11,10 +11,13 @@ namespace Suma2Lealtad.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Status
     {
         public int id { get; set; }
+
+        [Required(ErrorMessage = "* EL Estatus es requerido.")]
         public string name { get; set; }
     }
 }

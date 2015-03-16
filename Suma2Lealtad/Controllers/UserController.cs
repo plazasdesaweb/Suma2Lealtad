@@ -51,6 +51,7 @@ namespace Suma2Lealtad.Controllers
         {
             if (ModelState.IsValid)
             {
+                user.status = "1"; //provisional
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");

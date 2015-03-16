@@ -11,6 +11,7 @@ namespace Suma2Lealtad.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Company
     {
@@ -21,12 +22,27 @@ namespace Suma2Lealtad.Models
         }
     
         public int id { get; set; }
+
+        [Required(ErrorMessage = "* EL Nombre es requerido.")]
         public string name { get; set; }
+
+        [Required(ErrorMessage = "* EL Alias es requerido.")]
         public string ALIAS { get; set; }
+
+        [Required(ErrorMessage = "* EL Rif es requerido.")]
+        [RegularExpression(@"^[JGVE][-][0-9]{8}[-][0-9]$", ErrorMessage = "* El Rif no cumple el formato requerido. Ejm: J-30812541-8")]
         public string rif { get; set; }
+
+        [Required(ErrorMessage = "* La Dirección es requerida.")]
         public string address { get; set; }
+
+        [Required(ErrorMessage = "* EL Telefóno es requerido.")]
         public string phone { get; set; }
+
+        [Required(ErrorMessage = "* EL Correo es requerido.")]
+        [RegularExpression(@"^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,3}$", ErrorMessage = "* El Correo no cumple el formato requerido. Ejm: correo@ejemplo.com")]
         public string email { get; set; }
+
         public System.DateTime creationdate { get; set; }
         public int userid { get; set; }
     
