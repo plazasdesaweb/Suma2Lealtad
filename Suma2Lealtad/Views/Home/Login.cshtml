@@ -1,52 +1,11 @@
-﻿@{
-    Layout = null;
+﻿@model Suma2Lealtad.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html lang="en">
-
-  <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Administrador SUMA</title>
-
-    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet">
-    <link href="@Url.Content("~/Content/style.css")" rel="stylesheet">
-
-    <!--[if lt IE 9]>
-      <script src="@Url.Content("~/Scripts/html5shiv.min.js")"></script>
-      <script src="@Url.Content("~/Scripts/respond.min.js")"></script>
-    <![endif]-->
-
-  </head>
-
-  <body>
-
-    <div class="container">
-		
-	<div class="row row-plz">
-
-		<div class="col-md-2 col-right">
-			<img src="@Url.Content("~/Images/plzlogo.jpg")" />
-		</div>
-
-		<div class="col-md-6 col-plz col-left">
-			<div class="font-plz">Administrador SUMA</div><small>V.0.0.1</small>
-		</div>
-
-		<div class="col-md-4 col-plz col-right">   
-            @DateTime.Now.ToString("dddd, dd MMMM yyyy")
-			<div class="row col-right" style="color: #00a160;">.</div>
-		</div>
-
-	</div>
-
-	<nav class="navbar navbar-default" role="navigation">
-
-	  <div class="container-fluid">
+<form name="login" method="post" action="@Url.Action("Index","Home")" class="form-horizontal" role="form">
 
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
@@ -78,15 +37,15 @@
             <div class="panel-heading clearfix">
                         
                 <div class="editor-label col-md-7 ">   
-                    <img src=@Url.Content("~/Images/principal.jpg") />
+            <img src="~/Images/principal.jpg">
                 </div>
                         
                 <div class="editor-field col-md-4" style="margin-top: 80px;" aria-required="true">
-                    <input class="form-control" placeholder="Usuario" name="login" value="ddepablos" type="text" required/>
-                    <br />
-                    <input class="form-control" placeholder="Contraseña" name="clave" value="12345" type="password" required>
-                    <br />
-                    <input type="submit" class="btn btn-success btn-md" value="Iniciar Sesión" />
+            <input class="form-control" placeholder="Usuario" name="username" value="ddepablos" type="text" required="">
+            <br>
+            <input class="form-control" placeholder="Contraseña" name="password" value="" type="password" required="">
+            <br>
+            <input type="submit" class="btn btn-success btn-md" value="Iniciar Sesión">
                 </div>
 					
 		    </div>
@@ -94,16 +53,3 @@
         </div>
 		     
 	</form>
-                
-@*    }*@
-
-</div>
-
-    </div>
-      
-    <script src="@Url.Content("~/Scripts/jquery-2.1.1.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
-
-  </body>
-
-</html>

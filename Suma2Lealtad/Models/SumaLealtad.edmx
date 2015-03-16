@@ -4,97 +4,20 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="LealtadModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="LealtadModelStoreContainer">
-          <EntitySet Name="Affiliate" EntityType="LealtadModel.Store.Affiliate" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="AffiliateAud" EntityType="LealtadModel.Store.AffiliateAud" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Auditing" EntityType="LealtadModel.Store.Auditing" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Channel" EntityType="LealtadModel.Store.Channel" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="CLIENTE" EntityType="LealtadModel.Store.CLIENTE" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Company" EntityType="LealtadModel.Store.Company" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="CompanyAffiliate" EntityType="LealtadModel.Store.CompanyAffiliate" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="CustomerInterest" EntityType="LealtadModel.Store.CustomerInterest" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="FACTURA" EntityType="LealtadModel.Store.FACTURA" store:Type="Tables" store:Schema="dbo" store:Name="FACTURA">
-            <DefiningQuery>SELECT 
-      [FACTURA].[NRO_TARJETA] AS [NRO_TARJETA], 
-      [FACTURA].[SUCURSAL] AS [SUCURSAL], 
-      [FACTURA].[POS] AS [POS], 
-      [FACTURA].[FACTURA] AS [FACTURA], 
-      [FACTURA].[FECHA] AS [FECHA], 
-      [FACTURA].[HORA] AS [HORA], 
-      [FACTURA].[MONTO_FACTURA] AS [MONTO_FACTURA], 
-      [FACTURA].[FECHA_REGISTRO] AS [FECHA_REGISTRO], 
-      [FACTURA].[PUNTOS_ACRED] AS [PUNTOS_ACRED], 
-      [FACTURA].[PUNTOS_CANJE] AS [PUNTOS_CANJE], 
-      [FACTURA].[TIPO_DOCUMENTO] AS [TIPO_DOCUMENTO], 
-      [FACTURA].[NRO_DOCUMENTO] AS [NRO_DOCUMENTO]
-      FROM [dbo].[FACTURA] AS [FACTURA]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Interest" EntityType="LealtadModel.Store.Interest" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Menu" EntityType="LealtadModel.Store.Menu" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Object" EntityType="LealtadModel.Store.Object" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Operations" EntityType="LealtadModel.Store.Operations" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Order" EntityType="LealtadModel.Store.Order" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="OrderDetail" EntityType="LealtadModel.Store.OrderDetail" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="PARAMETROS" EntityType="LealtadModel.Store.PARAMETROS" store:Type="Tables" store:Schema="dbo" store:Name="PARAMETROS">
-            <DefiningQuery>SELECT 
-      [PARAMETROS].[ID_PARAM] AS [ID_PARAM], 
-      [PARAMETROS].[NOMBRE_PARAM] AS [NOMBRE_PARAM], 
-      [PARAMETROS].[DESCRIPCION] AS [DESCRIPCION], 
-      [PARAMETROS].[MTO_CANJE] AS [MTO_CANJE], 
-      [PARAMETROS].[PTS_CANJE] AS [PTS_CANJE], 
-      [PARAMETROS].[MTO_ACR] AS [MTO_ACR], 
-      [PARAMETROS].[PTS_ACR] AS [PTS_ACR], 
-      [PARAMETROS].[TIPO_PRE] AS [TIPO_PRE], 
-      [PARAMETROS].[TIPO_SUMA] AS [TIPO_SUMA], 
-      [PARAMETROS].[FECHA_ACT_PARAM] AS [FECHA_ACT_PARAM], 
-      [PARAMETROS].[FECHA_DESAC_PARAM] AS [FECHA_DESAC_PARAM], 
-      [PARAMETROS].[FECHA] AS [FECHA]
-      FROM [dbo].[PARAMETROS] AS [PARAMETROS]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Reasons" EntityType="LealtadModel.Store.Reasons" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="RESTRICCIONES" EntityType="LealtadModel.Store.RESTRICCIONES" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Role" EntityType="LealtadModel.Store.Role" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="SecurityLevel" EntityType="LealtadModel.Store.SecurityLevel" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="SecurityMenu" EntityType="LealtadModel.Store.SecurityMenu" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Status" EntityType="LealtadModel.Store.Status" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Type" EntityType="LealtadModel.Store.Type" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="User" EntityType="LealtadModel.Store.User" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="UserRol" EntityType="LealtadModel.Store.UserRol" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_Affiliate_Channel" Association="LealtadModel.Store.FK_Affiliate_Channel">
-            <End Role="Channel" EntitySet="Channel" />
-            <End Role="Affiliate" EntitySet="Affiliate" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CompanyAffiliate_Company" Association="LealtadModel.Store.FK_CompanyAffiliate_Company">
-            <End Role="Company" EntitySet="Company" />
-            <End Role="CompanyAffiliate" EntitySet="CompanyAffiliate" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomerInterest_Interest" Association="LealtadModel.Store.FK_CustomerInterest_Interest">
-            <End Role="Interest" EntitySet="Interest" />
-            <End Role="CustomerInterest" EntitySet="CustomerInterest" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_Company" Association="LealtadModel.Store.FK_Order_Company">
-            <End Role="Company" EntitySet="Company" />
-            <End Role="Order" EntitySet="Order" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderDetail_Order" Association="LealtadModel.Store.FK_OrderDetail_Order">
-            <End Role="Order" EntitySet="Order" />
-            <End Role="OrderDetail" EntitySet="OrderDetail" />
-          </AssociationSet>
-        </EntityContainer>
+    <Schema Namespace="LealtadModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Affiliate">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="customerid" Type="int" Nullable="false" />
-          <Property Name="docnumber" Type="varchar" Nullable="false" MaxLength="16" />
+          <Property Name="docnumber" Type="varchar" MaxLength="16" Nullable="false" />
           <Property Name="clientid" Type="int" Nullable="false" />
           <Property Name="storeid" Type="int" Nullable="false" />
           <Property Name="channelid" Type="int" Nullable="false" />
           <Property Name="typeid" Type="int" Nullable="false" />
           <Property Name="affiliatedate" Type="datetime" Nullable="false" />
-          <Property Name="typedelivery" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="typedelivery" Type="varchar" MaxLength="12" Nullable="false" />
           <Property Name="storeiddelivery" Type="int" />
           <Property Name="estimateddatedelivery" Type="date" Nullable="false" />
           <Property Name="creationdate" Type="datetime" Nullable="false" />
@@ -102,7 +25,10 @@
           <Property Name="modifieduserid" Type="int" Nullable="false" />
           <Property Name="modifieddate" Type="datetime" Nullable="false" />
           <Property Name="statusid" Type="int" Nullable="false" />
-          <Property Name="reasonsid" Type="int" Nullable="false" />
+          <Property Name="reasonsid" Type="int" />
+          <Property Name="twitter_account" Type="varchar" MaxLength="120" />
+          <Property Name="facebook_account" Type="varchar" MaxLength="120" />
+          <Property Name="instagram_account" Type="varchar" MaxLength="120" />
           <Property Name="comments" Type="varchar" MaxLength="120" />
         </EntityType>
         <EntityType Name="AffiliateAud">
@@ -134,15 +60,15 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="name" Type="varchar" Nullable="false" MaxLength="25" />
+          <Property Name="name" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <EntityType Name="CLIENTE">
           <Key>
             <PropertyRef Name="TIPO_DOCUMENTO" />
             <PropertyRef Name="NRO_DOCUMENTO" />
           </Key>
-          <Property Name="TIPO_DOCUMENTO" Type="char" Nullable="false" MaxLength="1" />
-          <Property Name="NRO_DOCUMENTO" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="TIPO_DOCUMENTO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="NRO_DOCUMENTO" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="NACIONALIDAD" Type="varchar" MaxLength="50" />
           <Property Name="NOMBRE_CLIENTE1" Type="varchar" MaxLength="100" />
           <Property Name="NOMBRE_CLIENTE2" Type="varchar" MaxLength="100" />
@@ -169,12 +95,12 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="name" Type="varchar" Nullable="false" MaxLength="120" />
-          <Property Name="ALIAS" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="rif" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="address" Type="varchar" Nullable="false" MaxLength="120" />
+          <Property Name="name" Type="varchar" MaxLength="120" Nullable="false" />
+          <Property Name="ALIAS" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="rif" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="address" Type="varchar" MaxLength="120" Nullable="false" />
           <Property Name="phone" Type="varchar" MaxLength="25" />
-          <Property Name="email" Type="varchar" Nullable="false" MaxLength="25" />
+          <Property Name="email" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="creationdate" Type="datetime" Nullable="false" />
           <Property Name="userid" Type="int" Nullable="false" />
         </EntityType>
@@ -197,11 +123,10 @@
           </Key>
           <Property Name="customerid" Type="int" Nullable="false" />
           <Property Name="interestid" Type="int" Nullable="false" />
-          <Property Name="comments" Type="varchar" Nullable="false" MaxLength="120" />
+          <Property Name="comments" Type="varchar" MaxLength="120" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'SumaLealtad.dbo.FACTURA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
+warning 6002: The table/view 'SumaLealtad.dbo.FACTURA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="FACTURA">
           <Key>
             <PropertyRef Name="NRO_TARJETA" />
@@ -213,25 +138,25 @@
             <PropertyRef Name="TIPO_DOCUMENTO" />
             <PropertyRef Name="NRO_DOCUMENTO" />
           </Key>
-          <Property Name="NRO_TARJETA" Type="numeric" Nullable="false" />
+          <Property Name="NRO_TARJETA" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="SUCURSAL" Type="int" Nullable="false" />
           <Property Name="POS" Type="int" Nullable="false" />
-          <Property Name="FACTURA" Type="numeric" Nullable="false" />
+          <Property Name="FACTURA" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="FECHA" Type="datetime" Nullable="false" />
-          <Property Name="HORA" Type="char" Nullable="false" MaxLength="8" />
+          <Property Name="HORA" Type="char" MaxLength="8" Nullable="false" />
           <Property Name="MONTO_FACTURA" Type="money" />
           <Property Name="FECHA_REGISTRO" Type="datetime" />
           <Property Name="PUNTOS_ACRED" Type="int" />
           <Property Name="PUNTOS_CANJE" Type="int" />
-          <Property Name="TIPO_DOCUMENTO" Type="varchar" Nullable="false" MaxLength="1" />
-          <Property Name="NRO_DOCUMENTO" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="TIPO_DOCUMENTO" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="NRO_DOCUMENTO" Type="varchar" MaxLength="15" Nullable="false" />
         </EntityType>
         <EntityType Name="Interest">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="varchar" Nullable="false" MaxLength="120" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="120" Nullable="false" />
           <Property Name="active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Menu">
@@ -239,10 +164,10 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="parentid" Type="int" Nullable="false" />
-          <Property Name="controller" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="actions" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="controller" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="actions" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="order" Type="int" Nullable="false" />
           <Property Name="tooltips" Type="varchar" MaxLength="120" />
         </EntityType>
@@ -251,15 +176,15 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="type" Type="varchar" Nullable="false" MaxLength="25" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <EntityType Name="Operations">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -268,12 +193,12 @@
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="companyid" Type="int" Nullable="false" />
           <Property Name="totalamount" Type="money" Nullable="false" />
-          <Property Name="paymenttype" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="paymenttype" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="creationdate" Type="datetime" Nullable="false" />
           <Property Name="creationuserid" Type="int" Nullable="false" />
           <Property Name="processdate" Type="datetime" Nullable="false" />
           <Property Name="comments" Type="varchar" MaxLength="120" />
-          <Property Name="status" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="status" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -285,18 +210,17 @@
           <Property Name="customerid" Type="int" Nullable="false" />
           <Property Name="amount" Type="money" Nullable="false" />
           <Property Name="comments" Type="varchar" MaxLength="120" />
-          <Property Name="status" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="status" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'SumaLealtad.dbo.PARAMETROS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
+warning 6002: The table/view 'SumaLealtad.dbo.PARAMETROS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="PARAMETROS">
           <Key>
             <PropertyRef Name="ID_PARAM" />
             <PropertyRef Name="NOMBRE_PARAM" />
           </Key>
           <Property Name="ID_PARAM" Type="int" Nullable="false" />
-          <Property Name="NOMBRE_PARAM" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="NOMBRE_PARAM" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="DESCRIPCION" Type="varchar" MaxLength="50" />
           <Property Name="MTO_CANJE" Type="int" />
           <Property Name="PTS_CANJE" Type="int" />
@@ -308,13 +232,22 @@
           <Property Name="FECHA_DESAC_PARAM" Type="datetime" />
           <Property Name="FECHA" Type="datetime" />
         </EntityType>
+        <EntityType Name="Photos_Affiliate">
+          <Key>
+            <PropertyRef Name="photo_id" />
+          </Key>
+          <Property Name="photo_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="photo" Type="image" Nullable="false" />
+          <Property Name="photo_type" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Affiliate_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Reasons">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="type" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="12" Nullable="false" />
         </EntityType>
         <EntityType Name="RESTRICCIONES">
           <Key>
@@ -336,16 +269,16 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="level" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SecurityLevel">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="comments" Type="varchar" MaxLength="120" />
         </EntityType>
         <EntityType Name="SecurityMenu">
@@ -354,7 +287,7 @@
             <PropertyRef Name="menuid" />
             <PropertyRef Name="securitylevelid" />
           </Key>
-          <Property Name="roleid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="roleid" Type="int" Nullable="false" />
           <Property Name="menuid" Type="int" Nullable="false" />
           <Property Name="securitylevelid" Type="int" Nullable="false" />
         </EntityType>
@@ -363,26 +296,26 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Type">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="name" Type="varchar" Nullable="false" MaxLength="25" />
+          <Property Name="name" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="login" Type="varchar" Nullable="false" MaxLength="32" />
-          <Property Name="passw" Type="varchar" Nullable="false" MaxLength="250" />
-          <Property Name="firstname" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="lastname" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="email" Type="varchar" Nullable="false" MaxLength="80" />
-          <Property Name="status" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="passw" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="firstname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="status" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <EntityType Name="UserRol">
           <Key>
@@ -393,8 +326,8 @@
           <Property Name="roleid" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Affiliate_Channel">
-          <End Role="Channel" Type="LealtadModel.Store.Channel" Multiplicity="1" />
-          <End Role="Affiliate" Type="LealtadModel.Store.Affiliate" Multiplicity="*" />
+          <End Role="Channel" Type="Self.Channel" Multiplicity="1" />
+          <End Role="Affiliate" Type="Self.Affiliate" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Channel">
               <PropertyRef Name="id" />
@@ -405,8 +338,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CompanyAffiliate_Company">
-          <End Role="Company" Type="LealtadModel.Store.Company" Multiplicity="1" />
-          <End Role="CompanyAffiliate" Type="LealtadModel.Store.CompanyAffiliate" Multiplicity="*" />
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="CompanyAffiliate" Type="Self.CompanyAffiliate" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Company">
               <PropertyRef Name="id" />
@@ -417,8 +350,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CustomerInterest_Interest">
-          <End Role="Interest" Type="LealtadModel.Store.Interest" Multiplicity="1" />
-          <End Role="CustomerInterest" Type="LealtadModel.Store.CustomerInterest" Multiplicity="*" />
+          <End Role="Interest" Type="Self.Interest" Multiplicity="1" />
+          <End Role="CustomerInterest" Type="Self.CustomerInterest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Interest">
               <PropertyRef Name="id" />
@@ -429,8 +362,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_Company">
-          <End Role="Company" Type="LealtadModel.Store.Company" Multiplicity="1" />
-          <End Role="Order" Type="LealtadModel.Store.Order" Multiplicity="*" />
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Company">
               <PropertyRef Name="id" />
@@ -441,8 +374,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OrderDetail_Order">
-          <End Role="Order" Type="LealtadModel.Store.Order" Multiplicity="1" />
-          <End Role="OrderDetail" Type="LealtadModel.Store.OrderDetail" Multiplicity="*" />
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Order">
               <PropertyRef Name="id" />
@@ -452,6 +385,84 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="LealtadModelStoreContainer">
+          <EntitySet Name="Affiliate" EntityType="Self.Affiliate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AffiliateAud" EntityType="Self.AffiliateAud" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Auditing" EntityType="Self.Auditing" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Channel" EntityType="Self.Channel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyAffiliate" EntityType="Self.CompanyAffiliate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerInterest" EntityType="Self.CustomerInterest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Interest" EntityType="Self.Interest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Object" EntityType="Self.Object" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Operations" EntityType="Self.Operations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Photos_Affiliate" EntityType="Self.Photos_Affiliate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reasons" EntityType="Self.Reasons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RESTRICCIONES" EntityType="Self.RESTRICCIONES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SecurityLevel" EntityType="Self.SecurityLevel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SecurityMenu" EntityType="Self.SecurityMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Type" EntityType="Self.Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRol" EntityType="Self.UserRol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FACTURA" EntityType="Self.FACTURA" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[FACTURA].[NRO_TARJETA] AS [NRO_TARJETA], 
+[FACTURA].[SUCURSAL] AS [SUCURSAL], 
+[FACTURA].[POS] AS [POS], 
+[FACTURA].[FACTURA] AS [FACTURA], 
+[FACTURA].[FECHA] AS [FECHA], 
+[FACTURA].[HORA] AS [HORA], 
+[FACTURA].[MONTO_FACTURA] AS [MONTO_FACTURA], 
+[FACTURA].[FECHA_REGISTRO] AS [FECHA_REGISTRO], 
+[FACTURA].[PUNTOS_ACRED] AS [PUNTOS_ACRED], 
+[FACTURA].[PUNTOS_CANJE] AS [PUNTOS_CANJE], 
+[FACTURA].[TIPO_DOCUMENTO] AS [TIPO_DOCUMENTO], 
+[FACTURA].[NRO_DOCUMENTO] AS [NRO_DOCUMENTO]
+FROM [dbo].[FACTURA] AS [FACTURA]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PARAMETROS" EntityType="Self.PARAMETROS" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[PARAMETROS].[ID_PARAM] AS [ID_PARAM], 
+[PARAMETROS].[NOMBRE_PARAM] AS [NOMBRE_PARAM], 
+[PARAMETROS].[DESCRIPCION] AS [DESCRIPCION], 
+[PARAMETROS].[MTO_CANJE] AS [MTO_CANJE], 
+[PARAMETROS].[PTS_CANJE] AS [PTS_CANJE], 
+[PARAMETROS].[MTO_ACR] AS [MTO_ACR], 
+[PARAMETROS].[PTS_ACR] AS [PTS_ACR], 
+[PARAMETROS].[TIPO_PRE] AS [TIPO_PRE], 
+[PARAMETROS].[TIPO_SUMA] AS [TIPO_SUMA], 
+[PARAMETROS].[FECHA_ACT_PARAM] AS [FECHA_ACT_PARAM], 
+[PARAMETROS].[FECHA_DESAC_PARAM] AS [FECHA_DESAC_PARAM], 
+[PARAMETROS].[FECHA] AS [FECHA]
+FROM [dbo].[PARAMETROS] AS [PARAMETROS]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Affiliate_Channel" Association="Self.FK_Affiliate_Channel">
+            <End Role="Channel" EntitySet="Channel" />
+            <End Role="Affiliate" EntitySet="Affiliate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyAffiliate_Company" Association="Self.FK_CompanyAffiliate_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CompanyAffiliate" EntitySet="CompanyAffiliate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerInterest_Interest" Association="Self.FK_CustomerInterest_Interest">
+            <End Role="Interest" EntitySet="Interest" />
+            <End Role="CustomerInterest" EntitySet="CustomerInterest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Company" Association="Self.FK_Order_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_Order" Association="Self.FK_OrderDetail_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -502,6 +513,7 @@
             <End Role="Order" EntitySet="Orders" />
             <End Role="OrderDetail" EntitySet="OrderDetails" />
           </AssociationSet>
+          <EntitySet Name="Photos_Affiliate" EntityType="LealtadModel.Photos_Affiliate" />
         </EntityContainer>
         <EntityType Name="Affiliate">
           <Key>
@@ -523,9 +535,12 @@
           <Property Name="modifieduserid" Type="Int32" Nullable="false" />
           <Property Name="modifieddate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="statusid" Type="Int32" Nullable="false" />
-          <Property Name="reasonsid" Type="Int32" Nullable="false" />
+          <Property Name="reasonsid" Type="Int32" />
           <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Channel" Relationship="LealtadModel.FK_Affiliate_Channel" FromRole="Affiliate" ToRole="Channel" />
+          <Property Name="twitter_account" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="facebook_account" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="instagram_account" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="AffiliateAud">
           <Key>
@@ -877,6 +892,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Photos_Affiliate">
+          <Key>
+            <PropertyRef Name="photo_id" />
+          </Key>
+          <Property Name="photo_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="photo" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="photo_type" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Affiliate_id" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -886,6 +910,9 @@
           <EntitySetMapping Name="Affiliates">
             <EntityTypeMapping TypeName="LealtadModel.Affiliate">
               <MappingFragment StoreEntitySet="Affiliate">
+                <ScalarProperty Name="instagram_account" ColumnName="instagram_account" />
+                <ScalarProperty Name="facebook_account" ColumnName="facebook_account" />
+                <ScalarProperty Name="twitter_account" ColumnName="twitter_account" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="customerid" ColumnName="customerid" />
                 <ScalarProperty Name="docnumber" ColumnName="docnumber" />
@@ -1197,6 +1224,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Photos_Affiliate">
+            <EntityTypeMapping TypeName="LealtadModel.Photos_Affiliate">
+              <MappingFragment StoreEntitySet="Photos_Affiliate">
+                <ScalarProperty Name="Affiliate_id" ColumnName="Affiliate_id" />
+                <ScalarProperty Name="photo_type" ColumnName="photo_type" />
+                <ScalarProperty Name="photo" ColumnName="photo" />
+                <ScalarProperty Name="photo_id" ColumnName="photo_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1211,9 +1248,10 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

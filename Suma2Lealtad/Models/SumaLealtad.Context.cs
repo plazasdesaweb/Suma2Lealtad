@@ -50,5 +50,6 @@ namespace Suma2Lealtad.Models
         public DbSet<Type> Types { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRol> UserRols { get; set; }
+        public DbSet<Photos_Affiliate> Photos_Affiliate { get; set; }
     }
 }

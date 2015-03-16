@@ -230,6 +230,7 @@
     <Compile Include="Models\CLIENTE.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CMenu.cs" />
     <Compile Include="Models\Company.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -263,6 +264,9 @@
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PARAMETRO.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Photos_Affiliate.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Reason.cs">
@@ -310,6 +314,7 @@
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Modules\AppModule.cs" />
+    <Compile Include="Modules\AppSession.cs" />
     <Compile Include="Modules\WSL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -540,6 +545,7 @@
     <Content Include="Views\OperacionesPinPad\Index.cshtml" />
     <Content Include="Views\OperacionesPinPad\SilverlightPinPad.cshtml" />
     <Content Include="Views\SaldosMovimientos\Index.cshtml" />
+    <Content Include="Views\Shared\_MenuLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
