@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Suma2Lealtad.Models;
+using Suma2Lealtad.Modules;
 
 namespace Suma2Lealtad.Controllers
 {
@@ -19,7 +20,19 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            var q = (from u in db.Users
+	        select new Usuario()
+	        {
+                id = u.id,
+                login = u.login,
+                passw = u.passw,
+                firstname = u.firstname,
+                lastname = u.lastname,
+                email = u.email,
+                status = (u.status.Equals("1") ? "Activo":"Inactivo")
+	        });
+
+            return View(q.ToList());
         }
 
         //
@@ -52,6 +65,7 @@ namespace Suma2Lealtad.Controllers
         {
             if (ModelState.IsValid)
             {
+                user.passw = AppModule.EncryptStringAES(user.passw);
                 user.status = "1"; //provisional
                 db.Users.Add(user);
                 db.SaveChanges();
@@ -103,16 +117,26 @@ namespace Suma2Lealtad.Controllers
             return View(user);
         }
 
-        //
+        //  
         // POST: /User/Delete/5
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(short id)
         {
             User user = db.Users.Find(id);
-            db.Users.Remove(user);
+
+            foreach (var m in db.UserRols.Where(m => m.userid == id))
+            {
+                db.UserRols.Remove(m);
+            }
+
             db.SaveChanges();
+
+            db.Users.Remove(user);
+
+            db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 

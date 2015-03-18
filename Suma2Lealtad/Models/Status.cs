@@ -17,7 +17,9 @@ namespace Suma2Lealtad.Models
     {
         public int id { get; set; }
 
-        [Required(ErrorMessage = "* EL Estatus es requerido.")]
+        [Required(ErrorMessage = "* EL Nombre es requerido.")]
+        [RegularExpression(@"^[a-zA-Z''-'\s]*$", ErrorMessage = "* El Estatus debe contener solo letras y mas de 3 caracteres.")]
+        [StringLength(30, MinimumLength = 3, ErrorMessage = "* El Estatus debe contener solo letras y mas de 3 caracteres.")]
         public string name { get; set; }
     }
 }

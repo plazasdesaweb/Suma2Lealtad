@@ -24,9 +24,13 @@ namespace Suma2Lealtad.Models
         public int id { get; set; }
 
         [Required(ErrorMessage = "* EL Nombre es requerido.")]
+        [RegularExpression(@"^[a-zA-Z''-'\s]*$", ErrorMessage = "* El Nombre debe contener solo letras y mas de 3 caracteres.")]
+        [StringLength(30, MinimumLength = 3, ErrorMessage = "* El Nombre debe contener solo letras y mas de 3 caracteres.")]
         public string name { get; set; }
 
         [Required(ErrorMessage = "* EL Alias es requerido.")]
+        [RegularExpression(@"^[a-zA-Z''-'\s]*$", ErrorMessage = "* El Alias debe contener solo letras y mas de 3 caracteres.")]
+        [StringLength(30, MinimumLength = 3, ErrorMessage = "* El Alias debe contener solo letras y mas de 3 caracteres.")]
         public string ALIAS { get; set; }
 
         [Required(ErrorMessage = "* EL Rif es requerido.")]
@@ -34,9 +38,12 @@ namespace Suma2Lealtad.Models
         public string rif { get; set; }
 
         [Required(ErrorMessage = "* La Dirección es requerida.")]
+        [RegularExpression(@"^[a-zA-Z''-'\s]*$", ErrorMessage = "* La Dirección debe contener solo letras y mas de 3 caracteres.")]
+        [StringLength(30, MinimumLength = 3, ErrorMessage = "* La Dirección debe contener solo letras y mas de 3 caracteres.")]
         public string address { get; set; }
 
         [Required(ErrorMessage = "* EL Telefóno es requerido.")]
+        [RegularExpression(@"^\+?\d{1,3}?[- .]?\(?(?:\d{2,3})\)?[- .]?\d\d\d[- .]?\d\d\d\d$", ErrorMessage = "* El Telefóno no cumple el formato requerido. Ejm: 0212-9031411")]
         public string phone { get; set; }
 
         [Required(ErrorMessage = "* EL Correo es requerido.")]
