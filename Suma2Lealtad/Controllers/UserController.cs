@@ -13,7 +13,14 @@ namespace Suma2Lealtad.Controllers
     [AuditingFilter]
     public class UserController : Controller
     {
+
         private LealtadEntities db = new LealtadEntities();
+
+        public ActionResult CreateRoles(UserRols UserRoles)
+        {
+            UserRoles.Update();
+            return RedirectToAction("Index");
+        }
 
         //
         // GET: /User/
@@ -34,6 +41,15 @@ namespace Suma2Lealtad.Controllers
                 return HttpNotFound();
             }
             return View(user);
+        }
+
+        //
+        // GET: /User/Roles/5
+
+        public ActionResult Roles(int id = 0)
+        {
+            UserRols UserRoles = new UserRols(id);
+            return View(UserRoles);
         }
 
         //

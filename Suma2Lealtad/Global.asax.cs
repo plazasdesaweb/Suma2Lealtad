@@ -25,7 +25,39 @@ namespace Suma2Lealtad
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+        }
 
+        void Application_End(object sender, EventArgs e)
+        {
+            //  Code that runs on application shutdown
+            Console.Write("Application_End");
+        }
+
+        void Application_Error(object sender, EventArgs e)
+        {
+            // Code that runs when an unhandled error occurs
+            Console.Write("Application_Error");
+        }
+
+        void Application_BeginRequest(object sender, EventArgs e)
+        {
+            Console.Write("Application_BeginRequest");
+        }
+
+        void Application_EndRequest(object sender, EventArgs e)
+        {
+            Console.Write("Application_EndRequest");
+        }
+
+        public void Session_OnStart()
+        {
+            Console.Write("Session_OnStart");
+        }
+
+        public void Session_OnEnd()
+        {
+            Session.Abandon();
+            Console.Write("Session_OnEnd");
         }
 
     }

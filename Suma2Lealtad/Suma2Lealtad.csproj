@@ -192,6 +192,7 @@
     <Compile Include="Controllers\AuditingController.cs" />
     <Compile Include="Controllers\ChannelController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InterestController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
@@ -312,6 +313,7 @@
     <Compile Include="Models\UserRol.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserRols.cs" />
     <Compile Include="Modules\AppModule.cs" />
     <Compile Include="Modules\AppSession.cs" />
     <Compile Include="Modules\WSL.cs" />
@@ -545,6 +547,9 @@
     <Content Include="Views\OperacionesPinPad\SilverlightPinPad.cshtml" />
     <Content Include="Views\SaldosMovimientos\Index.cshtml" />
     <Content Include="Views\Shared\_MenuLayout.cshtml" />
+    <Content Include="Views\Error\Error404.cshtml" />
+    <Content Include="Views\Error\SessionExpired.cshtml" />
+    <Content Include="Views\User\Roles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
