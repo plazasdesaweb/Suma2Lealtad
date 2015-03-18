@@ -24,57 +24,84 @@
                     @{Html.RenderPartial("SilverlightImpresora");}
 
                     <!-- SECCION PARA VERIFICAR OPERACIONES Impresora-->
-                        <div class="col-md-12">
-                            <p class="text-left" id="ElementoControl" style="visibility: hidden">ElementoControl</p>
-                        </div>
-                        @*<script src="~/Scripts/jquery-2.1.1.min.js"></script>
-                        <script>
-                            $(document).ready(function () {
-                                $("#seccion2").hide();
-                                $("#seccion3").hide();
-                                $("#boton2").hide();
-                                $("#boton3").hide();
-                            });
+                    <div class="col-md-12">
+                        <input name="ElementoControl" type="text" class="text-left" id="ElementoControl" style="visibility: visible" value="ElementoControl">
+                    </div>
 
-                            function Siguiente() {
-                                $("#seccion1").hide();
-                                $("#seccion2").show();
-                                $("#boton1").hide();
-                                $("#boton2").show();
-                            }
+                    <div id="dialog-confirm" title="Empty the recycle bin?">
+                        <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>¿Se imprimió correctamente la tarjeta?</p>
+                    </div>
 
-                            function Siguiente2() {
-                                if (VerificarElementoControl("ElementoControl", "Escaneada") == true) {
-                                    //alert("Error: Debe escanear el documento de identificación para continuar.");
-                                    alert("Error: Debe seleccionar el archivo para cargarlo en el servidor.");
-                                }
-                                    //else if (VerificarElementoControl("ElementoControl", "Seleccionada") == true) {
-                                    //    //alert("Error: Debe seleccionar el archivo para cargarlo en el servidor.");
-                                    //    alert("Error: Debe escanear el documento de identificación para continuar.");
-                                    //}
-                                else if (VerificarElementoControl("ElementoControl", "Seleccionada") == true) {
-                                    $("#seccion2").hide();
-                                    $("#seccion3").show();
-                                    $("#boton2").hide();
-                                    $("#boton3").show();
-                                }
-                                else {
-                                    alert("Error: Debe completar Paso 1 y Paso 2 para continuar.");
-                                }
+                    <script src="~/Scripts/jquery-2.1.1.min.js"></script>
+                    
+                    <script>
+                        var Myinterval = setInterval(function () {
+                            if (document.getElementById("ElementoControl").value == "Impresa") {
+                                alert("me toca mostrar el dialogbox");
+                                clearInterval(Myinterval)
+                                /* aqui debo meter el dialogo modal
+                                $("#dialog-confirm").dialog({
+                                    resizable: false,
+                                    height: 140,
+                                    modal: true,
+                                    buttons: {
+                                        "Si": function () {
+                                            $(this).dialog("close");
+                                        },
+                                        "No": function () {
+                                            $(this).dialog("close");
+                                        }
+                                    }
+                                });*/
                             }
+                        }, 1000);
 
-                            function VerificarElementoControl(ElementoControl, ValorDeControl) {
-                                if (document.getElementById(ElementoControl).innerHTML == ValorDeControl)
-                                    return true;
-                                else
-                                    return false;
-                            }
+                        //$(document).ready(function () {
+                        //    $("#seccion2").hide();
+                        //    $("#seccion3").hide();
+                        //    $("#boton2").hide();
+                        //    $("#boton3").hide();
+                        //});
 
-                            function ActualizaElementoControl(ElementoControl, ValorDeControl) {
-                                document.getElementById(ElementoControl).innerHTML = ValorDeControl;
-                            }
-                        </script>
-                        <!-- FIN SECCION PARA VERIFICAR OPERACIONES -->*@
+                        //function Siguiente() {
+                        //    $("#seccion1").hide();
+                        //    $("#seccion2").show();
+                        //    $("#boton1").hide();
+                        //    $("#boton2").show();
+                        //}
+
+                        //function Siguiente2() {
+                        //    if (VerificarElementoControl("ElementoControl", "Escaneada") == true) {
+                        //        //alert("Error: Debe escanear el documento de identificación para continuar.");
+                        //        alert("Error: Debe seleccionar el archivo para cargarlo en el servidor.");
+                        //    }
+                        //        //else if (VerificarElementoControl("ElementoControl", "Seleccionada") == true) {
+                        //        //    //alert("Error: Debe seleccionar el archivo para cargarlo en el servidor.");
+                        //        //    alert("Error: Debe escanear el documento de identificación para continuar.");
+                        //        //}
+                        //    else if (VerificarElementoControl("ElementoControl", "Seleccionada") == true) {
+                        //        $("#seccion2").hide();
+                        //        $("#seccion3").show();
+                        //        $("#boton2").hide();
+                        //        $("#boton3").show();
+                        //    }
+                        //    else {
+                        //        alert("Error: Debe completar Paso 1 y Paso 2 para continuar.");
+                        //    }
+                        //}
+
+                        //function VerificarElementoControl(ElementoControl, ValorDeControl) {
+                        //    if (document.getElementById(ElementoControl).innerHTML == ValorDeControl)
+                        //        return true;
+                        //    else
+                        //        return false;
+                        //}
+
+                        //function ActualizaElementoControl(ElementoControl, ValorDeControl) {
+                        //    document.getElementById(ElementoControl).innerHTML = ValorDeControl;
+                        //}
+                    </script>
+                    @*FIN SECCION PARA VERIFICAR OPERACIONES *@
 
                     <!-- SilverLight -->
                     <div class="form-group">

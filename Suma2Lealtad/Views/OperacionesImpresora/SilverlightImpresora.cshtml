@@ -10,18 +10,18 @@
 
 @{
     //DEBO SACAR LA INFO DEL NRO DEL DOCUMENTO DEL MODELO Y PASARLO COMO PARAMETRO AL HELPER SE SILVERLIGHT
-    var InitParams = "Nombre=" + "Nombre";
-    InitParams = InitParams + "," + "Apellido=" + "Apellido";
-    InitParams = InitParams + "," + "NroTarjeta=" + "NroTarjeta";
-    InitParams = InitParams + "," + "Track1=" + "Track1";
-    InitParams = InitParams + "," + "Track2=" + "Track2";
-    InitParams = InitParams + "," + "TipoTarjeta=" + "TipoTarjeta";
+    var InitParams = "Nombre=" + "NombrePrueba";
+    InitParams = InitParams + "," + "Apellido=" + "ApellidoPrueba";
+    InitParams = InitParams + "," + "NroTarjeta=" + "99999999999999999";
+    InitParams = InitParams + "," + "Track1=" + "B99999999999999999^AUTOMERC_PLAZAS^99120000";
+    InitParams = InitParams + "," + "Track2=" + "99999999999999999=99120000";
+    InitParams = InitParams + "," + "TipoTarjeta=" + "Suma";
     InitParams = InitParams + "," + "Corporacion=" + "Corporacion";
-    InitParams = InitParams + "," + "FechaVencimiento=" + "FechaVencimiento";  
+    InitParams = InitParams + "," + "FechaVencimiento=" + "12-99";  
     InitParams = InitParams + "," + "idElementoHtmlControl=ElementoControl";   
 }
 
-@Helpers.Silverlight(xapPath: "~/ClientBin/SumaPlazas.Dispositivos.Impresora.xap", slObjectId: "sl", divObjectWidth: "500px", customParams: @InitParams, divObjectClass: "col-md-12")
+@Helpers.Silverlight(xapPath: "~/ClientBin/SumaPlazas.Dispositivos.Impresora.xap", slObjectId: "sl", divObjectWidth: "100%", divObjectHeight: "350px", customParams: @InitParams, divObjectClass: "col-md-12")
 
 <script type="text/javascript">
     var slcontrol3 = document.getElementById("sl");
