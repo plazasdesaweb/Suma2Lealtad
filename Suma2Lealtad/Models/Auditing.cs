@@ -21,5 +21,6 @@ namespace Suma2Lealtad.Models
         public System.DateTime creationdate { get; set; }
         public string originaldata { get; set; }
         public string changedata { get; set; }
+        public string ipaddress { get; set; }
     }
 }

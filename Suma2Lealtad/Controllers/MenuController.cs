@@ -6,9 +6,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Suma2Lealtad.Models;
+using Suma2Lealtad.Filters;
 
 namespace Suma2Lealtad.Controllers
 {
+    [AuditingFilter]
     public class MenuController : Controller
     {
         private LealtadEntities db = new LealtadEntities();

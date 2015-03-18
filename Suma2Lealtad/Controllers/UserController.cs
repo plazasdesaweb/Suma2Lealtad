@@ -6,33 +6,28 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Suma2Lealtad.Models;
-using Suma2Lealtad.Modules;
+using Suma2Lealtad.Filters;
 
 namespace Suma2Lealtad.Controllers
 {
-
+    [AuditingFilter]
     public class UserController : Controller
     {
+
         private LealtadEntities db = new LealtadEntities();
+
+        public ActionResult CreateRoles(UserRols UserRoles)
+        {
+            UserRoles.Update();
+            return RedirectToAction("Index");
+        }
 
         //
         // GET: /User/
 
         public ActionResult Index()
         {
-            var q = (from u in db.Users
-	        select new Usuario()
-	        {
-                id = u.id,
-                login = u.login,
-                passw = u.passw,
-                firstname = u.firstname,
-                lastname = u.lastname,
-                email = u.email,
-                status = (u.status.Equals("1") ? "Activo":"Inactivo")
-	        });
-
-            return View(q.ToList());
+            return View(db.Users.ToList());
         }
 
         //
@@ -46,6 +41,15 @@ namespace Suma2Lealtad.Controllers
                 return HttpNotFound();
             }
             return View(user);
+        }
+
+        //
+        // GET: /User/Roles/5
+
+        public ActionResult Roles(int id = 0)
+        {
+            UserRols UserRoles = new UserRols(id);
+            return View(UserRoles);
         }
 
         //
@@ -65,8 +69,6 @@ namespace Suma2Lealtad.Controllers
         {
             if (ModelState.IsValid)
             {
-                user.passw = AppModule.EncryptStringAES(user.passw);
-                user.status = "1"; //provisional
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -117,26 +119,16 @@ namespace Suma2Lealtad.Controllers
             return View(user);
         }
 
-        //  
+        //
         // POST: /User/Delete/5
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(short id)
+        public ActionResult DeleteConfirmed(int id)
         {
             User user = db.Users.Find(id);
-
-            foreach (var m in db.UserRols.Where(m => m.userid == id))
-            {
-                db.UserRols.Remove(m);
-            }
-
-            db.SaveChanges();
-
             db.Users.Remove(user);
-
             db.SaveChanges();
-
             return RedirectToAction("Index");
         }
 
