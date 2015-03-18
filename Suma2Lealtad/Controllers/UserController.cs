@@ -27,9 +27,20 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
-        }
+            var q = (from u in db.Users
+                     select new Usuario()
+                     {
+                         id = u.id,
+                         login = u.login,
+                         passw = u.passw,
+                         firstname = u.firstname,
+                         lastname = u.lastname,
+                         email = u.email,
+                         status = (u.status.Equals("1") ? "Activo" : "Inactivo")
+                     });
 
+            return View(q.ToList());
+        }
         //
         // GET: /User/Details/5
 

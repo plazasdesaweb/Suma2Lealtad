@@ -314,6 +314,7 @@
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserRols.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Modules\AppModule.cs" />
     <Compile Include="Modules\AppSession.cs" />
     <Compile Include="Modules\WSL.cs" />
@@ -471,11 +472,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Usuario\Index.cshtml" />
-    <Content Include="Views\Usuario\Details.cshtml" />
-    <Content Include="Views\Usuario\Create.cshtml" />
-    <Content Include="Views\Usuario\Edit.cshtml" />
-    <Content Include="Views\Usuario\Delete.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Afiliado\Index.cshtml" />
     <Content Include="Views\Afiliado\Filter.cshtml" />
