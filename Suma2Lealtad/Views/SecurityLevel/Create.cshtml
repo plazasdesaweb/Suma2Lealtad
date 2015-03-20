@@ -2,43 +2,68 @@
 
 @{
     ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<div class="container">
 
-@using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
+    <div class="row">
 
-    <fieldset>
-        <legend>SecurityLevel</legend>
+        <div class="col-md-7 col-md-offset-2">
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.name)
+            <div class="panel panel-default">
+
+                <div class="panel-heading clearfix panel-gradient">
+                    <h3 class="panel-title">Nivel de Permiso / Agregar Nuevo Registro</h3>
+                </div>
+
+                <div class="panel-body">
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+
+                        <form class="form-horizontal" role="form">
+
+                            <div class="form-group">
+
+                                <div class="editor-label col-md-4 control-label">
+                                    @*@Html.LabelFor(model => model.name)*@ Nombre :
+                                </div>
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.name)
+                                </div>
+
+                            </div>
+
+                            <!-- btn btn-success -->
+                            <div class="form-group">
+                                <div class="col-md-12 col-btn">
+                                    <div class="pull-right">
+                                        <input type="submit" class="btn btn-success btn-md" value="Guardar" />
+                                        <a href="@Url.Action("Index", "SecurityLevel")" class="btn btn-danger btn-md" role="button">Cancelar</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--// btn btn-success -->
+
+                        </form>
+                
+                    }
+
+                </div>
+                <!--// panel-body -->
+
+            </div>
+            <!--// panel -->
+
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.name)
-            @Html.ValidationMessageFor(model => model.name)
-        </div>
+        <!--// columns -->
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.comments)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.comments)
-            @Html.ValidationMessageFor(model => model.comments)
-        </div>
+    </div>
+    <!--// row -->
 
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+<!--// container -->

@@ -6,9 +6,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Suma2Lealtad.Models;
+using Suma2Lealtad.Filters;
 
 namespace Suma2Lealtad.Controllers
 {
+    [AuditingFilter]
     public class ReasonsBlockController : Controller
     {
         private LealtadEntities db = new LealtadEntities();
@@ -64,7 +66,7 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Reason reason = db.Reasons.Find(id);
+            Suma2Lealtad.Models.Reason reason = db.Reasons.Find(id);
             if (reason == null)
             {
                 return HttpNotFound();
@@ -77,10 +79,11 @@ namespace Suma2Lealtad.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Reason reason)
+        public ActionResult Edit(Suma2Lealtad.Models.Reason reason)
         {
             if (ModelState.IsValid)
             {
+                reason.type = "Bloqueo";
                 db.Entry(reason).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

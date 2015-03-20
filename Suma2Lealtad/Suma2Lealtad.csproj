@@ -91,7 +91,6 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Transactions" />
@@ -193,6 +192,7 @@
     <Compile Include="Controllers\AuditingController.cs" />
     <Compile Include="Controllers\ChannelController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InterestController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
@@ -207,7 +207,7 @@
     <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Controllers\TypeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Filters\AuditingFilter.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -313,6 +313,8 @@
     <Compile Include="Models\UserRol.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserRols.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Modules\AppModule.cs" />
     <Compile Include="Modules\AppSession.cs" />
     <Compile Include="Modules\WSL.cs" />
@@ -384,9 +386,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="HtmlPage1.html" />
-    <Content Include="HtmlPage2.html" />
-    <Content Include="HtmlPage3.html" />
     <Content Include="Images\conectado.jpg" />
     <Content Include="Images\plzlogo.jpg" />
     <Content Include="Images\principal.jpg" />
@@ -434,48 +433,6 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\npm.js" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap-dialog\css\bootstrap-dialog.css" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap-dialog\css\bootstrap-dialog.min.css" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap-dialog\js\bootstrap-dialog.js" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap-dialog\js\bootstrap-dialog.min.js" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap\css\bootstrap-theme.css" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap\css\bootstrap-theme.min.css" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap\css\bootstrap.css" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap\css\bootstrap.min.css" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap\js\bootstrap.js" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap\js\bootstrap.min.js" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap\js\npm.js" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\jquery\jquery.min.js" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\prettify\prettify.css" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\prettify\run_prettify.js" />
-    <Content Include="Scripts\PruebaModalJQUI\jquery-ui.css" />
-    <Content Include="Scripts\PruebaModalJQUI\jquery-ui.js" />
-    <Content Include="Scripts\PruebaModalJQUI\jquery-ui.min.css" />
-    <Content Include="Scripts\PruebaModalJQUI\jquery-ui.min.js" />
-    <Content Include="Scripts\PruebaModalJQUI\jquery-ui.structure.css" />
-    <Content Include="Scripts\PruebaModalJQUI\jquery-ui.structure.min.css" />
-    <Content Include="Scripts\PruebaModalJQUI\jquery-ui.theme.css" />
-    <Content Include="Scripts\PruebaModalJQUI\jquery-ui.theme.min.css" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder1\jquery.js" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder2\ui-bg_diagonals-thick_18_b81900_40x40.png" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder2\ui-bg_diagonals-thick_20_666666_40x40.png" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder2\ui-bg_flat_10_000000_40x100.png" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder2\ui-bg_glass_100_f6f6f6_1x400.png" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder2\ui-bg_glass_100_fdf5ce_1x400.png" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder2\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder2\ui-bg_gloss-wave_35_f6a828_500x100.png" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder2\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder2\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder2\ui-icons_222222_256x240.png" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder2\ui-icons_228ef1_256x240.png" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder2\ui-icons_ef8c08_256x240.png" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder2\ui-icons_ffd27a_256x240.png" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder2\ui-icons_ffffff_256x240.png" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder3\bootbox.js" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder4\bootstrap-dialog.min.css" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder4\bootstrap-dialog.min.js" />
-    <Content Include="Scripts\PruebaModalJQUI\NewFolder4\run_prettify.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -515,11 +472,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Usuario\Index.cshtml" />
-    <Content Include="Views\Usuario\Details.cshtml" />
-    <Content Include="Views\Usuario\Create.cshtml" />
-    <Content Include="Views\Usuario\Edit.cshtml" />
-    <Content Include="Views\Usuario\Delete.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Afiliado\Index.cshtml" />
     <Content Include="Views\Afiliado\Filter.cshtml" />
@@ -591,12 +543,9 @@
     <Content Include="Views\OperacionesPinPad\SilverlightPinPad.cshtml" />
     <Content Include="Views\SaldosMovimientos\Index.cshtml" />
     <Content Include="Views\Shared\_MenuLayout.cshtml" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap-dialog\less\bootstrap-dialog.less" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap\css\bootstrap-theme.css.map" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap\css\bootstrap.css.map" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Views\Error\Error404.cshtml" />
+    <Content Include="Views\Error\SessionExpired.cshtml" />
+    <Content Include="Views\User\Roles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

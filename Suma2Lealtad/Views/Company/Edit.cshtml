@@ -38,11 +38,11 @@
                                     @Html.ValidationMessageFor(model => model.name)
                                 </div>
 
-                                <div class="editor-label  col-md-4 control-label">
-                                    @*@Html.LabelFor(model => model.active)*@ Alias :
+                                <div class="editor-label col-md-4 control-label">
+                                    @*@Html.LabelFor(model => model.name)*@ Alias:
                                 </div>
                                 <div class="editor-field col-md-8">
-                                    @Html.EditorFor(model => model.ALIAS)
+                                    @Html.TextBoxFor(model => model.ALIAS, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.ALIAS)
                                 </div>
 
@@ -50,7 +50,7 @@
                                     @*@Html.LabelFor(model => model.active)*@ Rif :
                                 </div>
                                 <div class="editor-field col-md-8">
-                                    @Html.EditorFor(model => model.rif)
+                                    @Html.TextBoxFor(model => model.rif, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.rif)
                                 </div>
 
@@ -58,15 +58,15 @@
                                     @*@Html.LabelFor(model => model.active)*@ Dirección :
                                 </div>
                                 <div class="editor-field col-md-8">
-                                    @Html.EditorFor(model => model.address)
+                                    @Html.TextBoxFor(model => model.address, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.address)
                                 </div>
 
                                 <div class="editor-label  col-md-4 control-label">
-                                    @*@Html.LabelFor(model => model.active)*@ Telefono :
+                                    @*@Html.LabelFor(model => model.active)*@ Teléfono :
                                 </div>
                                 <div class="editor-field col-md-8">
-                                    @Html.EditorFor(model => model.phone)
+                                    @Html.TextBoxFor(model => model.phone, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.phone)
                                 </div>
 
@@ -74,7 +74,7 @@
                                     @*@Html.LabelFor(model => model.active)*@ Correo :
                                 </div>
                                 <div class="editor-field col-md-8">
-                                    @Html.EditorFor(model => model.email)
+                                    @Html.TextBoxFor(model => model.email, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.email)
                                 </div>
 
@@ -85,7 +85,7 @@
                                 <div class="col-md-12 col-btn">
                                     <div class="pull-right">
                                         <input type="submit" class="btn btn-success btn-md" value="Guardar" />
-                                        <a class="btn btn-success btn-md" href="@Url.Action("Index", "Company")">Cancelar</a>
+                                        <a class="btn btn-danger btn-md" href="@Url.Action("Index", "Company")">Cancelar</a>
                                     </div>
                                 </div>
                             </div>

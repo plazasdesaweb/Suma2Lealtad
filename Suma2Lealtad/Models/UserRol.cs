@@ -11,10 +11,14 @@ namespace Suma2Lealtad.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class UserRol
     {
+        [Required(ErrorMessage = "* EL Usuario es requerido.")]
         public int userid { get; set; }
+
+        [Required(ErrorMessage = "* EL Rol es requerido.")]
         public int roleid { get; set; }
     }
 }

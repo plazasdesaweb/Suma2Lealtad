@@ -11,6 +11,7 @@ namespace Suma2Lealtad.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Company
     {
@@ -21,12 +22,34 @@ namespace Suma2Lealtad.Models
         }
     
         public int id { get; set; }
+
+        [Required(ErrorMessage = "* EL Nombre es requerido.")]
+        [RegularExpression(@"^[a-zA-Z''-'\s]*$", ErrorMessage = "* El Nombre debe contener solo letras y mas de 3 caracteres.")]
+        [StringLength(30, MinimumLength = 3, ErrorMessage = "* El Nombre debe contener solo letras y mas de 3 caracteres.")]
         public string name { get; set; }
+
+        [Required(ErrorMessage = "* EL Alias es requerido.")]
+        [RegularExpression(@"^[a-zA-Z''-'\s]*$", ErrorMessage = "* El Alias debe contener solo letras y mas de 3 caracteres.")]
+        [StringLength(30, MinimumLength = 3, ErrorMessage = "* El Alias debe contener solo letras y mas de 3 caracteres.")]
         public string ALIAS { get; set; }
+
+        [Required(ErrorMessage = "* EL Rif es requerido.")]
+        [RegularExpression(@"^[JGVE][-][0-9]{8}[-][0-9]$", ErrorMessage = "* El Rif no cumple el formato requerido. Ejm: J-30812541-8")]
         public string rif { get; set; }
+
+        [Required(ErrorMessage = "* La Dirección es requerida.")]
+        [RegularExpression(@"^[a-zA-Z''-'\s]*$", ErrorMessage = "* La Dirección debe contener solo letras y mas de 3 caracteres.")]
+        [StringLength(30, MinimumLength = 3, ErrorMessage = "* La Dirección debe contener solo letras y mas de 3 caracteres.")]
         public string address { get; set; }
+
+        [Required(ErrorMessage = "* EL Telefóno es requerido.")]
+        [RegularExpression(@"^\+?\d{1,3}?[- .]?\(?(?:\d{2,3})\)?[- .]?\d\d\d[- .]?\d\d\d\d$", ErrorMessage = "* El Telefóno no cumple el formato requerido. Ejm: 0212-9031411")]
         public string phone { get; set; }
+
+        [Required(ErrorMessage = "* EL Correo es requerido.")]
+        [RegularExpression(@"^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,3}$", ErrorMessage = "* El Correo no cumple el formato requerido. Ejm: correo@ejemplo.com")]
         public string email { get; set; }
+
         public System.DateTime creationdate { get; set; }
         public int userid { get; set; }
     

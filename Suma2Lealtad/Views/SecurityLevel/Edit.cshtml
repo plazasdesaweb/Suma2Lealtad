@@ -30,20 +30,12 @@
 
                             <div class="form-group">
 
-                                <div class="editor-label">
-                                    @Html.LabelFor(model => model.name)
+                                <div class="editor-label col-md-4 control-label">
+                                    @*@Html.LabelFor(model => model.name)*@ Nombre :
                                 </div>
-                                <div class="editor-field">
-                                    @Html.EditorFor(model => model.name)
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.name)
-                                </div>
-
-                                <div class="editor-label">
-                                    @Html.LabelFor(model => model.comments)
-                                </div>
-                                <div class="editor-field">
-                                    @Html.EditorFor(model => model.comments)
-                                    @Html.ValidationMessageFor(model => model.comments)
                                 </div>
 
                             </div>
@@ -53,7 +45,7 @@
                                 <div class="col-md-12 col-btn">
                                     <div class="pull-right">
                                         <input type="submit" class="btn btn-success btn-md" value="Guardar" />
-                                        <a class="btn btn-success btn-md" href="@Url.Action("Index", "SecurityLevel")">Cancelar</a>
+                                        <a class="btn btn-danger btn-md" href="@Url.Action("Index", "SecurityLevel")">Cancelar</a>
                                     </div>
                                 </div>
                             </div>

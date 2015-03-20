@@ -11,13 +11,15 @@ namespace Suma2Lealtad.Controllers
 {
     public class SaldosMovimientosController : Controller
     {
-        public ActionResult Index(string Documento)
+        //
+        // GET: /SaldosMovimientos/
+
+        public ActionResult Index()
         {
             SaldosMovimientos SaldosMovimientos = new SaldosMovimientos();
-
-            Documento = "V-14566318";
-            SaldosMovimientos.DocId = Documento.Substring(2);
             
+            SaldosMovimientos.DocId = "V-16006920".Replace("V-","");
+            //SaldosMovimientos.DocId = "V-6960635".Replace("V-", "");
             string saldosJson = WSL.Cards.getBalance(SaldosMovimientos.DocId);
             SaldosMovimientos.Saldos = (IEnumerable<Saldo>)JsonConvert.DeserializeObject<IEnumerable<Saldo>>(saldosJson);
             string movimientosPrepagoJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.First().accounttype , SaldosMovimientos.DocId);
@@ -27,6 +29,15 @@ namespace Suma2Lealtad.Controllers
             
             return View(SaldosMovimientos);
         }
-                
+
+        //
+        // GET: /SaldosMovimientos/Acreditar/
+
+        public ActionResult Acreditar(int id = 0)
+        {
+            return View(saldosmovimientos);
+        }
+
+        public IView saldosmovimientos { get; set; }
     }
 }

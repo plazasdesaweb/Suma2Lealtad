@@ -11,6 +11,7 @@ namespace Suma2Lealtad.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Interest
     {
@@ -20,7 +21,12 @@ namespace Suma2Lealtad.Models
         }
     
         public int id { get; set; }
+
+        [Required(ErrorMessage = "* EL Nombre es requerido.")]
+        [RegularExpression(@"^[a-zA-Z''-'\s]*$", ErrorMessage = "* El Interes debe contener solo letras y mas de 3 caracteres.")]
+        [StringLength(30, MinimumLength = 3, ErrorMessage = "* El Interes debe contener solo letras y mas de 3 caracteres.")]
         public string name { get; set; }
+
         public bool active { get; set; }
     
         public virtual ICollection<CustomerInterest> CustomerInterests { get; set; }

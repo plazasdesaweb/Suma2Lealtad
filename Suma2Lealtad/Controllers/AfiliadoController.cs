@@ -8,10 +8,11 @@ using System.Web.Mvc;
 using Suma2Lealtad.Models;
 using Suma2Lealtad.Modules;
 using Newtonsoft.Json;
-using System.Windows.Forms;
+using Suma2Lealtad.Filters;
 
 namespace Suma2Lealtad.Controllers
 {
+    [AuditingFilter]
     public class AfiliadoController : Controller
     {
 
@@ -130,7 +131,7 @@ namespace Suma2Lealtad.Controllers
                         catch (Exception ex)
                         {
                             //ViewBag.Message2 = "ERROR:" + ex.Message.ToString();
-                            MessageBox.Show("ERROR: No se pudo subir el archivo seleccionado (" + ex.Message.ToString() + ")");
+                            //MessageBox.Show("ERROR:" + ex.Message.ToString());
                         }
                     else
                     {
