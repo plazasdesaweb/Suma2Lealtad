@@ -1,4 +1,4 @@
-﻿@model Suma2Lealtad.Models.AfiliadoSuma
+﻿@model Suma2Lealtad.Models.Afiliado
 
 @{
     ViewBag.Title = "Filter";
@@ -18,6 +18,9 @@
                 </div>
 
                 <div class="panel-body">
+
+                    <div class="editor-label col-md-4 control-label"> <br /> </div>
+                    <div class="editor-field col-md-8"> <br /> </div>
 
                     <form action=@Url.Action("Find", "Afiliado") name="form" method="post" onsubmit="return validatePass();">
 
@@ -39,14 +42,19 @@
                             <span id="someMail"></span>
                         </div>
 
+                        <div class="editor-label col-md-4 control-label"> <br /> </div>
+                        <div class="editor-field col-md-8"> <br /> </div>
+
                         <div class="form-group">
                             <div class="col-md-12 col-btn">
                                 <div class="pull-right">
-                                    <input type="submit" class="btn btn-success btn-md" value="Buscar" />
+                                    <input type="submit" class="btn btn-success btn-lg" value="Buscar Afiliado" />
                                 </div>
                             </div>
                         </div>
 
+                        <div class="editor-label col-md-4 control-label"> <br /> </div>
+                        <div class="editor-field col-md-8"> <br /> </div>
 
                     </form>
 

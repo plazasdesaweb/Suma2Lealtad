@@ -12,20 +12,32 @@ namespace Suma2Lealtad.Models
 
         public AfiliadoRepository() { }
 
-        public AfiliadoSuma Model { get; set; }
+        public Afiliado Model { get; set; }
 
-        // buscar el registro se encuentra almacenado en el Modelo SUMA.
+        // buscar el registro se encuentra almacenado en el Modelo PlazasWeb.
         public bool IsRecordPlazasWeb(string numdoc)
         {
 
-            Model = JsonConvert.DeserializeObject<AfiliadoSuma>(WSL.PlazasWeb.getClientByNumDoc(numdoc));
+            Model = JsonConvert.DeserializeObject<Afiliado>(WSL.PlazasWeb.getClientByNumDoc(numdoc));
+
+            Model.Intereses = chargeInterestList();
 
             return Model.exnumber.Equals("0");
 
         }
 
-        // almacenar el registro en el Modelo SUMA.
-        public void Save(AfiliadoSuma AfiliadoSuma)
+
+        private List<Interest> chargeInterestList()
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                return db.Interests.Where(x => x.active == true).ToList();
+            }
+        }
+
+
+        // guardar el registro en el Modelo SumaLealtad.
+        public void Save(Afiliado AfiliadoSuma)
         {
 
             using (LealtadEntities db = new LealtadEntities())

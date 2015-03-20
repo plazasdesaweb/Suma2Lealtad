@@ -52,7 +52,7 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult Create()
         {
-            var model = TempData["ModelAfiliado"] as AfiliadoSuma;
+            var model = TempData["ModelAfiliado"] as Afiliado;
             return View(model);        
         }
 
@@ -61,7 +61,7 @@ namespace Suma2Lealtad.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AfiliadoSuma AfiliadoSuma)
+        public ActionResult Create(Afiliado AfiliadoSuma)
         {
             /* PENDIENTE : Implementar Expresiones Reguladores */
             //if (ModelState.IsValid)

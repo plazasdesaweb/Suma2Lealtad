@@ -1,4 +1,4 @@
-﻿@model Suma2Lealtad.Models.AfiliadoSuma
+﻿@model Suma2Lealtad.Models.Afiliado
 
 @{
     ViewBag.Title = "Create";
@@ -9,7 +9,7 @@
 
     <div class="row">
 
-        <div class="col-md-7 col-md-offset-2">
+        <div class="col-md-9 col-md-offset-1">
 
             <div class="panel panel-default">
 
@@ -30,6 +30,9 @@
                     @Html.HiddenFor(model => model.id)
 
                     <div class="form-group" id="seccion1">
+
+                        <div class="editor-label col-md-4 control-label"> <br /> </div>
+                        <div class="editor-field col-md-8"> <br /> </div>
 
                         <div class="editor-label col-md-4 control-label">
                             Correo Electrónico :
@@ -105,10 +108,10 @@
                             @Html.ValidationMessageFor(model => model.maritalstatus)
                         </div>
 
-                        <div class="editor-label col-md-4 control-label">
+@*                        <div class="editor-label col-md-4 control-label">
                             Estado Civil :
                         </div>
-                        <div class="editor-field col-md-8">
+                        <div class="editor-field col-md-8">*@
 
 
 
@@ -122,7 +125,7 @@
                                                            "id", "sexo", 
                                                            Model.SexoOptions.Where(m => m.id == 3)))*@
 
-                        </div>
+                        @*</div>*@
 
                         <div class="editor-label col-md-4 control-label">
                             Telf. Habitación :
@@ -152,6 +155,11 @@
 
                     <!-- SilverLight -->
                     <div class="form-group" id="seccion2">
+
+                        <div class="editor-label col-md-4 control-label"> <br /> </div>
+                        <div class="editor-field col-md-8"> <br /> </div>
+
+
                         <div class="col-md-12">
                             <p class="text-left">Paso 1. Escanee el documento de identidad.</p>
                         </div>
@@ -214,6 +222,9 @@
 
                     <!-- SilverLight -->
                     <div class="form-group" id="seccion3">
+
+                        <div class="editor-label col-md-4 control-label"> <br /> </div>
+                        <div class="editor-field col-md-8"> <br /> </div>
 
                         <div class="editor-label col-md-4 control-label">
                             Ocupación :
@@ -307,17 +318,13 @@
                             </select>
                         </div>
 
+                        <div class="editor-label col-md-4 control-label"> <br /> </div>
+                        <div class="editor-field col-md-8"> <br /> </div>
 
-                    </div>
-
-                    <div class="form-group" id="seccion4">
-
-                        <h3>Preferencias del Afiliado</h3>
-
-                        <div class="editor-label col-md-6 col-right">
-                            <b>Temas de Interés :</b>
+                        <div class="editor-label col-md-4 control-label">
+                            Temas de Interés :
                         </div>
-                        <div class="editor-field col-md-6">
+                        <div class="editor-field col-md-8">
                             @for (int i = 0; i < Model.Intereses.Count; i++)
                             {
                                 @Html.CheckBoxFor(m => m.Intereses[i].Checked, new { id = i })
@@ -327,8 +334,23 @@
                             }
                         </div>
 
-                    </div>                        
-                        
+                        <div class="editor-label col-md-4 control-label"> <br /> </div>
+                        <div class="editor-field col-md-8"> <br /> </div>
+
+                        <div class="editor-label col-md-4 control-label">
+                            Comentarios/Observaciones :
+                        </div>
+                        <div class="editor-field col-md-8">
+                            @Html.TextBoxFor(model => model.comments, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.comments)                            
+                        </div>
+
+                        <br />
+
+
+                    </div>
+
+                    <!-- Botones del Wizard -->                        
                     <div class="form-group">
                         <div class="col-md-12 col-btn">
                             <div class="pull-right">
@@ -339,9 +361,12 @@
                             </div>
                         </div>
                     </div>
-
+                    <!--// Botones del Wizard -->
 
                     }
+
+                    <div class="editor-label col-md-4 control-label"> <br /> </div>
+                    <div class="editor-field col-md-8"> <br /> </div>
 
                 </div>
                 <!--// panel-body -->

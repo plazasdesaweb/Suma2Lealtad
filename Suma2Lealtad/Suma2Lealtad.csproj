@@ -220,8 +220,7 @@
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AfiliadoRepository.cs" />
-    <Compile Include="Models\AfiliadoSuma.cs" />
-    <Compile Include="Models\AfiliadoWeb.cs" />
+    <Compile Include="Models\Afiliado.cs" />
     <Compile Include="Models\Auditing.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>

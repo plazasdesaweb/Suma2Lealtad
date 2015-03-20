@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Suma2Lealtad.Models
 {
-    public class AfiliadoSuma
+    public class Afiliado
     {
 
         public string id { get; set; }
@@ -26,11 +26,12 @@ namespace Suma2Lealtad.Models
         public string occupation { get; set; }
         public string phone3 { get; set; }
         public List<Interest> Intereses { get; set; }
+        public string comments { get; set; }
 
+        /* Manejo de Excepciones de Servicios PlazasWeb */
         public string exnumber { get; set; }
         public string exdetail { get; set; }
 
-        public string comments { get; set; }
 
     }
 
