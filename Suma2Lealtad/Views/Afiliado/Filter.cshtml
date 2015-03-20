@@ -1,4 +1,4 @@
-﻿@model Suma2Lealtad.Models.AfiliadoWeb
+﻿@model Suma2Lealtad.Models.AfiliadoSuma
 
 @{
     ViewBag.Title = "Filter";
@@ -14,19 +14,19 @@
             <div class="panel panel-default">
 
                 <div class="panel-heading clearfix panel-gradient">
-                    <h3 class="panel-title">Afiliado / Buscar Afiliado</h3>
+                    <h3 class="panel-title">Afiliado / Filtro de Búsqueda de Afiliado</h3>
                 </div>
 
                 <div class="panel-body">
 
-                    <form action=@Url.Action("Search", "Afiliado") name="form" method="post" onsubmit="return validatePass();">
+                    <form action=@Url.Action("Find", "Afiliado") name="form" method="post" onsubmit="return validatePass();">
 
                         <div class="editor-label col-md-4 control-label">
                             Número de Documento :
                         </div>
 
                         <div class="editor-field col-md-8">
-                            <input type="text" id="numdoc" name="numdoc" value="" maxlength="10" placeholder="V-12345678" class="form-control" required>
+                            <input type="text" id="numdoc" name="numdoc" value="V-12919906" maxlength="10" placeholder="V-12345678" class="form-control" required>
                             <span id="someID"></span>
                         </div>
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
@@ -7,14 +8,6 @@ namespace Suma2Lealtad.Models
 {
     public class AfiliadoSuma
     {
-
-        //public int FechaSolicitud { get; set; }
-        //public int FechaAfiliacion { get; set; }
-        //public string IdSucursal { get; set; }
-        //public string IdOcupacion { get; set; }
-        //public string IdNacionalidad { get; set; }
-        //public int? questionid { get; set; }
-        //public string answer { get; set; }
 
         public string id { get; set; }
         public string type { get; set; }
@@ -32,6 +25,12 @@ namespace Suma2Lealtad.Models
         public string nationality { get; set; }
         public string occupation { get; set; }
         public string phone3 { get; set; }
+        public List<Interest> Intereses { get; set; }
+
+        public string exnumber { get; set; }
+        public string exdetail { get; set; }
+
+        public string comments { get; set; }
 
     }
 
