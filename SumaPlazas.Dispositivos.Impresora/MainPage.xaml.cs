@@ -24,6 +24,13 @@ namespace SumaPlazas.Dispositivos.Impresora
         //Nombre de la impresora activa
         String Impresora = "";
 
+        //valores para la demora de los Workers
+        private int demora = 500;
+        private int demora2 = 1000;
+
+        //Operacion solicitada
+        string Operacion = "";
+
         //parámetros para la impresión
         string nombre;
         string apellido;
@@ -59,22 +66,21 @@ namespace SumaPlazas.Dispositivos.Impresora
             HtmlPage.RegisterScriptableObject("MainPage", this);
         }
 
-        #region detectarimpresora
-        //[ScriptableMember]
-        //public string DetectarImpresora()
+        #region DetectarImpresora
         private void DetectarImpresora()
         {
             listBox1.Items.Clear();
             BackgroundWorker w = new BackgroundWorker();
             w.DoWork += new DoWorkEventHandler(w_DoWorkDetectarImpresora);
             w.RunWorkerCompleted += new RunWorkerCompletedEventHandler(w_RunWorkerCompletedDetectarImpresora);
-            w.RunWorkerAsync();         
+            w.RunWorkerAsync();
         }
 
         private void w_DoWorkDetectarImpresora(object sender, DoWorkEventArgs e)
         {
-            int demora = 500;
-            int demora2 = 1000;
+            //int demora = 500;
+            //int demora2 = 1000;
+            Impresora = "";
             bool PermisosElevados = Application.Current.HasElevatedPermissions;
             if (PermisosElevados == true)
             {
@@ -82,13 +88,13 @@ namespace SumaPlazas.Dispositivos.Impresora
                 Dispatcher.BeginInvoke(delegate()
                 {
                     listBox1.Items.Add("Iniciando detección de impresora...");
-                    listBox1.SelectedIndex = listBox1.Items.Count-1;
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 });
                 Thread.Sleep(demora);
                 Dispatcher.BeginInvoke(delegate()
                 {
                     listBox1.Items.Add("Estableciendo comunicación con dispositivos...");
-                    listBox1.SelectedIndex = listBox1.Items.Count-1;
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 });
                 smartDriverDotNet = new SmartDriverDotNet();
                 string ResultadoCD800 = smartDriverDotNet.EstadoImpresora();
@@ -96,15 +102,15 @@ namespace SumaPlazas.Dispositivos.Impresora
                 Dispatcher.BeginInvoke(delegate()
                 {
                     listBox1.Items.Add("Impresora detectada: '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'.");
-                    listBox1.SelectedIndex = listBox1.Items.Count-1;
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 });
                 if (ResultadoCD800 != "")
                 {
                     Thread.Sleep(demora);
                     Dispatcher.BeginInvoke(delegate()
                     {
-                        listBox1.Items.Add("Estado: " + ResultadoCD800 + ".");
-                        listBox1.SelectedIndex = listBox1.Items.Count-1;
+                        listBox1.Items.Add("Estado: '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800': " + ResultadoCD800 + ".");
+                        listBox1.SelectedIndex = listBox1.Items.Count - 1;
                     });
                     if (ResultadoCD800.ToLower() == "la impresora está respondiendo")
                     {
@@ -112,7 +118,7 @@ namespace SumaPlazas.Dispositivos.Impresora
                         Dispatcher.BeginInvoke(delegate()
                         {
                             listBox1.Items.Add("Resultado: Se utilizará este dispositivo para imprimir.");
-                            listBox1.SelectedIndex = listBox1.Items.Count-1;
+                            listBox1.SelectedIndex = listBox1.Items.Count - 1;
                         });
                         Impresora = SmartDriverDotNet.NombreImpresora;
                     }
@@ -121,8 +127,20 @@ namespace SumaPlazas.Dispositivos.Impresora
                         Thread.Sleep(demora);
                         Dispatcher.BeginInvoke(delegate()
                         {
-                            listBox1.Items.Add("Resultado: No es posible comunicarse con la impresora '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'.");
-                            listBox1.SelectedIndex = listBox1.Items.Count-1;
+                            listBox1.Items.Add("Resultado: Imposible asignar la impresora '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'.");
+                            listBox1.SelectedIndex = listBox1.Items.Count - 1;
+                        });
+                        Thread.Sleep(demora);
+                        Dispatcher.BeginInvoke(delegate()
+                        {
+                            listBox1.Items.Add("Continuando detección de impresora...");
+                            listBox1.SelectedIndex = listBox1.Items.Count - 1;
+                        });
+                        Thread.Sleep(demora);
+                        Dispatcher.BeginInvoke(delegate()
+                        {
+                            listBox1.Items.Add("Re-estableciendo comunicación con dispositivos...");
+                            listBox1.SelectedIndex = listBox1.Items.Count - 1;
                         });
                         proyDataCardCP60 = new ProyDataCardCP60();
                         string ResultadoCP60 = proyDataCardCP60.EstadoImpresora();
@@ -130,15 +148,15 @@ namespace SumaPlazas.Dispositivos.Impresora
                         Dispatcher.BeginInvoke(delegate()
                         {
                             listBox1.Items.Add("Impresora detectada: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'.");
-                            listBox1.SelectedIndex = listBox1.Items.Count-1;
+                            listBox1.SelectedIndex = listBox1.Items.Count - 1;
                         });
                         if (ResultadoCP60 != "")
                         {
                             Thread.Sleep(demora);
                             Dispatcher.BeginInvoke(delegate()
                             {
-                                listBox1.Items.Add("Estado: " + ResultadoCP60 + ".");
-                                listBox1.SelectedIndex = listBox1.Items.Count-1;
+                                listBox1.Items.Add("Estado: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60': " + ResultadoCP60 + ".");
+                                listBox1.SelectedIndex = listBox1.Items.Count - 1;
                             });
                             if (ResultadoCP60.ToLower() == "la impresora está respondiendo")
                             {
@@ -146,7 +164,7 @@ namespace SumaPlazas.Dispositivos.Impresora
                                 Dispatcher.BeginInvoke(delegate()
                                 {
                                     listBox1.Items.Add("Resultado: Se utilizará este dispositivo para imprimir.");
-                                    listBox1.SelectedIndex = listBox1.Items.Count-1;
+                                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
                                 });
                                 Impresora = ProyDataCardCP60.NombreImpresora;
                             }
@@ -156,8 +174,8 @@ namespace SumaPlazas.Dispositivos.Impresora
                             Thread.Sleep(demora);
                             Dispatcher.BeginInvoke(delegate()
                             {
-                                listBox1.Items.Add("Resultado: No es posible comunicarse con la impresora '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'.");
-                                listBox1.SelectedIndex = listBox1.Items.Count-1;
+                                listBox1.Items.Add("Resultado: Imposible asignar la impresora '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'.");
+                                listBox1.SelectedIndex = listBox1.Items.Count - 1;
                             });
                         }
                     }
@@ -168,23 +186,35 @@ namespace SumaPlazas.Dispositivos.Impresora
                     Dispatcher.BeginInvoke(delegate()
                     {
                         listBox1.Items.Add("Resultado: No es posible comunicarse con la impresora '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'.");
-                        listBox1.SelectedIndex = listBox1.Items.Count-1;
+                        listBox1.SelectedIndex = listBox1.Items.Count - 1;
+                    });
+                    Thread.Sleep(demora);
+                    Dispatcher.BeginInvoke(delegate()
+                    {
+                        listBox1.Items.Add("Continuando detección de impresora...");
+                        listBox1.SelectedIndex = listBox1.Items.Count - 1;
+                    });
+                    Thread.Sleep(demora);
+                    Dispatcher.BeginInvoke(delegate()
+                    {
+                        listBox1.Items.Add("Re-estableciendo comunicación con dispositivos...");
+                        listBox1.SelectedIndex = listBox1.Items.Count - 1;
                     });
                     proyDataCardCP60 = new ProyDataCardCP60();
                     string ResultadoCP60 = proyDataCardCP60.EstadoImpresora();
                     Thread.Sleep(demora2);
                     Dispatcher.BeginInvoke(delegate()
                     {
-                        listBox1.Items.Add("Impresora detectada: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'."); 
-                        listBox1.SelectedIndex = listBox1.Items.Count-1;
+                        listBox1.Items.Add("Impresora detectada: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'.");
+                        listBox1.SelectedIndex = listBox1.Items.Count - 1;
                     });
                     if (ResultadoCP60 != "")
                     {
                         Thread.Sleep(demora);
                         Dispatcher.BeginInvoke(delegate()
                         {
-                            listBox1.Items.Add("Estado: " + ResultadoCP60 + ".");
-                            listBox1.SelectedIndex = listBox1.Items.Count-1;
+                            listBox1.Items.Add("Estado: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60': " + ResultadoCP60 + ".");
+                            listBox1.SelectedIndex = listBox1.Items.Count - 1;
                         });
                         if (ResultadoCP60.ToLower() == "la impresora está respondiendo")
                         {
@@ -192,7 +222,7 @@ namespace SumaPlazas.Dispositivos.Impresora
                             Dispatcher.BeginInvoke(delegate()
                             {
                                 listBox1.Items.Add("Resultado: Se utilizará este dispositivo para imprimir.");
-                                listBox1.SelectedIndex = listBox1.Items.Count-1;
+                                listBox1.SelectedIndex = listBox1.Items.Count - 1;
                             });
                             Impresora = ProyDataCardCP60.NombreImpresora;
                         }
@@ -201,8 +231,8 @@ namespace SumaPlazas.Dispositivos.Impresora
                             Thread.Sleep(demora);
                             Dispatcher.BeginInvoke(delegate()
                             {
-                                listBox1.Items.Add("Error: No se pudo asignar dispositivo para imprimir.");
-                                listBox1.SelectedIndex = listBox1.Items.Count-1;
+                                listBox1.Items.Add("Resultado: Imposible asignar la impresora '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'.");
+                                listBox1.SelectedIndex = listBox1.Items.Count - 1;
                             });
                         }
                     }
@@ -212,7 +242,7 @@ namespace SumaPlazas.Dispositivos.Impresora
                         Dispatcher.BeginInvoke(delegate()
                         {
                             listBox1.Items.Add("Resultado: No es posible comunicarse con la impresora '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'.");
-                            listBox1.SelectedIndex = listBox1.Items.Count-1;
+                            listBox1.SelectedIndex = listBox1.Items.Count - 1;
                         });
                     }
                 }
@@ -221,371 +251,203 @@ namespace SumaPlazas.Dispositivos.Impresora
             {
                 MessageBox.Show("Error de Aplicación: No están configurados permisos elevados.", "SumaPlazas.Dispositivos.Impresora.MainPage.DetectarImpresora", MessageBoxButton.OK);
             }
-
+            Thread.Sleep(demora);
+            Dispatcher.BeginInvoke(delegate()
+            {
+                listBox1.Items.Add("Finalizó detección de impresora...");
+                listBox1.SelectedIndex = listBox1.Items.Count - 1;
+            });
+            if (Impresora == "")
+            {
+                Dispatcher.BeginInvoke(delegate()
+                {
+                    listBox1.Items.Add("Error: No se pudo determinar dispositivo de impresión. Operación cancelada.");
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
+                });
+            }
         }
 
         private void w_RunWorkerCompletedDetectarImpresora(object sender, RunWorkerCompletedEventArgs e)
         {
-            listBox1.Items.Add("Finalizó detección de impresora...");
-            listBox1.SelectedIndex = listBox1.Items.Count-1;
+            if (Operacion == "ImprimirTarjeta" && Impresora != "")
+            {
+                BackgroundWorker w = new BackgroundWorker();
+                w.DoWork += new DoWorkEventHandler(w_DoWorkImprimirTarjeta);
+                w.RunWorkerCompleted += new RunWorkerCompletedEventHandler(w_RunWorkerCompletedImprimirTarjeta);
+                w.RunWorkerAsync();
+            }
+            else if (Operacion == "ReanudarImpresora" && Impresora != "")
+            {
+                BackgroundWorker w = new BackgroundWorker();
+                w.DoWork += new DoWorkEventHandler(w_DoWorkReanudarImpresora);
+                w.RunWorkerCompleted += new RunWorkerCompletedEventHandler(w_RunWorkerCompletedReanudarImpresora);
+                w.RunWorkerAsync();
+            }
+            else if (Operacion == "LimpiarErrores" && Impresora != "")
+            {
+                BackgroundWorker w = new BackgroundWorker();
+                w.DoWork += new DoWorkEventHandler(w_DoWorkLimpiarErrores);
+                w.RunWorkerCompleted += new RunWorkerCompletedEventHandler(w_RunWorkerCompletedLimpiarErrores);
+                w.RunWorkerAsync();
+            }
+            else if (Impresora == "")
+            {
+            }
+            else
+            {
+                MessageBox.Show("Error de Aplicación. Operacion no definida.", "SumaPlazas.Dispositivos.Impresora.MainPage.w_RunWorkerCompletedDetectarImpresora", MessageBoxButton.OK);
+            }
 
-            BackgroundWorker w = new BackgroundWorker();
-            w.DoWork += new DoWorkEventHandler(w_DoWorkImprimirTarjeta);
-            w.RunWorkerCompleted += new RunWorkerCompletedEventHandler(w_RunWorkerCompletedImprimirTarjeta);
-            w.RunWorkerAsync();
         }
         #endregion
 
-        #region reanudarimpresora
-        private void ReanudarImpresora()
+        //OJO: NA
+        //Hay que revisar las dll nativas de cada modelo de impresora para poner a funcionar los metodos ReanudarImpresora y LimpiarErrores. Ahorita no hacen nada.
+        #region ReanudarImpresora
+        [ScriptableMember]
+        public void ReanudarImpresora()
         {
-            listBox1.Items.Clear();
-            BackgroundWorker w = new BackgroundWorker();
-            w.DoWork += new DoWorkEventHandler(w_DoWorkReanudarImpresora);
-            w.RunWorkerCompleted += new RunWorkerCompletedEventHandler(w_RunWorkerCompletedReanudarImpresora);
-            w.RunWorkerAsync();
+            bool PermisosElevados = Application.Current.HasElevatedPermissions;
+            if (PermisosElevados == true)
+            {
+                DetectarImpresora();
+            }
+            else
+            {
+                MessageBox.Show("Error de Aplicación. No están configurados permisos elevados.", "SumaPlazas.Dispositivos.Impresora.MainPage.ReanudarImpresora", MessageBoxButton.OK);
+            }
+            Operacion = "ReanudarImpresora";
+            //BackgroundWorker w = new BackgroundWorker();
+            //w.DoWork += new DoWorkEventHandler(w_DoWorkReanudarImpresora);
+            //w.RunWorkerCompleted += new RunWorkerCompletedEventHandler(w_RunWorkerCompletedReanudarImpresora);
+            //w.RunWorkerAsync();
         }
 
         private void w_DoWorkReanudarImpresora(object sender, DoWorkEventArgs e)
         {
-            int demora = 500;
-            int demora2 = 1000;
-            bool PermisosElevados = Application.Current.HasElevatedPermissions;
-            if (PermisosElevados == true)
+            if (Impresora == ProyDataCardCP60.NombreImpresora)
             {
                 Thread.Sleep(demora);
                 Dispatcher.BeginInvoke(delegate()
                 {
-                    listBox1.Items.Add("Iniciando detección de impresora...");
+                    listBox1.Items.Add("Iniciando reanudación de impresora...dispositivo asignado: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'");
                     listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 });
+                string Resultado = proyDataCardCP60.ReanudarImpresora();
                 Thread.Sleep(demora);
                 Dispatcher.BeginInvoke(delegate()
                 {
-                    listBox1.Items.Add("Estableciendo comunicación con dispositivos...");
+                    listBox1.Items.Add("Resultado de la operación: " + Resultado + ".");
                     listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 });
-                smartDriverDotNet = new SmartDriverDotNet();
-                string ResultadoCD800 = smartDriverDotNet.ReanudarImpresora();
-                Thread.Sleep(demora2);
+            }
+            else if (Impresora == SmartDriverDotNet.NombreImpresora)
+            {
+                Thread.Sleep(demora);
                 Dispatcher.BeginInvoke(delegate()
                 {
-                    listBox1.Items.Add("Impresora detectada: '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'.");
+                    listBox1.Items.Add("Iniciando reanudación de impresora...dispositivo asignado: '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'");
                     listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 });
-                if (ResultadoCD800 != "")
+                string Resultado = smartDriverDotNet.ReanudarImpresora();
+                Thread.Sleep(demora);
+                Dispatcher.BeginInvoke(delegate()
                 {
-                    Thread.Sleep(demora);
-                    Dispatcher.BeginInvoke(delegate()
-                    {
-                        listBox1.Items.Add("Estado: " + ResultadoCD800 + ".");
-                        listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                    });
-                    if (ResultadoCD800.ToLower() == "la impresora está respondiendo")
-                    {
-                        Thread.Sleep(demora);
-                        Dispatcher.BeginInvoke(delegate()
-                        {
-                            listBox1.Items.Add("Resultado: Se utilizará este dispositivo para imprimir.");
-                            listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                        });
-                        Impresora = SmartDriverDotNet.NombreImpresora;
-                    }
-                    else
-                    {
-                        Thread.Sleep(demora);
-                        Dispatcher.BeginInvoke(delegate()
-                        {
-                            listBox1.Items.Add("Resultado: No es posible comunicarse con la impresora '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'.");
-                            listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                        });
-                        proyDataCardCP60 = new ProyDataCardCP60();
-                        string ResultadoCP60 = proyDataCardCP60.EstadoImpresora();
-                        Thread.Sleep(demora2);
-                        Dispatcher.BeginInvoke(delegate()
-                        {
-                            listBox1.Items.Add("Impresora detectada: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'.");
-                            listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                        });
-                        if (ResultadoCP60 != "")
-                        {
-                            Thread.Sleep(demora);
-                            Dispatcher.BeginInvoke(delegate()
-                            {
-                                listBox1.Items.Add("Estado: " + ResultadoCP60 + ".");
-                                listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                            });
-                            if (ResultadoCP60.ToLower() == "la impresora está respondiendo")
-                            {
-                                Thread.Sleep(demora);
-                                Dispatcher.BeginInvoke(delegate()
-                                {
-                                    listBox1.Items.Add("Resultado: Se utilizará este dispositivo para imprimir.");
-                                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                                });
-                                Impresora = ProyDataCardCP60.NombreImpresora;
-                            }
-                        }
-                        else
-                        {
-                            Thread.Sleep(demora);
-                            Dispatcher.BeginInvoke(delegate()
-                            {
-                                listBox1.Items.Add("Resultado: No es posible comunicarse con la impresora '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'.");
-                                listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                            });
-                        }
-                    }
-                }
-                else
-                {
-                    Thread.Sleep(demora);
-                    Dispatcher.BeginInvoke(delegate()
-                    {
-                        listBox1.Items.Add("Resultado: No es posible comunicarse con la impresora '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'.");
-                        listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                    });
-                    proyDataCardCP60 = new ProyDataCardCP60();
-                    string ResultadoCP60 = proyDataCardCP60.EstadoImpresora();
-                    Thread.Sleep(demora2);
-                    Dispatcher.BeginInvoke(delegate()
-                    {
-                        listBox1.Items.Add("Impresora detectada: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'.");
-                        listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                    });
-                    if (ResultadoCP60 != "")
-                    {
-                        Thread.Sleep(demora);
-                        Dispatcher.BeginInvoke(delegate()
-                        {
-                            listBox1.Items.Add("Estado: " + ResultadoCP60 + ".");
-                            listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                        });
-                        if (ResultadoCP60.ToLower() == "la impresora está respondiendo")
-                        {
-                            Thread.Sleep(demora);
-                            Dispatcher.BeginInvoke(delegate()
-                            {
-                                listBox1.Items.Add("Resultado: Se utilizará este dispositivo para imprimir.");
-                                listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                            });
-                            Impresora = ProyDataCardCP60.NombreImpresora;
-                        }
-                        else
-                        {
-                            Thread.Sleep(demora);
-                            Dispatcher.BeginInvoke(delegate()
-                            {
-                                listBox1.Items.Add("Error: No se pudo asignar dispositivo para imprimir.");
-                                listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                            });
-                        }
-                    }
-                    else
-                    {
-                        Thread.Sleep(demora);
-                        Dispatcher.BeginInvoke(delegate()
-                        {
-                            listBox1.Items.Add("Resultado: No es posible comunicarse con la impresora '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'.");
-                            listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                        });
-                    }
-                }
+                    listBox1.Items.Add("Resultado de la operación: " + Resultado + ".");
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
+                });
             }
             else
             {
-                MessageBox.Show("Error de Aplicación: No están configurados permisos elevados.", "SumaPlazas.Dispositivos.Impresora.MainPage.DetectarImpresora", MessageBoxButton.OK);
+                Thread.Sleep(demora);
+                Dispatcher.BeginInvoke(delegate()
+                {
+                    listBox1.Items.Add("Error: No es posible comunicarse con la impresora.'");
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
+                });
             }
-
         }
 
         private void w_RunWorkerCompletedReanudarImpresora(object sender, RunWorkerCompletedEventArgs e)
         {
-            listBox1.Items.Add("Finalizó detección de impresora...");
+            listBox1.Items.Add("Finalizó reanudación de impresora...");
             listBox1.SelectedIndex = listBox1.Items.Count - 1;
-
-            //BackgroundWorker w = new BackgroundWorker();
-            //w.DoWork += new DoWorkEventHandler(w_DoWorkImprimirTarjeta);
-            //w.RunWorkerCompleted += new RunWorkerCompletedEventHandler(w_RunWorkerCompletedImprimirTarjeta);
-            //w.RunWorkerAsync();
         }
         #endregion
 
-        #region limpiarerrores
-        private void LimpiarErrores()
+        #region LimpiarErrores
+        [ScriptableMember]
+        public void LimpiarErrores()
         {
-            listBox1.Items.Clear();
-            BackgroundWorker w = new BackgroundWorker();
-            w.DoWork += new DoWorkEventHandler(w_DoWorkLimpiarErrores);
-            w.RunWorkerCompleted += new RunWorkerCompletedEventHandler(w_RunWorkerCompletedLimpiarErrores);
-            w.RunWorkerAsync();
+            bool PermisosElevados = Application.Current.HasElevatedPermissions;
+            if (PermisosElevados == true)
+            {
+                DetectarImpresora();
+            }
+            else
+            {
+                MessageBox.Show("Error de Aplicación. No están configurados permisos elevados.", "SumaPlazas.Dispositivos.Impresora.MainPage.ReanudarImpresora", MessageBoxButton.OK);
+            }
+            Operacion = "LimpiarErrores";
+            //BackgroundWorker w = new BackgroundWorker();
+            //w.DoWork += new DoWorkEventHandler(w_DoWorkLimpiarErrores);
+            //w.RunWorkerCompleted += new RunWorkerCompletedEventHandler(w_RunWorkerCompletedLimpiarErrores);
+            //w.RunWorkerAsync();
         }
 
         private void w_DoWorkLimpiarErrores(object sender, DoWorkEventArgs e)
         {
-            int demora = 500;
-            int demora2 = 1000;
-            bool PermisosElevados = Application.Current.HasElevatedPermissions;
-            if (PermisosElevados == true)
+            if (Impresora == ProyDataCardCP60.NombreImpresora)
             {
                 Thread.Sleep(demora);
                 Dispatcher.BeginInvoke(delegate()
                 {
-                    listBox1.Items.Add("Iniciando detección de impresora...");
+                    listBox1.Items.Add("Iniciando limpieza de errores de impresora...dispositivo asignado: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'");
                     listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 });
+                string Resultado = proyDataCardCP60.ReanudarImpresora();
                 Thread.Sleep(demora);
                 Dispatcher.BeginInvoke(delegate()
                 {
-                    listBox1.Items.Add("Estableciendo comunicación con dispositivos...");
+                    listBox1.Items.Add("Resultado de la operación: " + Resultado + ".");
                     listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 });
-                smartDriverDotNet = new SmartDriverDotNet();
-                string ResultadoCD800 = smartDriverDotNet.LimpiarErrores();
-                Thread.Sleep(demora2);
+            }
+            else if (Impresora == SmartDriverDotNet.NombreImpresora)
+            {
+                Thread.Sleep(demora);
                 Dispatcher.BeginInvoke(delegate()
                 {
-                    listBox1.Items.Add("Impresora detectada: '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'.");
+                    listBox1.Items.Add("Iniciando limpieza de errores de impresora...dispositivo asignado: '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'");
                     listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 });
-                if (ResultadoCD800 != "")
+                string Resultado = smartDriverDotNet.ReanudarImpresora();
+                Thread.Sleep(demora);
+                Dispatcher.BeginInvoke(delegate()
                 {
-                    Thread.Sleep(demora);
-                    Dispatcher.BeginInvoke(delegate()
-                    {
-                        listBox1.Items.Add("Estado: " + ResultadoCD800 + ".");
-                        listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                    });
-                    if (ResultadoCD800.ToLower() == "la impresora está respondiendo")
-                    {
-                        Thread.Sleep(demora);
-                        Dispatcher.BeginInvoke(delegate()
-                        {
-                            listBox1.Items.Add("Resultado: Se utilizará este dispositivo para imprimir.");
-                            listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                        });
-                        Impresora = SmartDriverDotNet.NombreImpresora;
-                    }
-                    else
-                    {
-                        Thread.Sleep(demora);
-                        Dispatcher.BeginInvoke(delegate()
-                        {
-                            listBox1.Items.Add("Resultado: No es posible comunicarse con la impresora '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'.");
-                            listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                        });
-                        proyDataCardCP60 = new ProyDataCardCP60();
-                        string ResultadoCP60 = proyDataCardCP60.EstadoImpresora();
-                        Thread.Sleep(demora2);
-                        Dispatcher.BeginInvoke(delegate()
-                        {
-                            listBox1.Items.Add("Impresora detectada: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'.");
-                            listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                        });
-                        if (ResultadoCP60 != "")
-                        {
-                            Thread.Sleep(demora);
-                            Dispatcher.BeginInvoke(delegate()
-                            {
-                                listBox1.Items.Add("Estado: " + ResultadoCP60 + ".");
-                                listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                            });
-                            if (ResultadoCP60.ToLower() == "la impresora está respondiendo")
-                            {
-                                Thread.Sleep(demora);
-                                Dispatcher.BeginInvoke(delegate()
-                                {
-                                    listBox1.Items.Add("Resultado: Se utilizará este dispositivo para imprimir.");
-                                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                                });
-                                Impresora = ProyDataCardCP60.NombreImpresora;
-                            }
-                        }
-                        else
-                        {
-                            Thread.Sleep(demora);
-                            Dispatcher.BeginInvoke(delegate()
-                            {
-                                listBox1.Items.Add("Resultado: No es posible comunicarse con la impresora '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'.");
-                                listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                            });
-                        }
-                    }
-                }
-                else
-                {
-                    Thread.Sleep(demora);
-                    Dispatcher.BeginInvoke(delegate()
-                    {
-                        listBox1.Items.Add("Resultado: No es posible comunicarse con la impresora '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'.");
-                        listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                    });
-                    proyDataCardCP60 = new ProyDataCardCP60();
-                    string ResultadoCP60 = proyDataCardCP60.EstadoImpresora();
-                    Thread.Sleep(demora2);
-                    Dispatcher.BeginInvoke(delegate()
-                    {
-                        listBox1.Items.Add("Impresora detectada: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'.");
-                        listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                    });
-                    if (ResultadoCP60 != "")
-                    {
-                        Thread.Sleep(demora);
-                        Dispatcher.BeginInvoke(delegate()
-                        {
-                            listBox1.Items.Add("Estado: " + ResultadoCP60 + ".");
-                            listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                        });
-                        if (ResultadoCP60.ToLower() == "la impresora está respondiendo")
-                        {
-                            Thread.Sleep(demora);
-                            Dispatcher.BeginInvoke(delegate()
-                            {
-                                listBox1.Items.Add("Resultado: Se utilizará este dispositivo para imprimir.");
-                                listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                            });
-                            Impresora = ProyDataCardCP60.NombreImpresora;
-                        }
-                        else
-                        {
-                            Thread.Sleep(demora);
-                            Dispatcher.BeginInvoke(delegate()
-                            {
-                                listBox1.Items.Add("Error: No se pudo asignar dispositivo para imprimir.");
-                                listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                            });
-                        }
-                    }
-                    else
-                    {
-                        Thread.Sleep(demora);
-                        Dispatcher.BeginInvoke(delegate()
-                        {
-                            listBox1.Items.Add("Resultado: No es posible comunicarse con la impresora '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'.");
-                            listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                        });
-                    }
-                }
+                    listBox1.Items.Add("Resultado de la operación: " + Resultado + ".");
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
+                });
             }
             else
             {
-                MessageBox.Show("Error de Aplicación: No están configurados permisos elevados.", "SumaPlazas.Dispositivos.Impresora.MainPage.DetectarImpresora", MessageBoxButton.OK);
+                Thread.Sleep(demora);
+                Dispatcher.BeginInvoke(delegate()
+                {
+                    listBox1.Items.Add("Error: No es posible comunicarse con la impresora.'");
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
+                });
             }
-
         }
 
         private void w_RunWorkerCompletedLimpiarErrores(object sender, RunWorkerCompletedEventArgs e)
         {
-            listBox1.Items.Add("Finalizó detección de impresora...");
+            listBox1.Items.Add("Finalizó limpieza de errores de impresora...");
             listBox1.SelectedIndex = listBox1.Items.Count - 1;
-
-            //BackgroundWorker w = new BackgroundWorker();
-            //w.DoWork += new DoWorkEventHandler(w_DoWorkImprimirTarjeta);
-            //w.RunWorkerCompleted += new RunWorkerCompletedEventHandler(w_RunWorkerCompletedImprimirTarjeta);
-            //w.RunWorkerAsync();
         }
         #endregion
 
+        #region ImprimirTarjeta
         [ScriptableMember]
         public void ImprimirTarjeta()
         {
@@ -593,30 +455,35 @@ namespace SumaPlazas.Dispositivos.Impresora
             if (PermisosElevados == true)
             {
                 ElementoHtmlControl.SetProperty("value", "No impresa");
-                DetectarImpresora();              
+                DetectarImpresora();
             }
             else
             {
                 MessageBox.Show("Error de Aplicación. No están configurados permisos elevados.", "SumaPlazas.Dispositivos.Impresora.MainPage.ImprimirTarjeta", MessageBoxButton.OK);
             }
+            Operacion = "ImprimirTarjeta";
+            //BackgroundWorker w = new BackgroundWorker();
+            //w.DoWork += new DoWorkEventHandler(w_DoWorkImprimirTarjeta);
+            //w.RunWorkerCompleted += new RunWorkerCompletedEventHandler(w_RunWorkerCompletedImprimirTarjeta);
+            //w.RunWorkerAsync();
         }
 
         private void w_DoWorkImprimirTarjeta(object sender, DoWorkEventArgs e)
         {
-            int demora = 500;
+            //int demora = 500;
             if (Impresora == ProyDataCardCP60.NombreImpresora)
             {
                 Thread.Sleep(demora);
                 Dispatcher.BeginInvoke(delegate()
                 {
-                    listBox1.Items.Add("Preparando impresión...dispositivo asignado: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'");
-                    listBox1.SelectedIndex = listBox1.Items.Count-1;
+                    listBox1.Items.Add("Iniciando impresión de tarjeta...dispositivo asignado: '" + ProyDataCardCP60.NombreImpresora + "', modelo: 'CP60'");
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 });
                 Thread.Sleep(demora);
                 Dispatcher.BeginInvoke(delegate()
                 {
                     listBox1.Items.Add("Los datos a imprimir son: " + nombre + "," + apellido + "," + nroTarjeta); //+ "," + track1 + "," + track2 + "," + tipoTarjeta + "," + corporacion + "," + fechaVencimiento);
-                    listBox1.SelectedIndex = listBox1.Items.Count-1;
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 });
                 bool Resultado = proyDataCardCP60.Imprimir(ref nombre, ref apellido, ref nroTarjeta, ref track1, ref track2, ref tipoTarjeta, ref corporacion, ref fechaVencimiento);
                 //La pregunta la haremos en la página web, no en el silverlight
@@ -625,7 +492,7 @@ namespace SumaPlazas.Dispositivos.Impresora
                 Dispatcher.BeginInvoke(delegate()
                 {
                     listBox1.Items.Add("Resultado de la operación: " + Resultado + ".");
-                    listBox1.SelectedIndex = listBox1.Items.Count-1;
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 });
                 //if (Resultado == true)
                 //{
@@ -643,14 +510,14 @@ namespace SumaPlazas.Dispositivos.Impresora
                 Thread.Sleep(demora);
                 Dispatcher.BeginInvoke(delegate()
                 {
-                    listBox1.Items.Add("Preparando impresión...dispositivo asignado: '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'");
-                    listBox1.SelectedIndex = listBox1.Items.Count-1;
+                    listBox1.Items.Add("Iniciando impresión de tarjeta...dispositivo asignado: '" + SmartDriverDotNet.NombreImpresora + "', modelo: 'CD800'");
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 });
                 Thread.Sleep(demora);
                 Dispatcher.BeginInvoke(delegate()
                 {
                     listBox1.Items.Add("Los datos a imprimir son: " + nombre + "," + apellido + "," + nroTarjeta); // + "," + track1 + "," + track2 + "," + tipoTarjeta + "," + corporacion + "," + fechaVencimiento);
-                    listBox1.SelectedIndex = listBox1.Items.Count-1;
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 });
                 bool Resultado = smartDriverDotNet.Imprimir(ref nombre, ref apellido, ref nroTarjeta, ref track1, ref track2, ref tipoTarjeta, ref corporacion, ref fechaVencimiento);
                 //La pregunta la haremos en la página web, no en el silverlight
@@ -659,7 +526,7 @@ namespace SumaPlazas.Dispositivos.Impresora
                 Dispatcher.BeginInvoke(delegate()
                 {
                     listBox1.Items.Add("Resultado de la operación: " + Resultado + ".");
-                    listBox1.SelectedIndex = listBox1.Items.Count-1;
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 });
                 //if (Resultado == true)
                 //{
@@ -678,20 +545,18 @@ namespace SumaPlazas.Dispositivos.Impresora
                 Dispatcher.BeginInvoke(delegate()
                 {
                     listBox1.Items.Add("Error: No es posible comunicarse con la impresora.'");
-                    listBox1.SelectedIndex = listBox1.Items.Count-1;
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 });
-                //smartDriverDotNet = null;
-                //proyDataCardCP60 = null;
             }
         }
 
         private void w_RunWorkerCompletedImprimirTarjeta(object sender, RunWorkerCompletedEventArgs e)
         {
-            listBox1.Items.Add("Finalizó proceso de impresión...");
-            listBox1.SelectedIndex = listBox1.Items.Count-1;
-            
+            listBox1.Items.Add("Finalizó impresión de tarjeta...");
+            listBox1.SelectedIndex = listBox1.Items.Count - 1;
+
             ElementoHtmlControl.SetProperty("value", "Impresa");
         }
-
+        #endregion
     }
 }

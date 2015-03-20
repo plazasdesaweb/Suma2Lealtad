@@ -27,19 +27,19 @@ namespace SumaPlazas.Dispositivos.Escaner
                         if (EscanerWIA != null)
                         {
                             string FilePath = EscanerWIA.ObtenerImagen(NombreArchivo);
-                            if (FilePath != "")
-                            {
-                                long fileLength = new FileInfo(FilePath).Length;
-                                if (fileLength > 51200)
-                                {
-                                    //Hay q cambiar el tamaño de la imagen escaneada....
-                                    MessageBox.Show("El tamaño del archivo escaneado es muy grande: " + fileLength + " bytes. El máximo permitido es 50 Kb.");
-                                }
-                                else
-                                {
-                                    MessageBox.Show("El tamaño del archivo escaneado es: " + fileLength + " bytes.");
-                                }
-                            }
+                            //if (FilePath != "")
+                            //{
+                            //    long fileLength = new FileInfo(FilePath).Length;
+                            //    if (fileLength > 51200)
+                            //    {
+                            //        //Hay q cambiar el tamaño de la imagen escaneada....
+                            //        MessageBox.Show("El tamaño del archivo escaneado es muy grande: " + fileLength + " bytes. El máximo permitido es 50 Kb.");
+                            //    }
+                            //    else
+                            //    {
+                            //        MessageBox.Show("El tamaño del archivo escaneado es: " + fileLength + " bytes.");
+                            //    }
+                            //}
                             //MessageBox.Show("FilePath: " + FilePath);
                             return FilePath;
                         }
