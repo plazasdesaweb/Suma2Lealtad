@@ -46,7 +46,7 @@ namespace SumaPlazas.Dispositivos.Impresora
             // parámetro llamado idElementoHtmlControl
             string idElementoHtmlControl = e.InitParams["idElementoHtmlControl"];
 
-            //Pasar a la página principal como parámetro  
+            //Pasar a la página principal como parámetros  
             this.RootVisual = new MainPage(Nombre, Apellido, NroTarjeta, Track1, Track2, TipoTarjeta, Corporacion, FechaVencimiento, idElementoHtmlControl);
         }
 

@@ -32,7 +32,6 @@ namespace Suma2Lealtad.Models
         public string nationality { get; set; }
         public string occupation { get; set; }
         public string phone3 { get; set; }
-
     }
 
 }

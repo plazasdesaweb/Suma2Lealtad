@@ -177,7 +177,5 @@ namespace Suma2Lealtad.Modules
             return buffer;
         }
 
-
-
     }
 }

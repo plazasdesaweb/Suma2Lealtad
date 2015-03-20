@@ -86,14 +86,71 @@ namespace SumaPlazas.Dispositivos.Impresora
 
         public string ReanudarImpresora()
         {
-            string Resultado = "";
-            return Resultado;
+            try
+            {
+                if (AutomationFactory.IsAvailable)
+                {
+                    using (dynamic ProyDataCardCP60 = AutomationFactory.CreateObject("SumaPlazas.Librerias.Impresora.CP60.ProyDataCardCP60"))
+                    {
+                        if (ProyDataCardCP60 != null)
+                        {
+                            string Resultado = ProyDataCardCP60.ReanudarImpresora(NombreImpresora);
+                            return Resultado;
+                        }
+                        else
+                        {
+                            //MessageBox.Show("Error de Aplicación. No se pudo recibir estado cp60 1.", "SumaPlazas.Dispositivos.Impresora.CP60ProyDataCardCP60.EstadoImpresora", MessageBoxButton.OK);
+                            return "";
+                        }
+                    }
+                }
+                else
+                {
+                    //MessageBox.Show("Error de Aplicación. No se pudo recibir estado cp60 2.", "SumaPlazas.Librerias.Impresora.CP60.ProyDataCardCP60.EstadoImpresora", MessageBoxButton.OK);
+                    return "";
+                }
+            }
+            catch
+            //catch (Exception originalException)
+            {
+                //MessageBox.Show("Error de Aplicación: " + originalException, "SumaPlazas.Librerias.Impresora.CP60.ProyDataCardCP60.EstadoImpresora", MessageBoxButton.OK);
+                return "";
+            }
         }
 
-        public string LmpiarErrores()
+        public string LimpiarErrores()
         {
-            string Resultado = "";
-            return Resultado;
+            try
+            {
+                if (AutomationFactory.IsAvailable)
+                {
+                    using (dynamic ProyDataCardCP60 = AutomationFactory.CreateObject("SumaPlazas.Librerias.Impresora.CP60.ProyDataCardCP60"))
+                    {
+                        if (ProyDataCardCP60 != null)
+                        {
+                            string Resultado = ProyDataCardCP60.LimpiarErrores(NombreImpresora);
+                            return Resultado;
+                        }
+                        else
+                        {
+                            //MessageBox.Show("Error de Aplicación. No se pudo recibir estado cp60 1.", "SumaPlazas.Dispositivos.Impresora.CP60ProyDataCardCP60.EstadoImpresora", MessageBoxButton.OK);
+                            return "";
+                        }
+                    }
+                }
+                else
+                {
+                    //MessageBox.Show("Error de Aplicación. No se pudo recibir estado cp60 2.", "SumaPlazas.Librerias.Impresora.CP60.ProyDataCardCP60.EstadoImpresora", MessageBoxButton.OK);
+                    return "";
+                }
+            }
+            catch
+            //catch (Exception originalException)
+            {
+                //MessageBox.Show("Error de Aplicación: " + originalException, "SumaPlazas.Librerias.Impresora.CP60.ProyDataCardCP60.EstadoImpresora", MessageBoxButton.OK);
+                return "";
+            }
         }
+
     }
 }

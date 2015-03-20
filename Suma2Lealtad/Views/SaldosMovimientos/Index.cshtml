@@ -5,10 +5,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
-    Documento del afiliado: @Model.DocId
-</div>
-<br />
+@*<link href="css/bootstrap.css" rel="stylesheet">*@
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+@*<link href="css/style.css" rel="stylesheet">*@
+<link href="~/Content/style.css" rel="stylesheet" />
+
+<style type="text/css" media="screen">
+    .table-hover {
+        cursor: pointer;
+    }
+
+    .table tbody tr.active td {
+        background-color: #1C2B2B; /*#476B6B #29A329;*/
+        color: white;
+    }
+</style>
+
 <div class="container">
 
     <div class="row">
@@ -18,12 +30,13 @@
             <div class="panel panel-default">
 
                 <div class="panel-heading clearfix panel-gradient">
-                    <h3 class="panel-title">Afiliado / Saldos </h3>
+                    <h3 class="panel-title">Afiliado  @Model.DocId / Saldos </h3>
                 </div>
 
                 <div class="panel-body">
 
-                    <table class="table table-striped custab">
+                    @*<table class="table table-striped custab">*@
+                    <table id="cuentas" class="table table-hover">
 
                         <thead>
                             <tr>
@@ -49,7 +62,7 @@
 
                             @foreach (var item in Model.Saldos)
                             {                            
-                                <tr>
+                                <tr data-row-key="@item.accounttype">
                                     <td>
                                         @Html.DisplayFor(modelItem => item.accountname)
                                     </td>
@@ -89,42 +102,8 @@
     </div>
     <!-- row -->
 
-    <!-- btn btn-success -->
-    <div class="col-md-12 col-btn">
-        <div class="text-center">
-            <a href="javascript:MovimientosSuma()" class="btn btn-success btn-md" role="button">Movimientos Suma</a>
-            <a href="javascript:MovimientosPrepago()" class="btn btn-success btn-md" role="button">Movimientos Prepago</a>
-            <a href="javascript:OcultarMovimientos()" class="btn btn-success btn-md" role="button">Ocultar Movimientos</a>
-        </div>
-
-        <script src="~/Scripts/jquery-2.1.1.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $("#MovimientosPrepago").hide();
-                $("#MovimientosSuma").hide();
-            });
-
-            function MovimientosSuma() {
-                $("#MovimientosPrepago").hide();
-                $("#MovimientosSuma").show();
-            };
-
-            function MovimientosPrepago() {
-                $("#MovimientosSuma").hide();
-                $("#MovimientosPrepago").show();
-            };
-
-            function OcultarMovimientos() {
-                $("#MovimientosSuma").hide();
-                $("#MovimientosPrepago").hide();
-            };
-        </script>
-    </div>
-
-    <!--// btn btn-success -->
 </div>
 <!-- container -->
-<br />
 
 <div id="MovimientosPrepago" class="container">
 
@@ -135,9 +114,8 @@
             <div class="panel panel-default">
 
                 <div class="panel-heading clearfix panel-gradient">
-                    <h3 class="panel-title">Afiliado / Movimientos Prepago</h3>
+                    <h3 class="panel-title">Afiliado / Movimientos Prepago <a href="javascript:OcultarMovimientos()" class="btn btn-success btn-md" role="button">Ocultar Movimientos</a></h3>                    
                 </div>
-
                 <div class="panel-body">
 
                     <table class="table table-striped custab">
@@ -223,8 +201,9 @@
             <div class="panel panel-default">
 
                 <div class="panel-heading clearfix panel-gradient">
-                    <h3 class="panel-title">Afiliado / Movimientos Suma</h3>
-                </div>
+                    <h3 class="panel-title">Afiliado / Movimientos Suma <a href="javascript:OcultarMovimientos()" class="btn btn-success btn-md" role="button">Ocultar Movimientos</a>
+                </h3>
+               </div>
 
                 <div class="panel-body">
 
@@ -301,3 +280,46 @@
 
 </div>
 <!-- container -->
+
+<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#MovimientosPrepago").hide();
+        $("#MovimientosSuma").hide();
+    });
+
+    $('#cuentas tr').click(function () {
+        var TipoCuenta;
+
+        $('.table tbody tr').removeClass("active");
+        $(this).addClass("active");
+        TipoCuenta = $(this).data("row-key");
+
+        if (TipoCuenta == "5") {
+            $("#MovimientosSuma").hide();
+            $("#MovimientosPrepago").show();
+        }
+        else if (TipoCuenta == "7") {
+            $("#MovimientosPrepago").hide();
+            $("#MovimientosSuma").show();
+        }
+        else {
+            alert("error tipo de cuenta no definido");
+        }
+    });
+
+    //function MovimientosSuma() {
+    //    $("#MovimientosPrepago").hide();
+    //    $("#MovimientosSuma").show();
+    //};
+
+    //function MovimientosPrepago() {
+    //    $("#MovimientosSuma").hide();
+    //    $("#MovimientosPrepago").show();
+    //};
+
+    function OcultarMovimientos() {
+        $("#MovimientosSuma").hide();
+        $("#MovimientosPrepago").hide();
+    };
+</script>
