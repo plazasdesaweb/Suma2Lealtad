@@ -60,7 +60,7 @@ namespace Suma2Lealtad.Controllers
         // POST: /Afiliado/Create
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Create(Afiliado AfiliadoSuma)
         {
             /* PENDIENTE : Implementar Expresiones Reguladores */
