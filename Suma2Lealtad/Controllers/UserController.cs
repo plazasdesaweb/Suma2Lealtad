@@ -13,7 +13,6 @@ namespace Suma2Lealtad.Controllers
     [AuditingFilter]
     public class UserController : Controller
     {
-
         private LealtadEntities db = new LealtadEntities();
 
         public ActionResult CreateRoles(UserRols UserRoles)
@@ -137,9 +136,17 @@ namespace Suma2Lealtad.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
+           User user = db.Users.Find(id);
+
+             foreach (var m in db.UserRols.Where(m => m.userid == id))
+             {
+             db.UserRols.Remove(m);
+             }
+
+                db.SaveChanges();
+                db.Users.Remove(user);
+                db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
