@@ -219,8 +219,8 @@
     <Compile Include="Models\AffiliateAud.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\AfiliadoSuma.cs" />
-    <Compile Include="Models\AfiliadoWeb.cs" />
+    <Compile Include="Models\AfiliadoRepository.cs" />
+    <Compile Include="Models\Afiliado.cs" />
     <Compile Include="Models\Auditing.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -474,12 +474,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Afiliado\Index.cshtml" />
     <Content Include="Views\Afiliado\Filter.cshtml" />
-    <Content Include="Views\Afiliado\Details.cshtml" />
-    <Content Include="Views\Afiliado\Create.cshtml" />
-    <Content Include="Views\Afiliado\Edit.cshtml" />
-    <Content Include="Views\Afiliado\Delete.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Afiliado\SilverlightEscaner.cshtml" />
     <Content Include="Views\Interest\Index.cshtml" />
@@ -548,6 +543,7 @@
     <Content Include="Views\Error\SessionExpired.cshtml" />
     <Content Include="Views\User\Roles.cshtml" />
     <Content Include="Views\Role\Menus.cshtml" />
+    <Content Include="Views\Afiliado\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

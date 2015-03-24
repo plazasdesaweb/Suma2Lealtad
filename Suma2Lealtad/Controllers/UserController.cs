@@ -15,12 +15,6 @@ namespace Suma2Lealtad.Controllers
     {
         private LealtadEntities db = new LealtadEntities();
 
-        public ActionResult CreateRoles(UserRols UserRoles)
-        {
-            UserRoles.Update();
-            return RedirectToAction("Index");
-        }
-
         //
         // GET: /User/
 
@@ -51,6 +45,15 @@ namespace Suma2Lealtad.Controllers
                 return HttpNotFound();
             }
             return View(user);
+        }
+
+        //
+        // GET: /User/CreateRoles/5
+
+        public ActionResult CreateRoles(UserRols UserRoles)
+        {
+            UserRoles.Update();
+            return RedirectToAction("Index");
         }
 
         //
