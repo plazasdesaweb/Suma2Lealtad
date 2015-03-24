@@ -37,6 +37,16 @@ namespace Suma2Lealtad.Controllers
         }
 
         //
+        // GET: /Menu/Menus/5
+
+        public ActionResult Menus(int id = 0)
+        {
+            RoleMenus RoleMenus = new RoleMenus(id);
+            return View(RoleMenus);
+        }
+
+
+        //
         // GET: /Menu/Create
 
         public ActionResult Create()
