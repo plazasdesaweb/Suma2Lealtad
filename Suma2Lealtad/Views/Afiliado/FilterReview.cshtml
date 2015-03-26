@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "FilterReview";
+}
+
+<h2>FilterReview</h2>
+
+<form action=@Url.Action("Index", "Afiliado") name="form" method="post">
+
+<div>
+
+    Número de Documento :
+
+    <input type="text" id="numdoc" name="numdoc" value="V-12919906" maxlength="10" required>
+    <span id="field1"></span>
+
+</div>
+
+<br />
+
+<div class="form-group">
+    <div>
+        <div>
+            <input type="submit" class="btn btn-success btn-md" value="Buscar Afiliado" />
+        </div>
+    </div>
+</div><!-- form-group -->      
+
+</form>

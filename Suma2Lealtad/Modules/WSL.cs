@@ -142,10 +142,10 @@ namespace Suma2Lealtad.Modules
                 return ConsumirServicioPlazasWeb(req);
             }
 
-            public static string UpdateClient(Suma2Lealtad.Models.AfiliadoSuma record)
+            public static string UpdateClient(Suma2Lealtad.Models.Afiliado record)
             {
                 string req = WSL_WEB_UPDCLIENT;
-                req = req.Replace("{id}", record.id);
+                req = req.Replace("{id}", record.id.ToString() );
                 req = req.Replace("{type}", record.type + "");
                 req = req.Replace("{docnumber}", record.docnumber);
                 req = req.Replace("{email}", record.email);
