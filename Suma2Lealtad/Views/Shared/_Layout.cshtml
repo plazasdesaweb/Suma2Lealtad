@@ -2,7 +2,7 @@
 
 <html lang="en">
 
-  <head>
+<head>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,48 +17,52 @@
       <script src="@Url.Content("~/Scripts/respond.min.js")"></script>
     <![endif]-->
 
-  </head>
+</head>
 
-  <body>
+<body>
 
     <div class="container">
-		
-	<div class="row row-plz">
 
-		<div class="col-md-2 col-right">
-			<img src="@Url.Content("~/Images/plzlogo.jpg")" />
-		</div>
+        <div class="row row-plz">
 
-		<div class="col-md-6 col-plz col-left">
-			<div class="font-plz">Administrador SUMA</div><small>V.0.0.3</small>
-		</div>
-		
-        @if (Session["username"] != null) {
-            <div class="col-md-4 col-plz col-right">   
-                <div class="row">@Html.Raw(Session["username"].ToString())</div>
-                <div class="row">@Html.Raw(Session["appdate"].ToString())</div> 
+            <div class="col-md-2 col-right">
+                <img src="@Url.Content("~/Images/plzlogo.jpg")" />
             </div>
-        }
 
-	</div>
+            <div class="col-md-6 col-plz col-left">
+                <div class="font-plz">Administrador SUMA</div>
+                <small>V.0.0.3</small>
+            </div>
 
-	<nav class="navbar navbar-default" role="navigation">
-	  <div class="container-fluid">
-	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-       
-                 @Html.Partial("_MenuLayout")
+            @if (Session["username"] != null)
+            {
+                <div class="col-md-4 col-plz col-right">
+                    <div class="row">@Html.Raw(Session["username"].ToString())</div>
+                    <div class="row">@Html.Raw(Session["appdate"].ToString())</div>
+                </div>
+            }
 
-	    </div><!-- /.navbar-collapse -->
-	  </div><!-- /.container-fluid -->
-    </nav>		
+        </div>
 
-    @RenderBody()
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                    @Html.Partial("_MenuLayout")
+
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+
+        @RenderBody()
 
     </div>
-      
+
     <script src="@Url.Content("~/Scripts/jquery-2.1.1.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
 
-  </body>
+</body>
 
 </html>

@@ -21,5 +21,6 @@ namespace Suma2Lealtad.Models
         public string actions { get; set; }
         public int order { get; set; }
         public string tooltips { get; set; }
+        public bool Checked { get; set; }
     }
 }

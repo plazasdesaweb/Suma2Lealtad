@@ -284,6 +284,7 @@
     <Compile Include="Models\Role.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RoleMenus.cs" />
     <Compile Include="Models\Saldo.cs" />
     <Compile Include="Models\SaldosMovimientos.cs" />
     <Compile Include="Models\SecurityLevel.cs">
@@ -547,6 +548,7 @@
     <Content Include="Views\Error\Error404.cshtml" />
     <Content Include="Views\Error\SessionExpired.cshtml" />
     <Content Include="Views\User\Roles.cshtml" />
+    <Content Include="Views\Role\Menus.cshtml" />
     <Content Include="Views\Afiliado\Create.cshtml" />
     <Content Include="Views\Afiliado\Edit.cshtml" />
     <Content Include="Views\Afiliado\GenericView.cshtml" />

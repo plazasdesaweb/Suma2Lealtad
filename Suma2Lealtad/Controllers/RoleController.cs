@@ -15,6 +15,13 @@ namespace Suma2Lealtad.Controllers
     {
         private LealtadEntities db = new LealtadEntities();
 
+        public ActionResult CreateRoles(RoleMenus RoleMenus)
+        {
+            RoleMenus.Update();
+            return RedirectToAction("Index");
+        }
+
+
         //
         // GET: /Role/
 
@@ -34,6 +41,15 @@ namespace Suma2Lealtad.Controllers
                 return HttpNotFound();
             }
             return View(role);
+        }
+
+        //
+        // GET: /User/Roles/5
+
+        public ActionResult Menus(int id = 0)
+        {
+            RoleMenus RoleMenus = new RoleMenus(id);
+            return View(RoleMenus);
         }
 
         //
@@ -110,6 +126,13 @@ namespace Suma2Lealtad.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            UserRol userrol = db.UserRols.Find(id);
+
+            if (userrol == null)
+            {
+                return RedirectToAction("Index");
+            }
+
             Role role = db.Roles.Find(id);
             db.Roles.Remove(role);
             db.SaveChanges();
