@@ -20,6 +20,8 @@ namespace Suma2Lealtad.Modules
         private const string WSL_CARDS_CARD_PRINT = "card/print/{numdoc}";
         private const string WSL_CARDS_CARD_ACTIVE = "active/{numdoc}";
         private const string WSL_CARDS_CARD_INACTIVE = "card/inactive/{numdoc}";
+        private const string WSL_WEB_GETCLIENTBYNAME = "getclient/{name}";
+        
         //servicios web
         private const string WSL_WEB_GETCLIENTBYNUMDOC = "getclientbynumdoc/{docnumber}";
         private const string WSL_WEB_UPDCLIENT = "updclient/{id}/{docnumber}/{nationality}/{name}/{name2}/{lastname1}/{lastname2}/{birthdate}/{gender}/{maritalstatus}/{occupation}/{phone1}/{phone2}/{phone3}/{email}/{type}";
@@ -142,7 +144,14 @@ namespace Suma2Lealtad.Modules
                 return ConsumirServicioPlazasWeb(req);
             }
 
-            public static string UpdateClient(Suma2Lealtad.Models.AfiliadoSuma record)
+            public static string getClientByName(string name)
+            {
+                string req = WSL_WEB_GETCLIENTBYNAME;
+                req = req.Replace("{name}", name);
+                return ConsumirServicioPlazasWeb(req);
+            }
+
+            public static string UpdateClient(Suma2Lealtad.Models.Afiliado record)
             {
                 string req = WSL_WEB_UPDCLIENT;
                 req = req.Replace("{id}", record.id);

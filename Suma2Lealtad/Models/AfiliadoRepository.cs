@@ -26,7 +26,6 @@ namespace Suma2Lealtad.Models
 
         }
 
-
         private List<Interest> chargeInterestList()
         {
             using (LealtadEntities db = new LealtadEntities())
