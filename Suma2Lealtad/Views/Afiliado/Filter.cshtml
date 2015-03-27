@@ -22,25 +22,25 @@
                     <div class="editor-label col-md-4 control-label"> <br /> </div>
                     <div class="editor-field col-md-8"> <br /> </div>
 
-                    <form action=@Url.Action("Find", "Afiliado") name="form" method="post" >
+                    <form action=@Url.Action("Find", "Afiliado") name="form" method="post" onsubmit="return validatePass();">
 
                         <div class="editor-label col-md-4 control-label">
                             Número de Documento :
                         </div>
 
                         <div class="editor-field col-md-8">
-                            <input type="text" id="numdoc" name="numdoc" maxlength="10" placeholder="V-12345678" class="form-control">
+                            <input type="text" id="numdoc" name="numdoc" value="V-12919906" maxlength="10" placeholder="V-12345678" class="form-control" required>
                             <span id="someID"></span>
                         </div>
 
-                        <div class="editor-label col-md-4 control-label">
-                            Nombre :
+@*                        <div class="editor-label col-md-4 control-label">
+                            Correo Electrónico :
                         </div>
 
                         <div class="editor-field col-md-8">
-                            <input type="text" id="name" name="name" maxlength="50" placeholder="Nombre" class="form-control">
-                            <span id="someName"></span>
-                        </div>
+                            <input type="text" id="email" name="email" maxlength="10" placeholder="correo@ejemplo.com" class="form-control">
+                            <span id="someMail"></span>
+                        </div>*@
 
                         <div class="editor-label col-md-4 control-label"> <br /> </div>
                         <div class="editor-field col-md-8"> <br /> </div>
@@ -48,7 +48,7 @@
                         <div class="form-group">
                             <div class="col-md-12 col-btn">
                                 <div class="pull-right">
-                                    <input type="submit" class="btn btn-success btn-lg" value="Buscar Afiliado" />
+                                    <input type="submit" class="btn btn-success btn-lg" value="Buscar" />
                                 </div>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
     </div>
     <!--// row -->
 
-@*    <script type="text/javascript">
+    <script type="text/javascript">
 
         function validatePass() {
 
@@ -93,7 +93,7 @@
             span.appendChild(document.createTextNode("* Formato de Documento incorrecto. Ejm = V-12345678"));
 
         }
-    </script>*@
+    </script>
 
 </div>
 <!--// container -->
