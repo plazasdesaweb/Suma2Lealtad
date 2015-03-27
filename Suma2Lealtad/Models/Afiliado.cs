@@ -14,7 +14,7 @@ namespace Suma2Lealtad.Models
         public string docnumber { get; set; }
         public int clientid { get; set; }
         public string storeid { get; set; }
-        public string channelid { get; set; }
+        public int channelid { get; set; }
         public int typeid { get; set; }
         public string typedelivery { get; set; }
         public int storeiddelivery { get; set; }
@@ -58,7 +58,7 @@ namespace Suma2Lealtad.Models
         public IEnumerable<Sexo> SexoOptions =
             new List<Sexo>
         {
-              new Sexo { id = 0, sexo = "Nulo" },
+              new Sexo { id = 0, sexo = "" },
               new Sexo { id = 1, sexo = "Masculino" },
               new Sexo { id = 2, sexo = "Femenino"  }
         };
@@ -118,7 +118,6 @@ namespace Suma2Lealtad.Models
             new List<Estado>
         {
             new Estado {id =null, estado = ""        },
-            new Estado {id = "0", estado = ""        },
             new Estado {id = "1", estado = "DC"      },
             new Estado {id = "2", estado = "Miranda" },
             new Estado {id = "3", estado = "Vargas"  },

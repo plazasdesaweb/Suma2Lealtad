@@ -12,6 +12,9 @@ namespace Suma2Lealtad.Models
     public class AfiliadoRepository
     {
 
+        private int INITIAL_INTEGER_VALUE = 1;
+        private string INITIAL_STRING_VALUE = "";
+
         public AfiliadoRepository() { }
 
         public class customerInterest { 
@@ -145,7 +148,7 @@ namespace Suma2Lealtad.Models
                                        phone2 = c.TELEFONO_OFIC,
                                        phone3 = c.TELEFONO_CEL,
                                        email = c.E_MAIL,
-                                       storeiddelivery = (int)c.COD_SUCURSAL,
+                                       storeiddelivery = (int) c.COD_SUCURSAL,
                                        cod_estado = c.COD_ESTADO,
                                        cod_ciudad = c.COD_CIUDAD,
                                        cod_municipio = c.COD_MUNICIPIO,
@@ -154,12 +157,14 @@ namespace Suma2Lealtad.Models
                                        facebook_account = a.facebook_account,
                                        twitter_account = a.twitter_account,
                                        instagram_account = a.instagram_account,
+                                       channelid = a.channelid,
+                                       typedelivery = a.typedelivery,
                                        comments = a.comments
                                    }).Single();
 
                 if (record != null)
                 {
-                    record.Intereses = chargeInterestList(record.customerid);
+                    record.Intereses = chargeInterestList(record.id);
                 }
 
                 return record;
@@ -184,108 +189,105 @@ namespace Suma2Lealtad.Models
                 if (result == null)
                 {
 
-                    var _cliente = new CLIENTE()
+                    var cliente = new CLIENTE()
                     {
-                        TIPO_DOCUMENTO = AfiliadoSuma.type,
-                        NRO_DOCUMENTO = AfiliadoSuma.docnumber,
-                        NACIONALIDAD = AfiliadoSuma.nationality,
-                        NOMBRE_CLIENTE1 = AfiliadoSuma.name,
-                        NOMBRE_CLIENTE2 = AfiliadoSuma.name2,
-                        APELLIDO_CLIENTE1 = AfiliadoSuma.lastname1,
-                        APELLIDO_CLIENTE2 = AfiliadoSuma.lastname2,
-                        FECHA_NACIMIENTO = System.DateTime.Now,       // PENDIENTE 
-                        SEXO = AfiliadoSuma.gender,
-                        EDO_CIVIL = AfiliadoSuma.maritalstatus,
-                        OCUPACION = AfiliadoSuma.occupation,
-                        TELEFONO_HAB = AfiliadoSuma.phone1,
-                        TELEFONO_OFIC = AfiliadoSuma.phone2,
-                        TELEFONO_CEL = AfiliadoSuma.phone3,
-                        E_MAIL = AfiliadoSuma.email,
-                        COD_SUCURSAL = AfiliadoSuma.storeiddelivery,
-                        COD_ESTADO = AfiliadoSuma.cod_estado == null ? "0" : AfiliadoSuma.cod_estado,
-                        COD_CIUDAD = AfiliadoSuma.cod_ciudad == null ? "0" : AfiliadoSuma.cod_ciudad,
-                        COD_MUNICIPIO = AfiliadoSuma.cod_municipio == null ? "0" : AfiliadoSuma.cod_municipio,
-                        COD_PARROQUIA = AfiliadoSuma.cod_parroquia == null ? "0" : AfiliadoSuma.cod_parroquia,
-                        COD_URBANIZACION = AfiliadoSuma.cod_urbanizacion == null ? "0" : AfiliadoSuma.cod_urbanizacion,
-                        FECHA_CREACION = System.DateTime.Now
+                        TIPO_DOCUMENTO      = INITIAL_INTEGER_VALUE.ToString(),
+                        NRO_DOCUMENTO       = AfiliadoSuma.docnumber,
+                        NACIONALIDAD        = AfiliadoSuma.nationality,
+                        NOMBRE_CLIENTE1     = AfiliadoSuma.name,
+                        NOMBRE_CLIENTE2     = AfiliadoSuma.name2,
+                        APELLIDO_CLIENTE1   = AfiliadoSuma.lastname1,
+                        APELLIDO_CLIENTE2   = AfiliadoSuma.lastname2,
+                        FECHA_NACIMIENTO    = System.DateTime.Now,       // PENDIENTE 
+                        SEXO                = AfiliadoSuma.gender,
+                        EDO_CIVIL           = AfiliadoSuma.maritalstatus,
+                        OCUPACION           = AfiliadoSuma.occupation,
+                        TELEFONO_HAB        = AfiliadoSuma.phone1,
+                        TELEFONO_OFIC       = AfiliadoSuma.phone2,
+                        TELEFONO_CEL        = AfiliadoSuma.phone3,
+                        E_MAIL              = AfiliadoSuma.email,
+                        COD_SUCURSAL        = AfiliadoSuma.storeiddelivery,
+                        COD_ESTADO          = AfiliadoSuma.cod_estado == null ? "0" : AfiliadoSuma.cod_estado,
+                        COD_CIUDAD          = AfiliadoSuma.cod_ciudad == null ? "0" : AfiliadoSuma.cod_ciudad,
+                        COD_MUNICIPIO       = AfiliadoSuma.cod_municipio == null ? "0" : AfiliadoSuma.cod_municipio,
+                        COD_PARROQUIA       = AfiliadoSuma.cod_parroquia == null ? "0" : AfiliadoSuma.cod_parroquia,
+                        COD_URBANIZACION    = AfiliadoSuma.cod_urbanizacion == null ? "0" : AfiliadoSuma.cod_urbanizacion,
+                        FECHA_CREACION      = System.DateTime.Now
                     };
 
-                    var _affiliate = new Affiliate()
+                    var affiliate = new Affiliate()
                     {
-                        id = AfilliatesID(),
-                        customerid = AfiliadoSuma.id,
-                        docnumber = AfiliadoSuma.docnumber,
-                        //clientid = AfiliadoSuma.id,
-                        storeid = AfiliadoSuma.storeiddelivery,
-                        channelid = 1,
-                        typeid = 1,
-                        affiliatedate = System.DateTime.Now,
-                        typedelivery = "",
-                        storeiddelivery = AfiliadoSuma.storeiddelivery,
+                        id                  = AfilliatesID(),
+                        customerid          = AfiliadoSuma.id,
+                        docnumber           = AfiliadoSuma.docnumber,
+                        clientid            = AfiliadoSuma.clientid,
+                        storeid             = AfiliadoSuma.storeiddelivery,
+                        channelid           = AfiliadoSuma.channelid,
+                        typeid              = INITIAL_INTEGER_VALUE,
+                        affiliatedate       = System.DateTime.Now,
+                        typedelivery        = AfiliadoSuma.typedelivery,
+                        storeiddelivery     = AfiliadoSuma.storeiddelivery,
                         estimateddatedelivery = System.DateTime.Now,
-                        creationdate = System.DateTime.Now,
-                        creationuserid = (int)HttpContext.Current.Session["userid"],
-                        modifieduserid = (int)HttpContext.Current.Session["userid"],
-                        modifieddate = System.DateTime.Now,
-                        statusid = 1,
-                        reasonsid = 1,
-                        twitter_account = AfiliadoSuma.twitter_account,
-                        facebook_account = AfiliadoSuma.facebook_account,
-                        instagram_account = AfiliadoSuma.instagram_account,
-                        comments = AfiliadoSuma.comments
+                        creationdate        = System.DateTime.Now,
+                        creationuserid      = (int) HttpContext.Current.Session["userid"],
+                        modifieddate        = System.DateTime.Now,
+                        modifieduserid      = (int) HttpContext.Current.Session["userid"],
+                        statusid            = INITIAL_INTEGER_VALUE,
+                        reasonsid           = INITIAL_INTEGER_VALUE,
+                        twitter_account     = AfiliadoSuma.twitter_account,
+                        facebook_account    = AfiliadoSuma.facebook_account,
+                        instagram_account   = AfiliadoSuma.instagram_account,
+                        comments            = AfiliadoSuma.comments
                     };
 
-                    var _companyaff = new CompanyAffiliate()
+                    var companyaffiliate = new CompanyAffiliate()
                     {
-                        affiliateid = _affiliate.id,
-                        companyid = 1,
-                        begindate = System.DateTime.Now,
-                        enddate = System.DateTime.Now,
-                        comments = _affiliate.comments,
-                        active = true
+                        affiliateid = affiliate.id,
+                        companyid   = INITIAL_INTEGER_VALUE,
+                        begindate   = System.DateTime.Now,
+                        enddate     = System.DateTime.Now,
+                        comments    = affiliate.comments,
+                        active      = true
                     };
 
-                    db.CLIENTES.Add(_cliente);
+                    db.CLIENTES.Add(cliente);
 
-                    db.Affiliates.Add(_affiliate);
+                    db.Affiliates.Add(affiliate);
 
-                    db.CompanyAffiliates.Add(_companyaff);
+                    db.CompanyAffiliates.Add(companyaffiliate);
 
                     foreach (var interes in AfiliadoSuma.Intereses.Where(x => x.Checked == true))
                     {
 
                         CustomerInterest customerInterest = new CustomerInterest()
                         {
-                            customerid = _affiliate.customerid,
-                            interestid = interes.id,
-                            comments = ""
+                            customerid  = affiliate.id,
+                            interestid  = interes.id,
+                            comments    = INITIAL_STRING_VALUE
                         };
 
                         db.CustomerInterests.Add(customerInterest);
 
                     }
 
-                    var affiliateAuditoria = new AffiliateAud()
+                    var affiliateauditoria = new AffiliateAud()
                     {
-                        id = AfilliateAudID(),
-                        affiliateid = _affiliate.id,
-                        modifieduserid = (int)HttpContext.Current.Session["userid"],
-                        modifieddate = System.DateTime.Now,
-                        statusid = 1,
-                        reasonsid = 1,
-                        comments = _affiliate.comments
+                        id              = AfilliateAudID(),
+                        affiliateid     = affiliate.id,
+                        modifieduserid  = (int) HttpContext.Current.Session["userid"],
+                        modifieddate    = System.DateTime.Now,
+                        statusid        = INITIAL_INTEGER_VALUE,
+                        reasonsid       = INITIAL_INTEGER_VALUE,
+                        comments        = affiliate.comments
                     };
 
-                    db.AffiliateAuds.Add(affiliateAuditoria);
+                    db.AffiliateAuds.Add(affiliateauditoria);
 
                     db.SaveChanges();
 
                 }
-
                 return true;
-
             }
-
 
         }
 
@@ -302,7 +304,7 @@ namespace Suma2Lealtad.Models
                 // Entidad : Cliente 
                 CLIENTE cliente = db.CLIENTES.FirstOrDefault(c => c.NRO_DOCUMENTO == afiliado.docnumber);
 
-                if (cliente != null)
+                if ( cliente != null )
                 {
 
                     cliente.TIPO_DOCUMENTO = afiliado.typeid.ToString();
@@ -341,18 +343,18 @@ namespace Suma2Lealtad.Models
                     affiliate.docnumber = afiliado.docnumber;
                     affiliate.clientid = afiliado.clientid;
                     affiliate.storeid = afiliado.storeiddelivery;
-                    affiliate.channelid = int.Parse(afiliado.channelid);
+                    affiliate.channelid = afiliado.channelid;
                     affiliate.typeid = afiliado.typeid;
                     affiliate.affiliatedate = System.DateTime.Now;
                     affiliate.typedelivery = afiliado.typedelivery;
                     affiliate.storeiddelivery = afiliado.storeiddelivery;
                     affiliate.estimateddatedelivery = System.DateTime.Now;
-                    affiliate.creationdate = System.DateTime.Now;
-                    affiliate.creationuserid = (int)HttpContext.Current.Session["userid"];
+                    //affiliate.creationdate = System.DateTime.Now;
+                    //affiliate.creationuserid = (int)HttpContext.Current.Session["userid"];
                     affiliate.modifieduserid = (int) HttpContext.Current.Session["userid"];
                     affiliate.modifieddate = System.DateTime.Now;
-                    affiliate.statusid = 1;
-                    affiliate.reasonsid = 1;
+                    //affiliate.statusid = 1;
+                    //affiliate.reasonsid = 1;
                     affiliate.twitter_account = afiliado.twitter_account;
                     affiliate.facebook_account = afiliado.facebook_account;
                     affiliate.instagram_account = afiliado.instagram_account;
@@ -361,7 +363,7 @@ namespace Suma2Lealtad.Models
                 }
 
                 // Entidad : Temas de Interés del Afiliado. 
-                foreach (var m in db.CustomerInterests.Where(f => f.customerid == afiliado.customerid))
+                foreach (var m in db.CustomerInterests.Where(f => f.customerid == afiliado.id))
                 {
                     db.CustomerInterests.Remove(m);
                 }
@@ -371,7 +373,7 @@ namespace Suma2Lealtad.Models
 
                     CustomerInterest customerInterest = new CustomerInterest()
                     {
-                        customerid = afiliado.customerid,
+                        customerid = afiliado.id,
                         interestid = interes.id,
                         comments = ""
                     };
