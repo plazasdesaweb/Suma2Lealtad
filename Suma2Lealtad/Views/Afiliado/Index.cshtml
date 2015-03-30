@@ -1,102 +1,82 @@
-﻿@{
-    ViewBag.Title = "Index";
-}
+﻿@model IEnumerable<Suma2Lealtad.Models.Afiliado>
 
-<h2>Index</h2>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <div class="form-group">
 
+    <div class="panel panel-default">
 
+        <div class="panel-heading clearfix panel-gradient">
+            <h3 class="panel-title">Afiliado / Revisar Afiliaciones / Lista de Registros</h3>
+        </div>
 
-    <!-- Table Dummy -->
+        <div class="panel-body">
 
-<div class="panel panel-default">
+            <table class="table table-striped custab">
 
-                <div class="panel-heading clearfix panel-gradient">
-                    <h3 class="panel-title">Afiliado / Revisar Afiliaciones / Lista de Registros</h3>
+                <thead>
+
+                    <tr>
+                        <th>Número Documento/Cédula
+                        </th>
+                        <th>Afiliado
+                        </th>
+                        <th>Correo
+                        </th>
+                        <th>Estatus
+                        </th>
+
+                        <th class="text-center"></th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.docnumber)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.email)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.estatus)
+                            </td>
+
+                            <td class="text-right">
+                                <a href="@Url.Action("Edit", "Afiliado", new { id = item.id })" class="btn btn-info btn-xs">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+            <div class="col-md-12 col-btn">
+                <div class="pull-right">
+                    <a href="@Url.Action("FilterReview", "Afiliado")" class="btn btn-success btn-md">Retornar</a>
                 </div>
-
-                <div class="panel-body">
-
-                    <table class="table table-striped custab">
-
-                        <thead>
-
-                            <tr>
-                                <th>
-                                     Nombre
-
-                                </th>
-                                <th class="text-center"></th>
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-
-                                <tr>
-                                    <td>
-                                        Afiliado 1
-                                    </td>
-                                    <td class="text-right">
-                                        <a href="/Afiliado/Edit/1" class="btn btn-info btn-xs">
-                                            <span class="glyphicon glyphicon-edit"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Afiliado 2
-                                    </td>
-                                    <td class="text-right">
-                                        <a href="/Afiliado/Edit/2" class="btn btn-info btn-xs">
-                                            <span class="glyphicon glyphicon-edit"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Afiliado 3
-                                    </td>
-                                    <td class="text-right">
-                                        <a href="/Afiliado/Edit/3" class="btn btn-info btn-xs">
-                                            <span class="glyphicon glyphicon-edit"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Afiliado 4
-                                    </td>
-                                    <td class="text-right">
-                                        <a href="/Afiliado/Edit/4" class="btn btn-info btn-xs">
-                                            <span class="glyphicon glyphicon-edit"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-
-                        </tbody>
-
-                    </table>
-
-                    <div>
-                        <div>
-                            <a href="@Url.Action("FilterReview", "Afiliado")" class="btn btn-success btn-md">Retornar</a>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- panel-body -->
-
             </div>
 
-    <!-- // Table Dummy -->
+        </div>
+        <!-- panel-body -->
 
+    </div>
 
-
-
-
-
-
-</div><!-- form-group -->      
+</div>
+<!-- form-group -->

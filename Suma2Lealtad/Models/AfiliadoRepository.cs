@@ -174,6 +174,48 @@ namespace Suma2Lealtad.Models
         }
 
 
+        public List<Afiliado> FindSuma(string numdoc, string name, string email)
+        {
+            if (name == "")
+                name = null;
+
+            if (email == "")
+                email = null;
+
+
+            using (LealtadEntities db = new LealtadEntities())
+            {
+
+                List<Afiliado> record = (from c in db.CLIENTES
+                                   join a in db.Affiliates on c.NRO_DOCUMENTO
+                                   equals a.docnumber
+                                   join s in db.Status on a.statusid
+                                   equals s.id
+                                   where c.NRO_DOCUMENTO.Equals(numdoc) || c.E_MAIL == email || c.NOMBRE_CLIENTE1.Contains(name)
+                                   select new Afiliado()
+                                   {
+                                       id = a.id,
+                                       docnumber = c.NRO_DOCUMENTO,
+                                       name = c.NOMBRE_CLIENTE1 + " " + c.APELLIDO_CLIENTE1,
+                                       name2 = c.NOMBRE_CLIENTE2,
+                                       lastname1 = c.APELLIDO_CLIENTE1,
+                                       lastname2 = c.APELLIDO_CLIENTE2,
+                                       email = c.E_MAIL,
+                                       estatus = s.name
+                                   }).ToList();
+
+                //if (record != null)
+                //{
+                //    record.Intereses = chargeInterestList(record.customerid);
+                //}
+
+                return record;
+
+            }
+
+        }
+
+
         //
         // Save : Almacenar registro del afiliado en el Modelo de SumaLealtad.
 

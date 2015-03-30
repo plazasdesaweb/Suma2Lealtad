@@ -92,9 +92,14 @@ namespace Suma2Lealtad.Controllers
         //
         // GET : /Afiliado/Index
 
-        public ActionResult Index()
+        [HttpPost]
+        public ActionResult Index(string numdoc, string name, string email)
         {
-            return View();
+            
+            List<Afiliado> afiliado = rep.FindSuma(numdoc,name, email);
+
+            return View(afiliado);
+        
         }
 
 
