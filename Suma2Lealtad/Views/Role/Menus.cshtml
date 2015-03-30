@@ -13,7 +13,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading clearfix panel-gradient">
-                    <h3 class="panel-title">Rol / Asociar Roles al Usuario</h3>
+                    <h3 class="panel-title">Rol / Asociar Opciones de Menú</h3>
                 </div>
 
 
@@ -33,7 +33,7 @@
 
                                 <div class="row">
                                     <div class="editor-label col-md-6 col-right">
-                                        <b>Usuario :</b>
+                                        <b>Rol :</b>
                                     </div>
                                     <div class="editor-field col-md-6">
                                         @Html.DisplayFor(model => model.RoleName, new { @class = "form-control" })
@@ -47,7 +47,7 @@
                                 <div class="row">
 
                                     <div class="editor-label col-md-6 col-right">
-                                        <b>Roles :</b>
+                                        <b>Menú / Opciones :</b>
                                     </div>
                                     <div class="editor-field col-md-6">
                                         @for (int i = 0; i < Model.Menus.Count; i++)

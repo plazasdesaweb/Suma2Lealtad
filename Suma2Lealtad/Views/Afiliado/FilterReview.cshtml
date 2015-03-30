@@ -1,28 +1,186 @@
-﻿@{
+﻿@model Suma2Lealtad.Models.Afiliado
+
+@{
     ViewBag.Title = "FilterReview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>FilterReview</h2>
+<div class="container">
 
-<form action=@Url.Action("Index", "Afiliado") name="form" method="post">
+    <div class="row">
 
-<div>
+        <div class="col-md-7 col-md-offset-2">
 
-    Número de Documento :
+            <div class="panel panel-default">
 
-    <input type="text" id="numdoc" name="numdoc" value="V-12919906" maxlength="10" required>
-    <span id="field1"></span>
+                <div class="panel-heading clearfix panel-gradient">
+                    <h3 class="panel-title">Afiliado / Filtro de Búsqueda de Afiliado</h3>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="editor-label col-md-4 control-label">
+                        <br />
+                    </div>
+                    <div class="editor-field col-md-8">
+                        <br />
+                    </div>
+
+                    <form action=@Url.Action("Index", "Afiliado") name="FilterForm" id="FilterForm" method="post" onsubmit="return validateForm();">
+
+                        <div class="editor-label col-md-4 control-label">
+                            Número de Documento :
+                        </div>
+
+                        <div class="editor-field col-md-8">
+                            <input type="text" id="numdoc" name="numdoc" maxlength="10" class="form-control">
+                            <span id="field1"></span>
+                        </div>
+
+                        <div class="editor-label col-md-4 control-label">
+                            Nombre :
+                        </div>
+
+                        <div class="editor-field col-md-8">
+                            <input type="text" id="name" name="name" value="" maxlength="50" class="form-control">
+                            <span id="field2"></span>
+                        </div>
+
+                        <div class="editor-label col-md-4 control-label">
+                            Correo Electrónico :
+                        </div>
+
+                        <div class="editor-field col-md-8">
+                            <input type="text" id="email" name="email" value="" maxlength="50" class="form-control">
+                            <span id="field3"></span>
+                        </div>
+
+                        <br />
+                        <div class="editor-label col-md-4 control-label"></div>
+                        <div class="editor-field col-md-8">
+                            <span id="fields"></span>
+                        </div>
+                        <br />
+
+                        <div class="form-group">
+                            <div class="col-md-12 col-btn">
+                                <div class="pull-right">
+                                    <input type="submit" class="btn btn-success btn-md" value="Buscar Afiliado" />
+                                </div>
+                            </div>
+                        </div>
+                        <!-- form-group -->
+
+                    </form>
+
+                </div>
+                <!--// panel-body -->
+
+            </div>
+            <!--// panel -->
+
+        </div>
+        <!--// columns -->
+
+    </div>
+    <!--// row -->
+
+    <script>
+
+        function validateNumDoc() {
+
+            var numdoc = document.getElementById('numdoc').value;
+
+            if(numdoc.length == 0) 
+                return false;
+
+            console.log(numdoc);
+
+            if (!numdoc.match(/^(V|E|J|G)\-\d{6,8}$/)) {
+
+                var span = document.getElementById('field1');
+                span.innerHTML = "";
+                span.appendChild(document.createTextNode("ExpReg No Válida!!"));
+                return false;
+
+            }
+
+            return true;
+
+        }
+
+
+        function validateName() {
+
+            var name = document.getElementById('name').value;
+
+            if (name.length == 0)
+                return false;
+
+            console.log(name);
+
+
+            if (!name.match(/^[a-zA-Z''-'\s]*$/)) {
+
+                var span = document.getElementById('field2');
+                span.innerHTML = "";
+                span.appendChild(document.createTextNode("ExpReg No Válida."));
+                return false;
+
+            }
+
+            return true;
+
+        }
+
+
+        function validateEmail() {
+
+            var email = document.getElementById('email').value;
+
+            if (email.length == 0)
+                return false;
+
+            console.log(email);
+
+            //var patternemail = /^[A-Za-z\._\-[0-9]*[X][A-Za-z]*[\.][a-z]{2,4}$/;
+            var patternemail = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*X[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/;
+
+            if (!email.match(patternemail)) {
+
+                var span = document.getElementById('field3');
+                span.innerHTML = "";
+                span.appendChild(document.createTextNode("ExpReg No Válida."));
+                return false;
+
+            }
+
+            return true;
+
+        }
+
+        function validateForm() {
+
+            var numdoc = document.getElementById('numdoc').value;
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+
+            if (numdoc.length == 0 && name.length == 0 && email.length == 0) {
+                var span = document.getElementById('fields');
+                span.innerHTML = "";
+                span.appendChild(document.createTextNode("Debe ingresar al menos un campo válido."));
+                return false;
+            } else {
+
+                if (!validateNumDoc() && !validateName() && !validateEmail()) {
+                    return false;
+                }
+
+            }
+
+        }
+
+    </script>
 
 </div>
-
-<br />
-
-<div class="form-group">
-    <div>
-        <div>
-            <input type="submit" class="btn btn-success btn-md" value="Buscar Afiliado" />
-        </div>
-    </div>
-</div><!-- form-group -->      
-
-</form>
+<!--// container -->

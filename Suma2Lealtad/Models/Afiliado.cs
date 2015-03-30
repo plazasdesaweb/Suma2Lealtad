@@ -19,6 +19,7 @@ namespace Suma2Lealtad.Models
         public string typedelivery { get; set; }
         public int storeiddelivery { get; set; }
         public int statusid { get; set; }
+        public string estatus { get; set; }
         public int reasonsid { get; set; }
         public string twitter_account { get; set; }
         public string facebook_account { get; set; }
