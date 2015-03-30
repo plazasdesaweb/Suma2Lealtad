@@ -135,18 +135,18 @@ namespace Suma2Lealtad.Controllers
         public ActionResult Edit(Afiliado afiliado)
         {
 
-            if ( rep.SaveChanges( afiliado ) )
+            if ( ! rep.SaveChanges( afiliado ) )
 	        {
-                return RedirectToAction("FilterReview");
+                return RedirectToAction("GenericView", "Afiliado");
+                //return RedirectToAction("FilterReview");
 	        }
-
-            return View( afiliado );
+            return RedirectToAction("FilterReview");
+            //return View( afiliado );
 
         }
 
         protected override void Dispose(bool disposing)
         {
-            //db.Dispose();
             base.Dispose(disposing);
         }
 
