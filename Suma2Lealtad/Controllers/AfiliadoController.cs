@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Suma2Lealtad.Models;
-using Suma2Lealtad.Modules;
-using Newtonsoft.Json;
 using Suma2Lealtad.Filters;
 
 namespace Suma2Lealtad.Controllers
@@ -130,11 +122,14 @@ namespace Suma2Lealtad.Controllers
         public ActionResult Edit(Afiliado afiliado)
         {
 
-            if ( ! rep.SaveChanges( afiliado ) )
-	        {
+
+            if (!rep.SaveChanges(afiliado))
+            {
                 return RedirectToAction("GenericView", "Afiliado");
                 //return RedirectToAction("FilterReview");
-	        }
+            }
+
+
             return RedirectToAction("FilterReview");
             //return View( afiliado );
 

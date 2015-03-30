@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace Suma2Lealtad.Models
 {
@@ -216,6 +212,8 @@ namespace Suma2Lealtad.Models
               new TypeDelivery { id = 2, delivery = "Envío a Casa"        },
               new TypeDelivery { id = 3, delivery = "Envío a Oficina"     }
         };
+
+
 
 
     }
