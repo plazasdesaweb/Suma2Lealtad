@@ -148,7 +148,21 @@ namespace Suma2Lealtad.Controllers
             }
 
             return RedirectToAction("Filter");
+        }
 
+        public ActionResult OperacionesImpresora()
+        {
+            return View();
+        }
+
+        public ActionResult OperacionesPinPad()
+        {
+            return View();
+        }
+
+        public ActionResult Edit()
+        {
+            return View();
         }
     }
 }

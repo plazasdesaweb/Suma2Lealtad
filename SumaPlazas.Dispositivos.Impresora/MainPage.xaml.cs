@@ -454,7 +454,8 @@ namespace SumaPlazas.Dispositivos.Impresora
             bool PermisosElevados = Application.Current.HasElevatedPermissions;
             if (PermisosElevados == true)
             {
-                ElementoHtmlControl.SetProperty("value", "No impresa");
+                //ElementoHtmlControl.SetProperty("value", "No impresa");
+                ElementoHtmlControl.SetProperty("innerHTML", "No impresa");                
                 DetectarImpresora();
             }
             else
@@ -488,12 +489,12 @@ namespace SumaPlazas.Dispositivos.Impresora
                 bool Resultado = proyDataCardCP60.Imprimir(ref nombre, ref apellido, ref nroTarjeta, ref track1, ref track2, ref tipoTarjeta, ref corporacion, ref fechaVencimiento);
                 //La pregunta la haremos en la página web, no en el silverlight
                 //Respuesta = MessageBox.Show("¿Se imprimió correctamente la tarjeta?", "Pregunta", MessageBoxButton.);
-                Thread.Sleep(demora);
-                Dispatcher.BeginInvoke(delegate()
-                {
-                    listBox1.Items.Add("Resultado de la operación: " + Resultado + ".");
-                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                });
+                //Thread.Sleep(demora);
+                //Dispatcher.BeginInvoke(delegate()
+                //{
+                //    listBox1.Items.Add("Resultado de la operación: " + Resultado + ".");
+                //    listBox1.SelectedIndex = listBox1.Items.Count - 1;
+                //});
                 //if (Resultado == true)
                 //{
                 //    MessageBox.Show("Impresa");
@@ -522,12 +523,12 @@ namespace SumaPlazas.Dispositivos.Impresora
                 bool Resultado = smartDriverDotNet.Imprimir(ref nombre, ref apellido, ref nroTarjeta, ref track1, ref track2, ref tipoTarjeta, ref corporacion, ref fechaVencimiento);
                 //La pregunta la haremos en la página web, no en el silverlight
                 //Respuesta = MessageBox.Show("¿Se imprimió correctamente la tarjeta?", "Pregunta", MessageBoxButton.);
-                Thread.Sleep(demora);
-                Dispatcher.BeginInvoke(delegate()
-                {
-                    listBox1.Items.Add("Resultado de la operación: " + Resultado + ".");
-                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                });
+                //Thread.Sleep(demora);
+                //Dispatcher.BeginInvoke(delegate()
+                //{
+                //    listBox1.Items.Add("Resultado de la operación: " + Resultado + ".");
+                //    listBox1.SelectedIndex = listBox1.Items.Count - 1;
+                //});
                 //if (Resultado == true)
                 //{
                 //    MessageBox.Show("Impresa");
@@ -555,7 +556,8 @@ namespace SumaPlazas.Dispositivos.Impresora
             listBox1.Items.Add("Finalizó impresión de tarjeta...");
             listBox1.SelectedIndex = listBox1.Items.Count - 1;
 
-            ElementoHtmlControl.SetProperty("value", "Impresa");
+            //ElementoHtmlControl.SetProperty("value", "Impresa");
+            ElementoHtmlControl.SetProperty("innerHTML", "Impresa");            
         }
         #endregion
     }

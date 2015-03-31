@@ -7,9 +7,8 @@
 
 <body>
 
-    <link href="assets/bootstrap-dialog/css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css" />
-    <script src="assets/bootstrap-dialog/js/bootstrap-dialog.min.js"></script>
-
+    <!--<link href="assets/bootstrap-dialog/css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css" />
+    <script src="assets/bootstrap-dialog/js/bootstrap-dialog.min.js"></script>-->
     <script src="Scripts/PruebaBS3Dialog/assets/jquery/jquery.min.js"></script>
     <link href="Scripts/PruebaBS3Dialog/assets/bootstrap/css/bootstrap.css" rel="stylesheet" />
     <script src="Scripts/PruebaBS3Dialog/assets/bootstrap/js/bootstrap.js"></script>
@@ -18,11 +17,7 @@
     <script src="Scripts/PruebaBS3Dialog/assets/bootstrap-dialog/js/bootstrap-dialog.js"></script>
 
     <div class="container">
-        <h3>Dialog closable / unclosable</h3>
-        <p>
-            If option 'closable' is set to false, the default closing behaviors will be disabled, but you can still close the dialog by using dialog.close().
-        </p>
-        <h3>Just like what we have done in alert, we can control confirm dialog more.</h3>
+        <h3>BootstrapDialog.confirm</h3>
         <div class="source-code runnable">
             <!--BootstrapDialog.confirm({
             title: 'Impresora de Tarjetas',
@@ -30,9 +25,7 @@
             type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
             closable: false, // <-- Default value is false
             btnCancelLabel: 'No', // <-- Default value is 'Cancel',
-            btnCancelClass: 'btn-success',
             btnOKLabel: 'Si', // <-- Default value is 'OK',
-            btnOKClass: 'btn-success', // <-- If you didn't specify it, dialog type will be used,
             callback: function(result) {
                 // result will be true if button was click, while it will be false if users close the dialog directly.
                 if(result) {
@@ -44,6 +37,28 @@
         });-->
         </div>
 
+        <h3>BootstrapDialog.show</h3>
+        <div class="source-code runnable">
+            <!--BootstrapDialog.show({
+            title: 'Impresora de Tarjetas',
+            message: '¿La tarjeta fue impresa correctamente?',
+            type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+            closable: false,
+            buttons: [{
+                label: 'No',
+                action: function(dialogRef) {
+                    alert('No');
+                    dialogRef.close();  
+                }
+            }, {
+                label: 'Si',
+                action: function(dialogRef) {
+                    alert('Si');
+                    dialogRef.close();  
+                }
+            }]
+        });-->      
+        </div>
     </div>
     <!--usar dialog.alert, o dialog.show para poder manipular y controlar los botones al pelo-->
 
@@ -53,10 +68,10 @@
                 var $section = $(this);
                 var code = $(this).html().replace('<!--', '').replace('-->', '');
 
-                //// Code preview
-                //var $codePreview = $('<pre class="prettyprint lang-javascript"></pre>');
-                //$codePreview.text(code);
-                //$section.html($codePreview);
+                // Code preview
+                var $codePreview = $('<pre class="prettyprint lang-javascript"></pre>');
+                $codePreview.text(code);
+                $section.html($codePreview);
 
                 // Run code
                 if ($section.hasClass('runnable')) {
