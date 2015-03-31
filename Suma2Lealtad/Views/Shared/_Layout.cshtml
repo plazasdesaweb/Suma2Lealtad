@@ -60,9 +60,49 @@
 
     </div>
 
+</body>
+
     <script src="@Url.Content("~/Scripts/jquery-2.1.1.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
 
-</body>
+   @* <script>
+    $(document).ready(function () {
+
+        var $validator = $("#EditAfiliado").validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true,
+                    minlength: 3
+                }
+            },
+            messages: {
+                email: {
+                    email: "Enter a valid email address.",
+                },
+            }
+        });
+
+        //$('#rootwizard').bootstrapWizard({
+        //    'tabClass': 'nav nav-pills',
+        //    'onNext': function (tab, navigation, index) {
+        //        var $valid = $("#commentForm").valid();
+        //        if (!$valid) {
+        //            $validator.focusInvalid();
+        //            return false;
+        //        }
+        //    }
+        //});
+
+
+        $('#tab2primary').click(function () {
+
+            alert('sdfghjk');
+
+        });
+
+    });
+    </script>*@
 
 </html>

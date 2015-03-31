@@ -135,11 +135,17 @@ namespace Suma2Lealtad.Controllers
         public ActionResult Edit(Afiliado afiliado)
         {
 
-            if ( ! rep.SaveChanges( afiliado ) )
-	        {
-                return RedirectToAction("GenericView", "Afiliado");
-                //return RedirectToAction("FilterReview");
-	        }
+            if (ModelState.IsValid)
+            {
+
+                if (!rep.SaveChanges(afiliado))
+                {
+                    return RedirectToAction("GenericView", "Afiliado");
+                    //return RedirectToAction("FilterReview");
+                }
+                
+            }
+
             return RedirectToAction("FilterReview");
             //return View( afiliado );
 

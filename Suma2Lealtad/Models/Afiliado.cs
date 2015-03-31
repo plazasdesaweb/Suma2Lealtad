@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -24,10 +25,10 @@ namespace Suma2Lealtad.Models
         public string twitter_account { get; set; }
         public string facebook_account { get; set; }
         public string instagram_account { get; set; }
-        public string comments { get; set; }
         /* Cliente */
         public string type { get; set; }
         public string name { get; set; }
+        public string comments { get; set; }
         public string name2 { get; set; }
         public string lastname1 { get; set; }
         public string lastname2 { get; set; }
