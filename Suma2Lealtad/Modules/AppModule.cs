@@ -11,6 +11,10 @@ namespace Suma2Lealtad.Modules
 {
     public class AppModule
     {
+        public static string GetPathPicture()
+        {
+            return ConfigurationManager.AppSettings["PATHPICTURE"];
+        }
 
         /* retornar IP Address del Servidor de Servicios Cards */
         public static string CardsServerRoute()
