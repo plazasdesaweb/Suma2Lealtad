@@ -1,8 +1,7 @@
-﻿@model Suma2Lealtad.Models.AfiliadoWeb
+﻿@model Suma2Lealtad.Models.AfiliadoSuma
 
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "OperacionesPinPad";
 }
 
 <div class="container">
@@ -37,7 +36,7 @@
                                     <a id="boton2" href="javascript:Siguiente2()" class="btn btn-success btn-md" role="button">Siguiente</a>*@
                                 @*<a id="boton3" href="@Url.Action("", "")" class="btn btn-success btn-md" role="button">Guardar</a>*@
                                 @*<input id="boton3" type="submit" class="btn btn-success btn-md" value="Guardar" />*@
-                                <a id="boton4" href="@Url.Action("", "")" class="btn btn-danger btn-md" role="button">Salir</a>
+                                <a id="boton4" href="@Url.Action("Edit", "Afiliado")" class="btn btn-danger btn-md" role="button">Salir</a>
                             </div>
                         </div>
                     </div>

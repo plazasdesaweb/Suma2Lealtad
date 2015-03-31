@@ -1,25 +1,35 @@
 ﻿<div class="panel-body">
+    <div class="form-group">
+    <div class="col-md-12 col-btn">
+        <div class="pull-right">
+            <a id="boton4" href="@Url.Action("Edit", "Afiliado")" class="btn btn-warning btn-md" role="button">Editar Afiliado</a>
+        </div>
+    </div>
+</div>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
 
-	<form class="form-horizontal" role="form">
+        <form class="form-horizontal" role="form">
 
-		<div class="form-group">
+            <div class="form-group">
 
-            <div class="panel-heading clearfix">
-                        
-                <div class="editor-label" align="center">   
-                    <img src=@Url.Content("~/Images/conectado.jpg") />
+                <div class="panel-heading clearfix">
+
+                    <div class="editor-label" align="center">
+                        <img src=@Url.Content("~/Images/conectado.jpg") />
+                    </div>
+
                 </div>
-					
-		    </div>
 
-        </div>
-		     
-	</form>
+            </div>
+
+        </form>
                 
     }
 
 </div>
+
+

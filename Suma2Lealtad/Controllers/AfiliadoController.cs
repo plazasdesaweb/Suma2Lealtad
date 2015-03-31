@@ -46,10 +46,10 @@ namespace Suma2Lealtad.Controllers
             Afiliado afiliado = rep.Find(numdoc);
 
             if ( afiliado == null )
-            {
+        {
                 ViewBag.GenericView = "Registro No Encontrado.";
                 return RedirectToAction("GenericView", "Afiliado"); 
-            }
+        }
 
             TempData["AfiliadoModel"] = afiliado;
             return RedirectToAction("Create", "Afiliado");
@@ -61,7 +61,7 @@ namespace Suma2Lealtad.Controllers
         // GET: /Afiliado/Create
 
         public ActionResult Create()
-        {
+                {
             var model = TempData["AfiliadoModel"] as Afiliado;
             return View(model);        
         }
@@ -72,29 +72,29 @@ namespace Suma2Lealtad.Controllers
 
         [HttpPost]
         public ActionResult Create(Afiliado afiliado)
-        {
+                    {
 
             if (rep.Save(afiliado))
-            {
+                    {
                 ViewBag.GenericView = "Registro creado satisfactoriamente.";
             }
             else
-            {
+                    {
                 ViewBag.GenericView = "Ha ocurrido una excepción, revise los valores e intente nuevamente.";
             }
 
             return RedirectToAction("GenericView", "Afiliado");      
 
-        }
+                    }
 
 
         //
         // GET : /Afiliado/FilterReview
 
         public ActionResult FilterReview()
-        {
+                    {
             return View();
-        }
+                    }
 
 
         //
@@ -102,31 +102,31 @@ namespace Suma2Lealtad.Controllers
 
         [HttpPost]
         public ActionResult Index(string numdoc, string name, string email)
-        {
+                        {
             
             List<Afiliado> afiliado = rep.FindSuma(numdoc,name, email);
 
             return View(afiliado);
         
-        }
+                        }
 
 
         //
         // GET : /Afiliado/Edit/1
 
         public ActionResult Edit(int id = 0)
-        {
+                        {
 
             Afiliado afiliado = rep.FindSuma(id);
 
             if (afiliado == null)
-            {
+                    {
                 //return HttpNotFound();
                 return RedirectToAction("GenericView", "Afiliado");
-            }
+                    }
             return View(afiliado); 
 
-        }
+                }
 
         //
         // POST : /Afiliado/Edit/
@@ -139,12 +139,26 @@ namespace Suma2Lealtad.Controllers
 	        {
                 return RedirectToAction("GenericView", "Afiliado");
                 //return RedirectToAction("FilterReview");
-	        }
+            }
             return RedirectToAction("FilterReview");
             //return View( afiliado );
 
+            return RedirectToAction("Filter");
         }
 
+        public ActionResult OperacionesImpresora()
+        {
+            return View();
+        }
+
+        public ActionResult OperacionesPinPad()
+        {
+            return View();
+        }
+
+        public ActionResult Edit()
+        {
+            return View();
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

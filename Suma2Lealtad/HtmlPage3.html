@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+
+<body>
+
+    <!--<link href="assets/bootstrap-dialog/css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css" />
+    <script src="assets/bootstrap-dialog/js/bootstrap-dialog.min.js"></script>-->
+    <script src="Scripts/PruebaBS3Dialog/assets/jquery/jquery.min.js"></script>
+    <link href="Scripts/PruebaBS3Dialog/assets/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <script src="Scripts/PruebaBS3Dialog/assets/bootstrap/js/bootstrap.js"></script>
+    <script src="Scripts/PruebaBS3Dialog/assets/prettify/run_prettify.js"></script>
+    <link href="Scripts/PruebaBS3Dialog/assets/bootstrap-dialog/css/bootstrap-dialog.css" rel="stylesheet" />
+    <script src="Scripts/PruebaBS3Dialog/assets/bootstrap-dialog/js/bootstrap-dialog.js"></script>
+
+    <div class="container">
+        <h3>BootstrapDialog.confirm</h3>
+        <div class="source-code runnable">
+            <!--BootstrapDialog.confirm({
+            title: 'Impresora de Tarjetas',
+            message: '¿La tarjeta fue impresa correctamente?',
+            type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+            closable: false, // <-- Default value is false
+            btnCancelLabel: 'No', // <-- Default value is 'Cancel',
+            btnOKLabel: 'Si', // <-- Default value is 'OK',
+            callback: function(result) {
+                // result will be true if button was click, while it will be false if users close the dialog directly.
+                if(result) {
+                    alert('Si');
+                }else {
+                    alert('No');
+                }
+            }
+        });-->
+        </div>
+
+        <h3>BootstrapDialog.show</h3>
+        <div class="source-code runnable">
+            <!--BootstrapDialog.show({
+            title: 'Impresora de Tarjetas',
+            message: '¿La tarjeta fue impresa correctamente?',
+            type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+            closable: false,
+            buttons: [{
+                label: 'No',
+                action: function(dialogRef) {
+                    alert('No');
+                    dialogRef.close();  
+                }
+            }, {
+                label: 'Si',
+                action: function(dialogRef) {
+                    alert('Si');
+                    dialogRef.close();  
+                }
+            }]
+        });-->      
+        </div>
+    </div>
+    <!--usar dialog.alert, o dialog.show para poder manipular y controlar los botones al pelo-->
+
+    <script type="text/javascript">
+        $(function () {
+            $('.source-code').each(function (index) {
+                var $section = $(this);
+                var code = $(this).html().replace('<!--', '').replace('-->', '');
+
+                // Code preview
+                var $codePreview = $('<pre class="prettyprint lang-javascript"></pre>');
+                $codePreview.text(code);
+                $section.html($codePreview);
+
+                // Run code
+                if ($section.hasClass('runnable')) {
+                    var $button = $('<button class="btn btn-primary">Run the code</button>');
+                    $button.on('click', { code: code }, function (event) {
+                        eval(event.data.code);
+                    });
+                    $button.insertAfter($section);
+                    $('<div class="clearfix" style="margin-bottom: 10px;"></div>').insertAfter($button);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

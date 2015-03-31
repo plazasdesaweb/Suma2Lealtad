@@ -1,0 +1,38 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>jQuery UI Dialog - Modal confirmation</title>
+<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">-->
+    <link href="Scripts/PruebaModalJQUI/jquery-ui.css" rel="stylesheet" />
+<!--<script src="//code.jquery.com/jquery-1.10.2.js"></script>-->
+    <script src="Scripts/PruebaModalJQUI/NewFolder1/jquery.js"></script>
+<!--<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>-->
+    <script src="Scripts/PruebaModalJQUI/jquery-ui.js"></script>
+<!--<link rel="stylesheet" href="/resources/demos/style.css">-->
+    <link href="Scripts/PruebaModalJQUI/jquery-ui.theme.css" rel="stylesheet" />
+<script>
+    $(function () {
+        $("#dialog-confirm").dialog({
+            resizable: false,
+            height: 200,
+            modal: true,
+            buttons: {
+                "No": function () {
+                    $(this).dialog("close");
+                },
+                "Si": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+</script>
+</head>
+<body>
+<div id="dialog-confirm" title="Operaciones de Impresora">
+<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Se imprimió bien la tarjeta?</p>
+</div>
+<p>Sed vel diam id libero <a href="http://example.com">rutrum convallis</a>. Donec aliquet leo vel magna. Phasellus rhoncus faucibus ante. Etiam bibendum, enim faucibus aliquet rhoncus, arcu felis ultricies neque, sit amet auctor elit eros a lectus.</p>
+</body>
+</html>

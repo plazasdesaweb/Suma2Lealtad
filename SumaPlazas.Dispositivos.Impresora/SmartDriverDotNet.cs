@@ -86,14 +86,70 @@ namespace SumaPlazas.Dispositivos.Impresora
 
         public string ReanudarImpresora()
         {
-            string Resultado = "";
-            return Resultado;
+            try
+            {
+                if (AutomationFactory.IsAvailable)
+                {
+                    using (dynamic SmartDriverDotNet = AutomationFactory.CreateObject("SumaPlazas.Librerias.Impresora.CD800.SmartDriverDotNet"))
+                    {
+                        if (SmartDriverDotNet != null)
+                        {
+                            string Resultado = SmartDriverDotNet.ReanudarImpresora(NombreImpresora);
+                            return Resultado;
+                        }
+                        else
+                        {
+                            //MessageBox.Show("Error de Aplicación. No se pudo recibir estado cd800 1.", "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.EstadoImpresora", MessageBoxButton.OK);
+                            return "";
+                        }
+                    }
+                }
+                else
+                {
+                    //MessageBox.Show("Error de Aplicación. No se pudo recibir estado cd800 2.", "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.EstadoImpresora", MessageBoxButton.OK);
+                    return "";
+                }
+            }
+            catch
+            //catch (Exception originalException)
+            {
+                //MessageBox.Show("Error de Aplicación: " + originalException, "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.EstadoImpresora", MessageBoxButton.OK);
+                return "";
+            }
         }
 
-        public string LmpiarErrores()
+        public string LimpiarErrores()
         {
-            string Resultado = "";
-            return Resultado;
+            try
+            {
+                if (AutomationFactory.IsAvailable)
+                {
+                    using (dynamic SmartDriverDotNet = AutomationFactory.CreateObject("SumaPlazas.Librerias.Impresora.CD800.SmartDriverDotNet"))
+                    {
+                        if (SmartDriverDotNet != null)
+                        {
+                            string Resultado = SmartDriverDotNet.LimpiarErrores(NombreImpresora);
+                            return Resultado;
+                        }
+                        else
+                        {
+                            //MessageBox.Show("Error de Aplicación. No se pudo recibir estado cd800 1.", "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.EstadoImpresora", MessageBoxButton.OK);
+                            return "";
+                        }
+                    }
+                }
+                else
+                {
+                    //MessageBox.Show("Error de Aplicación. No se pudo recibir estado cd800 2.", "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.EstadoImpresora", MessageBoxButton.OK);
+                    return "";
+                }
+            }
+            catch
+            //catch (Exception originalException)
+            {
+                //MessageBox.Show("Error de Aplicación: " + originalException, "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.EstadoImpresora", MessageBoxButton.OK);
+                return "";
+            }
         }
     }
 }
