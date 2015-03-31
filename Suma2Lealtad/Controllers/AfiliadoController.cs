@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Suma2Lealtad.Models;
 using Suma2Lealtad.Filters;
+using System.Collections.Generic;
 
 namespace Suma2Lealtad.Controllers
 {

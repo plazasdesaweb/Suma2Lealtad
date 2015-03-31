@@ -61,7 +61,72 @@
     </div>
 
     <script src="@Url.Content("~/Scripts/jquery-2.1.1.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.bootstrap.wizard.min.js")"></script>
+
+    <script>
+    $(document).ready(function() {
+
+       $.validator.addMethod("regex", function(value, element, regexpr) {          
+         return regexpr.test(value);
+       }, "Ingrese un valor correcto.");   
+
+        var $validator = $("#commentForm").validate({
+          rules: {
+
+            name2: {
+              required: true,
+              minlength: 3
+            },
+            lastname2: {
+              required: true,
+              minlength: 3
+            },
+            email: {
+              required: true,
+              email:true,
+              minlength: 3
+            },
+
+
+            emailfield: {
+              required: true,
+              email: true,
+              minlength: 3
+            },
+            namefield: {
+              required: true,
+              /*minlength: 3,*/
+              regex: /^[0-9]+$/
+            },
+            urlfield: {
+              required: true,
+              minlength: 3,
+              url: true
+            }
+          },
+        messages: {
+            emailfield: { 
+                emailfield: "Enter a valid email address.",
+            },
+        }         
+
+        });
+
+        $('#rootwizard').bootstrapWizard({
+            'tabClass': 'nav nav-pills',
+            'onNext': function(tab, navigation, index) {
+                var $valid = $("#commentForm").valid();
+                if(!$valid) {
+                    $validator.focusInvalid();
+                    return false;
+                }
+            }
+        }); 
+        window.prettyPrint && prettyPrint()
+    }); 
+    </script>
 
 </body>
 
