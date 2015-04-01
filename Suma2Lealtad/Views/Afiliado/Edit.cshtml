@@ -8,14 +8,14 @@
 
     <div class="row">
 
-        <div class="panel-body">
+        <div class="panel-body col-md-offset-1 col-md-10">
 
             <form id="commentForm" method="post" action="@Url.Action("Edit", "Afiliado")" class="form-horizontal">
 
                 <div id="rootwizard">
-                    <div class="navbar navbar-default">
-                        <div class="navbar-inner">
-                            <ul>
+                    <div class="nav-gradient navbar navbar-default ">
+                        <div class="nav navbar-nav">
+                            <ul class="nav navbar-nav">
                                 <li><a href="#tab1" data-toggle="tab">Datos Básicos</a></li>
                                 <li><a href="#tab2" data-toggle="tab">Documentos</a></li>
                                 <li><a href="#tab3" data-toggle="tab">Temas de Interés</a></li>
@@ -28,7 +28,7 @@
                         <div class="tab-pane" id="tab1">
 
                             <div class="editor-label col-md-4 control-label"></div>
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 <br />
                             </div>
 
@@ -38,7 +38,7 @@
                                 * Número Documento/Cédula :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.TextBoxFor(model => model.docnumber, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.docnumber)
                             </div>
@@ -47,7 +47,7 @@
                                 * Correo Electrónico :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.TextBoxFor(model => model.email, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.email)
                             </div>
@@ -56,7 +56,7 @@
                                 * Primer Nombre :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.name)
                             </div>
@@ -65,7 +65,7 @@
                                 Segundo Nombre :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.TextBoxFor(model => model.name2, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.name2)
                             </div>
@@ -74,7 +74,7 @@
                                 * Primer Apellido :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.TextBoxFor(model => model.lastname1, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.lastname1)
                             </div>
@@ -83,7 +83,7 @@
                                 Segundo Apellido :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.TextBoxFor(model => model.lastname2, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.lastname2)
                             </div>
@@ -92,7 +92,7 @@
                                 * Fecha de Nacimiento :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.TextBoxFor(model => model.birthdate, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.birthdate)
                             </div>
@@ -101,29 +101,29 @@
                                 * Sexo :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.gender,
-                    new SelectList(Model.SexoOptions,
-                    "id", "sexo",
-                    Model.SexoOptions), new { @class = "form-control" })
+                                new SelectList(Model.SexoOptions,
+                                "id", "sexo",
+                                Model.SexoOptions), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
                                 * Estado Civil :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.maritalstatus,
-                    new SelectList(Model.MaritalStatusOptions,
-                    "id", "maritalstatus",
-                    Model.MaritalStatusOptions), new { @class = "form-control" })
+                                new SelectList(Model.MaritalStatusOptions,
+                                "id", "maritalstatus",
+                                Model.MaritalStatusOptions), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
                                 * Teléfono de Casa :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.TextBoxFor(model => model.phone1, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.phone1)
                             </div>
@@ -132,7 +132,7 @@
                                 Teléfono de Oficina :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.TextBoxFor(model => model.phone2, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.phone2)
                             </div>
@@ -141,7 +141,7 @@
                                 Teléfono de Celular :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.TextBoxFor(model => model.phone3, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.phone3)
                             </div>
@@ -150,7 +150,7 @@
                                 Ocupación :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.TextBoxFor(model => model.occupation, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.occupation)
                             </div>
@@ -159,7 +159,7 @@
                                 Nacionalidad :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.TextBoxFor(model => model.nationality, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.nationality)
                             </div>
@@ -168,7 +168,7 @@
                                 Twitter :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.TextBoxFor(model => model.twitter_account, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.twitter_account)
                             </div>
@@ -177,7 +177,7 @@
                                 Facebook :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.TextBoxFor(model => model.facebook_account, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.facebook_account)
                             </div>
@@ -186,7 +186,7 @@
                                 Instagram :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.TextBoxFor(model => model.instagram_account, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.instagram_account)
                             </div>
@@ -213,7 +213,7 @@
                         <div class="tab-pane" id="tab3">
 
                             <div class="editor-label col-md-4 control-label"></div>
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 <br />
                             </div>
 
@@ -221,7 +221,7 @@
                                 * Estado :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.cod_estado,
                                 new SelectList(Model.EstadoOptions,
                                 "id", "estado",
@@ -232,7 +232,7 @@
                                 * Ciudad :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.cod_ciudad,
                                 new SelectList(Model.CiudadOptions,
                                 "id", "ciudad",
@@ -243,7 +243,7 @@
                                 * Municipio :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.cod_municipio,
                                 new SelectList(Model.MunicipioOptions,
                                 "id", "municipio",
@@ -254,7 +254,7 @@
                                 * Parroquia :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.cod_parroquia,
                                 new SelectList(Model.ParroquiaOptions,
                                 "id", "parroquia",
@@ -265,7 +265,7 @@
                                 * Urbanización :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.cod_urbanizacion,
                                 new SelectList(Model.UrbanizacionOptions,
                                 "id", "urbanizacion",
@@ -273,7 +273,7 @@
                             </div>
 
                             <div class="editor-label col-md-4 control-label"></div>
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 <br />
                             </div>
 
@@ -281,7 +281,7 @@
                                 Canal :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.channelid,
                                 new SelectList(Model.ChannelOptions,
                                 "id", "channel",
@@ -292,7 +292,7 @@
                                 Tipo de Despacho/Entrega :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.typedelivery,
                                 new SelectList(Model.TypeDeliveryOptions,
                                 "id", "delivery",
@@ -303,7 +303,7 @@
                                 Sucursal :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.storeiddelivery,
                                 new SelectList(Model.StoreOptions,
                                 "id", "sucursal",
@@ -311,7 +311,7 @@
                             </div>
 
                             <div class="editor-label col-md-4 control-label"></div>
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 <br />
                             </div>
 
@@ -319,7 +319,7 @@
                                 Temas de Interés :
                             </div>
 
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 @for (int i = 0; i < Model.Intereses.Count; i++)
                                 {
                                     @Html.CheckBoxFor(m => m.Intereses[i].Checked, new { id = i })
@@ -330,7 +330,7 @@
                             </div>
 
                             <div class="editor-label col-md-4 control-label"></div>
-                            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-6">
                                 <br />
                             </div>
 
@@ -338,43 +338,48 @@
                                 Comentarios/Observaciones :
                             </div>
 
-                            <div class="editor-field col-md-8">
-                                @Html.TextAreaFor(model => model.comments, new { @class = "form-control", style = "width: 700px; height: 100px;" })
+                            <div class="editor-field col-md-6">
+                                @Html.TextAreaFor(model => model.comments, new { @class = "form-control", style = "width: 520px; height: 100px;" })
                                 @Html.ValidationMessageFor(model => model.comments)
                             </div>
 
-                            <div class="form-group">
-                                <div class="col-md-12 col-btn">
-                                    <div class="pull-right">
-                                        <input type="submit" class="btn btn-success btn-md" value="Guardar" />
-                                    </div>
-                                </div>
+                            <div class="editor-label col-md-4 control-label"></div>
+                            <div class="editor-field col-md-6"><br /></div>
+
+                            <div class="editor-label col-md-4 control-label"></div>
+                            <div class="editor-field col-md-6">
+                                <input type="submit" class="btn btn-success btn-md" value="Guardar" style="padding-right: 15px; padding-left: 15px; margin-left: 0px;" />
                             </div>
+
 
                         </div>
                         <!-- DIRECCIÓN -->
 
                         <div class="editor-label col-md-4 control-label"></div>
-                        <div class="editor-field col-md-8">
+                        <div class="editor-field col-md-6">
                             <br />
                         </div>
 
-                        <!-- BOTONES -->
+                        <div class="editor-label col-md-4 control-label"></div>
+                        <div class="editor-field col-md-6">
+                            <!-- BOTONES -->
                         <ul class="pager wizard">
-                            <li class="previous first" style="display: none;"><a href="#">Primero</a></li>
+
                             <li class="previous"><a href="#">Anterior</a></li>
-                            <li class="next last" style="display: none;"><a href="#">Último</a></li>
-                            <li class="next"><a href="#">Siguiente</a></li>
+                            <li class="next pull-left"><a href="#">Siguiente</a></li>
                         </ul>
                         <!--// BOTONES -->
+                        </div>
+
+                        
 
                         <div class="editor-label col-md-4 control-label"></div>
-                        <div class="editor-field col-md-8">
+                        <div class="editor-field col-md-6">
                             <br />
                         </div>
 
                         <div class="editor-label col-md-4 control-label"></div>
-                        <div class="editor-field col-md-8">
+                        <div class="editor-field col-md-6">
                             <br />
                         </div>
 

@@ -5,24 +5,11 @@ Versión     : V.1.0.D
 Fecha       : Octubre/2014
 */
 
-.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
-    background-color: #f7931e;
-}
-
-a, a:focus, a:hover {
-    color:white;
-}
-
-.nav > li > a:focus, .nav > li > a:hover {
-    background-color:#f7931e;
-}
-
-.pager li > a:focus, .pager li > a:hover {
-    background-color:#f7931e;
-}
-
-.pager .disabled > a, .pager .disabled > a:focus, .pager .disabled > a:hover, .pager .disabled > span {
-    background-color:#f7931e;
+div > .nav-gradient {
+    color:#fff;
+    background-color: #00a160;
+    border-color:#0F5410;
+    background-image:linear-gradient(to bottom, #0F5410 0%, #159909 43%);
 }
 
 a.disabled {
