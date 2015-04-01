@@ -182,3 +182,8 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 /.nuget
+/Suma2Lealtad/Fotos
+/Suma2Lealtad/Scripts/PruebaBS3Dialog/assets
+/Suma2Lealtad/Scripts/PruebaModalJQUI/NewFolder1
+/Suma2Lealtad/Scripts/PruebaModalJQUI/NewFolder2
+/Suma2Lealtad/Scripts/PruebaModalJQUI
