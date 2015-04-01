@@ -38,7 +38,7 @@ namespace Suma2Lealtad.Controllers
 
             Afiliado afiliado = rep.Find(numdoc);
 
-            if ( afiliado == null )
+            if (afiliado == null)
             {
                 ViewBag.GenericView = "Registro No Encontrado.";
                 return RedirectToAction("GenericView", "Afiliado"); 
@@ -97,7 +97,7 @@ namespace Suma2Lealtad.Controllers
         public ActionResult Index(string numdoc, string name, string email)
         {
             
-            List<Afiliado> afiliado = rep.FindSuma(numdoc,name, email);
+            List<Afiliado> afiliado = rep.FindSuma(numdoc, name, email);
 
             return View(afiliado);
         
@@ -128,17 +128,28 @@ namespace Suma2Lealtad.Controllers
         public ActionResult Edit(Afiliado afiliado)
         {
 
-
             if (!rep.SaveChanges(afiliado))
-            {
+	        {
                 return RedirectToAction("GenericView", "Afiliado");
                 //return RedirectToAction("FilterReview");
-            }
+	        }
 
 
             return RedirectToAction("FilterReview");
             //return View( afiliado );
 
+            //Aqui debo llamar a los servicios de actualización
+
+        }
+
+        public ActionResult OperacionesImpresora()
+        {
+            return View();
+        }
+
+        public ActionResult OperacionesPinPad()
+        {
+            return View();
         }
 
         protected override void Dispose(bool disposing)

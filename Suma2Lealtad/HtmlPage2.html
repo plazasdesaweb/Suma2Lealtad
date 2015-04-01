@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>My page</title>
+ 
+<!-- CSS dependencies -->
+<!--<link rel="stylesheet" type="text/css" href="bootstrap.min.css">-->
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+ 
+<p>Content here. <a class="alert" href=#>Alert!</a></p>
+ 
+<!-- JS dependencies -->
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+    <script src="Scripts/PruebaModalJQUI/NewFolder1/jquery.js"></script>
+<!--<script src="bootstrap.min.js"></script>-->
+    <script src="Scripts/bootstrap.min.js"></script>
+ 
+<!-- bootbox code -->
+<!--<script src="bootbox.min.js"></script>-->
+    <script src="Scripts/PruebaModalJQUI/NewFolder3/bootbox.js"></script>
+<script>
+    $(document).on("click", ".alert", function (e) {
+        bootbox.dialog({
+            message: "Se imprimió bien la tarjeta?",
+            title: "Operaciones de Impresora",
+            buttons: {
+                success: {
+                    label: "Si",
+                    className: "btn-success",
+                    callback: function () {
+                        Example.show("great success");
+                    }
+                },
+                danger: {
+                    label: "No",
+                    className: "btn-danger",
+                    callback: function () {
+                        Example.show("uh oh, look out!");
+                    }
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html> 

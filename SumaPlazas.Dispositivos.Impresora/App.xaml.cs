@@ -26,11 +26,28 @@ namespace SumaPlazas.Dispositivos.Impresora
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            // parámetro llamado Nombre
+            string Nombre = e.InitParams["Nombre"];
+            // parámetro llamado Apellido
+            string Apellido = e.InitParams["Apellido"];
+            // parámetro llamado NroTarjeta
+            string NroTarjeta = e.InitParams["NroTarjeta"];
+            // parámetro llamado Track1
+            string Track1 = e.InitParams["Track1"];
+            // parámetro llamado Track2
+            string Track2 = e.InitParams["Track2"];
+            // parámetro llamado TipoTarjeta
+            string TipoTarjeta = e.InitParams["TipoTarjeta"];
+            // parámetro llamado Corporacion
+            string Corporacion = e.InitParams["Corporacion"];
+            // parámetro llamado FechaVencimiento
+            string FechaVencimiento = e.InitParams["FechaVencimiento"];
+
             // parámetro llamado idElementoHtmlControl
             string idElementoHtmlControl = e.InitParams["idElementoHtmlControl"];
 
-            //Pasar a la página principal como parámetro  
-            this.RootVisual = new MainPage(idElementoHtmlControl); 
+            //Pasar a la página principal como parámetros  
+            this.RootVisual = new MainPage(Nombre, Apellido, NroTarjeta, Track1, Track2, TipoTarjeta, Corporacion, FechaVencimiento, idElementoHtmlControl);
         }
 
         private void Application_Exit(object sender, EventArgs e)
