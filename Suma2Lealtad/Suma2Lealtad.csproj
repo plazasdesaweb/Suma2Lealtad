@@ -376,6 +376,8 @@
     <Content Include="Images\conectado.jpg" />
     <Content Include="Images\plzlogo.jpg" />
     <Content Include="Images\principal.jpg" />
+    <Content Include="Picture\V-12919906.jpg" />
+    <Content Include="Picture\V-16006920.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\html5shiv.min.js" />

@@ -35,7 +35,7 @@
                             @Html.HiddenFor(model => model.typeid)
 
                             <div class="editor-label col-md-4 control-label">
-                                Número Documento/Cédula :
+                                * Número Documento/Cédula :
                             </div>
 
                             <div class="editor-field col-md-8">
@@ -44,7 +44,7 @@
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
-                                Correo Electrónico :
+                                * Correo Electrónico :
                             </div>
 
                             <div class="editor-field col-md-8">
@@ -53,7 +53,7 @@
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
-                                Primer Nombre :
+                                * Primer Nombre :
                             </div>
 
                             <div class="editor-field col-md-8">
@@ -71,7 +71,7 @@
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
-                                Primer Apellido :
+                                * Primer Apellido :
                             </div>
 
                             <div class="editor-field col-md-8">
@@ -89,7 +89,7 @@
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
-                                Fecha de Nacimiento :
+                                * Fecha de Nacimiento :
                             </div>
 
                             <div class="editor-field col-md-8">
@@ -98,7 +98,7 @@
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
-                                Sexo :
+                                * Sexo :
                             </div>
 
                             <div class="editor-field col-md-8">
@@ -109,7 +109,7 @@
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
-                                Estado Civil :
+                                * Estado Civil :
                             </div>
 
                             <div class="editor-field col-md-8">
@@ -120,7 +120,7 @@
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
-                                Teléfono de Casa :
+                                * Teléfono de Casa :
                             </div>
 
                             <div class="editor-field col-md-8">
@@ -203,7 +203,6 @@
 
                             <div class="editor-field col-md-10">
                                 <img src="@Url.Content(@Model.picture)" />
-                                @*<img src="@Model.picture" height="100" />*@
                             </div>
 
                         </div>
@@ -219,58 +218,58 @@
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
-                                Estado :
+                                * Estado :
                             </div>
 
                             <div class="editor-field col-md-8">
                                 @Html.DropDownListFor(m => m.cod_estado,
-                    new SelectList(Model.EstadoOptions,
-                    "id", "estado",
-                    Model.EstadoOptions), new { @class = "form-control" })
+                                new SelectList(Model.EstadoOptions,
+                                "id", "estado",
+                                Model.EstadoOptions), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
-                                Ciudad :
+                                * Ciudad :
                             </div>
 
                             <div class="editor-field col-md-8">
                                 @Html.DropDownListFor(m => m.cod_ciudad,
-                    new SelectList(Model.CiudadOptions,
-                    "id", "ciudad",
-                    Model.CiudadOptions), new { @class = "form-control" })
+                                new SelectList(Model.CiudadOptions,
+                                "id", "ciudad",
+                                Model.CiudadOptions), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
-                                Municipio :
+                                * Municipio :
                             </div>
 
                             <div class="editor-field col-md-8">
                                 @Html.DropDownListFor(m => m.cod_municipio,
-                    new SelectList(Model.MunicipioOptions,
-                    "id", "municipio",
-                    Model.MunicipioOptions), new { @class = "form-control" })
+                                new SelectList(Model.MunicipioOptions,
+                                "id", "municipio",
+                                Model.MunicipioOptions), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
-                                Parroquia :
+                                * Parroquia :
                             </div>
 
                             <div class="editor-field col-md-8">
                                 @Html.DropDownListFor(m => m.cod_parroquia,
-                    new SelectList(Model.ParroquiaOptions,
-                    "id", "parroquia",
-                    Model.ParroquiaOptions), new { @class = "form-control" })
+                                new SelectList(Model.ParroquiaOptions,
+                                "id", "parroquia",
+                                Model.ParroquiaOptions), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
-                                Urbanización :
+                                * Urbanización :
                             </div>
 
                             <div class="editor-field col-md-8">
                                 @Html.DropDownListFor(m => m.cod_urbanizacion,
-                    new SelectList(Model.UrbanizacionOptions,
-                    "id", "urbanizacion",
-                    Model.UrbanizacionOptions), new { @class = "form-control" })
+                                new SelectList(Model.UrbanizacionOptions,
+                                "id", "urbanizacion",
+                                Model.UrbanizacionOptions), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label"></div>
@@ -284,9 +283,9 @@
 
                             <div class="editor-field col-md-8">
                                 @Html.DropDownListFor(m => m.channelid,
-                    new SelectList(Model.ChannelOptions,
-                    "id", "channel",
-                    Model.ChannelOptions), new { @class = "form-control" })
+                                new SelectList(Model.ChannelOptions,
+                                "id", "channel",
+                                Model.ChannelOptions), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -295,9 +294,9 @@
 
                             <div class="editor-field col-md-8">
                                 @Html.DropDownListFor(m => m.typedelivery,
-                    new SelectList(Model.TypeDeliveryOptions,
-                    "id", "delivery",
-                    Model.TypeDeliveryOptions), new { @class = "form-control" })
+                                new SelectList(Model.TypeDeliveryOptions,
+                                "id", "delivery",
+                                Model.TypeDeliveryOptions), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -306,9 +305,9 @@
 
                             <div class="editor-field col-md-8">
                                 @Html.DropDownListFor(m => m.storeiddelivery,
-                    new SelectList(Model.StoreOptions,
-                    "id", "sucursal",
-                    Model.StoreOptions), new { @class = "form-control" })
+                                new SelectList(Model.StoreOptions,
+                                "id", "sucursal",
+                                Model.StoreOptions), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label"></div>

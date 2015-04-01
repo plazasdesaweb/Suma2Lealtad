@@ -165,7 +165,7 @@ namespace Suma2Lealtad.Models
                 if (record != null)
                 {
                     record.Intereses = chargeInterestList(record.id);
-                    record.picture = AppModule.GetPathPicture() + record.docnumber + ".jpg";
+                    record.picture = AppModule.GetPathPicture().Replace("@filename@", record.docnumber);
                 }
 
                 return record;

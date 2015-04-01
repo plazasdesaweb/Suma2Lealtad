@@ -141,20 +141,6 @@
             if (email.length == 0)
                 return false;
 
-            console.log(email);
-
-            //var patternemail = /^[A-Za-z\._\-[0-9]*[X][A-Za-z]*[\.][a-z]{2,4}$/;
-            var patternemail = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*X[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/;
-
-            if (!email.match(patternemail)) {
-
-                var span = document.getElementById('field3');
-                span.innerHTML = "";
-                span.appendChild(document.createTextNode("ExpReg No Válida."));
-                return false;
-
-            }
-
             return true;
 
         }
