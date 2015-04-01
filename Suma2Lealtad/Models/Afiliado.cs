@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Web;
 
 namespace Suma2Lealtad.Models
 {
@@ -36,7 +33,7 @@ namespace Suma2Lealtad.Models
         public string phone2 { get; set; }
         public string gender { get; set; }
         public string maritalstatus { get; set; }
-        public string birthdate { get; set; }
+        public DateTime? birthdate { get; set; }
         public string nationality { get; set; }
         public string occupation { get; set; }
         public string phone3 { get; set; }
@@ -46,6 +43,7 @@ namespace Suma2Lealtad.Models
         public string cod_municipio { get; set; }
         public string cod_parroquia { get; set; }
         public string cod_urbanizacion { get; set; }
+        public string picture { get; set; }
         /* Excepciones */
         public string exnumber { get; set; }
         public string exdetail { get; set; }
@@ -59,7 +57,7 @@ namespace Suma2Lealtad.Models
         public IEnumerable<Sexo> SexoOptions =
             new List<Sexo>
         {
-              new Sexo { id = 0, sexo = "" },
+              //new Sexo { id = 0, sexo = "" },
               new Sexo { id = 1, sexo = "Masculino" },
               new Sexo { id = 2, sexo = "Femenino"  }
         };
@@ -118,7 +116,7 @@ namespace Suma2Lealtad.Models
         public IEnumerable<Estado> EstadoOptions =
             new List<Estado>
         {
-            new Estado {id =null, estado = ""        },
+            new Estado {id = " ", estado = ""        },
             new Estado {id = "1", estado = "DC"      },
             new Estado {id = "2", estado = "Miranda" },
             new Estado {id = "3", estado = "Vargas"  },
@@ -134,7 +132,7 @@ namespace Suma2Lealtad.Models
         public IEnumerable<Ciudad> CiudadOptions =
             new List<Ciudad>
         {
-            new Ciudad {id =null, ciudad = ""        },
+            new Ciudad {id =" ", ciudad = ""        },
             new Ciudad {id = "1", ciudad = "Caracas" },
             new Ciudad {id = "2", ciudad = "Maracay" }
         };
@@ -148,7 +146,7 @@ namespace Suma2Lealtad.Models
         public IEnumerable<Municipio> MunicipioOptions =
             new List<Municipio>
         {
-            new Municipio {id =null, municipio = ""           },
+            new Municipio {id =" ", municipio = ""           },
             new Municipio {id = "1", municipio = "Libertador" },
             new Municipio {id = "2", municipio = "Baruta"     }
         };
@@ -162,7 +160,7 @@ namespace Suma2Lealtad.Models
         public IEnumerable<Parroquia> ParroquiaOptions =
             new List<Parroquia>
         {
-            new Parroquia {id =null, parroquia = ""         },
+            new Parroquia {id =" ", parroquia = ""         },
             new Parroquia {id = "1", parroquia = "Paraíso"  },
             new Parroquia {id = "2", parroquia = "San José" },
             new Parroquia {id = "3", parroquia = "San Juan" },
@@ -180,7 +178,7 @@ namespace Suma2Lealtad.Models
         public IEnumerable<Urbanizacion> UrbanizacionOptions =
             new List<Urbanizacion>
         {
-            new Urbanizacion {id =null, urbanizacion = ""            },
+            new Urbanizacion {id =" ", urbanizacion = ""            },
             new Urbanizacion {id = "1", urbanizacion = "El Paraíso"  },
             new Urbanizacion {id = "2", urbanizacion = "Las Acacias" },
             new Urbanizacion {id = "3", urbanizacion = "Baruta"      },
@@ -217,6 +215,8 @@ namespace Suma2Lealtad.Models
               new TypeDelivery { id = 2, delivery = "Envío a Casa"        },
               new TypeDelivery { id = 3, delivery = "Envío a Oficina"     }
         };
+
+
 
 
     }

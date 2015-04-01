@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Suma2Lealtad.Models;
-using Suma2Lealtad.Modules;
-using Newtonsoft.Json;
 using Suma2Lealtad.Filters;
+using System.Collections.Generic;
 
 namespace Suma2Lealtad.Controllers
 {
@@ -48,7 +41,7 @@ namespace Suma2Lealtad.Controllers
             if (afiliado == null)
             {
                 ViewBag.GenericView = "Registro No Encontrado.";
-                return RedirectToAction("GenericView", "Afiliado");
+                return RedirectToAction("GenericView", "Afiliado"); 
             }
 
             TempData["AfiliadoModel"] = afiliado;
@@ -63,7 +56,7 @@ namespace Suma2Lealtad.Controllers
         public ActionResult Create()
         {
             var model = TempData["AfiliadoModel"] as Afiliado;
-            return View(model);
+            return View(model);        
         }
 
 
@@ -83,7 +76,7 @@ namespace Suma2Lealtad.Controllers
                 ViewBag.GenericView = "Ha ocurrido una excepción, revise los valores e intente nuevamente.";
             }
 
-            return RedirectToAction("GenericView", "Afiliado");
+            return RedirectToAction("GenericView", "Afiliado");      
 
         }
 
@@ -103,11 +96,11 @@ namespace Suma2Lealtad.Controllers
         [HttpPost]
         public ActionResult Index(string numdoc, string name, string email)
         {
-
+            
             List<Afiliado> afiliado = rep.FindSuma(numdoc, name, email);
 
             return View(afiliado);
-
+        
         }
 
 
@@ -124,7 +117,7 @@ namespace Suma2Lealtad.Controllers
                 //return HttpNotFound();
                 return RedirectToAction("GenericView", "Afiliado");
             }
-            return View(afiliado);
+            return View(afiliado); 
 
         }
 
@@ -136,10 +129,12 @@ namespace Suma2Lealtad.Controllers
         {
 
             if (!rep.SaveChanges(afiliado))
-            {
+	        {
                 return RedirectToAction("GenericView", "Afiliado");
                 //return RedirectToAction("FilterReview");
-            }
+	        }
+
+
             return RedirectToAction("FilterReview");
             //return View( afiliado );
 

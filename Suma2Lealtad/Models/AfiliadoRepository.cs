@@ -140,7 +140,7 @@ namespace Suma2Lealtad.Models
                                        name2 = c.NOMBRE_CLIENTE2,
                                        lastname1 = c.APELLIDO_CLIENTE1,
                                        lastname2 = c.APELLIDO_CLIENTE2,
-                                       //birthdate = c.FECHA_NACIMIENTO.ToString(), // PENDIENTE
+                                       birthdate = c.FECHA_NACIMIENTO,
                                        gender = c.SEXO,
                                        maritalstatus = c.EDO_CIVIL,
                                        occupation = c.OCUPACION,
@@ -165,6 +165,7 @@ namespace Suma2Lealtad.Models
                 if (record != null)
                 {
                     record.Intereses = chargeInterestList(record.id);
+                    record.picture = AppModule.GetPathPicture() + record.docnumber + ".jpg";
                 }
 
                 return record;
@@ -240,7 +241,7 @@ namespace Suma2Lealtad.Models
                         NOMBRE_CLIENTE2     = AfiliadoSuma.name2,
                         APELLIDO_CLIENTE1   = AfiliadoSuma.lastname1,
                         APELLIDO_CLIENTE2   = AfiliadoSuma.lastname2,
-                        FECHA_NACIMIENTO    = System.DateTime.Now,       // PENDIENTE 
+                        FECHA_NACIMIENTO    = AfiliadoSuma.birthdate,
                         SEXO                = AfiliadoSuma.gender,
                         EDO_CIVIL           = AfiliadoSuma.maritalstatus,
                         OCUPACION           = AfiliadoSuma.occupation,
@@ -356,7 +357,7 @@ namespace Suma2Lealtad.Models
                     cliente.NOMBRE_CLIENTE2 = afiliado.name2;
                     cliente.APELLIDO_CLIENTE1 = afiliado.lastname1;
                     cliente.APELLIDO_CLIENTE2 = afiliado.lastname2;
-                    cliente.FECHA_NACIMIENTO = System.DateTime.Now;       //PENDIENTE : record.birthdate;
+                    cliente.FECHA_NACIMIENTO = afiliado.birthdate;
                     cliente.SEXO = afiliado.gender;
                     cliente.EDO_CIVIL = afiliado.maritalstatus;
                     cliente.OCUPACION = afiliado.occupation;

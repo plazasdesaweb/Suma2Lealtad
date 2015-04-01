@@ -5,6 +5,26 @@ Versión     : V.1.0.D
 Fecha       : Octubre/2014
 */
 
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+    background-color: #f7931e;
+}
+
+a, a:focus, a:hover {
+    color:white;
+}
+
+.nav > li > a:focus, .nav > li > a:hover {
+    background-color:#f7931e;
+}
+
+.pager li > a:focus, .pager li > a:hover {
+    background-color:#f7931e;
+}
+
+.pager .disabled > a, .pager .disabled > a:focus, .pager .disabled > a:hover, .pager .disabled > span {
+    background-color:#f7931e;
+}
+
 a.disabled {
 pointer-events: none;
 cursor: default;
