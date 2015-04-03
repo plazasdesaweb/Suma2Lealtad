@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Suma2Lealtad.Models;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
 using WebMatrix.WebData;
-using Suma2Lealtad.Models;
 
 namespace Suma2Lealtad.Filters
 {

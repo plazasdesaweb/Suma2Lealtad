@@ -1,0 +1,326 @@
+﻿@model Suma2Lealtad.Models.SaldosMovimientos
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<link href="css/bootstrap.css" rel="stylesheet">*@
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+@*<link href="css/style.css" rel="stylesheet">*@
+<link href="~/Content/style.css" rel="stylesheet" />
+
+<style type="text/css" media="screen">
+    .table-hover {
+        cursor: pointer;
+    }
+
+    .table tbody tr.active td {
+        background-color: #1C2B2B; /*#476B6B #29A329;*/
+        color: white;
+    }
+</style>
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-push-1 col-md-10">
+
+            <div class="panel panel-default">
+
+                <div class="panel-heading clearfix panel-gradient">
+                    <h3 class="panel-title">Afiliado  @Model.DocId / Saldos <a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.DocId })" class="btn btn-success btn-md">Regresar</a></h3>
+                </div>
+
+                <div class="panel-body">
+
+                    @*<table class="table table-striped custab">*@
+                    <table id="cuentas" class="table table-hover">
+
+                        <thead>
+                            <tr>
+                                <th>accountname
+                                </th>
+                                <th>accountnumber
+                                </th>
+                                <th>accounttype
+                                </th>
+                                <th>cardstatus
+                                </th>
+                                <th>numdoc
+                                </th>
+                                <th>pan
+                                </th>
+                                <th>saldo
+                                </th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item in Model.Saldos)
+                            {                            
+                                <tr data-row-key="@item.accounttype">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.accountname)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.accountnumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.accounttype)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.cardstatus)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.numdoc)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.pan)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.saldo)
+                                    </td>
+                                </tr>                            
+                            }
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <!-- panel-body -->
+
+            </div>
+            <!-- panel -->
+
+        </div>
+        <!-- columns -->
+
+    </div>
+    <!-- row -->
+
+</div>
+<!-- container -->
+
+<div id="MovimientosPrepago" class="container">
+
+    <div class="row">
+
+        <div class="col-md-push-1 col-md-10">
+
+            <div class="panel panel-default">
+
+                <div class="panel-heading clearfix panel-gradient">
+                    <h3 class="panel-title">Afiliado / Movimientos Prepago <a href="javascript:OcultarMovimientos()" class="btn btn-success btn-md" role="button">Ocultar Movimientos</a></h3>
+                </div>
+                <div class="panel-body">
+
+                    <table class="table table-striped custab">
+
+                        <thead>
+                            <tr>
+                                <th>batchid
+                                </th>
+                                <th>fecha
+                                </th>
+                                <th>isodescription
+                                </th>
+                                <th>pan
+                                </th>
+                                <th>puntos
+                                </th>
+                                <th>saldo
+                                </th>
+                                <th>transcode
+                                </th>
+                                <th>transname
+                                </th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item in Model.MovimientosPrepago)
+                            {                            
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.batchid)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.fecha)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.isodescription)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.pan)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.puntos)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.saldo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.transcode)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.transname)
+                                    </td>
+                                </tr>                            
+                            }
+                        </tbody>
+
+                    </table>
+
+                </div>
+                <!-- panel-body -->
+
+            </div>
+            <!-- panel -->
+
+        </div>
+        <!-- columns -->
+
+    </div>
+    <!-- row -->
+
+</div>
+<!-- container -->
+
+<div id="MovimientosSuma" class="container">
+
+    <div class="row">
+
+        <div class="col-md-push-1 col-md-10">
+
+            <div class="panel panel-default">
+
+                <div class="panel-heading clearfix panel-gradient">
+                    <h3 class="panel-title">Afiliado / Movimientos Suma <a href="javascript:OcultarMovimientos()" class="btn btn-success btn-md" role="button">Ocultar Movimientos</a>
+                    </h3>
+                </div>
+
+                <div class="panel-body">
+
+                    <table class="table table-striped custab">
+
+                        <thead>
+                            <tr>
+                                <th>batchid
+                                </th>
+                                <th>fecha
+                                </th>
+                                <th>isodescription
+                                </th>
+                                <th>pan
+                                </th>
+                                <th>puntos
+                                </th>
+                                <th>saldo
+                                </th>
+                                <th>transcode
+                                </th>
+                                <th>transname
+                                </th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item in Model.MovimientosSuma)
+                            {                            
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.batchid)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.fecha)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.isodescription)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.pan)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.puntos)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.saldo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.transcode)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.transname)
+                                    </td>
+                                </tr>                            
+                            }
+                        </tbody>
+
+                    </table>
+
+                </div>
+                <!-- panel-body -->
+
+            </div>
+            <!-- panel -->
+
+        </div>
+        <!-- columns -->
+
+    </div>
+    <!-- row -->
+
+</div>
+<!-- container -->
+
+<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#MovimientosPrepago").hide();
+        $("#MovimientosSuma").hide();
+    });
+
+    $('#cuentas tr').click(function () {
+        var TipoCuenta;
+
+        $('.table tbody tr').removeClass("active");
+        $(this).addClass("active");
+        TipoCuenta = $(this).data("row-key");
+
+        if (TipoCuenta == "5") {
+            $("#MovimientosSuma").hide();
+            $("#MovimientosPrepago").show();
+        }
+        else if (TipoCuenta == "7") {
+            $("#MovimientosPrepago").hide();
+            $("#MovimientosSuma").show();
+        }
+        else {
+            alert("error tipo de cuenta no definido");
+        }
+    });
+
+    //function MovimientosSuma() {
+    //    $("#MovimientosPrepago").hide();
+    //    $("#MovimientosSuma").show();
+    //};
+
+    //function MovimientosPrepago() {
+    //    $("#MovimientosSuma").hide();
+    //    $("#MovimientosPrepago").show();
+    //};
+
+    function OcultarMovimientos() {
+        $("#MovimientosSuma").hide();
+        $("#MovimientosPrepago").hide();
+    };
+</script>

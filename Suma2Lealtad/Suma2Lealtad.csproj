@@ -203,12 +203,9 @@
     <Compile Include="Controllers\InterestController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\MyDatabaseEntities.cs" />
-    <Compile Include="Controllers\OperacionesImpresoraController.cs" />
-    <Compile Include="Controllers\OperacionesPinPadController.cs" />
     <Compile Include="Controllers\ReasonsBlockController.cs" />
     <Compile Include="Controllers\ReasonsController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
-    <Compile Include="Controllers\SaldosMovimientosController.cs" />
     <Compile Include="Controllers\SecurityLevelController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Controllers\TypeController.cs" />
@@ -324,6 +321,7 @@
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Modules\AppModule.cs" />
     <Compile Include="Modules\AppSession.cs" />
+    <Compile Include="Modules\Tarjeta.cs" />
     <Compile Include="Modules\WSL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -519,11 +517,6 @@
     <Content Include="Views\Menu\Create.cshtml" />
     <Content Include="Views\Menu\Edit.cshtml" />
     <Content Include="Views\Menu\Delete.cshtml" />
-    <Content Include="Views\OperacionesImpresora\Index.cshtml" />
-    <Content Include="Views\OperacionesImpresora\SilverlightImpresora.cshtml" />
-    <Content Include="Views\OperacionesPinPad\Index.cshtml" />
-    <Content Include="Views\OperacionesPinPad\SilverlightPinPad.cshtml" />
-    <Content Include="Views\SaldosMovimientos\Index.cshtml" />
     <Content Include="Views\Shared\_MenuLayout.cshtml" />
     <Content Include="Views\Error\Error404.cshtml" />
     <Content Include="Views\Error\SessionExpired.cshtml" />
@@ -534,11 +527,13 @@
     <Content Include="Views\Afiliado\GenericView.cshtml" />
     <Content Include="Views\Afiliado\FilterReview.cshtml" />
     <Content Include="Views\Afiliado\Index.cshtml" />
-    <Content Include="Views\Afiliado\OperacionesImpresora.cshtml" />
-    <Content Include="Views\Afiliado\OperacionesPinPad.cshtml" />
     <Content Include="Views\Afiliado\SilverlightPinPad.cshtml" />
     <Content Include="Views\Afiliado\SilverlightImpresora.cshtml" />
     <Content Include="Scripts\jquery-2.1.3.min.map" />
+    <Content Include="Views\Afiliado\PinPadCrearPin.cshtml" />
+    <Content Include="Views\Afiliado\PinPadReiniciarPin.cshtml" />
+    <Content Include="Views\Afiliado\PinPadCambiarPin.cshtml" />
+    <Content Include="Views\Afiliado\ImpresoraImprimirTarjeta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

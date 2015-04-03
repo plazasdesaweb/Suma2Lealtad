@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Suma2Lealtad.Models;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Suma2Lealtad.Models;
 using System.Web.Routing;
 
 namespace Suma2Lealtad.Filters

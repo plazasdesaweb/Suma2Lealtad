@@ -1,15 +1,14 @@
-﻿using System;
+﻿using DotNetOpenAuth.AspNet;
+using Microsoft.Web.WebPages.OAuth;
+using Suma2Lealtad.Filters;
+using Suma2Lealtad.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using DotNetOpenAuth.AspNet;
-using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
-using Suma2Lealtad.Filters;
-using Suma2Lealtad.Models;
 
 namespace Suma2Lealtad.Controllers
 {

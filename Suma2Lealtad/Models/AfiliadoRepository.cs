@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Suma2Lealtad.Modules;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Newtonsoft.Json;
-using Suma2Lealtad.Modules;
-using System.Data;
-using System.Web.WebPages.Html;
 
 namespace Suma2Lealtad.Models
 {

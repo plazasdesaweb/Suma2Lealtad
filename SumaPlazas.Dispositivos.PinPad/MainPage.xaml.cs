@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Net;
-using System.Runtime.InteropServices.Automation;
+﻿using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 using System.Windows.Browser;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 
 namespace SumaPlazas.Dispositivos.PinPad
 {
@@ -37,6 +27,7 @@ namespace SumaPlazas.Dispositivos.PinPad
             HtmlPage.RegisterScriptableObject("MainPage", this);
         }
 
+        #region CrearPin
         [ScriptableMember]
         public void CrearPin()
         {
@@ -93,7 +84,9 @@ namespace SumaPlazas.Dispositivos.PinPad
                 ElementoHtmlControl.SetProperty("innerHTML", "Pin creado");
             }
         }
+        #endregion
 
+        #region CambiarPin
         [ScriptableMember]
         public void CambiarPin()
         {
@@ -134,7 +127,7 @@ namespace SumaPlazas.Dispositivos.PinPad
             {
                 listBox1.Items.Add("Respuesta recibida: Pin no cambiado.");
                 listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                listBox1.Items.Add("Error de Aplicación: No se pudo crear el pin.");
+                listBox1.Items.Add("Error de Aplicación: No se pudo cambiar el pin.");
                 listBox1.SelectedIndex = listBox1.Items.Count - 1;
             }
             else
@@ -144,7 +137,9 @@ namespace SumaPlazas.Dispositivos.PinPad
                 ElementoHtmlControl.SetProperty("innerHTML", "Pin cambiado");
             }
         }
+        #endregion
 
+        #region ReiniciarPin
         [ScriptableMember]
         public void ReiniciarPin()
         {
@@ -185,7 +180,7 @@ namespace SumaPlazas.Dispositivos.PinPad
             {
                 listBox1.Items.Add("Respuesta recibida: Pin no reiniciado.");
                 listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                listBox1.Items.Add("Error de Aplicación: No se pudo crear el pin.");
+                listBox1.Items.Add("Error de Aplicación: No se pudo reiniciar el pin.");
                 listBox1.SelectedIndex = listBox1.Items.Count - 1;
             }
             else
@@ -194,6 +189,7 @@ namespace SumaPlazas.Dispositivos.PinPad
                 ElementoHtmlControl.SetProperty("innerHTML", "Pin reiniciado");
             }
         }
+        #endregion
 
     }
 }

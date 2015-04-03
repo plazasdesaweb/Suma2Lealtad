@@ -1,9 +1,6 @@
-﻿using Suma2Lealtad.Models;
+﻿using Suma2Lealtad.Filters;
+using Suma2Lealtad.Models;
 using Suma2Lealtad.Modules;
-using Suma2Lealtad.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 

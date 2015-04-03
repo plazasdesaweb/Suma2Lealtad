@@ -1,19 +1,9 @@
-﻿@model Suma2Lealtad.Models.AfiliadoWeb
-
-<!-- btn btn-success -->
-<div class="col-md-12 col-btn">
-    <div class="text-center">
-        <a href="javascript:ImprimirTarjeta()" class="btn btn-success btn-md" role="button">Imprimir Tarjeta</a>
-        @*<a href="javascript:ReanudarImpresora()" class="btn btn-success btn-md" role="button">Reanudar Impresora</a>*@
-        @*<a href="javascript:LimpiarErrores()" class="btn btn-success btn-md" role="button">Limpiar Errores Impresora</a>*@
-    </div>
-</div>
-<!--// btn btn-success -->
+﻿@model Suma2Lealtad.Models.Afiliado
 
 @{
     //DEBO SACAR LA INFO DEL NRO DEL DOCUMENTO DEL MODELO Y PASARLO COMO PARAMETRO AL HELPER SE SILVERLIGHT
-    var InitParams = "Nombre=" + "NombrePrueba";
-    InitParams = InitParams + "," + "Apellido=" + "ApellidoPrueba";
+    var InitParams = "Nombre=" + Model.name;
+    InitParams = InitParams + "," + "Apellido=" + Model.lastname1;
     InitParams = InitParams + "," + "NroTarjeta=" + "99999999999999999";
     InitParams = InitParams + "," + "Track1=" + "B99999999999999999^AUTOMERC_PLAZAS^99120000";
     InitParams = InitParams + "," + "Track2=" + "99999999999999999=99120000";

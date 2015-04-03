@@ -8,60 +8,10 @@
 
     <div class="row">
 
-        <div class="col-md-7 col-md-offset-2">
-
-            <div class="panel panel-default">
-
-                <div class="panel-heading clearfix panel-gradient">
-                    <h3 class="panel-title">Afiliado / Editar Datos</h3>
-                </div>
-
-                <div class="panel-body">
-
-                    @* Para acceder a las operaciones con Silverlight *@
-                    <div class="form-group">
-                        <div class="col-md-12 col-btn">
-                            <div class="pull-right">
-                                <a id="boton5" href="@Url.Action("OperacionesImpresora", "Afiliado")" class="btn btn-warning btn-md" role="button">OperacionesImpresora</a>
-                                <a id="boton6" href="@Url.Action("OperacionesPinPad", "Afiliado")" class="btn btn-warning btn-md" role="button">OperacionesPinPad</a>
-                            </div>
-                        </div>
-                    </div>
-                    @* Fin Para acceder a las operaciones con Silverlight *@
-
-                    @using (Html.BeginForm())
-                    {
-                     
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true)
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-
-    <div class="row">
-
-        <div class="col-md-10 col-md-offset-1">
-
-            <div class="panel with-nav-tabs panel-primary">
-
-                <div class="panel-heading">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab1primary" data-toggle="tab">1. Datos Básicos</a></li>
-                        <li><a href="#tab2primary" data-toggle="tab">2. Documentación</a></li>
-                        <li><a href="#tab3primary" data-toggle="tab">3. Dirección - Temas de Intereses</a></li>
-                    </ul>
-                </div>
-                <!-- panel-heading -->
-
         <div class="panel-body">
 
-            <form id="commentForm" method="post" action="@Url.Action("Edit", "Afiliado")" class="form-horizontal">
-
+            <form id="commentForm" method="post" action="@Url.Action("Edit", "Afiliado", Model)" class="form-horizontal">
+            
                 <div id="rootwizard">
                     <div class="navbar navbar-default">
                         <div class="navbar-inner">
@@ -72,199 +22,185 @@
                             </ul>
                         </div>
                     </div>
-        <div class="tab-content">
+                    <div class="tab-content">
 
-        <!-- DATOS BÁSICOS -->                    
+                        <!-- DATOS BÁSICOS -->
                         <div class="tab-pane" id="tab1">
 
-            <div class="editor-label col-md-4 control-label"></div>
+                            <div class="editor-label col-md-4 control-label"></div>
                             <div class="editor-field col-md-8">
                                 <br />
                             </div>
 
-            @Html.HiddenFor(model => model.typeid)
+                            @Html.HiddenFor(model => model.typeid)
 
-            <div class="editor-label col-md-4 control-label">
-                Número Documento/Cédula :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Número Documento/Cédula :
+                            </div>
 
-            <div class="editor-field col-md-8">
-                @Html.TextBoxFor(model => model.docnumber, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.docnumber)
-            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.docnumber, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.docnumber)
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Correo Electrónico :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Correo Electrónico :
+                            </div>
 
-            <div class="editor-field col-md-8">
-                @Html.TextBoxFor(model => model.email, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.email)
-            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.email)
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Primer Nombre :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Primer Nombre :
+                            </div>
 
-            <div class="editor-field col-md-8">
-                @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.name)
-            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.name)
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Segundo Nombre :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Segundo Nombre :
+                            </div>
 
-            <div class="editor-field col-md-8">
-                @Html.TextBoxFor(model => model.name2, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.name2)
-            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.name2, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.name2)
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Primer Apellido :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Primer Apellido :
+                            </div>
 
-            <div class="editor-field col-md-8">
-                @Html.TextBoxFor(model => model.lastname1, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.lastname1)
-            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.lastname1, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.lastname1)
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Segundo Apellido :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Segundo Apellido :
+                            </div>
 
-            <div class="editor-field col-md-8">
-                @Html.TextBoxFor(model => model.lastname2, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.lastname2)
-            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.lastname2, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.lastname2)
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Fecha de Nacimiento :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Fecha de Nacimiento :
+                            </div>
 
-            <div class="editor-field col-md-8">
-                @Html.TextBoxFor(model => model.birthdate, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.birthdate)
-            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.birthdate, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.birthdate)
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Sexo :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Sexo :
+                            </div>
 
-            <div class="editor-field col-md-8">
-            @Html.DropDownListFor(m => m.gender, 
-                                new SelectList(Model.SexoOptions, 
-                                                "id", "sexo", 
+                            <div class="editor-field col-md-8">
+                                @Html.DropDownListFor(m => m.gender,
+                    new SelectList(Model.SexoOptions,
+                    "id", "sexo",
                     Model.SexoOptions), new { @class = "form-control" })
-            </div>
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Estado Civil :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Estado Civil :
+                            </div>
 
-            <div class="editor-field col-md-8">
-            @Html.DropDownListFor(m => m.maritalstatus, 
-                                new SelectList(Model.MaritalStatusOptions, 
-                                                "id", "maritalstatus", 
+                            <div class="editor-field col-md-8">
+                                @Html.DropDownListFor(m => m.maritalstatus,
+                    new SelectList(Model.MaritalStatusOptions,
+                    "id", "maritalstatus",
                     Model.MaritalStatusOptions), new { @class = "form-control" })
-            </div>
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Teléfono de Casa :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Teléfono de Casa :
+                            </div>
 
-            <div class="editor-field col-md-8">
-                @Html.TextBoxFor(model => model.phone1, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.phone1)
-            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.phone1, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.phone1)
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Teléfono de Oficina :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Teléfono de Oficina :
+                            </div>
 
-            <div class="editor-field col-md-8">
-                @Html.TextBoxFor(model => model.phone2, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.phone2)
-            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.phone2, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.phone2)
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Teléfono de Celular :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Teléfono de Celular :
+                            </div>
 
-            <div class="editor-field col-md-8">
-                @Html.TextBoxFor(model => model.phone3, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.phone3)
-            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.phone3, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.phone3)
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Ocupación :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Ocupación :
+                            </div>
 
-            <div class="editor-field col-md-8">
-                @Html.TextBoxFor(model => model.occupation, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.occupation)
-            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.occupation, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.occupation)
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Nacionalidad :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Nacionalidad :
+                            </div>
 
-            <div class="editor-field col-md-8">
-                @Html.TextBoxFor(model => model.nationality, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.nationality)
-            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.nationality, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.nationality)
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Twitter :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Twitter :
+                            </div>
 
-            <div class="editor-field col-md-8">
-                @Html.TextBoxFor(model => model.twitter_account, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.twitter_account)
-            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.twitter_account, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.twitter_account)
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Facebook :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Facebook :
+                            </div>
 
-            <div class="editor-field col-md-8">
-                @Html.TextBoxFor(model => model.facebook_account, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.facebook_account)
-            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.facebook_account, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.facebook_account)
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Instagram :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Instagram :
+                            </div>
 
-            <div class="editor-field col-md-8">
-                @Html.TextBoxFor(model => model.instagram_account, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.instagram_account)
-            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.instagram_account, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.instagram_account)
+                            </div>
 
-        </div>
+                        </div>
                         <!--// DATOS BÁSICOS -->
 
 
-        <!-- SILVERLIGHT -->
+                        <!-- SILVERLIGHT -->
                         <div class="tab-pane" id="tab2">
 
                             <div class="editor-label col-md-2 control-label">
-                            <div class="tab-pane fade" id="tab2primary">
-                                <!-- CODIGO DE SILVERLIGHT -->
-                                @* Para acceder a las operaciones con Silverlight *@
-                                <div class="form-group">
-                                    <div class="col-md-12 col-btn">
-                                        <div class="pull-right">
-                                            <a href="@Url.Action("OperacionesImpresora", "Afiliado")" class="btn btn-warning btn-md" role="button">OperacionesImpresora</a>
-                                            <a href="@Url.Action("OperacionesPinPad", "Afiliado")" class="btn btn-warning btn-md" role="button">OperacionesPinPad</a>
-        </div>
-                                    </div>
-                                </div>
-                                @* Fin Para acceder a las operaciones con Silverlight *@
-                                <!-- CODIGO DE SILVERLIGHT -->
                             </div>
-                            <!-- SILVERLIGHT -->
-                    
+
                             <div class="editor-field col-md-10">
                                 <img src="@Url.Content(@Model.picture)" />
                                 @*<img src="@Model.picture" height="100" />*@
@@ -272,12 +208,6 @@
 
                         </div>
                         <!--// SILVERLIGHT -->
-                                <div class="editor-label col-md-4 control-label">
-                                    <br />
-                                </div>
-                                <div class="editor-field col-md-8">
-                                    <br />
-                                </div>
 
 
                         <!-- DIRECCIÓN -->
@@ -288,147 +218,147 @@
                                 <br />
                             </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Estado :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Estado :
+                            </div>
 
-            <div class="editor-field col-md-8">
-            @Html.DropDownListFor(m => m.cod_estado, 
-                                new SelectList(Model.EstadoOptions, 
-                                                "id", "estado", 
+                            <div class="editor-field col-md-8">
+                                @Html.DropDownListFor(m => m.cod_estado,
+                    new SelectList(Model.EstadoOptions,
+                    "id", "estado",
                     Model.EstadoOptions), new { @class = "form-control" })
-            </div>
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Ciudad :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Ciudad :
+                            </div>
 
-            <div class="editor-field col-md-8">
-            @Html.DropDownListFor(m => m.cod_ciudad, 
-                                new SelectList(Model.CiudadOptions, 
-                                                "id", "ciudad", 
+                            <div class="editor-field col-md-8">
+                                @Html.DropDownListFor(m => m.cod_ciudad,
+                    new SelectList(Model.CiudadOptions,
+                    "id", "ciudad",
                     Model.CiudadOptions), new { @class = "form-control" })
-            </div>
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Municipio :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Municipio :
+                            </div>
 
-            <div class="editor-field col-md-8">
-            @Html.DropDownListFor(m => m.cod_municipio, 
-                                new SelectList(Model.MunicipioOptions, 
-                                                "id", "municipio", 
+                            <div class="editor-field col-md-8">
+                                @Html.DropDownListFor(m => m.cod_municipio,
+                    new SelectList(Model.MunicipioOptions,
+                    "id", "municipio",
                     Model.MunicipioOptions), new { @class = "form-control" })
-            </div>
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Parroquia :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Parroquia :
+                            </div>
 
-            <div class="editor-field col-md-8">
-            @Html.DropDownListFor(m => m.cod_parroquia, 
-                                new SelectList(Model.ParroquiaOptions, 
-                                                "id", "parroquia", 
+                            <div class="editor-field col-md-8">
+                                @Html.DropDownListFor(m => m.cod_parroquia,
+                    new SelectList(Model.ParroquiaOptions,
+                    "id", "parroquia",
                     Model.ParroquiaOptions), new { @class = "form-control" })
-            </div>
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Urbanización :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Urbanización :
+                            </div>
 
-            <div class="editor-field col-md-8">
-            @Html.DropDownListFor(m => m.cod_urbanizacion, 
-                                new SelectList(Model.UrbanizacionOptions, 
-                                                "id", "urbanizacion", 
+                            <div class="editor-field col-md-8">
+                                @Html.DropDownListFor(m => m.cod_urbanizacion,
+                    new SelectList(Model.UrbanizacionOptions,
+                    "id", "urbanizacion",
                     Model.UrbanizacionOptions), new { @class = "form-control" })
-            </div>
+                            </div>
 
                             <div class="editor-label col-md-4 control-label"></div>
                             <div class="editor-field col-md-8">
                                 <br />
                             </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Canal :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Canal :
+                            </div>
 
-            <div class="editor-field col-md-8">
-            @Html.DropDownListFor(m => m.channelid, 
-                                new SelectList(Model.ChannelOptions, 
-                                                "id", "channel", 
+                            <div class="editor-field col-md-8">
+                                @Html.DropDownListFor(m => m.channelid,
+                    new SelectList(Model.ChannelOptions,
+                    "id", "channel",
                     Model.ChannelOptions), new { @class = "form-control" })
-            </div>
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Tipo de Despacho/Entrega :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Tipo de Despacho/Entrega :
+                            </div>
 
-            <div class="editor-field col-md-8">
-            @Html.DropDownListFor(m => m.typedelivery, 
-                                new SelectList(Model.TypeDeliveryOptions, 
-                                                "id", "delivery", 
+                            <div class="editor-field col-md-8">
+                                @Html.DropDownListFor(m => m.typedelivery,
+                    new SelectList(Model.TypeDeliveryOptions,
+                    "id", "delivery",
                     Model.TypeDeliveryOptions), new { @class = "form-control" })
-            </div>
+                            </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Sucursal :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Sucursal :
+                            </div>
 
-            <div class="editor-field col-md-8">
-            @Html.DropDownListFor(m => m.storeiddelivery, 
-                                new SelectList(Model.StoreOptions, 
-                                                "id", "sucursal", 
+                            <div class="editor-field col-md-8">
+                                @Html.DropDownListFor(m => m.storeiddelivery,
+                    new SelectList(Model.StoreOptions,
+                    "id", "sucursal",
                     Model.StoreOptions), new { @class = "form-control" })
-            </div>
+                            </div>
 
                             <div class="editor-label col-md-4 control-label"></div>
                             <div class="editor-field col-md-8">
                                 <br />
                             </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Temas de Interés :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Temas de Interés :
+                            </div>
 
-            <div class="editor-field col-md-8">
-                @for (int i = 0; i < Model.Intereses.Count; i++)
-                {
-                    @Html.CheckBoxFor(m => m.Intereses[i].Checked, new { id = i })
-                    @Html.HiddenFor(m => m.Intereses[i].id)
-                    @Html.DisplayFor(m => m.Intereses[i].name)
-                    <br />
-                }
-            </div>
+                            <div class="editor-field col-md-8">
+                                @for (int i = 0; i < Model.Intereses.Count; i++)
+                                {
+                                    @Html.CheckBoxFor(m => m.Intereses[i].Checked, new { id = i })
+                                    @Html.HiddenFor(m => m.Intereses[i].id)
+                                    @Html.DisplayFor(m => m.Intereses[i].name)
+                                    <br />
+                                }
+                            </div>
 
                             <div class="editor-label col-md-4 control-label"></div>
                             <div class="editor-field col-md-8">
                                 <br />
                             </div>
 
-            <div class="editor-label col-md-4 control-label">
-                Comentarios/Observaciones :
-            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Comentarios/Observaciones :
+                            </div>
 
-            <div class="editor-field col-md-8">
+                            <div class="editor-field col-md-8">
                                 @Html.TextAreaFor(model => model.comments, new { @class = "form-control", style = "width: 700px; height: 100px;" })
-                @Html.ValidationMessageFor(model => model.comments)                            
-            </div>
+                                @Html.ValidationMessageFor(model => model.comments)
+                            </div>
 
-            <div class="form-group">
-                <div class="col-md-12 col-btn">
-                    <div class="pull-right">
+                            <div class="form-group">
+                                <div class="col-md-12 col-btn">
+                                    <div class="pull-right">
                                         <input type="submit" class="btn btn-success btn-md" value="Guardar" />
                                     </div>
                                 </div>
                             </div>
 
-                    </div>
+                        </div>
                         <!-- DIRECCIÓN -->
 
                         <div class="editor-label col-md-4 control-label"></div>
                         <div class="editor-field col-md-8">
                             <br />
-                </div>
+                        </div>
 
                         <!-- BOTONES -->
                         <ul class="pager wizard">
@@ -442,25 +372,24 @@
                         <div class="editor-label col-md-4 control-label"></div>
                         <div class="editor-field col-md-8">
                             <br />
-        </div>
-                            <!--// container -->
+                        </div>
 
                         <div class="editor-label col-md-4 control-label"></div>
                         <div class="editor-field col-md-8">
                             <br />
                         </div>
-                                                            
+
                     </div>
                     <!--// tab-content -->
-                    
+
                 </div>
                 <!--// rootwizard -->
 
             </form>
-    
+
         </div>
         <!--// panel-body -->
-    
+
     </div>
     <!--// row -->
 

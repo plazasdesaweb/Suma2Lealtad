@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using Suma2Lealtad.Filters;
 using Suma2Lealtad.Models;
-using Suma2Lealtad.Filters;
+using System.Data;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace Suma2Lealtad.Controllers
 {
