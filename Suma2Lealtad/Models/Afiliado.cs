@@ -57,7 +57,7 @@ namespace Suma2Lealtad.Models
         public IEnumerable<Sexo> SexoOptions =
             new List<Sexo>
         {
-              //new Sexo { id = 0, sexo = "" },
+              new Sexo { id = 0, sexo = "" },
               new Sexo { id = 1, sexo = "Masculino" },
               new Sexo { id = 2, sexo = "Femenino"  }
         };
@@ -72,6 +72,7 @@ namespace Suma2Lealtad.Models
         public IEnumerable<MaritalStatus> MaritalStatusOptions =
             new List<MaritalStatus>
         {
+              new MaritalStatus { id = 0, maritalstatus = "" },
               new MaritalStatus { id = 1, maritalstatus = "Soltero"     },
               new MaritalStatus { id = 2, maritalstatus = "Casado"      },
               new MaritalStatus { id = 3, maritalstatus = "Divorciado"  },

@@ -86,15 +86,25 @@
             });
     </script>   
 
-
-
-
     <script>
     $(document).ready(function() {
 
        $.validator.addMethod("regex", function(value, element, regexpr) {          
          return regexpr.test(value);
-       }, "Ingrese un valor correcto.");   
+       }, "Ingrese un valor correcto.");
+
+       $.validator.addMethod("valueNotEquals", function (value, element, arg) {
+           return arg != value;
+       }, "Es requerido seleccionar un valor de la lista.");
+
+       var $validateFilter = $("#FilterForm").validate({
+           rules: {
+               email: {
+                   email: true,
+                   minlength: 3
+               }
+           }
+       });
 
         var $validator = $("#commentForm").validate({
           rules: {
@@ -120,43 +130,24 @@
                 minlength: 3
             },
 
-            gender: {
-                required: true
-            },
-
-            maritalstatus: {
-                required: true
-            },
-
             phone1: {
                 required: true,
                 minlength: 3
             },
 
-            cod_estado: {
-                required: true,
-                minlength: 1
-            },
+            gender: { valueNotEquals: "0" },
 
-            cod_ciudad: {
-                required: true,
-                minlength: 1
-            },
+            maritalstatus: { valueNotEquals: "0" },
 
-            cod_municipio: {
-                required: true,
-                minlength: 1
-            },
+            cod_estado: { valueNotEquals: " " },
 
-            cod_parroquia: {
-                required: true,
-                minlength: 1
-            },
+            cod_ciudad: { valueNotEquals: " " },
 
-            cod_urbanizacion: {
-                required: true,
-                minlength: 1
-            },
+            cod_municipio: { valueNotEquals: " " },
+
+            cod_parroquia: { valueNotEquals: " " },
+
+            cod_urbanizacion: { valueNotEquals: " " },
 
 
             emailfield: {
@@ -176,9 +167,10 @@
             }
           },
         messages: {
-            emailfield: { 
-                emailfield: "Enter a valid email address.",
+            emailfield: {
+                emailfield: "Enter a valid email address."
             },
+            
         }         
 
         });
