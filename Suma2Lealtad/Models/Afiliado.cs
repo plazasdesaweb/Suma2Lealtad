@@ -5,45 +5,103 @@ namespace Suma2Lealtad.Models
 {
     public class Afiliado
     {
-        /* Affiliate */
-        public int id { get; set; }
-        public int customerid { get; set; }
-        public string docnumber { get; set; }
-        public int clientid { get; set; }
-        public string storeid { get; set; }
+        // Affiliate */
+        //public int id { get; set; }
+        //public int customerid { get; set; }
+        //public string docnumber { get; set; }
+        //public int clientid { get; set; }
+        //public string storeid { get; set; }
+        //public int channelid { get; set; }
+        //public int typeid { get; set; }
+        //public string typedelivery { get; set; }
+        //public int storeiddelivery { get; set; }
+        //public int statusid { get; set; }
+        //public string estatus { get; set; }
+        //public int reasonsid { get; set; }
+        //public string twitter_account { get; set; }
+        //public string facebook_account { get; set; }
+        //public string instagram_account { get; set; }
+        //public string comments { get; set; }
+        // Cliente */
+        //public string type { get; set; }
+        //public string name { get; set; }
+        //public string name2 { get; set; }
+        //public string lastname1 { get; set; }
+        //public string lastname2 { get; set; }
+        //public string email { get; set; }
+        //public string phone1 { get; set; }
+        //public string phone2 { get; set; }
+        //public string gender { get; set; }
+        //public string maritalstatus { get; set; }
+        //public DateTime? birthdate { get; set; }
+        //public string nationality { get; set; }
+        //public string occupation { get; set; }
+        //public string phone3 { get; set; }
+        //public List<Interest> Intereses { get; set; }
+        //public string cod_estado { get; set; }
+        //public string cod_ciudad { get; set; }
+        //public string cod_municipio { get; set; }
+        //public string cod_parroquia { get; set; }
+        //public string cod_urbanizacion { get; set; }
+        //public string picture { get; set; }
+
+        /* Elementos que sustentan la carga */
+        //SERVICIO WSL.WebPlazas.getClientByNumDoc // +
+        public string nationality { get; set; } // +*
+        public string name { get; set; } // +<*
+        public string name2 { get; set; } // +<*
+        public string lastname1 { get; set; } // +<*
+        public string lastname2 { get; set; } // +<*
+	    public DateTime? birthdate { get; set; } // +*
+	    public string gender { get; set; } //+*
+        public string maritalstatus { get; set; } // +*
+        public string occupation { get; set; } // +*
+        public string phone1 { get; set; } // +<*
+        public string phone2 { get; set; } // +*
+        public string phone3 { get; set; } // +*
+        public string email { get; set; } // +*
+        public string type { get; set; } // +*
+        //SERVICIO WSL.Cards.getClient !
+	    public string pan { get; set; } // !
+	    public string printed { get; set; } // !
+	    public string estatustarjeta { get; set; } // !
+        //METODO Tarjeta.ConstruirTrackI
+	    public string trackI { get; set; }
+        //METODO Tarjeta.ConstruirTrackII
+	    public string trackII { get; set; }
+        //ENTIDAD Affiliate 
+	    public int id { get; set; }
+	    public int customerid { get; set; } // (No se a que corresponde)                	 
+	    public string docnumber { get; set; } // +<*    
+	    public int clientid { get; set; }  // +(corresponde al id de WEBPLAZAS)*
+        public int storeid { get; set; }
         public int channelid { get; set; }
         public int typeid { get; set; }
         public string typedelivery { get; set; }
         public int storeiddelivery { get; set; }
         public int statusid { get; set; }
-        public string estatus { get; set; }
-        public int reasonsid { get; set; }
-        public string twitter_account { get; set; }
-        public string facebook_account { get; set; }
-        public string instagram_account { get; set; }
+	    public int reasonsid { get; set; }
+	    public string twitter_account { get; set; } // +
+        public string facebook_account { get; set; } // +
+        public string instagram_account { get; set; } // +
         public string comments { get; set; }
-        /* Cliente */
-        public string type { get; set; }
-        public string name { get; set; }
-        public string name2 { get; set; }
-        public string lastname1 { get; set; }
-        public string lastname2 { get; set; }
-        public string email { get; set; }
-        public string phone1 { get; set; }
-        public string phone2 { get; set; }
-        public string gender { get; set; }
-        public string maritalstatus { get; set; }
-        public DateTime? birthdate { get; set; }
-        public string nationality { get; set; }
-        public string occupation { get; set; }
-        public string phone3 { get; set; }
-        public List<Interest> Intereses { get; set; }
+        //ENTIDAD Status
+	    public string estatus { get; set; }        
+        //ENTIDAD CLIENTE
         public string cod_estado { get; set; }
         public string cod_ciudad { get; set; }
         public string cod_municipio { get; set; }
         public string cod_parroquia { get; set; }
-        public string cod_urbanizacion { get; set; }
-        public string picture { get; set; }
+        public string cod_urbanizacion { get; set; }        
+        //ENTIDAD Photos_Affiliate, FILEYSTEM ~/Picture/@filename@.jpg
+	    public string picture { get; set; }
+        //ENTIDAD CustomerInterest
+	    public List<Interest> Intereses { get; set; }
+        /* Elementos que sustentan la actualización */
+        //ENTITYFRAMEWORK LealtadEntities
+        //SERVICIO WSL_CARDS_ADDCLIENT <
+        //SERVICIO WSL_WEBPLAZAS_UPDATECLIENT *       
+
         /* Excepciones */
         public string exnumber { get; set; }
         public string exdetail { get; set; }
@@ -77,7 +135,6 @@ namespace Suma2Lealtad.Models
               new MaritalStatus { id = 2, maritalstatus = "Casado"      },
               new MaritalStatus { id = 3, maritalstatus = "Divorciado"  },
               new MaritalStatus { id = 4, maritalstatus = "Viudo"       }
-
         };
 
         public class Store
@@ -89,7 +146,7 @@ namespace Suma2Lealtad.Models
         public IEnumerable<Store> StoreOptions =
             new List<Store>
         {
-            new Store {id =   null, sucursal = ""                 },
+            new Store {id = null, sucursal = ""                 },
             new Store {id = "1002", sucursal = "Prados del Este"  },
             new Store {id = "1003", sucursal = "Cafetal"          },
             new Store {id = "1005", sucursal = "Los Samanes"      },
@@ -133,7 +190,7 @@ namespace Suma2Lealtad.Models
         public IEnumerable<Ciudad> CiudadOptions =
             new List<Ciudad>
         {
-            new Ciudad {id =" ", ciudad = ""        },
+            new Ciudad {id = " ", ciudad = ""        },
             new Ciudad {id = "1", ciudad = "Caracas" },
             new Ciudad {id = "2", ciudad = "Maracay" }
         };
@@ -147,7 +204,7 @@ namespace Suma2Lealtad.Models
         public IEnumerable<Municipio> MunicipioOptions =
             new List<Municipio>
         {
-            new Municipio {id =" ", municipio = ""           },
+            new Municipio {id = " ", municipio = ""           },
             new Municipio {id = "1", municipio = "Libertador" },
             new Municipio {id = "2", municipio = "Baruta"     }
         };
@@ -161,7 +218,7 @@ namespace Suma2Lealtad.Models
         public IEnumerable<Parroquia> ParroquiaOptions =
             new List<Parroquia>
         {
-            new Parroquia {id =" ", parroquia = ""         },
+            new Parroquia {id = " ", parroquia = ""         },
             new Parroquia {id = "1", parroquia = "Paraíso"  },
             new Parroquia {id = "2", parroquia = "San José" },
             new Parroquia {id = "3", parroquia = "San Juan" },
@@ -179,7 +236,7 @@ namespace Suma2Lealtad.Models
         public IEnumerable<Urbanizacion> UrbanizacionOptions =
             new List<Urbanizacion>
         {
-            new Urbanizacion {id =" ", urbanizacion = ""            },
+            new Urbanizacion {id = " ", urbanizacion = ""            },
             new Urbanizacion {id = "1", urbanizacion = "El Paraíso"  },
             new Urbanizacion {id = "2", urbanizacion = "Las Acacias" },
             new Urbanizacion {id = "3", urbanizacion = "Baruta"      },
@@ -217,9 +274,5 @@ namespace Suma2Lealtad.Models
               new TypeDelivery { id = 3, delivery = "Envío a Oficina"     }
         };
 
-
-
-
     }
-
 }

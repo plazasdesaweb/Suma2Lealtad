@@ -39,11 +39,15 @@
                     <tr>
                         <th>Número Documento/Cédula
                         </th>
-                        <th>Afiliado
+                        <th>Nombre 
                         </th>
                         <th>Correo
                         </th>
-                        <th>Estatus
+                        <th>Estatus Afiliación
+                        </th>
+                        <th>Tarjeta
+                        </th>
+                        <th>Estatus Tarjeta
                         </th>
 
                         <th class="text-center"></th>
@@ -55,7 +59,7 @@
 
                     @foreach (var item in Model)
                     {
-                        <tr data-row-key="@item.id" data-status="@item.estatus">
+                        <tr data-row-key="@item.id" data-statusafiliacion="@item.estatus" data-statustarjeta="@item.estatustarjeta">
                             <td>
                                 @Html.DisplayFor(modelItem => item.docnumber)
                             </td>
@@ -70,6 +74,14 @@
 
                             <td>
                                 @Html.DisplayFor(modelItem => item.estatus)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.pan)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.estatustarjeta)
                             </td>
 
                             <td class="text-right">
@@ -95,6 +107,7 @@
                     <a id="BloquearTarjeta" class="btn btn-success btn-md" role="button">Bloquear Tarjeta</a>
                     <a id="SuspenderTarjeta" class="btn btn-success btn-md" role="button">Suspender Tarjeta</a>
                     <a id="SaldosMovimientos" class="btn btn-success btn-md" role="button">Saldos y Movimientos</a>
+                    <a id="Acreditar" class="btn btn-success btn-md" role="button">Acreditar más</a>
                 </div>
                 <div class="pull-right">
                     <a href="@Url.Action("FilterReview", "Afiliado")" class="btn btn-success btn-md">Regresar</a>
@@ -105,42 +118,56 @@
             <script>
                 $(document).ready(function () {
                     var rowId;
-                    var status;
+                    var statusAfiliacion;
+                    var statusTarjeta;
+
+                    $("#CrearPin").addClass("disabled");
+                    $("#CambiarPin").addClass("disabled");
+                    $("#ReiniciarPin").addClass("disabled");
+                    $("#ImprimirTarjeta").addClass("disabled");
+                    $("#BloquearTarjeta").addClass("disabled");
+                    $("#SuspenderTarjeta").addClass("disabled");
+                    $("#SaldosMovimientos").addClass("disabled");
+                    $("#Acreditar").addClass("disabled");
 
                     $('.table tr').click(function () {
                         $('.table tbody tr').removeClass("active");
                         $(this).addClass("active");
 
                         rowId = $(this).data("row-key");
-                        status = $(this).data("status");
+                        statusAfiliacion = $(this).data("statusafiliacion");
+                        statusTarjeta = $(this).data("statustarjeta");
 
-                        //comentados para pruebas
-                        //$("#CrearPin").addClass("disabled"); 
-                        //$("#CambiarPin").addClass("disabled"); 
-                        //$("#ReiniciarPin").addClass("disabled"); 
-                        //$("#ImprimirTarjeta").addClass("disabled"); 
-                        //$("#SaldosMovimientos").addClass("disabled"); 
+                        $("#CrearPin").addClass("disabled"); 
+                        $("#CambiarPin").addClass("disabled"); 
+                        $("#ReiniciarPin").addClass("disabled"); 
+                        $("#ImprimirTarjeta").addClass("disabled"); 
+                        $("#BloquearTarjeta").addClass("disabled"); 
+                        $("#SuspenderTarjeta").addClass("disabled"); 
+                        $("#SaldosMovimientos").addClass("disabled"); 
+                        $("#Acreditar").addClass("disabled"); 
 
-                        switch (status) {
-                            case "Nueva":   
-                                $("#ImprimirTarjeta").removeClass("disabled");
-                                break;
-                            case "Activa":   
-                                $("#CrearPin").removeClass("disabled");
-                                $("#CambiarPin").removeClass("disabled");
-                                $("#ReiniciarPin").removeClass("disabled");
-                                $("#SaldosMovimientos").removeClass("disabled");
-                                break;
-                            //case 2:   // activa
-                            //    $("#btn2").removeClass("disabled");
-                            //    $("#btn4").removeClass("disabled");
-                            //    break;
-                            //case -1:  // bloqueada
-                            //    $("#btn1").removeClass("disabled");
-                            //    break;
-                            default:
-                                break;
+                        //Verificar combinaciones de estatus de afiliacion y tarjeta
+                        if (statusAfiliacion == "Nueva" && statusTarjeta == "Nueva") {
+                            $("#ImprimirTarjeta").removeClass("disabled");
+                            $("#SaldosMovimientos").removeClass("disabled");
+                            $("#Acreditar").removeClass("disabled");
                         }
+                        else if (statusAfiliacion == "Activa" && statusTarjeta == "Inactiva") {
+                            $("#CrearPin").removeClass("disabled");
+                            $("#BloquearTarjeta").removeClass("disabled");
+                            $("#SuspenderTarjeta").removeClass("disabled");
+                            $("#SaldosMovimientos").removeClass("disabled");
+                            $("#Acreditar").removeClass("disabled");
+                        }
+                        else if (statusAfiliacion == "Activa" && statusTarjeta == "Activa") {
+                            $("#CambiarPin").removeClass("disabled");
+                            $("#ReiniciarPin").removeClass("disabled");
+                            $("#BloquearTarjeta").removeClass("disabled");
+                            $("#SuspenderTarjeta").removeClass("disabled");
+                            $("#SaldosMovimientos").removeClass("disabled");
+                            $("#Acreditar").removeClass("disabled");
+                        }                       
                     });
 
                     $("#CrearPin").click(function () {
@@ -153,35 +180,62 @@
 
                     $("#CambiarPin").click(function () {
                         var href = '@Url.Content("~/{controller}/{action}/{params}")'
-                            href = href.replace("{controller}", "Afiliado");
-                            href = href.replace("{action}", "CambiarPin");
-                            href = href.replace("{params}", rowId);
-                            window.location.href = href;
-                        });
+                        href = href.replace("{controller}", "Afiliado");
+                        href = href.replace("{action}", "CambiarPin");
+                        href = href.replace("{params}", rowId);
+                        window.location.href = href;
+                    });
 
                     $("#ReiniciarPin").click(function () {
                         var href = '@Url.Content("~/{controller}/{action}/{params}")'
-                            href = href.replace("{controller}", "Afiliado");
-                            href = href.replace("{action}", "ReiniciarPin");
-                            href = href.replace("{params}", rowId);
-                            window.location.href = href;
-                        });
+                        href = href.replace("{controller}", "Afiliado");
+                        href = href.replace("{action}", "ReiniciarPin");
+                        href = href.replace("{params}", rowId);
+                        window.location.href = href;
+                    });
 
                     $("#ImprimirTarjeta").click(function () {
                         var href = '@Url.Content("~/{controller}/{action}/{params}")'
-                            href = href.replace("{controller}", "Afiliado");
-                            href = href.replace("{action}", "ImprimirTarjeta");
-                            href = href.replace("{params}", rowId);
-                            window.location.href = href;
-                        });
+                        href = href.replace("{controller}", "Afiliado");
+                        href = href.replace("{action}", "ImprimirTarjeta");
+                        href = href.replace("{params}", rowId);
+                        window.location.href = href;
+                    });
+
+                    $("#BloquearTarjeta").click(function () {
+                        alert("BloquearTarjeta");
+                        @*var href = '@Url.Content("~/{controller}/{action}/{params}")'
+                        href = href.replace("{controller}", "Afiliado");
+                        href = href.replace("{action}", "BloquearTarjeta");
+                        href = href.replace("{params}", rowId);
+                        window.location.href = href;*@
+                    });
+
+                    $("#SuspenderTarjeta").click(function () {
+                        alert("SuspenderTarjeta");
+                        @*var href = '@Url.Content("~/{controller}/{action}/{params}")'
+                        href = href.replace("{controller}", "Afiliado");
+                        href = href.replace("{action}", "SuspenderTarjeta");
+                        href = href.replace("{params}", rowId);
+                        window.location.href = href;*@
+                    });
 
                     $("#SaldosMovimientos").click(function () {
                         var href = '@Url.Content("~/{controller}/{action}/{params}")'
-                            href = href.replace("{controller}", "Afiliado");
-                            href = href.replace("{action}", "SaldosMovimientos");
-                            href = href.replace("{params}", rowId);
-                            window.location.href = href;
-                        });
+                        href = href.replace("{controller}", "Afiliado");
+                        href = href.replace("{action}", "SaldosMovimientos");
+                        href = href.replace("{params}", rowId);
+                        window.location.href = href;
+                    });
+
+                    $("#Acreditar").click(function () {
+                        alert("Acreditar");
+                        @*var href = '@Url.Content("~/{controller}/{action}/{params}")'
+                        href = href.replace("{controller}", "Afiliado");
+                        href = href.replace("{action}", "Acreditar");
+                        href = href.replace("{params}", rowId);
+                        window.location.href = href;*@
+                    });
                 });
             </script>
             <!-- SECCION PARA botones de operaciones -->

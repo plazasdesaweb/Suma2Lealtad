@@ -12,6 +12,9 @@
 
             <form id="commentForm" method="post" action="@Url.Action("Edit", "Afiliado")" class="form-horizontal">
 
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
                 <div id="rootwizard">
                     <div class="nav-gradient navbar navbar-default ">
                         <div class="nav navbar-nav">
@@ -32,6 +35,7 @@
                                 <br />
                             </div>
 
+                            @Html.HiddenFor(model => model.id)
                             @Html.HiddenFor(model => model.typeid)
 
                             <div class="editor-label col-md-4 control-label">

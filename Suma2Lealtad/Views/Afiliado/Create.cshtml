@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container">
@@ -11,10 +10,10 @@
 
         <div class="panel-body col-md-offset-1 col-md-10">
 
-            @*<form id="commentForm" method="post" action="@Url.Action("Create", "Afiliado")" class="form-horizontal">*@
+            <form id="commentForm" method="post" action="@Url.Action("Create", "Afiliado")" class="form-horizontal" enctype = "multipart/form-data">
 
-            @using (Html.BeginForm("Create", "Afiliado", FormMethod.Post, new { enctype = "multipart/form-data", id="commentForm" }))
-            {
+                @*@using (Html.BeginForm("Create", "Afiliado", FormMethod.Post, new { enctype = "multipart/form-data", id = "commentForm" }))
+            { }*@
 
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
@@ -40,6 +39,7 @@
                             </div>
 
                             @Html.HiddenFor(model => model.id)
+                            @Html.HiddenFor(model => model.clientid)
                             @Html.HiddenFor(model => model.typeid)
 
                             <div class="editor-label col-md-4 control-label">
@@ -206,12 +206,78 @@
                         <!-- SILVERLIGHT -->
                         <div class="tab-pane" id="tab2">
 
-                            <div class="editor-label col-md-2 control-label">
+                            @*<div class="editor-label col-md-2 control-label">
                             </div>
 
                             <div class="editor-field col-md-10">
                                 <img src="@Url.Content(@Model.picture)" />
+                            </div>*@
+
+                            @*<div class="editor-label col-md-4 control-label">
+                                <br />
                             </div>
+                            <div class="editor-field col-md-8">
+                                <br />
+                            </div>*@
+
+
+                            <div class="col-md-12">
+                                <p class="text-left">Paso 1. Escanee el documento de identidad.</p>
+                            </div>
+
+                            @{Html.RenderPartial("SilverlightEscaner");}
+
+                            <div class="col-md-12">
+                                <p class="text-left" id="ElementoControl" style="visibility: hidden">ElementoControl</p>
+                            </div>
+                            <!-- SECCION PARA VERIFICAR OPERACIONES ESCANER-->                            
+                            <script src="~/Scripts/jquery-2.1.1.min.js"></script>
+                            <script>
+                                $(document).ready(function () {
+                                    $("#seccion2").hide();
+                                    $("#seccion3").hide();
+                                    $("#boton2").hide();
+                                    $("#boton3").hide();
+                                });
+
+                                function Siguiente() {
+                                    $("#seccion1").hide();
+                                    $("#seccion2").show();
+                                    $("#boton1").hide();
+                                    $("#boton2").show();
+                                }
+
+                                function Siguiente2() {
+                                    if (VerificarElementoControl("ElementoControl", "Escaneada") == true) {
+                                        alert("Error: Debe seleccionar el archivo para cargarlo en el servidor.");
+                                    }
+                                    else if (VerificarElementoControl("ElementoControl", "Seleccionada") == true) {
+                                        $("#seccion2").hide();
+                                        $("#seccion3").show();
+                                        $("#boton2").hide();
+                                        $("#boton3").show();
+                                    }
+                                    else {
+                                        alert("Error: Debe completar Paso 1 y Paso 2 para continuar.");
+                                    }
+                                }
+
+                                function VerificarElementoControl(ElementoControl, ValorDeControl) {
+                                    if (document.getElementById(ElementoControl).innerHTML == ValorDeControl)
+                                        return true;
+                                    else
+                                        return false;
+                                }
+
+                                function ActualizaElementoControl(ElementoControl, ValorDeControl) {
+                                    document.getElementById(ElementoControl).innerHTML = ValorDeControl;
+                                }
+                            </script>
+                            <!-- FIN SECCION PARA VERIFICAR OPERACIONES -->
+                            <div class="col-md-12">
+                                <p class="text-left">Paso 2. Seleccione el archivo escaneado para subirlo al servidor. </p>
+                                <input type="file" name="file" id="file" onchange="ActualizaElementoControl('ElementoControl','Seleccionada')" />
+                            </div>                            
 
                         </div>
                         <!--// SILVERLIGHT -->
@@ -398,8 +464,9 @@
 
                 </div>
                 <!--// rootwizard -->
-            }
-            @*</form>*@
+
+                @*}*@
+            </form>
 
         </div>
         <!--// panel-body -->

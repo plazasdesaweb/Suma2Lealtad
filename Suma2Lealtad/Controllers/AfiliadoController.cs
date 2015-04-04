@@ -21,33 +21,63 @@ namespace Suma2Lealtad.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Find(string numdoc)
+        {
+            //Los estados actuales para una persona son:
+            //NOCLIENTE            (no registrado en WEBPLAZAS)
+            //NOAFILIADO           (no afiliado en SUMAPLAZAS)
+            //CLIENTE              (registrado en WEBPLAZAS)
+            //AFILIADO             (afiliado en SUMAPLAZAS)
+            //El estado deseado es:
+            //AFILIADO/CLIENTE     (registrado en WEBPLAZAS y afiliado en SUMAPLAZAS) 
+            //Existen 4 resultados posibles para esta búsqueda
+            //NOCLIENTE/NOAFILIADO -> por definir acción para crear registro de CLIENTE y crear afiliación de AFILIADO => Redireccionar a GenericView con mensaje descriptivo
+            //NOCLIENTE/AFILIADO   -> por definir acción para crear registro de CLIENTE => Redireccionar a GenericView con mensaje descriptivo
+            //CLIENTE/NOAFILIADO   -> acción: editar registro de CLIENTE y crear afiliación de AFILIADO => CREAR AFILIACION (retornar vista Create)
+            //CLIENTE/AFILIADO     -> acción: editar registro de CLIENTE y editar afiliación de AFILIADO => REVISAR AFILIACION (Redirecciónar a acción Index ó Edit)
+
+            //Sa cambia el metodo de busuqeda para pruebas
+            //Afiliado afiliadoparcial = rep.FindSuma(numdoc, "", "").FirstOrDefault();
+            //Afiliado afiliado = rep.FindSuma(afiliadoparcial.id);
+                                    
+            Afiliado afiliado = rep.Find(numdoc);
+            
+            if (afiliado == null)
+            {
+                //pendiente
+                return RedirectToAction("GenericView");
+            }
+            else if (afiliado.clientid == 0 && afiliado != null)
+            {
+                //pendiente
+                return RedirectToAction("GenericView");
+            }
+            else if (afiliado.clientid != 0 && afiliado.id == 0)
+            {
+                return View("Create", afiliado);
+            }
+            else if (afiliado.clientid != 0 && afiliado.id != 0)
+            {
+                List<Afiliado> afiliados = new List<Afiliado> { afiliado };                
+                return View("Index", afiliados);
+            }
+            else
+            {
+                //pendiente
+                return RedirectToAction("GenericView");
+            }
+        }
+
         public ActionResult GenericView()
         {
             return View();
         }
 
 
-        [HttpPost]
-        public ActionResult Find(string numdoc)
+        public ActionResult Create(Afiliado afiliado)
         {
-
-            Afiliado afiliado = rep.Find(numdoc);
-
-            if (afiliado == null)
-            {
-                ViewBag.GenericView = "Registro No Encontrado.";
-                return RedirectToAction("GenericView", "Afiliado");
-            }
-
-            TempData["AfiliadoModel"] = afiliado;
-            return RedirectToAction("Create", "Afiliado");
-
-        }
-
-        public ActionResult Create()
-        {
-            var model = TempData["AfiliadoModel"] as Afiliado;
-            return View(model);
+            return View(afiliado);
         }
 
         [HttpPost]
@@ -60,7 +90,10 @@ namespace Suma2Lealtad.Controllers
                 if (file != null && file.ContentLength > 0)
                     try
                     {
-                        string path = System.IO.Path.Combine(Server.MapPath(AppModule.GetPathPicture()), System.IO.Path.GetFileName(file.FileName));
+                        //para serverpath viejo
+                        //string path = System.IO.Path.Combine(Server.MapPath(AppModule.GetPathPicture()), System.IO.Path.GetFileName(file.FileName));
+                        //para serverpath nuevo
+                        string path = Server.MapPath(AppModule.GetPathPicture().Replace("@filename@", afiliado.docnumber));
                         file.SaveAs(path);
                         //ViewBag.Message2 = "Archivo cargado.";
                         //MessageBox.Show("Archivo cargado");
@@ -109,7 +142,7 @@ namespace Suma2Lealtad.Controllers
             //para pruebas
             //numdoc = "V-12919906";
 
-            List<Afiliado> afiliado = rep.FindSuma(numdoc, "", "");
+            List<Afiliado> afiliado = rep.FindSuma(numdoc,"","");
 
             return View(afiliado);
 

@@ -233,6 +233,8 @@
     <Compile Include="Models\CLIENTE.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClienteCards.cs" />
+    <Compile Include="Models\ClienteWebPlazas.cs" />
     <Compile Include="Models\CMenu.cs" />
     <Compile Include="Models\Company.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
