@@ -73,7 +73,7 @@ namespace Suma2Lealtad.Models
 	    public int id { get; set; }
 	    public int customerid { get; set; } // (No se a que corresponde)                	 
 	    public string docnumber { get; set; } // +<*    
-	    public int clientid { get; set; }  // +(corresponde al id de WEBPLAZAS)*
+        public int clientid { get; set; }  // +* (corresponde al id de WEBPLAZAS)
         public int storeid { get; set; }
         public int channelid { get; set; }
         public int typeid { get; set; }

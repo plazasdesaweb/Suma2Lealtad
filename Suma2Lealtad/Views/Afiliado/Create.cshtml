@@ -12,9 +12,6 @@
 
             <form id="commentForm" method="post" action="@Url.Action("Create", "Afiliado")" class="form-horizontal" enctype = "multipart/form-data">
 
-                @*@using (Html.BeginForm("Create", "Afiliado", FormMethod.Post, new { enctype = "multipart/form-data", id = "commentForm" }))
-            { }*@
-
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
 
@@ -230,7 +227,7 @@
                             <div class="col-md-12">
                                 <p class="text-left" id="ElementoControl" style="visibility: hidden">ElementoControl</p>
                             </div>
-                            <!-- SECCION PARA VERIFICAR OPERACIONES ESCANER-->                            
+                            <!-- SECCION PARA VERIFICAR OPERACIONES ESCANER-->
                             <script src="~/Scripts/jquery-2.1.1.min.js"></script>
                             <script>
                                 $(document).ready(function () {
@@ -277,7 +274,7 @@
                             <div class="col-md-12">
                                 <p class="text-left">Paso 2. Seleccione el archivo escaneado para subirlo al servidor. </p>
                                 <input type="file" name="file" id="file" onchange="ActualizaElementoControl('ElementoControl','Seleccionada')" />
-                            </div>                            
+                            </div>
 
                         </div>
                         <!--// SILVERLIGHT -->
@@ -427,7 +424,6 @@
                                 <input type="submit" class="btn btn-success btn-md" value="Guardar" style="padding-right: 15px; padding-left: 15px; margin-left: 0px;" />
                             </div>
 
-
                         </div>
                         <!-- DIRECCIÓN -->
 
@@ -447,8 +443,6 @@
                             <!--// BOTONES -->
                         </div>
 
-
-
                         <div class="editor-label col-md-4 control-label"></div>
                         <div class="editor-field col-md-6">
                             <br />
@@ -465,7 +459,6 @@
                 </div>
                 <!--// rootwizard -->
 
-                @*}*@
             </form>
 
         </div>

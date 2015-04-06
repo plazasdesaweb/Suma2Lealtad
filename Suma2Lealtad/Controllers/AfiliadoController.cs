@@ -37,12 +37,8 @@ namespace Suma2Lealtad.Controllers
             //CLIENTE/NOAFILIADO   -> acción: editar registro de CLIENTE y crear afiliación de AFILIADO => CREAR AFILIACION (retornar vista Create)
             //CLIENTE/AFILIADO     -> acción: editar registro de CLIENTE y editar afiliación de AFILIADO => REVISAR AFILIACION (Redirecciónar a acción Index ó Edit)
 
-            //Sa cambia el metodo de busuqeda para pruebas
-            //Afiliado afiliadoparcial = rep.FindSuma(numdoc, "", "").FirstOrDefault();
-            //Afiliado afiliado = rep.FindSuma(afiliadoparcial.id);
-                                    
             Afiliado afiliado = rep.Find(numdoc);
-            
+
             if (afiliado == null)
             {
                 //pendiente
@@ -59,7 +55,8 @@ namespace Suma2Lealtad.Controllers
             }
             else if (afiliado.clientid != 0 && afiliado.id != 0)
             {
-                List<Afiliado> afiliados = new List<Afiliado> { afiliado };                
+                afiliado.name = (afiliado.name + " " + afiliado.lastname1).ToUpper();
+                List<Afiliado> afiliados = new List<Afiliado> { afiliado };
                 return View("Index", afiliados);
             }
             else
@@ -69,8 +66,24 @@ namespace Suma2Lealtad.Controllers
             }
         }
 
-        public ActionResult GenericView()
+        public ActionResult GenericView(int idmensaje = 0)
         {
+            if (idmensaje == 0)
+            {
+                ViewBag.Mensaje = "Mensaje no establecido.";
+            }
+            else if (idmensaje == 1)
+            {
+                ViewBag.Mensaje = "Ocurrió un error al subir el archivo al servidor. Operación cancelada.";
+            }
+            else if (idmensaje == 2)
+            {
+                ViewBag.Mensaje = "Registro creado satisfactoriamente.";
+            }
+            else if (idmensaje == 3)
+            {
+                ViewBag.Mensaje = "No se pudo crear el registro. Operación cancelada.";
+            }
             return View();
         }
 
@@ -95,14 +108,11 @@ namespace Suma2Lealtad.Controllers
                         //para serverpath nuevo
                         string path = Server.MapPath(AppModule.GetPathPicture().Replace("@filename@", afiliado.docnumber));
                         file.SaveAs(path);
-                        //ViewBag.Message2 = "Archivo cargado.";
-                        //MessageBox.Show("Archivo cargado");
                     }
-                    catch (Exception ex)
+                    //catch (Exception ex)
+                    catch
                     {
-                        //ViewBag.Message2 = "ERROR:" + ex.Message.ToString();
-                        //MessageBox.Show("ERROR:" + ex.Message.ToString());
-                        ViewBag.GenericView = "Ocurrió un error al subir el archivo al servidor," + ex.Message.ToString();
+                        return RedirectToAction("GenericView", new { idmensaje = 1 });
                     }
                 else
                 {
@@ -110,13 +120,15 @@ namespace Suma2Lealtad.Controllers
                     //MessageBox.Show("Debe seleccionar un archivo");
 
                 }
+
                 //PENDIENTE: SI FALLA ALGUNA DE LAS ACTIVIDADES. HAY QUE DESHACER LAS ACTIVIDADES ANTERIORES EXITOSAS.                
                 
-                ViewBag.GenericView = "Registro creado satisfactoriamente.";
+                return RedirectToAction("GenericView", new { idmensaje = 2 });
             }
-
-            return RedirectToAction("GenericView", "Afiliado");
-
+            else
+            {
+                return RedirectToAction("GenericView", new { idmensaje = 3 });
+            }
         }
 
         public ActionResult FilterReview()
@@ -128,35 +140,24 @@ namespace Suma2Lealtad.Controllers
         [HttpPost]
         public ActionResult Index(string numdoc, string name, string email)
         {
-            //para pruebas
-            //numdoc = "V-12919906";
-
             List<Afiliado> afiliado = rep.FindSuma(numdoc, name, email);
-
             return View(afiliado);
-
         }
 
         public ActionResult Index(string numdoc)
         {
-            //para pruebas
-            //numdoc = "V-12919906";
-
-            List<Afiliado> afiliado = rep.FindSuma(numdoc,"","");
-
+            List<Afiliado> afiliado = rep.FindSuma(numdoc, "", "");
             return View(afiliado);
-
         }
 
         public ActionResult Edit(int id = 0)
         {
-
             Afiliado afiliado = rep.FindSuma(id);
 
             if (afiliado == null)
             {
                 //return HttpNotFound();
-                return RedirectToAction("GenericView", "Afiliado");
+                return RedirectToAction("GenericView");
             }
             return View(afiliado);
 
@@ -182,51 +183,30 @@ namespace Suma2Lealtad.Controllers
         public ActionResult ImprimirTarjeta(int id)
         {
             Afiliado afiliado = rep.FindSuma(id);
-
             return View("ImpresoraImprimirTarjeta", afiliado);
         }
 
         public ActionResult CrearPin(int id)
         {
             Afiliado afiliado = rep.FindSuma(id);
-
             return View("PinPadCrearPin", afiliado);
         }
 
         public ActionResult CambiarPin(int id)
         {
             Afiliado afiliado = rep.FindSuma(id);
-
             return View("PinPadCambiarPin", afiliado);
         }
 
         public ActionResult ReiniciarPin(int id)
         {
             Afiliado afiliado = rep.FindSuma(id);
-
             return View("PinPadReiniciarPin", afiliado);
         }
 
-        //public ActionResult SaldosMovimientos(string documento)
         public ActionResult SaldosMovimientos(int id)
         {
-            Afiliado afiliado = rep.FindSuma(id);
-
-            SaldosMovimientos SaldosMovimientos = new SaldosMovimientos();
-
-            SaldosMovimientos.DocId = afiliado.docnumber;
-
-            //para pruebas
-            //SaldosMovimientos.DocId = "V-6960635";
-
-            string nrodocumento = SaldosMovimientos.DocId.Substring(2);
-            string saldosJson = WSL.Cards.getBalance(nrodocumento);
-            SaldosMovimientos.Saldos = (IEnumerable<Saldo>)JsonConvert.DeserializeObject<IEnumerable<Saldo>>(saldosJson);
-            string movimientosPrepagoJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.First().accounttype, nrodocumento);
-            string movimientosLealtadJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.Skip(1).First().accounttype, nrodocumento);
-            SaldosMovimientos.MovimientosPrepago = (IEnumerable<Movimiento>)JsonConvert.DeserializeObject<IEnumerable<Movimiento>>(movimientosPrepagoJson);
-            SaldosMovimientos.MovimientosSuma = (IEnumerable<Movimiento>)JsonConvert.DeserializeObject<IEnumerable<Movimiento>>(movimientosLealtadJson);
-
+            SaldosMovimientos SaldosMovimientos = rep.FindSaldosMovimientos(id);
             return View(SaldosMovimientos);
         }
 
@@ -236,5 +216,4 @@ namespace Suma2Lealtad.Controllers
         }
 
     }
-
 }

@@ -85,7 +85,7 @@
                             </td>
 
                             <td class="text-right">
-                                <a href="@Url.Action("Edit", "Afiliado", new { id = item.id })" class="btn btn-info btn-xs">
+                                <a id="@item.id" href="@Url.Action("Edit", "Afiliado", new { id = item.id })" class="btn btn-info btn-xs disabled">
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </a>
                             </td>
@@ -118,6 +118,7 @@
             <script>
                 $(document).ready(function () {
                     var rowId;
+                    var docNumber;
                     var statusAfiliacion;
                     var statusTarjeta;
 
@@ -131,12 +132,13 @@
                     $("#Acreditar").addClass("disabled");
 
                     $('.table tr').click(function () {
-                        $('.table tbody tr').removeClass("active");
-                        $(this).addClass("active");
-
                         rowId = $(this).data("row-key");
                         statusAfiliacion = $(this).data("statusafiliacion");
                         statusTarjeta = $(this).data("statustarjeta");
+
+                        $('.table tbody tr').removeClass("active");
+                        $(this).addClass("active");
+                        $("#" + rowId).removeClass("disabled");
 
                         $("#CrearPin").addClass("disabled"); 
                         $("#CambiarPin").addClass("disabled"); 

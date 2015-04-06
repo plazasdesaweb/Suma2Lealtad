@@ -251,7 +251,6 @@ namespace Suma2Lealtad.Models
             }
         }
 
-
         // 
         // FindSuma : Buscar el registro del Afiliado en el Modelo SumaLealtad.
 
@@ -555,7 +554,6 @@ namespace Suma2Lealtad.Models
 
         }
 
-
         //
         // SaveChanges : Actualizar registro del afiliado en el Modelo de SumaLealtad.
 
@@ -668,6 +666,20 @@ namespace Suma2Lealtad.Models
 
         }
 
-    }
+        public SaldosMovimientos FindSaldosMovimientos(int id)
+        {
+            SaldosMovimientos SaldosMovimientos = new SaldosMovimientos();
+            Afiliado afiliado = FindSuma(id);
+            SaldosMovimientos.DocId = afiliado.docnumber;
+            string nrodocumento = SaldosMovimientos.DocId.Substring(2);
+            string saldosJson = WSL.Cards.getBalance(nrodocumento);
+            SaldosMovimientos.Saldos = (IEnumerable<Saldo>)JsonConvert.DeserializeObject<IEnumerable<Saldo>>(saldosJson);
+            string movimientosPrepagoJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.First().accounttype, nrodocumento);
+            string movimientosLealtadJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.Skip(1).First().accounttype, nrodocumento);
+            SaldosMovimientos.MovimientosPrepago = (IEnumerable<Movimiento>)JsonConvert.DeserializeObject<IEnumerable<Movimiento>>(movimientosPrepagoJson);
+            SaldosMovimientos.MovimientosSuma = (IEnumerable<Movimiento>)JsonConvert.DeserializeObject<IEnumerable<Movimiento>>(movimientosLealtadJson);
+            return SaldosMovimientos;
+        }
 
+    }
 }
