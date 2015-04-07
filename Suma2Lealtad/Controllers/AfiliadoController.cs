@@ -131,22 +131,29 @@ namespace Suma2Lealtad.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult Aprobar(string numdoc, string monto)
+        {
+            //metodo de repositorio que actualiza estatus y crea registro en cards
+            return View("GenericView");
+        }
+
         public ActionResult FilterReview()
         {
             return View();
         }
 
 
+        public ActionResult Index(string numdoc)
+        {
+            List<Afiliado> afiliado = rep.FindSuma(numdoc, "", "");
+            return View(afiliado);
+        }
+
         [HttpPost]
         public ActionResult Index(string numdoc, string name, string email)
         {
             List<Afiliado> afiliado = rep.FindSuma(numdoc, name, email);
-            return View(afiliado);
-        }
-
-        public ActionResult Index(string numdoc)
-        {
-            List<Afiliado> afiliado = rep.FindSuma(numdoc, "", "");
             return View(afiliado);
         }
 
@@ -208,6 +215,29 @@ namespace Suma2Lealtad.Controllers
         {
             SaldosMovimientos SaldosMovimientos = rep.FindSaldosMovimientos(id);
             return View(SaldosMovimientos);
+        }
+
+        public ActionResult Acreditar(int id)
+        {
+            Afiliado afiliado = rep.FindSuma(id);
+            return View(afiliado);
+        }
+
+        [HttpPost]
+        public ActionResult Acreditar(string numdoc, string monto)
+        {
+            RespuestaCards RespuestaCards = rep.Acreditar(numdoc, monto);
+            return View("GenericView");
+        }
+
+        public ActionResult BloquearTarjeta(int id)
+        {
+            return View("GenericView");
+        }
+
+        public ActionResult SuspenderTarjeta(int id)
+        {
+            return View("GenericView");
         }
 
         protected override void Dispose(bool disposing)

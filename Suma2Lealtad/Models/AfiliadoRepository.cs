@@ -106,11 +106,11 @@ namespace Suma2Lealtad.Models
                 //Status
                 //CustomerInterest
                 //Photos_Affiliate, FILEYSTEM ~/Picture/@filename@.jpg                
+                //Tercero se buscan los datos de Tarjeta de AFILIADO en Cards
                 //WSL.Cards.getClient
                 //Tarjeta.ConstruirTrackI
                 //Tarjeta.ConstruirTrackII
-                //SERVICIO WSL.WebPlazas.getClientByNumDoc // +
-
+                
                 string ClienteWebPlazasJson = WSL.WebPlazas.getClientByNumDoc(numdoc);
                 ClienteWebPlazas ClienteWebPlazas = (ClienteWebPlazas)JsonConvert.DeserializeObject<ClienteWebPlazas>(ClienteWebPlazasJson);
 
@@ -192,18 +192,18 @@ namespace Suma2Lealtad.Models
                                   instagram_account = a.instagram_account, // +
                                   comments = a.comments,
                                   //ENTIDAD CLIENTE
-                                  name = c.NOMBRE_CLIENTE1,
-                                  name2 = c.NOMBRE_CLIENTE2,
-                                  lastname1 = c.APELLIDO_CLIENTE1,
-                                  lastname2 = c.APELLIDO_CLIENTE2,
-                                  birthdate = c.FECHA_NACIMIENTO,
-                                  gender = c.SEXO,
-                                  maritalstatus = c.EDO_CIVIL,
-                                  occupation = c.OCUPACION,
-                                  phone1 = c.TELEFONO_HAB,
-                                  phone2 = c.TELEFONO_OFIC,
-                                  phone3 = c.TELEFONO_CEL,
-                                  email = c.E_MAIL,
+                                  //name = c.NOMBRE_CLIENTE1,
+                                  //name2 = c.NOMBRE_CLIENTE2,
+                                  //lastname1 = c.APELLIDO_CLIENTE1,
+                                  //lastname2 = c.APELLIDO_CLIENTE2,
+                                  //birthdate = c.FECHA_NACIMIENTO,
+                                  //gender = c.SEXO,
+                                  //maritalstatus = c.EDO_CIVIL,
+                                  //occupation = c.OCUPACION,
+                                  //phone1 = c.TELEFONO_HAB,
+                                  //phone2 = c.TELEFONO_OFIC,
+                                  //phone3 = c.TELEFONO_CEL,
+                                  //email = c.E_MAIL,
                                   cod_estado = c.COD_ESTADO,
                                   cod_ciudad = c.COD_CIUDAD,
                                   cod_municipio = c.COD_MUNICIPIO,
@@ -212,7 +212,8 @@ namespace Suma2Lealtad.Models
                                   //ENTIDAD Status
                                   estatus = s.name
                               }).Single();
-
+                    
+                    //WSL.WebPlazas.getClientByNumDoc
                     record.nationality = ClienteWebPlazas.nationality; // +*
                     record.name = ClienteWebPlazas.name; // +<*
                     record.name2 = ClienteWebPlazas.name2; // +<*
@@ -495,7 +496,7 @@ namespace Suma2Lealtad.Models
                         creationuserid = (int)HttpContext.Current.Session["userid"],
                         modifieddate = System.DateTime.Now,
                         modifieduserid = (int)HttpContext.Current.Session["userid"],
-                        statusid = INITIAL_INTEGER_VALUE,
+                        statusid = 0, //INITIAL_INTEGER_VALUE,
                         reasonsid = INITIAL_INTEGER_VALUE,
                         twitter_account = AfiliadoSuma.twitter_account,
                         facebook_account = AfiliadoSuma.facebook_account,
@@ -533,18 +534,18 @@ namespace Suma2Lealtad.Models
 
                     }
 
-                    var affiliateauditoria = new AffiliateAud()
-                    {
-                        id = AfilliateAudID(),
-                        affiliateid = affiliate.id,
-                        modifieduserid = (int)HttpContext.Current.Session["userid"],
-                        modifieddate = System.DateTime.Now,
-                        statusid = INITIAL_INTEGER_VALUE,
-                        reasonsid = INITIAL_INTEGER_VALUE,
-                        comments = affiliate.comments
-                    };
+                    //var affiliateauditoria = new AffiliateAud()
+                    //{
+                    //    id = AfilliateAudID(),
+                    //    affiliateid = affiliate.id,
+                    //    modifieduserid = (int)HttpContext.Current.Session["userid"],
+                    //    modifieddate = System.DateTime.Now,
+                    //    statusid = INITIAL_INTEGER_VALUE,
+                    //    reasonsid = INITIAL_INTEGER_VALUE,
+                    //    comments = affiliate.comments
+                    //};
 
-                    db.AffiliateAuds.Add(affiliateauditoria);
+                    //db.AffiliateAuds.Add(affiliateauditoria);
 
                     db.SaveChanges();
 
@@ -679,6 +680,14 @@ namespace Suma2Lealtad.Models
             SaldosMovimientos.MovimientosPrepago = (IEnumerable<Movimiento>)JsonConvert.DeserializeObject<IEnumerable<Movimiento>>(movimientosPrepagoJson);
             SaldosMovimientos.MovimientosSuma = (IEnumerable<Movimiento>)JsonConvert.DeserializeObject<IEnumerable<Movimiento>>(movimientosLealtadJson);
             return SaldosMovimientos;
+        }
+
+        public RespuestaCards Acreditar(string numdoc, string monto)
+        {
+            RespuestaCards RespuestaCards = new RespuestaCards();
+            string RespuestaCardsJson = WSL.Cards.addBatch(numdoc, monto);
+            RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
+            return RespuestaCards;
         }
 
     }

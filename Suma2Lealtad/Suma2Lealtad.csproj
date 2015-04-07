@@ -277,6 +277,7 @@
     <Compile Include="Models\Reason.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RespuestaCards.cs" />
     <Compile Include="Models\RESTRICCIONE.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -538,6 +539,7 @@
     <Content Include="Views\Afiliado\PinPadReiniciarPin.cshtml" />
     <Content Include="Views\Afiliado\PinPadCambiarPin.cshtml" />
     <Content Include="Views\Afiliado\ImpresoraImprimirTarjeta.cshtml" />
+    <Content Include="Views\Afiliado\SaldosMovimientos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

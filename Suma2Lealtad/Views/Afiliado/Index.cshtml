@@ -85,8 +85,11 @@
                             </td>
 
                             <td class="text-right">
-                                <a id="@item.id" href="@Url.Action("Edit", "Afiliado", new { id = item.id })" class="btn btn-info btn-xs disabled">
+                                <a id="@(item.id)_edit" href="@Url.Action("Edit", "Afiliado", new { id = item.id })" class="btn btn-info btn-xs disabled">
                                     <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                                <a id="@(item.id)_approve" href="@Url.Action("Edit", "Afiliado", new { id = item.id })" class="btn btn-info btn-xs disabled">
+                                    <span class="glyphicon glyphicon-ok"></span>
                                 </a>
                             </td>
                         </tr>
@@ -114,7 +117,7 @@
                 </div>
             </div>
 
-            <script src="~/Scripts/jquery-2.1.1.min.js"></script>
+            <script src="~/Scripts/jquery-2.1.3.min.js"></script>
             <script>
                 $(document).ready(function () {
                     var rowId;
@@ -138,7 +141,8 @@
 
                         $('.table tbody tr').removeClass("active");
                         $(this).addClass("active");
-                        $("#" + rowId).removeClass("disabled");
+                        $("#" + rowId + "_edit").removeClass("disabled");
+                        $("#" + rowId + "_approve").removeClass("disabled");
 
                         $("#CrearPin").addClass("disabled"); 
                         $("#CambiarPin").addClass("disabled"); 

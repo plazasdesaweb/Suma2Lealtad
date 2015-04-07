@@ -9,15 +9,16 @@ namespace Suma2Lealtad.Modules
     /* Capa de Acceso a Servicios Web */
     public class WSL
     {
-        //servicios cards
+        //servicios Cards
         private const string WSL_CARDS_ADDCLIENT = "addclient/{numdoc}/{name}/{phone}/{address}";
+        private const string WSL_CARDS_ADDBATCH = "/addbatch/{numdoc}/{transcode}/{monto}/{factoracred}/{factorcanje}";
         private const string WSL_CARDS_GETCLIENT = "getclient/{numdoc}";
         private const string WSL_CARDS_GETBALANCE = "getbalance/{numdoc}";
         private const string WSL_CARDS_GETBATCH = "getbatch/{accounttype}/{numdoc}";
         private const string WSL_CARDS_CARD_PRINT = "card/print/{numdoc}";
         private const string WSL_CARDS_CARD_ACTIVE = "card/active/{numdoc}";
         private const string WSL_CARDS_CARD_INACTIVE = "card/inactive/{numdoc}";
-        //servicios web
+        //servicios WebPlazas
         private const string WSL_WEBPLAZAS_GETCLIENTBYNUMDOC = "getclientbynumdoc/{docnumber}";
         private const string WSL_WEBPLAZAS_UPDCLIENT = "updclient/{id}/{docnumber}/{nationality}/{name}/{name2}/{lastname1}/{lastname2}/{birthdate}/{gender}/{maritalstatus}/{occupation}/{phone1}/{phone2}/{phone3}/{email}/{type}";
 
@@ -67,6 +68,17 @@ namespace Suma2Lealtad.Modules
                 req = req.Replace("{name}", name);
                 req = req.Replace("{phone}", phone);
                 req = req.Replace("{address}", address);
+                return ConsumirServicioCards(req);
+            }
+
+            public static string addBatch(string numdoc, string monto, string transcodeacred = "318", string factoracred = "1", string factorcanje = "100")
+            {
+                string req = WSL_CARDS_ADDBATCH;
+                req = req.Replace("{numdoc}", numdoc);
+                req = req.Replace("{transcode}", transcodeacred);
+                req = req.Replace("{monto}", monto);
+                req = req.Replace("{factoracred}", factoracred);
+                req = req.Replace("{factorcanje}", factorcanje);
                 return ConsumirServicioCards(req);
             }
 
@@ -156,12 +168,12 @@ namespace Suma2Lealtad.Modules
                 req = req.Replace("{phone1}", record.phone1);
                 req = req.Replace("{phone2}", record.phone2 == null ? "NULO" : record.phone2);
                 req = req.Replace("{phone3}", record.phone3 == null ? "NULO" : record.phone3);
-                req = req.Replace("{email}", record.email);                                
-                req = req.Replace("{type}", record.type + "");                                               
+                req = req.Replace("{email}", record.email);
+                req = req.Replace("{type}", record.type + "");
                 return ConsumirServicioPlazasWeb(req);
             }
 
-        }                
+        }
 
     }
 }
