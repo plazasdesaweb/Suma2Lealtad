@@ -1,16 +1,14 @@
-﻿@{
+﻿@model Suma2Lealtad.Models.ViewModel 
+@{
     ViewBag.Title = "GenericView";
 }
-
 <div class="jumbotron">
     <div class="container">
-        <h3><b>Afiliado</b></h3>
-        <p>@ViewBag.Mensaje</p>
+        <h3><b>@Model.Title</b></h3>
+        <p>@Model.Message</p>
     </div>
+</div>
+<div class="col-md-12 col-btn">
+    <a class="btn btn-success btn-lg" href="@Url.Action(@Model.ActionName, @Model.ControllerName)">Continuar</a>
 </div>
 
-<div class="form-group">
-    <div class="col-md-12 col-btn">
-        <a class="btn btn-success btn-lg" href="@Url.Action("Filter", "Afiliado")">Continuar</a>
-    </div>
-</div>
