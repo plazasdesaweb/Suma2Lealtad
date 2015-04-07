@@ -1,0 +1,71 @@
+﻿@model Suma2Lealtad.Models.Afiliado
+
+@{
+    ViewBag.Title = "Acreditar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-push-2 col-md-8">
+
+            <div class="panel panel-default">
+
+                <div class="panel-heading clearfix panel-gradient">
+                    <h3 class="panel-title">Acreditar</h3>
+                </div>
+
+                <div class="panel-body">
+
+                    <table class="table table-striped custab">
+
+                        <form class="form-horizontal" role="form">
+
+                            <div class="form-group">
+
+                                <div class="editor-label col-md-4 control-label">
+                                    Cédula :
+                                </div>
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model.docnumber, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.docnumber)
+                                </div>
+
+                                <div class="editor-label col-md-4 control-label">
+                                    Monto :
+                                </div>
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model, new { @class = "form-control" })
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                    </table>
+
+                    <!-- buttons -->
+                    <div class="col-md-12 col-tabla-btn">
+                        <div class="pull-right">
+                            <input type="submit" class="btn btn-success btn-md" value="Guardar" />
+                        </div>
+                    </div>
+                    <!--// buttons -->
+
+                </div>
+                <!-- panel-body -->
+
+            </div>
+            <!-- panel -->
+
+        </div>
+        <!-- columns -->
+
+    </div>
+    <!-- row -->
+
+</div>
+<!-- container -->
+
