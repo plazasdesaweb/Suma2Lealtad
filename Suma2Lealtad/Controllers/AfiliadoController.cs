@@ -42,7 +42,7 @@ namespace Suma2Lealtad.Controllers
             if (afiliado == null)
             {
                 //pendiente
-                
+
                 // registro no encontrado en WebPlazas.
                 return RedirectToAction("GenericView", new { msg = "El Número del Documento no existe en el Modelo WebPlazas." });
                 //return RedirectToAction("GenericView");
@@ -78,7 +78,7 @@ namespace Suma2Lealtad.Controllers
             GenericModel.ActionName = "Filter";
             GenericModel.ControllerName = "Afiliado";
 
-            if ( msg != null)
+            if (msg != null)
             {
                 GenericModel.Message = msg;
             }
@@ -142,7 +142,7 @@ namespace Suma2Lealtad.Controllers
                 }
 
                 //PENDIENTE: SI FALLA ALGUNA DE LAS ACTIVIDADES. HAY QUE DESHACER LAS ACTIVIDADES ANTERIORES EXITOSAS.                
-                
+
                 return RedirectToAction("GenericView", new { idmensaje = 2 });
             }
             else
@@ -151,18 +151,10 @@ namespace Suma2Lealtad.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult Aprobar(string numdoc, string monto)
-        {
-            //metodo de repositorio que actualiza estatus y crea registro en cards
-            return View("GenericView");
-        }
-
         public ActionResult FilterReview()
         {
             return View();
         }
-
 
         public ActionResult Index(string numdoc)
         {
@@ -175,6 +167,14 @@ namespace Suma2Lealtad.Controllers
         {
             List<Afiliado> afiliado = rep.FindSuma(numdoc, name, email);
             return View(afiliado);
+        }
+
+        public ActionResult Aprobar(int id)
+        {
+            Afiliado afiliado = rep.FindSuma(id);
+            string docnumber = rep.Aprobar(afiliado);
+            List<Afiliado> afiliados = rep.FindSuma(docnumber,"","");
+            return View("Index",afiliados);
         }
 
         public ActionResult Edit(int id = 0)

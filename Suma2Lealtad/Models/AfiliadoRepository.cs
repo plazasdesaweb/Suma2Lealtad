@@ -616,7 +616,7 @@ namespace Suma2Lealtad.Models
                     //affiliate.creationuserid = (int)HttpContext.Current.Session["userid"];
                     affiliate.modifieduserid = (int)HttpContext.Current.Session["userid"];
                     affiliate.modifieddate = System.DateTime.Now;
-                    //affiliate.statusid = 1;
+                    affiliate.statusid = afiliado.statusid;
                     //affiliate.reasonsid = 1;
                     affiliate.twitter_account = afiliado.twitter_account;
                     affiliate.facebook_account = afiliado.facebook_account;
@@ -688,6 +688,19 @@ namespace Suma2Lealtad.Models
             string RespuestaCardsJson = WSL.Cards.addBatch(numdoc, monto);
             RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
             return RespuestaCards;
+        }
+
+        public string Aprobar (Afiliado afiliado)
+        {
+            RespuestaCards RespuestaCards = new RespuestaCards();
+            string RespuestaCardsJson = WSL.Cards.addClient(afiliado.docnumber, (afiliado.name + " " + afiliado.lastname1).ToUpper(), afiliado.phone1, "Plazas Baruta");
+            RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
+            //if (RespuestaCards.code == "0" || RespuestaCards.code == "7")
+            //{
+                afiliado.statusid = 2;
+                SaveChanges(afiliado);
+            //}
+            return afiliado.docnumber;
         }
 
     }
