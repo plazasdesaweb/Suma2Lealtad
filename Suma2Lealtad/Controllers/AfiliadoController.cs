@@ -42,7 +42,10 @@ namespace Suma2Lealtad.Controllers
             if (afiliado == null)
             {
                 //pendiente
-                return RedirectToAction("GenericView");
+                
+                // registro no encontrado en WebPlazas.
+                return RedirectToAction("GenericView", new { msg = "El Número del Documento no existe en el Modelo WebPlazas." });
+                //return RedirectToAction("GenericView");
             }
             else if (afiliado.clientid == 0 && afiliado != null)
             {
@@ -66,25 +69,42 @@ namespace Suma2Lealtad.Controllers
             }
         }
 
-        public ActionResult GenericView(int idmensaje = 0)
+        public ActionResult GenericView(int idmensaje = 0, string msg = null)
         {
-            if (idmensaje == 0)
+
+            ViewModel GenericModel = new ViewModel();
+
+            GenericModel.Title = "Afiliado";
+            GenericModel.ActionName = "Filter";
+            GenericModel.ControllerName = "Afiliado";
+
+            if ( msg != null)
             {
-                ViewBag.Mensaje = "Mensaje no establecido.";
+                GenericModel.Message = msg;
+            }
+            else if (idmensaje == 0)
+            {
+                //ViewBag.Mensaje = "Mensaje no establecido.";
+                GenericModel.Message = "Mensaje no establecido.";
             }
             else if (idmensaje == 1)
             {
-                ViewBag.Mensaje = "Ocurrió un error al subir el archivo al servidor. Operación cancelada.";
+                //ViewBag.Mensaje = "Ocurrió un error al subir el archivo al servidor. Operación cancelada.";
+                GenericModel.Message = "Ocurrió un error al subir el archivo al servidor. Operación cancelada.";
             }
             else if (idmensaje == 2)
             {
-                ViewBag.Mensaje = "Registro creado satisfactoriamente.";
+                //ViewBag.Mensaje = "Registro creado satisfactoriamente.";
+                GenericModel.Message = "Registro creado satisfactoriamente.";
             }
             else if (idmensaje == 3)
             {
-                ViewBag.Mensaje = "No se pudo crear el registro. Operación cancelada.";
+                //ViewBag.Mensaje = "No se pudo crear el registro. Operación cancelada.";
+                GenericModel.Message = "No se pudo crear el registro. Operación cancelada.";
             }
-            return View();
+            //return View();
+            return View(GenericModel);
+
         }
 
 
@@ -169,13 +189,14 @@ namespace Suma2Lealtad.Controllers
 
             if (!rep.SaveChanges(afiliado))
             {
-                return RedirectToAction("GenericView", "Afiliado");
+                return RedirectToAction("GenericView", new { msg = "Existen campos que son requeridos para procesar el formulario." });
                 //return RedirectToAction("FilterReview");
             }
 
             //Aqui debo llamar a los servicios de actualización
 
-            return RedirectToAction("FilterReview");
+            return RedirectToAction("GenericView", new { msg = "La información del afiliado ha sido actualizada satisfactoriamente." });
+            //return RedirectToAction("FilterReview");
             //return View(afiliado);
 
         }
