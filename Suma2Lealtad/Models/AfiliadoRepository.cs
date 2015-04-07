@@ -533,18 +533,18 @@ namespace Suma2Lealtad.Models
 
                     }
 
-                    var affiliateauditoria = new AffiliateAud()
-                    {
-                        id = AfilliateAudID(),
-                        affiliateid = affiliate.id,
-                        modifieduserid = (int)HttpContext.Current.Session["userid"],
-                        modifieddate = System.DateTime.Now,
-                        statusid = INITIAL_INTEGER_VALUE,
-                        reasonsid = INITIAL_INTEGER_VALUE,
-                        comments = affiliate.comments
-                    };
+                    //var affiliateauditoria = new AffiliateAud()
+                    //{
+                    //    id = AfilliateAudID(),
+                    //    affiliateid = affiliate.id,
+                    //    modifieduserid = (int)HttpContext.Current.Session["userid"],
+                    //    modifieddate = System.DateTime.Now,
+                    //    statusid = INITIAL_INTEGER_VALUE,
+                    //    reasonsid = INITIAL_INTEGER_VALUE,
+                    //    comments = affiliate.comments
+                    //};
 
-                    db.AffiliateAuds.Add(affiliateauditoria);
+                    //db.AffiliateAuds.Add(affiliateauditoria);
 
                     db.SaveChanges();
 

@@ -538,6 +538,8 @@
     <Content Include="Views\Afiliado\PinPadReiniciarPin.cshtml" />
     <Content Include="Views\Afiliado\PinPadCambiarPin.cshtml" />
     <Content Include="Views\Afiliado\ImpresoraImprimirTarjeta.cshtml" />
+    <Content Include="Views\Afiliado\SaldosMovimientos.cshtml" />
+    <Content Include="Views\Afiliado\Acreditar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
