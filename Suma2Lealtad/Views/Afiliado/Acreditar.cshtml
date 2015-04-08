@@ -19,40 +19,40 @@
 
                 <div class="panel-body">
 
-                    <table class="table table-striped custab">
+                    <form action="@Url.Action("Acreditar", "Afiliado")" name="form" method="post">
 
-                        <form class="form-horizontal" role="form">
+                        @*<table class="table table-striped custab">*@
 
-                            <div class="form-group">
+                        <div class="form-group">
 
-                                <div class="editor-label col-md-4 control-label">
-                                    Cédula :
-                                </div>
-                                <div class="editor-field col-md-8">
-                                    @Html.TextBoxFor(model => model.docnumber, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.docnumber)
-                                </div>
-
-                                <div class="editor-label col-md-4 control-label">
-                                    Monto :
-                                </div>
-                                <div class="editor-field col-md-8">
-                                    @Html.TextBoxFor(model => model, new { @class = "form-control" })
-                                </div>
-
+                            <div class="editor-label col-md-4 control-label">
+                                Cédula :
+                            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.docnumber, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.docnumber)
                             </div>
 
-                        </form>
+                            <div class="editor-label col-md-4 control-label">
+                                Monto :
+                            </div>
+                            <div class="editor-field col-md-8">
+                                @*@Html.TextBoxFor(model => model, new { @class = "form-control" })*@
+                                @Html.TextBox("Monto","", new { @class = "form-control" })
+                            </div>
 
-                    </table>
-
-                    <!-- buttons -->
-                    <div class="col-md-12 col-tabla-btn">
-                        <div class="pull-right">
-                            <input type="submit" class="btn btn-success btn-md" value="Guardar" />
                         </div>
-                    </div>
-                    <!--// buttons -->
+
+                        @*</table>*@
+
+                        <!-- buttons -->
+                        <div class="col-md-12 col-tabla-btn">
+                            <div class="pull-right">
+                                <input type="submit" class="btn btn-success btn-md" value="Guardar" />
+                            </div>
+                        </div>
+                        <!--// buttons -->
+                    </form>
 
                 </div>
                 <!-- panel-body -->

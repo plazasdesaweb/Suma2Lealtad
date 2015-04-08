@@ -22,86 +22,89 @@
 </style>
 
 <div class="container">
+    <form id="commentForm" method="post" action="@Url.Action("Index", "Afiliado")" class="form-horizontal">
 
-    <div class="row">
+        <div class="row">
 
-        <div class="col-md-push-1 col-md-10">
+            <div class="col-md-push-1 col-md-10">
 
-            <div class="panel panel-default">
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix panel-gradient">                        
+                        @*<h3 class="panel-title">Afiliado  @Model.DocId / Saldos <a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.DocId })" class="btn btn-success btn-md">Regresar</a></h3>*@
+                        <h3 class="panel-title">Afiliado  @Model.DocId / Saldos
+                            <input type="submit" class="btn btn-success btn-md" value="Regresar" style="padding-right: 15px; padding-left: 15px; margin-left: 0px;" /></h3>
+                    </div>
+                    <div class="panel-body">
 
-                <div class="panel-heading clearfix panel-gradient">
-                    <h3 class="panel-title">Afiliado  @Model.DocId / Saldos <a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.DocId })" class="btn btn-success btn-md">Regresar</a></h3>
+                        @*<table class="table table-striped custab">*@
+                        <table id="cuentas" class="table table-hover">
+
+                            <thead>
+                                <tr>
+                                    <th>accountname
+                                    </th>
+                                    <th>accountnumber
+                                    </th>
+                                    <th>accounttype
+                                    </th>
+                                    <th>cardstatus
+                                    </th>
+                                    <th>numdoc
+                                    </th>
+                                    <th>pan
+                                    </th>
+                                    <th>saldo
+                                    </th>
+                                    <th class="text-center"></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var item in Model.Saldos)
+                                {                            
+                                    <tr data-row-key="@item.accounttype">
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.accountname)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.accountnumber)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.accounttype)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.cardstatus)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.numdoc)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.pan)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.saldo)
+                                        </td>
+                                    </tr>                            
+                                }
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <!-- panel-body -->
+
                 </div>
-
-                <div class="panel-body">
-
-                    @*<table class="table table-striped custab">*@
-                    <table id="cuentas" class="table table-hover">
-
-                        <thead>
-                            <tr>
-                                <th>accountname
-                                </th>
-                                <th>accountnumber
-                                </th>
-                                <th>accounttype
-                                </th>
-                                <th>cardstatus
-                                </th>
-                                <th>numdoc
-                                </th>
-                                <th>pan
-                                </th>
-                                <th>saldo
-                                </th>
-                                <th class="text-center"></th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-
-                            @foreach (var item in Model.Saldos)
-                            {                            
-                                <tr data-row-key="@item.accounttype">
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.accountname)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.accountnumber)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.accounttype)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.cardstatus)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.numdoc)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.pan)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.saldo)
-                                    </td>
-                                </tr>                            
-                            }
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-                <!-- panel-body -->
+                <!-- panel -->
 
             </div>
-            <!-- panel -->
+            <!-- columns -->
 
         </div>
-        <!-- columns -->
-
-    </div>
-    <!-- row -->
+        <!-- row -->
+        @Html.TextBox("numdoc", @Model.DocId, new { style = "visibility:hidden", @class = "form-control" })
+    </form>
 
 </div>
 <!-- container -->

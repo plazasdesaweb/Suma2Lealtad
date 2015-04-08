@@ -88,9 +88,14 @@
                                 <a id="@(item.id)_edit" href="@Url.Action("Edit", "Afiliado", new { id = item.id })" class="btn btn-info btn-xs" >
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </a>
-                                <a id="@(item.id)_approve" href="@Url.Action("Aprobar", "Afiliado", new { id = item.id })" class="btn btn-info btn-xs" >
-                                    <span class="glyphicon glyphicon-ok"></span>
-                                </a>
+                                @{
+                        if (item.estatus != "Activa")
+                        {
+                                    <a id="@(item.id)_approve" href="@Url.Action("Aprobar", "Afiliado", new { id = item.id })" class="btn btn-info btn-xs" >
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    </a>
+                        }
+                                }
                             </td>
                         </tr>
                     }
@@ -143,21 +148,27 @@
                         $(this).addClass("active");
                         //$("#" + rowId + "_edit").removeClass("disabled");
                         //$("#" + rowId + "_approve").removeClass("disabled");
-                        //$("#" + rowId + "_edit").
-                        //$("#" + rowId + "_approve").show();
 
-                        $("#CrearPin").addClass("disabled"); 
-                        $("#CambiarPin").addClass("disabled"); 
-                        $("#ReiniciarPin").addClass("disabled"); 
-                        $("#ImprimirTarjeta").addClass("disabled"); 
-                        $("#BloquearTarjeta").addClass("disabled"); 
-                        $("#SuspenderTarjeta").addClass("disabled"); 
-                        $("#SaldosMovimientos").addClass("disabled"); 
-                        $("#Acreditar").addClass("disabled"); 
+                        $("#CrearPin").addClass("disabled");
+                        $("#CambiarPin").addClass("disabled");
+                        $("#ReiniciarPin").addClass("disabled");
+                        $("#ImprimirTarjeta").addClass("disabled");
+                        $("#BloquearTarjeta").addClass("disabled");
+                        $("#SuspenderTarjeta").addClass("disabled");
+                        $("#SaldosMovimientos").addClass("disabled");
+                        $("#Acreditar").addClass("disabled");
 
                         //Verificar combinaciones de estatus de afiliacion y tarjeta
                         if (statusAfiliacion == "Nueva" && statusTarjeta == "Nueva") {
                             $("#ImprimirTarjeta").removeClass("disabled");
+                            $("#SaldosMovimientos").removeClass("disabled");
+                            $("#Acreditar").removeClass("disabled");
+                        }
+                        else if (statusAfiliacion == "Activa" && statusTarjeta == "Nueva") {
+                            $("#CrearPin").removeClass("disabled");
+                            $("#ImprimirTarjeta").removeClass("disabled");
+                            $("#BloquearTarjeta").removeClass("disabled");
+                            $("#SuspenderTarjeta").removeClass("disabled");
                             $("#SaldosMovimientos").removeClass("disabled");
                             $("#Acreditar").removeClass("disabled");
                         }
@@ -175,7 +186,7 @@
                             $("#SuspenderTarjeta").removeClass("disabled");
                             $("#SaldosMovimientos").removeClass("disabled");
                             $("#Acreditar").removeClass("disabled");
-                        }                       
+                        }
                     });
 
                     $("#CrearPin").click(function () {
@@ -237,12 +248,11 @@
                     });
 
                     $("#Acreditar").click(function () {
-                        alert("Acreditar");
-                        @*var href = '@Url.Content("~/{controller}/{action}/{params}")'
+                        var href = '@Url.Content("~/{controller}/{action}/{params}")'
                         href = href.replace("{controller}", "Afiliado");
                         href = href.replace("{action}", "Acreditar");
                         href = href.replace("{params}", rowId);
-                        window.location.href = href;*@
+                        window.location.href = href;
                     });
                 });
             </script>

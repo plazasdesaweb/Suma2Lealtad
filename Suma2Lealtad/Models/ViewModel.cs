@@ -11,5 +11,6 @@ namespace Suma2Lealtad.Models
         public string Message { get; set; }
         public string ActionName { get; set; }
         public string ControllerName { get; set; }
+        public string RouteValues { get; set; }
     }
 }

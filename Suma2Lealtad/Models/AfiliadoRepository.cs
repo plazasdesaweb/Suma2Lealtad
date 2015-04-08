@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Suma2Lealtad.Modules;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,11 +9,10 @@ namespace Suma2Lealtad.Models
 {
     public class AfiliadoRepository
     {
-
         private int INITIAL_INTEGER_VALUE = 1;
-        private string INITIAL_STRING_VALUE = "";
+        //private string INITIAL_STRING_VALUE = "";
 
-        public AfiliadoRepository() { }
+        //public AfiliadoRepository() { }
 
         public class customerInterest
         {
@@ -70,57 +70,95 @@ namespace Suma2Lealtad.Models
         #region sequenceID
         private int AfilliatesID()
         {
-
             using (LealtadEntities db = new LealtadEntities())
             {
                 if (db.Affiliates.Count() == 0)
                     return 1;
                 return (db.Affiliates.Max(a => a.id) + 1);
             }
-
         }
 
         private int AfilliateAudID()
         {
-
             using (LealtadEntities db = new LealtadEntities())
             {
                 if (db.AffiliateAuds.Count() == 0)
                     return 1;
                 return (db.AffiliateAuds.Max(a => a.id) + 1);
             }
-
         }
         #endregion
-
 
         public Afiliado Find(string numdoc)
         {
             using (LealtadEntities db = new LealtadEntities())
             {
-                //Primero se buscan los datos de CLIENTE en WebPlazas
-                //WSL.WebPlazas.getClientByNumDoc
-                //Segundo se buscan los datos de AFILIADO en SumaPlazas
-                //Affiliado
-                //CLIENTE
-                //Status
-                //CustomerInterest
-                //Photos_Affiliate, FILEYSTEM ~/Picture/@filename@.jpg                
-                //Tercero se buscan los datos de Tarjeta de AFILIADO en Cards
-                //WSL.Cards.getClient
-                //Tarjeta.ConstruirTrackI
-                //Tarjeta.ConstruirTrackII
-                
-                string ClienteWebPlazasJson = WSL.WebPlazas.getClientByNumDoc(numdoc);
-                ClienteWebPlazas ClienteWebPlazas = (ClienteWebPlazas)JsonConvert.DeserializeObject<ClienteWebPlazas>(ClienteWebPlazasJson);
-
-                Afiliado record = (from a in db.Affiliates
-                                   where a.docnumber.Equals(numdoc)
-                                   select new Afiliado()
-                                   {
-                                       //ENTIDAD Affiliate 
-                                       id = a.id,
-                                   }).SingleOrDefault();
+                //Primero se buscan los datos de AFILIADO en SumaPlazas
+                //ENTIDAD Affiliado
+                //ENTIDAD CLIENTE
+                //ENTIDAD Status
+                //ENTIDAD CustomerInterest
+                //ENTIDAD Photos_Affiliate, FILEYSTEM ~/Picture/@filename@.jpg                
+                Afiliado afiliado = (from a in db.Affiliates
+                                     join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                     join s in db.Status on a.statusid equals s.id
+                                     where a.docnumber.Equals(numdoc)
+                                     select new Afiliado()
+                                     {
+                                         //ENTIDAD Affiliate 
+                                         id = a.id == null ? 0 : (int)a.id,
+                                         customerid = a.customerid, // (No se a que corresponde)                	 
+                                         docnumber = a.docnumber, // +<*    
+                                         clientid = a.clientid == null ? 0 : (int)a.clientid, // +(corresponde al id de WEBPLAZAS)*
+                                         storeid = a.storeid,
+                                         channelid = a.channelid,
+                                         typeid = a.typeid,
+                                         typedelivery = a.typedelivery,
+                                         storeiddelivery = a.storeiddelivery == null ? 0 : (int)a.storeiddelivery,
+                                         statusid = a.statusid,
+                                         reasonsid = a.reasonsid == null ? 0 : (int)a.reasonsid,
+                                         twitter_account = a.twitter_account, // +
+                                         facebook_account = a.facebook_account, // +
+                                         instagram_account = a.instagram_account, // +
+                                         comments = a.comments,
+                                         //ENTIDAD CLIENTE
+                                         cod_estado = c.COD_ESTADO,
+                                         cod_ciudad = c.COD_CIUDAD,
+                                         cod_municipio = c.COD_MUNICIPIO,
+                                         cod_parroquia = c.COD_PARROQUIA,
+                                         cod_urbanizacion = c.COD_URBANIZACION,
+                                         //ENTIDAD Status
+                                         estatus = s.name,
+                                     }).SingleOrDefault();
+                if (afiliado == null)
+                {
+                    afiliado = new Afiliado();
+                    afiliado.id = 0;
+                    afiliado.docnumber = numdoc;
+                }
+                //ENTIDAD CustomerInterest
+                afiliado.Intereses = chargeInterestList(afiliado.id);
+                //ENTIDAD Photos_Affiliate, FILEYSTEM ~/Picture/@filename@.jpg
+                afiliado.picture = AppModule.GetPathPicture().Replace("@filename@", afiliado.docnumber);
+                //Segundo se buscan los datos de CLIENTE en WebPlazas
+                //SERVICIO WSL.WebPlazas.getClientByNumDoc                
+                string clienteWebPlazasJson = WSL.WebPlazas.getClientByNumDoc(numdoc);
+                ClienteWebPlazas clienteWebPlazas = (ClienteWebPlazas)JsonConvert.DeserializeObject<ClienteWebPlazas>(clienteWebPlazasJson);
+                afiliado.nationality = clienteWebPlazas.nationality; // +*
+                afiliado.name = clienteWebPlazas.name; // +<*
+                afiliado.name2 = clienteWebPlazas.name2; // +<*
+                afiliado.lastname1 = clienteWebPlazas.lastname1; // +<*
+                afiliado.lastname2 = clienteWebPlazas.lastname2; // +<*
+                afiliado.birthdate = clienteWebPlazas.birthdate; // +*
+                afiliado.gender = clienteWebPlazas.gender; //+*
+                afiliado.clientid = clienteWebPlazas.id; //
+                afiliado.maritalstatus = clienteWebPlazas.maritalstatus; // +*
+                afiliado.occupation = clienteWebPlazas.occupation; // +*
+                afiliado.phone1 = clienteWebPlazas.phone1; // +<*
+                afiliado.phone2 = clienteWebPlazas.phone2; // +*
+                afiliado.phone3 = clienteWebPlazas.phone3; // +*
+                afiliado.email = clienteWebPlazas.email; // +*
+                afiliado.type = clienteWebPlazas.type; // +*            
 
                 //Los estados actuales para una persona son:
                 //NOCLIENTE            (no registrado en WEBPLAZAS)
@@ -135,443 +173,376 @@ namespace Suma2Lealtad.Models
                 //CLIENTE/NOAFILIADO   -> acción: editar registro de CLIENTE y crear afiliación de AFILIADO => CREAR AFILIACION (retornar vista Create)
                 //CLIENTE/AFILIADO     -> acción: editar registro de CLIENTE y editar afiliación de AFILIADO => REVISAR AFILIACION (Redirecciónar a acción Index ó Edit)
 
-                if (ClienteWebPlazas == null && record == null)
+                if (afiliado.clientid == 0 && afiliado.id == 0)
                 {
+                    //NOCLIENTE/NOAFILIADO
                 }
-                else if (ClienteWebPlazas == null && record != null)
+                else if (afiliado.clientid == 0 && afiliado.id != 0)
                 {
-                    record.clientid = 0;
+                    //NOCLIENTE/AFILIADO
                 }
-                else if (ClienteWebPlazas != null && record == null)
+                else if (afiliado.clientid != 0 && afiliado.id == 0)
                 {
-                    record = new Afiliado();
-                    record.docnumber = ClienteWebPlazas.docnumber; // +<*   
-                    record.clientid = ClienteWebPlazas.id; // CORRESPONDE AL ID DE CLIENTE EN WEBPLAZAS
-                    record.nationality = ClienteWebPlazas.nationality; // +*
-                    record.name = ClienteWebPlazas.name; // +<*
-                    record.name2 = ClienteWebPlazas.name2; // +<*
-                    record.lastname1 = ClienteWebPlazas.lastname1; // +<*
-                    record.lastname2 = ClienteWebPlazas.lastname2; // +<*
-                    record.birthdate = ClienteWebPlazas.birthdate; // +*
-                    record.gender = ClienteWebPlazas.gender; //+*
-                    record.maritalstatus = ClienteWebPlazas.maritalstatus; // +*
-                    record.occupation = ClienteWebPlazas.occupation; // +*
-                    record.phone1 = ClienteWebPlazas.phone1; // +<*
-                    record.phone2 = ClienteWebPlazas.phone2; // +*
-                    record.phone3 = ClienteWebPlazas.phone3; // +*
-                    record.email = ClienteWebPlazas.email; // +*
-                    record.type = ClienteWebPlazas.type; // +*
-
-                    //ENTIDAD CustomerInterest
-                    record.Intereses = chargeInterestList(record.id);
+                    //CLIENTE/NOAFILIADO                    
                 }
-                else if (ClienteWebPlazas != null && record != null)
+                else if (afiliado.clientid != 0 && afiliado.id != 0)
                 {
-                    record = (from c in db.CLIENTES
-                              join a in db.Affiliates on c.NRO_DOCUMENTO
-                              equals a.docnumber
-                              join s in db.Status on a.statusid
-                              equals s.id
-                              where a.id == record.id
-                              select new Afiliado()
-                              {
-                                  //ENTIDAD Affiliate 
-                                  id = a.id,
-                                  customerid = a.customerid, // (No se a que corresponde)                	 
-                                  docnumber = a.docnumber, // +<*    
-                                  clientid = a.clientid, // +(corresponde al id de WEBPLAZAS)*
-                                  storeid = a.storeid,
-                                  channelid = a.channelid,
-                                  typeid = a.typeid,
-                                  typedelivery = a.typedelivery,
-                                  storeiddelivery = a.storeiddelivery == null ? 0 : (int)a.storeiddelivery,
-                                  statusid = a.statusid,
-                                  reasonsid = a.reasonsid == null ? 0 : (int)a.reasonsid,
-                                  twitter_account = a.twitter_account, // +
-                                  facebook_account = a.facebook_account, // +
-                                  instagram_account = a.instagram_account, // +
-                                  comments = a.comments,
-                                  //ENTIDAD CLIENTE
-                                  //name = c.NOMBRE_CLIENTE1,
-                                  //name2 = c.NOMBRE_CLIENTE2,
-                                  //lastname1 = c.APELLIDO_CLIENTE1,
-                                  //lastname2 = c.APELLIDO_CLIENTE2,
-                                  //birthdate = c.FECHA_NACIMIENTO,
-                                  //gender = c.SEXO,
-                                  //maritalstatus = c.EDO_CIVIL,
-                                  //occupation = c.OCUPACION,
-                                  //phone1 = c.TELEFONO_HAB,
-                                  //phone2 = c.TELEFONO_OFIC,
-                                  //phone3 = c.TELEFONO_CEL,
-                                  //email = c.E_MAIL,
-                                  cod_estado = c.COD_ESTADO,
-                                  cod_ciudad = c.COD_CIUDAD,
-                                  cod_municipio = c.COD_MUNICIPIO,
-                                  cod_parroquia = c.COD_PARROQUIA,
-                                  cod_urbanizacion = c.COD_URBANIZACION,
-                                  //ENTIDAD Status
-                                  estatus = s.name
-                              }).Single();
-                    
-                    //WSL.WebPlazas.getClientByNumDoc
-                    record.nationality = ClienteWebPlazas.nationality; // +*
-                    record.name = ClienteWebPlazas.name; // +<*
-                    record.name2 = ClienteWebPlazas.name2; // +<*
-                    record.lastname1 = ClienteWebPlazas.lastname1; // +<*
-                    record.lastname2 = ClienteWebPlazas.lastname2; // +<*
-                    record.birthdate = ClienteWebPlazas.birthdate; // +*
-                    record.gender = ClienteWebPlazas.gender; //+*
-                    record.maritalstatus = ClienteWebPlazas.maritalstatus; // +*
-                    record.occupation = ClienteWebPlazas.occupation; // +*
-                    record.phone1 = ClienteWebPlazas.phone1; // +<*
-                    record.phone2 = ClienteWebPlazas.phone2; // +*
-                    record.phone3 = ClienteWebPlazas.phone3; // +*
-                    record.email = ClienteWebPlazas.email; // +*
-                    record.type = ClienteWebPlazas.type; // +*
-
-                    //ENTIDAD CustomerInterest
-                    record.Intereses = chargeInterestList(record.id);
-
-                    //ENTIDAD Photos_Affiliate, FILEYSTEM ~/Picture/@filename@.jpg
-                    record.picture = AppModule.GetPathPicture().Replace("@filename@", record.docnumber);
-
+                    //CLIENTE/AFILIADO
+                    //Tercero se buscan los datos de Tarjeta de AFILIADO en Cards
                     //SERVICIO WSL.Cards.getClient !
-                    string ClienteCardsJson = WSL.Cards.getClient(record.docnumber.Substring(2));
-                    ClienteCards ClienteCards = (ClienteCards)JsonConvert.DeserializeObject<IEnumerable<ClienteCards>>(ClienteCardsJson).FirstOrDefault();
-                    record.pan = ClienteCards.pan; // !
-                    record.printed = ClienteCards.printed; // !
-                    record.estatustarjeta = ClienteCards.tarjeta; // !
-
-                    //METODO Tarjeta.ConstruirTrackI
-                    record.trackI = Tarjeta.ConstruirTrackI(record.pan);
-
-                    //METODO Tarjeta.ConstruirTrackII
-                    record.trackII = Tarjeta.ConstruirTrackII(record.pan);
+                    string clienteCardsJson = WSL.Cards.getClient(afiliado.docnumber.Substring(2));
+                    ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<IEnumerable<ClienteCards>>(clienteCardsJson).FirstOrDefault();
+                    afiliado.pan = clienteCards.pan; // !
+                    afiliado.printed = clienteCards.printed; // !
+                    afiliado.estatustarjeta = clienteCards.tarjeta; // !
                 }
-                return record;
+                return afiliado;
             }
         }
 
-        // 
-        // FindSuma : Buscar el registro del Afiliado en el Modelo SumaLealtad.
-
-
-        public Afiliado FindSuma(int id = 0)
+        public Afiliado Find(int id)
         {
             using (LealtadEntities db = new LealtadEntities())
             {
-                //Primero se crea el objeto record de tipo Afiliado, y se llena a partir de varios origenes de datos en el siguiente orden 
-                //Affiliado
-                //CLIENTE
-                //Status
-                //CustomerInterest
-                //Photos_Affiliate, FILEYSTEM ~/Picture/@filename@.jpg
-                //WSL.WebPlazas.getClientByNumDoc
-                //WSL.Cards.getClient
-                //Tarjeta.ConstruirTrackI
-                //Tarjeta.ConstruirTrackII
-
-                Afiliado record = (from c in db.CLIENTES
-                                   join a in db.Affiliates on c.NRO_DOCUMENTO
-                                   equals a.docnumber
-                                   join s in db.Status on a.statusid
-                                   equals s.id
-                                   where a.id == id
-                                   select new Afiliado()
-                                   {
-                                       //id = a.id,
-                                       //customerid = a.customerid,
-                                       //docnumber = c.NRO_DOCUMENTO,
-                                       //clientid = a.clientid,
-                                       //typeid = a.typeid,
-                                       //nationality = c.NACIONALIDAD,
-                                       //name = c.NOMBRE_CLIENTE1,
-                                       //name2 = c.NOMBRE_CLIENTE2,
-                                       //lastname1 = c.APELLIDO_CLIENTE1,
-                                       //lastname2 = c.APELLIDO_CLIENTE2,
-                                       //birthdate = c.FECHA_NACIMIENTO,
-                                       //gender = c.SEXO,
-                                       //maritalstatus = c.EDO_CIVIL,
-                                       //occupation = c.OCUPACION,
-                                       //phone1 = c.TELEFONO_HAB,
-                                       //phone2 = c.TELEFONO_OFIC,
-                                       //phone3 = c.TELEFONO_CEL,
-                                       //email = c.E_MAIL,
-                                       //storeiddelivery = (int) c.COD_SUCURSAL,
-                                       //cod_estado = c.COD_ESTADO,
-                                       //cod_ciudad = c.COD_CIUDAD,
-                                       //cod_municipio = c.COD_MUNICIPIO,
-                                       //cod_parroquia = c.COD_PARROQUIA,
-                                       //cod_urbanizacion = c.COD_URBANIZACION,
-                                       //facebook_account = a.facebook_account,
-                                       //twitter_account = a.twitter_account,
-                                       //instagram_account = a.instagram_account,
-                                       //channelid = a.channelid,
-                                       //typedelivery = a.typedelivery,
-                                       //comments = a.comments
-
-                                       //ENTIDAD Affiliate 
-                                       id = a.id,
-                                       customerid = a.customerid, // (No se a que corresponde)                	 
-                                       docnumber = a.docnumber, // +<*    
-                                       clientid = a.clientid, // +(corresponde al id de WEBPLAZAS)*
-                                       storeid = a.storeid,
-                                       channelid = a.channelid,
-                                       typeid = a.typeid,
-                                       typedelivery = a.typedelivery,
-                                       storeiddelivery = a.storeiddelivery == null ? 0 : (int)a.storeiddelivery,
-                                       statusid = a.statusid,
-                                       reasonsid = a.reasonsid == null ? 0 : (int)a.reasonsid,
-                                       twitter_account = a.twitter_account, // +
-                                       facebook_account = a.facebook_account, // +
-                                       instagram_account = a.instagram_account, // +
-                                       comments = a.comments,
-                                       //ENTIDAD CLIENTE
-                                       name = c.NOMBRE_CLIENTE1,
-                                       name2 = c.NOMBRE_CLIENTE2,
-                                       lastname1 = c.APELLIDO_CLIENTE1,
-                                       lastname2 = c.APELLIDO_CLIENTE2,
-                                       birthdate = c.FECHA_NACIMIENTO,
-                                       gender = c.SEXO,
-                                       maritalstatus = c.EDO_CIVIL,
-                                       occupation = c.OCUPACION,
-                                       phone1 = c.TELEFONO_HAB,
-                                       phone2 = c.TELEFONO_OFIC,
-                                       phone3 = c.TELEFONO_CEL,
-                                       email = c.E_MAIL,
-                                       cod_estado = c.COD_ESTADO,
-                                       cod_ciudad = c.COD_CIUDAD,
-                                       cod_municipio = c.COD_MUNICIPIO,
-                                       cod_parroquia = c.COD_PARROQUIA,
-                                       cod_urbanizacion = c.COD_URBANIZACION,
-                                       //ENTIDAD Status
-                                       estatus = s.name
-                                   }).Single();
-                if (record != null)
+                //Primero se buscan los datos de AFILIADO en SumaPlazas
+                //ENTIDAD Affiliado
+                //ENTIDAD CLIENTE
+                //ENTIDAD Status
+                //ENTIDAD CustomerInterest
+                //ENTIDAD Photos_Affiliate, FILEYSTEM ~/Picture/@filename@.jpg                
+                Afiliado afiliado = (from a in db.Affiliates
+                                     join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                     join s in db.Status on a.statusid equals s.id
+                                     where a.id.Equals(id)
+                                     select new Afiliado()
+                                     {
+                                         //ENTIDAD Affiliate 
+                                         id = a.id == null ? 0 : (int)a.id,
+                                         customerid = a.customerid, // (No se a que corresponde)                	 
+                                         docnumber = a.docnumber, // +<*    
+                                         clientid = a.clientid == null ? 0 : (int)a.clientid, // +(corresponde al id de WEBPLAZAS)*
+                                         storeid = a.storeid,
+                                         channelid = a.channelid,
+                                         typeid = a.typeid,
+                                         typedelivery = a.typedelivery,
+                                         storeiddelivery = a.storeiddelivery == null ? 0 : (int)a.storeiddelivery,
+                                         statusid = a.statusid,
+                                         reasonsid = a.reasonsid == null ? 0 : (int)a.reasonsid,
+                                         twitter_account = a.twitter_account, // +
+                                         facebook_account = a.facebook_account, // +
+                                         instagram_account = a.instagram_account, // +
+                                         comments = a.comments,
+                                         //ENTIDAD CLIENTE
+                                         cod_estado = c.COD_ESTADO,
+                                         cod_ciudad = c.COD_CIUDAD,
+                                         cod_municipio = c.COD_MUNICIPIO,
+                                         cod_parroquia = c.COD_PARROQUIA,
+                                         cod_urbanizacion = c.COD_URBANIZACION,
+                                         //ENTIDAD Status
+                                         estatus = s.name,
+                                     }).Single();
+                if (afiliado != null)
                 {
                     //ENTIDAD CustomerInterest
-                    record.Intereses = chargeInterestList(record.id);
-
+                    afiliado.Intereses = chargeInterestList(afiliado.id);
                     //ENTIDAD Photos_Affiliate, FILEYSTEM ~/Picture/@filename@.jpg
-                    record.picture = AppModule.GetPathPicture().Replace("@filename@", record.docnumber);
-
-                    //SERVICIO WSL.WebPlazas.getClientByNumDoc // +
-                    string ClienteWebPlazasJson = WSL.WebPlazas.getClientByNumDoc(record.docnumber);
-                    ClienteWebPlazas ClienteWebPlazas = (ClienteWebPlazas)JsonConvert.DeserializeObject<ClienteWebPlazas>(ClienteWebPlazasJson);
-                    record.nationality = ClienteWebPlazas.nationality; // +*
-                    //record.name = ClienteWebPlazas.name; // +<*
-                    //record.name2 = ClienteWebPlazas.name2; // +<*
-                    //record.lastname1 = ClienteWebPlazas.lastname1; // +<*
-                    //record.lastname2 = ClienteWebPlazas.lastname2; // +<*
-                    //record.birthdate = ClienteWebPlazas.birthdate; // +*
-                    //record.gender = ClienteWebPlazas.gender; //+*
-                    //record.maritalstatus = ClienteWebPlazas.maritalstatus; // +*
-                    //record.occupation = ClienteWebPlazas.occupation; // +*
-                    //record.phone1 = ClienteWebPlazas.phone1; // +<*
-                    //record.phone2 = ClienteWebPlazas.phone2; // +*
-                    //record.phone3 = ClienteWebPlazas.phone3; // +*
-                    //record.email = ClienteWebPlazas.email; // +*
-                    record.type = ClienteWebPlazas.type; // +*
-
-                    //SERVICIO WSL.Cards.getClient !
-                    string ClienteCardsJson = WSL.Cards.getClient(record.docnumber.Substring(2));
-                    ClienteCards ClienteCards = (ClienteCards)JsonConvert.DeserializeObject<IEnumerable<ClienteCards>>(ClienteCardsJson).FirstOrDefault();
-                    record.pan = ClienteCards.pan; // !
-                    record.printed = ClienteCards.printed; // !
-                    record.estatustarjeta = ClienteCards.tarjeta; // !
-
-                    //METODO Tarjeta.ConstruirTrackI
-                    record.trackI = Tarjeta.ConstruirTrackI(record.pan);
-
-                    //METODO Tarjeta.ConstruirTrackII
-                    record.trackII = Tarjeta.ConstruirTrackII(record.pan);
+                    afiliado.picture = AppModule.GetPathPicture().Replace("@filename@", afiliado.docnumber);
                 }
                 else
                 {
-                    //Excepción: No existe afiliado con ese id
+                    afiliado = new Afiliado();
+                    afiliado.id = 0;
+                    afiliado.docnumber = "";
                 }
-                return record;
+                //Segundo se buscan los datos de CLIENTE en WebPlazas
+                //SERVICIO WSL.WebPlazas.getClientByNumDoc                
+                string clienteWebPlazasJson = WSL.WebPlazas.getClientByNumDoc(afiliado.docnumber);
+                ClienteWebPlazas clienteWebPlazas = (ClienteWebPlazas)JsonConvert.DeserializeObject<ClienteWebPlazas>(clienteWebPlazasJson);
+                afiliado.nationality = clienteWebPlazas.nationality; // +*
+                afiliado.name = clienteWebPlazas.name; // +<*
+                afiliado.name2 = clienteWebPlazas.name2; // +<*
+                afiliado.lastname1 = clienteWebPlazas.lastname1; // +<*
+                afiliado.lastname2 = clienteWebPlazas.lastname2; // +<*
+                afiliado.birthdate = clienteWebPlazas.birthdate; // +*
+                afiliado.gender = clienteWebPlazas.gender; //+*
+                afiliado.clientid = clienteWebPlazas.id; //
+                afiliado.maritalstatus = clienteWebPlazas.maritalstatus; // +*
+                afiliado.occupation = clienteWebPlazas.occupation; // +*
+                afiliado.phone1 = clienteWebPlazas.phone1; // +<*
+                afiliado.phone2 = clienteWebPlazas.phone2; // +*
+                afiliado.phone3 = clienteWebPlazas.phone3; // +*
+                afiliado.email = clienteWebPlazas.email; // +*
+                afiliado.type = clienteWebPlazas.type; // +*             
+
+                //Los estados actuales para una persona son:
+                //NOCLIENTE            (no registrado en WEBPLAZAS)
+                //NOAFILIADO           (no afiliado en SUMAPLAZAS)
+                //CLIENTE              (registrado en WEBPLAZAS)
+                //AFILIADO             (afiliado en SUMAPLAZAS)
+                //El estado deseado es:
+                //AFILIADO/CLIENTE     (registrado en WEBPLAZAS y afiliado en SUMAPLAZAS) 
+                //Existen 4 resultados posibles para esta búsqueda
+                //NOCLIENTE/NOAFILIADO -> por definir acción para crear registro de CLIENTE y crear afiliación de AFILIADO => Redireccionar a GenericView con mensaje descriptivo
+                //NOCLIENTE/AFILIADO   -> por definir acción para crear registro de CLIENTE => Redireccionar a GenericView con mensaje descriptivo
+                //CLIENTE/NOAFILIADO   -> acción: editar registro de CLIENTE y crear afiliación de AFILIADO => CREAR AFILIACION (retornar vista Create)
+                //CLIENTE/AFILIADO     -> acción: editar registro de CLIENTE y editar afiliación de AFILIADO => REVISAR AFILIACION (Redirecciónar a acción Index ó Edit)
+
+                if (afiliado.clientid == 0 && afiliado.id == 0)
+                {
+                    //NOCLIENTE/NOAFILIADO
+                }
+                else if (afiliado.clientid == 0 && afiliado.id != 0)
+                {
+                    //NOCLIENTE/AFILIADO
+                }
+                else if (afiliado.clientid != 0 && afiliado.id == 0)
+                {
+                    //CLIENTE/NOAFILIADO                    
+                }
+                else if (afiliado.clientid != 0 && afiliado.id != 0)
+                {
+                    //CLIENTE/AFILIADO
+                    //Tercero se buscan los datos de Tarjeta de AFILIADO en Cards
+                    //SERVICIO WSL.Cards.getClient !
+                    string clienteCardsJson = WSL.Cards.getClient(afiliado.docnumber.Substring(2));
+                    ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<IEnumerable<ClienteCards>>(clienteCardsJson).FirstOrDefault();
+                    afiliado.pan = clienteCards.pan; // !
+                    afiliado.printed = clienteCards.printed; // !
+                    afiliado.estatustarjeta = clienteCards.tarjeta; // !
+                }
+                return afiliado;
             }
         }
 
-
-        public List<Afiliado> FindSuma(string numdoc, string name, string email)
+        public List<Afiliado> Find(string numdoc, string name = null, string email = null)
         {
-            if (name == "")
-                name = null;
-            if (email == "")
-                email = null;
             using (LealtadEntities db = new LealtadEntities())
             {
-                List<Afiliado> records = (from c in db.CLIENTES
-                                          join a in db.Affiliates on c.NRO_DOCUMENTO
-                                          equals a.docnumber
-                                          join s in db.Status on a.statusid
-                                          equals s.id
-                                          where c.NRO_DOCUMENTO.Equals(numdoc) || c.E_MAIL == email || c.NOMBRE_CLIENTE1.Contains(name)
-                                          select new Afiliado()
-                                          {
-                                              id = a.id,
-                                              docnumber = a.docnumber,
-                                              name = c.NOMBRE_CLIENTE1 + " " + c.APELLIDO_CLIENTE1,
-                                              name2 = c.NOMBRE_CLIENTE2,
-                                              lastname1 = c.APELLIDO_CLIENTE1,
-                                              lastname2 = c.APELLIDO_CLIENTE2,
-                                              email = c.E_MAIL,
-                                              estatus = s.name
-                                          }).ToList();
-
-                if (records != null)
+                //Primero se buscan los datos de AFILIADO en SumaPlazas
+                //ENTIDAD Affiliado
+                //ENTIDAD CLIENTE
+                //ENTIDAD Status
+                //ENTIDAD CustomerInterest
+                //ENTIDAD Photos_Affiliate, FILEYSTEM ~/Picture/@filename@.jpg                                
+                List<Afiliado> afiliados = (from a in db.Affiliates
+                                            join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                            join s in db.Status on a.statusid equals s.id
+                                            where a.docnumber.Equals(numdoc) || c.E_MAIL == email || c.NOMBRE_CLIENTE1.Contains(name) || c.APELLIDO_CLIENTE1.Contains(name)
+                                            select new Afiliado()
+                                            {
+                                                //ENTIDAD Affiliate 
+                                                id = a.id == null ? 0 : (int)a.id,
+                                                customerid = a.customerid, // (No se a que corresponde)                	 
+                                                docnumber = a.docnumber, // +<*    
+                                                clientid = a.clientid == null ? 0 : (int)a.clientid, // +(corresponde al id de WEBPLAZAS)*
+                                                storeid = a.storeid,
+                                                channelid = a.channelid,
+                                                typeid = a.typeid,
+                                                typedelivery = a.typedelivery,
+                                                storeiddelivery = a.storeiddelivery == null ? 0 : (int)a.storeiddelivery,
+                                                statusid = a.statusid,
+                                                reasonsid = a.reasonsid == null ? 0 : (int)a.reasonsid,
+                                                twitter_account = a.twitter_account, // +
+                                                facebook_account = a.facebook_account, // +
+                                                instagram_account = a.instagram_account, // +
+                                                comments = a.comments,
+                                                //ENTIDAD CLIENTE
+                                                cod_estado = c.COD_ESTADO,
+                                                cod_ciudad = c.COD_CIUDAD,
+                                                cod_municipio = c.COD_MUNICIPIO,
+                                                cod_parroquia = c.COD_PARROQUIA,
+                                                cod_urbanizacion = c.COD_URBANIZACION,
+                                                //ENTIDAD Status
+                                                estatus = s.name,
+                                            }).ToList();
+                if (afiliados != null)
                 {
-                    foreach (var record in records)
+                    foreach (var afiliado in afiliados)
                     {
-                        //SERVICIO WSL.Cards.getClient !
-                        string ClienteCardsJson = WSL.Cards.getClient(record.docnumber.Substring(2));
-                        ClienteCards ClienteCards = (ClienteCards)JsonConvert.DeserializeObject<IEnumerable<ClienteCards>>(ClienteCardsJson).FirstOrDefault();
-                        record.pan = ClienteCards.pan; // !
-                        record.printed = ClienteCards.printed; // !
-                        record.estatustarjeta = ClienteCards.tarjeta; // !
-                    }
-                }
-                return records;
-            }
-        }
+                        //ENTIDAD CustomerInterest
+                        afiliado.Intereses = chargeInterestList(afiliado.id);
+                        //ENTIDAD Photos_Affiliate, FILEYSTEM ~/Picture/@filename@.jpg
+                        afiliado.picture = AppModule.GetPathPicture().Replace("@filename@", afiliado.docnumber);
+                        //Segundo se buscan los datos de CLIENTE en WebPlazas
+                        //SERVICIO WSL.WebPlazas.getClientByNumDoc                
+                        string clienteWebPlazasJson = WSL.WebPlazas.getClientByNumDoc(afiliado.docnumber);
+                        ClienteWebPlazas clienteWebPlazas = (ClienteWebPlazas)JsonConvert.DeserializeObject<ClienteWebPlazas>(clienteWebPlazasJson);
+                        afiliado.nationality = clienteWebPlazas.nationality; // +*
+                        afiliado.name = clienteWebPlazas.name; // +<*
+                        afiliado.name2 = clienteWebPlazas.name2; // +<*
+                        afiliado.lastname1 = clienteWebPlazas.lastname1; // +<*
+                        afiliado.lastname2 = clienteWebPlazas.lastname2; // +<*
+                        afiliado.birthdate = clienteWebPlazas.birthdate; // +*
+                        afiliado.gender = clienteWebPlazas.gender; //+*
+                        afiliado.clientid = clienteWebPlazas.id; //
+                        afiliado.maritalstatus = clienteWebPlazas.maritalstatus; // +*
+                        afiliado.occupation = clienteWebPlazas.occupation; // +*
+                        afiliado.phone1 = clienteWebPlazas.phone1; // +<*
+                        afiliado.phone2 = clienteWebPlazas.phone2; // +*
+                        afiliado.phone3 = clienteWebPlazas.phone3; // +*
+                        afiliado.email = clienteWebPlazas.email; // +*
+                        afiliado.type = clienteWebPlazas.type; // +*             
 
+                        //Los estados actuales para una persona son:
+                        //NOCLIENTE            (no registrado en WEBPLAZAS)
+                        //NOAFILIADO           (no afiliado en SUMAPLAZAS)
+                        //CLIENTE              (registrado en WEBPLAZAS)
+                        //AFILIADO             (afiliado en SUMAPLAZAS)
+                        //El estado deseado es:
+                        //AFILIADO/CLIENTE     (registrado en WEBPLAZAS y afiliado en SUMAPLAZAS) 
+                        //Existen 4 resultados posibles para esta búsqueda
+                        //NOCLIENTE/NOAFILIADO -> por definir acción para crear registro de CLIENTE y crear afiliación de AFILIADO => Redireccionar a GenericView con mensaje descriptivo
+                        //NOCLIENTE/AFILIADO   -> por definir acción para crear registro de CLIENTE => Redireccionar a GenericView con mensaje descriptivo
+                        //CLIENTE/NOAFILIADO   -> acción: editar registro de CLIENTE y crear afiliación de AFILIADO => CREAR AFILIACION (retornar vista Create)
+                        //CLIENTE/AFILIADO     -> acción: editar registro de CLIENTE y editar afiliación de AFILIADO => REVISAR AFILIACION (Redirecciónar a acción Index ó Edit)
 
-        //
-        // Save : Almacenar registro del afiliado en el Modelo de SumaLealtad.
-
-        public bool Save(Afiliado AfiliadoSuma)
-        {
-
-            using (LealtadEntities db = new LealtadEntities())
-            {
-
-                var result = db.CLIENTES.SingleOrDefault(c => c.NRO_DOCUMENTO == AfiliadoSuma.docnumber);
-
-                // Caso : El afiliado está registrado en PlazasWeb pero no está registrado en SumaLealtad.
-                if (result == null)
-                {
-
-                    var cliente = new CLIENTE()
-                    {
-                        TIPO_DOCUMENTO = INITIAL_INTEGER_VALUE.ToString(),
-                        NRO_DOCUMENTO = AfiliadoSuma.docnumber,
-                        NACIONALIDAD = AfiliadoSuma.nationality,
-                        NOMBRE_CLIENTE1 = AfiliadoSuma.name,
-                        NOMBRE_CLIENTE2 = AfiliadoSuma.name2,
-                        APELLIDO_CLIENTE1 = AfiliadoSuma.lastname1,
-                        APELLIDO_CLIENTE2 = AfiliadoSuma.lastname2,
-                        FECHA_NACIMIENTO = AfiliadoSuma.birthdate,
-                        SEXO = AfiliadoSuma.gender,
-                        EDO_CIVIL = AfiliadoSuma.maritalstatus,
-                        OCUPACION = AfiliadoSuma.occupation,
-                        TELEFONO_HAB = AfiliadoSuma.phone1,
-                        TELEFONO_OFIC = AfiliadoSuma.phone2,
-                        TELEFONO_CEL = AfiliadoSuma.phone3,
-                        E_MAIL = AfiliadoSuma.email,
-                        COD_SUCURSAL = AfiliadoSuma.storeiddelivery,
-                        COD_ESTADO = AfiliadoSuma.cod_estado == null ? "0" : AfiliadoSuma.cod_estado,
-                        COD_CIUDAD = AfiliadoSuma.cod_ciudad == null ? "0" : AfiliadoSuma.cod_ciudad,
-                        COD_MUNICIPIO = AfiliadoSuma.cod_municipio == null ? "0" : AfiliadoSuma.cod_municipio,
-                        COD_PARROQUIA = AfiliadoSuma.cod_parroquia == null ? "0" : AfiliadoSuma.cod_parroquia,
-                        COD_URBANIZACION = AfiliadoSuma.cod_urbanizacion == null ? "0" : AfiliadoSuma.cod_urbanizacion,
-                        FECHA_CREACION = System.DateTime.Now
-                    };
-
-                    var affiliate = new Affiliate()
-                    {
-                        id = AfilliatesID(),
-                        customerid = AfiliadoSuma.id,
-                        docnumber = AfiliadoSuma.docnumber,
-                        clientid = AfiliadoSuma.clientid,
-                        storeid = AfiliadoSuma.storeiddelivery,
-                        channelid = AfiliadoSuma.channelid,
-                        typeid = INITIAL_INTEGER_VALUE,
-                        affiliatedate = System.DateTime.Now,
-                        typedelivery = AfiliadoSuma.typedelivery,
-                        storeiddelivery = AfiliadoSuma.storeiddelivery,
-                        estimateddatedelivery = System.DateTime.Now,
-                        creationdate = System.DateTime.Now,
-                        creationuserid = (int)HttpContext.Current.Session["userid"],
-                        modifieddate = System.DateTime.Now,
-                        modifieduserid = (int)HttpContext.Current.Session["userid"],
-                        statusid = 0, //INITIAL_INTEGER_VALUE,
-                        reasonsid = INITIAL_INTEGER_VALUE,
-                        twitter_account = AfiliadoSuma.twitter_account,
-                        facebook_account = AfiliadoSuma.facebook_account,
-                        instagram_account = AfiliadoSuma.instagram_account,
-                        comments = AfiliadoSuma.comments
-                    };
-
-                    var companyaffiliate = new CompanyAffiliate()
-                    {
-                        affiliateid = affiliate.id,
-                        companyid = INITIAL_INTEGER_VALUE,
-                        begindate = System.DateTime.Now,
-                        enddate = System.DateTime.Now,
-                        comments = affiliate.comments,
-                        active = true
-                    };
-
-                    db.CLIENTES.Add(cliente);
-
-                    db.Affiliates.Add(affiliate);
-
-                    db.CompanyAffiliates.Add(companyaffiliate);
-
-                    foreach (var interes in AfiliadoSuma.Intereses.Where(x => x.Checked == true))
-                    {
-
-                        CustomerInterest customerInterest = new CustomerInterest()
+                        if (afiliado.clientid == 0 && afiliado.id == 0)
                         {
-                            customerid = affiliate.id,
-                            interestid = interes.id,
-                            comments = INITIAL_STRING_VALUE
-                        };
-
-                        db.CustomerInterests.Add(customerInterest);
-
+                            //NOCLIENTE/NOAFILIADO
+                        }
+                        else if (afiliado.clientid == 0 && afiliado.id != 0)
+                        {
+                            //NOCLIENTE/AFILIADO
+                        }
+                        else if (afiliado.clientid != 0 && afiliado.id == 0)
+                        {
+                            //CLIENTE/NOAFILIADO                    
+                        }
+                        else if (afiliado.clientid != 0 && afiliado.id != 0)
+                        {
+                            //CLIENTE/AFILIADO
+                            //Tercero se buscan los datos de Tarjeta de AFILIADO en Cards
+                            //SERVICIO WSL.Cards.getClient !
+                            string clienteCardsJson = WSL.Cards.getClient(afiliado.docnumber.Substring(2));
+                            ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<IEnumerable<ClienteCards>>(clienteCardsJson).FirstOrDefault();
+                            afiliado.pan = clienteCards.pan; // !
+                            afiliado.printed = clienteCards.printed; // !
+                            afiliado.estatustarjeta = clienteCards.tarjeta; // !
+                        }
                     }
-
-                    //var affiliateauditoria = new AffiliateAud()
-                    //{
-                    //    id = AfilliateAudID(),
-                    //    affiliateid = affiliate.id,
-                    //    modifieduserid = (int)HttpContext.Current.Session["userid"],
-                    //    modifieddate = System.DateTime.Now,
-                    //    statusid = INITIAL_INTEGER_VALUE,
-                    //    reasonsid = INITIAL_INTEGER_VALUE,
-                    //    comments = affiliate.comments
-                    //};
-
-                    //db.AffiliateAuds.Add(affiliateauditoria);
-
-                    db.SaveChanges();
-
                 }
+                return afiliados;
+            }
+        }
+
+        public bool Save(Afiliado afiliado)
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                //ENTIDAD Affiliatte                   
+                //var buscarAffilliates = db.Affiliates.SingleOrDefault(a => a.docnumber == afiliado.docnumber);
+                //if (buscarAffilliates == null)
+                //{
+                //    return false;
+                //}
+                var Affiliate = new Affiliate()
+                {
+                    id = AfilliatesID(),
+                    customerid = afiliado.customerid,
+                    docnumber = afiliado.docnumber,
+                    clientid = afiliado.clientid,
+                    storeid = afiliado.storeid,
+                    channelid = afiliado.channelid,
+                    typeid = INITIAL_INTEGER_VALUE,
+                    affiliatedate = System.DateTime.Now,
+                    typedelivery = afiliado.typedelivery,                    
+                    storeiddelivery = afiliado.storeiddelivery,
+                    estimateddatedelivery = new DateTime(),
+                    creationdate = DateTime.Now,
+                    creationuserid = (int)HttpContext.Current.Session["userid"],
+                    modifieddate = DateTime.Now,
+                    modifieduserid = (int)HttpContext.Current.Session["userid"],
+                    statusid = INITIAL_INTEGER_VALUE,
+                    reasonsid = INITIAL_INTEGER_VALUE,
+                    twitter_account = afiliado.twitter_account,
+                    facebook_account = afiliado.facebook_account,
+                    instagram_account = afiliado.instagram_account,
+                    comments = afiliado.comments
+                };
+                db.Affiliates.Add(Affiliate);
+                //ENTIDAD CLIENTE
+                //var buscarCLIENTES = db.CLIENTES.SingleOrDefault(c => c.NRO_DOCUMENTO == afiliado.docnumber);
+                //if (buscarCLIENTES == null)
+                //{  
+                //    return false;
+                //}  
+                var CLIENTE = new CLIENTE()
+                {
+                    TIPO_DOCUMENTO = afiliado.docnumber.Substring(0, 1),
+                    NRO_DOCUMENTO = afiliado.docnumber.Substring(2),
+                    NACIONALIDAD = afiliado.nationality,
+                    NOMBRE_CLIENTE1 = afiliado.name,
+                    NOMBRE_CLIENTE2 = afiliado.name2 == null ? "" : afiliado.name2,
+                    APELLIDO_CLIENTE1 = afiliado.lastname1,
+                    APELLIDO_CLIENTE2 = afiliado.lastname2 == null ? "" : afiliado.lastname2,
+                    FECHA_NACIMIENTO = afiliado.birthdate,
+                    SEXO = afiliado.gender,
+                    EDO_CIVIL = afiliado.maritalstatus,
+                    OCUPACION = afiliado.occupation == null ? "" : afiliado.occupation,
+                    TELEFONO_HAB = afiliado.phone1,
+                    TELEFONO_OFIC = afiliado.phone2 == null ? "" : afiliado.cod_estado,
+                    TELEFONO_CEL = afiliado.phone3 == null ? "" : afiliado.cod_estado,
+                    E_MAIL = afiliado.email,
+                    COD_SUCURSAL = afiliado.storeid,
+                    COD_ESTADO = afiliado.cod_estado == null ? "0" : afiliado.cod_estado,
+                    COD_CIUDAD = afiliado.cod_ciudad == null ? "0" : afiliado.cod_ciudad,
+                    COD_MUNICIPIO = afiliado.cod_municipio == null ? "0" : afiliado.cod_municipio,
+                    COD_PARROQUIA = afiliado.cod_parroquia == null ? "0" : afiliado.cod_parroquia,
+                    COD_URBANIZACION = afiliado.cod_urbanizacion == null ? "0" : afiliado.cod_urbanizacion,
+                    FECHA_CREACION = DateTime.Now
+                };
+                db.CLIENTES.Add(CLIENTE);
+                //ENTIDAD CustomerInterest
+                foreach (var interes in afiliado.Intereses.Where(x => x.Checked == true))
+                {
+                    CustomerInterest customerInterest = new CustomerInterest()
+                    {
+                        customerid = Affiliate.id,
+                        interestid = interes.id,
+                        comments = ""  //INITIAL_STRING_VALUE
+                    };
+                    db.CustomerInterests.Add(customerInterest);
+                }
+                //ENTIDAD Photos_Affiliate, FILEYSTEM ~/Picture/@filename@.jpg 
+                //var Photos_Affiliate = new Photos_Affiliate();
+                //ENTIDAD CompanyAffiliate
+                var companyaffiliate = new CompanyAffiliate()
+                {
+                    affiliateid = Affiliate.id,
+                    companyid = 1, //INITIAL_INTEGER_VALUE,
+                    begindate = DateTime.Now,
+                    enddate = new DateTime(),
+                    comments = afiliado.comments,
+                    active = true
+                };
+                db.CompanyAffiliates.Add(companyaffiliate);
+                //ENTIDAD AffiliateAud
+                var affiliateauditoria = new AffiliateAud()
+                {
+                    id = AfilliateAudID(),
+                    affiliateid = Affiliate.id,
+                    modifieduserid = (int)HttpContext.Current.Session["userid"],
+                    modifieddate = System.DateTime.Now,
+                    statusid = Affiliate.statusid,
+                    reasonsid = Affiliate.reasonsid == null ? 1 : (int)Affiliate.reasonsid,
+                    comments = afiliado.comments
+                };
+                db.AffiliateAuds.Add(affiliateauditoria);
+                db.SaveChanges();
                 return true;
             }
-
         }
-
-        //
-        // SaveChanges : Actualizar registro del afiliado en el Modelo de SumaLealtad.
 
         public bool SaveChanges(Afiliado afiliado)
         {
-
             using (LealtadEntities db = new LealtadEntities())
             {
-
                 // Entidad : Cliente 
                 CLIENTE cliente = db.CLIENTES.FirstOrDefault(c => c.NRO_DOCUMENTO == afiliado.docnumber);
-
                 if (cliente != null)
                 {
-
-                    cliente.TIPO_DOCUMENTO = afiliado.typeid.ToString();
-                    cliente.NRO_DOCUMENTO = afiliado.docnumber;
+                    //cliente.TIPO_DOCUMENTO = afiliado.typeid.ToString();
+                    //cliente.NRO_DOCUMENTO = afiliado.docnumber;
                     cliente.NACIONALIDAD = afiliado.nationality;
                     cliente.NOMBRE_CLIENTE1 = afiliado.name;
                     cliente.NOMBRE_CLIENTE2 = afiliado.name2;
@@ -584,34 +555,31 @@ namespace Suma2Lealtad.Models
                     cliente.TELEFONO_HAB = afiliado.phone1;
                     cliente.TELEFONO_OFIC = afiliado.phone2;
                     cliente.TELEFONO_CEL = afiliado.phone3;
-                    cliente.E_MAIL = afiliado.email;
-                    cliente.COD_SUCURSAL = afiliado.storeiddelivery;
+                    //cliente.E_MAIL = afiliado.email;
+                    cliente.COD_SUCURSAL = afiliado.storeid;
                     cliente.COD_ESTADO = afiliado.cod_estado;
                     cliente.COD_CIUDAD = afiliado.cod_ciudad;
                     cliente.COD_MUNICIPIO = afiliado.cod_municipio;
                     cliente.COD_PARROQUIA = afiliado.cod_parroquia;
                     cliente.COD_URBANIZACION = afiliado.cod_urbanizacion;
-                    cliente.FECHA_CREACION = System.DateTime.Now;
-
+                    //cliente.FECHA_CREACION = System.DateTime.Now;
                 }
 
                 // Entidad : Afiliado 
                 Affiliate affiliate = db.Affiliates.FirstOrDefault(a => a.id == afiliado.id);
-
                 if (affiliate != null)
                 {
-
                     affiliate.id = afiliado.id;
-                    affiliate.customerid = afiliado.customerid;
-                    affiliate.docnumber = afiliado.docnumber;
-                    affiliate.clientid = afiliado.clientid;
+                    //affiliate.customerid = afiliado.customerid;
+                    //affiliate.docnumber = afiliado.docnumber;
+                    //affiliate.clientid = afiliado.clientid;
                     affiliate.storeid = afiliado.storeiddelivery;
                     affiliate.channelid = afiliado.channelid;
                     affiliate.typeid = afiliado.typeid;
-                    affiliate.affiliatedate = System.DateTime.Now;
+                    //affiliate.affiliatedate = afiliado.a
                     affiliate.typedelivery = afiliado.typedelivery;
                     affiliate.storeiddelivery = afiliado.storeiddelivery;
-                    affiliate.estimateddatedelivery = System.DateTime.Now;
+                    //affiliate.estimateddatedelivery = System.DateTime.Now;
                     //affiliate.creationdate = System.DateTime.Now;
                     //affiliate.creationuserid = (int)HttpContext.Current.Session["userid"];
                     affiliate.modifieduserid = (int)HttpContext.Current.Session["userid"];
@@ -624,53 +592,43 @@ namespace Suma2Lealtad.Models
                     affiliate.comments = afiliado.comments;
 
                 }
-
                 // Entidad : Temas de Interés del Afiliado. 
                 foreach (var m in db.CustomerInterests.Where(f => f.customerid == afiliado.id))
                 {
                     db.CustomerInterests.Remove(m);
                 }
-
                 foreach (var interes in afiliado.Intereses.Where(x => x.Checked == true))
                 {
-
                     CustomerInterest customerInterest = new CustomerInterest()
                     {
                         customerid = afiliado.id,
                         interestid = interes.id,
                         comments = ""
                     };
-
                     db.CustomerInterests.Add(customerInterest);
-
                 }
 
-                //// Entidad : Auditoría del registro de Afiliado. 
-                //var affiliateAuditoria = new AffiliateAud()
-                //{
-                //    id = AfilliateAudID(),
-                //    affiliateid = afiliado.id,
-                //    modifieduserid = (int) HttpContext.Current.Session["userid"],
-                //    modifieddate = System.DateTime.Now,
-                //    statusid = 1,       //PENDIENTE
-                //    reasonsid = 1,      //PENDIENTE
-                //    comments = afiliado.comments
-                //};
-
+                //Entidad : Auditoría del registro de Afiliado. 
+                var affiliateAuditoria = new AffiliateAud()
+                {
+                    id = AfilliateAudID(),
+                    affiliateid = afiliado.id,
+                    modifieduserid = (int)HttpContext.Current.Session["userid"],
+                    modifieddate = System.DateTime.Now,
+                    statusid = afiliado.statusid,       //PENDIENTE
+                    reasonsid = 1,      //PENDIENTE
+                    comments = afiliado.comments
+                };
                 //db.AffiliateAuds.Add(affiliateAuditoria);
-
                 db.SaveChanges();
-
-            }
-
-            return true;
-
+                return true;
+            }            
         }
 
         public SaldosMovimientos FindSaldosMovimientos(int id)
         {
             SaldosMovimientos SaldosMovimientos = new SaldosMovimientos();
-            Afiliado afiliado = FindSuma(id);
+            Afiliado afiliado = Find(id);
             SaldosMovimientos.DocId = afiliado.docnumber;
             string nrodocumento = SaldosMovimientos.DocId.Substring(2);
             string saldosJson = WSL.Cards.getBalance(nrodocumento);
@@ -678,29 +636,37 @@ namespace Suma2Lealtad.Models
             string movimientosPrepagoJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.First().accounttype, nrodocumento);
             string movimientosLealtadJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.Skip(1).First().accounttype, nrodocumento);
             SaldosMovimientos.MovimientosPrepago = (IEnumerable<Movimiento>)JsonConvert.DeserializeObject<IEnumerable<Movimiento>>(movimientosPrepagoJson);
+            var MovimientosPrepagoOrdenados =  SaldosMovimientos.MovimientosPrepago.OrderByDescending(x => x.batchid);
+            SaldosMovimientos.MovimientosPrepago = MovimientosPrepagoOrdenados;
             SaldosMovimientos.MovimientosSuma = (IEnumerable<Movimiento>)JsonConvert.DeserializeObject<IEnumerable<Movimiento>>(movimientosLealtadJson);
+            var MovimientosSumaOrdenados =  SaldosMovimientos.MovimientosSuma.OrderByDescending(x => x.batchid);
+            SaldosMovimientos.MovimientosSuma = MovimientosSumaOrdenados;
             return SaldosMovimientos;
         }
 
         public RespuestaCards Acreditar(string numdoc, string monto)
         {
             RespuestaCards RespuestaCards = new RespuestaCards();
-            string RespuestaCardsJson = WSL.Cards.addBatch(numdoc, monto);
+            string RespuestaCardsJson = WSL.Cards.addBatch(numdoc.Substring(2), monto);
             RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
             return RespuestaCards;
         }
 
-        public string Aprobar (Afiliado afiliado)
+        public bool Aprobar(Afiliado afiliado)
         {
             RespuestaCards RespuestaCards = new RespuestaCards();
             string RespuestaCardsJson = WSL.Cards.addClient(afiliado.docnumber, (afiliado.name + " " + afiliado.lastname1).ToUpper(), afiliado.phone1, "Plazas Baruta");
             RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
-            //if (RespuestaCards.code == "0" || RespuestaCards.code == "7")
-            //{
+            if (RespuestaCards.code == "0" || RespuestaCards.code == "7")
+            {
                 afiliado.statusid = 2;
                 SaveChanges(afiliado);
-            //}
-            return afiliado.docnumber;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
     }
