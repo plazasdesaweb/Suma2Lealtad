@@ -14,7 +14,7 @@
             <div class="panel panel-default">
 
                 <div class="panel-heading clearfix panel-gradient">
-                    <h3 class="panel-title">Compañia / Lista de Registros </h3>
+                    <h3 class="panel-title">Compañía / Lista de Registros </h3>
                 </div>
 
                 <div class="panel-body">
@@ -23,71 +23,51 @@
 
                         <thead>
 
-                            <tr>
-                                <th>
-                                    @*@Html.DisplayNameFor(model => model.)*@ Nombre
-                                </th>
-                                <th>
-                                    @*@Html.DisplayNameFor(model => model.)*@ Alias
-                                </th>
-                                <th>
-                                    @*@Html.DisplayNameFor(model => model.)*@ Rif
-                                </th>
-                                <th>
-                                    @*@Html.DisplayNameFor(model => model.)*@ Dirección
-                                </th>
-                                <th>
-                                    @*@Html.DisplayNameFor(model => model.)*@ Teléfono
-                                </th>
-                                <th>
-                                    @*@Html.DisplayNameFor(model => model.)*@ Correo
-                                </th>
-
-                                <th class="text-center"></th>
-                            </tr>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Alias</th>
+                            <th>RIF</th>
+                            <th>Dirección</th>
+                            <th>Teléfono</th>
+                            <th>Correo</th>
+                            <th class="text-center"></th>
+                        </tr>
 
                         </thead>
 
                         <tbody>
 
-
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.name)
-                                    </td>
-
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ALIAS)
-                                    </td>
-
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.rif)
-                                    </td>
-
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.address)
-                                    </td>
-
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.phone)
-                                    </td>
-
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.email)
-                                    </td>
-
-                                    <td class="text-right">
-                                        <a href="@Url.Action("Edit", "Company", new { id = item.id })" class="btn btn-info btn-xs">
-                                            <span class="glyphicon glyphicon-edit"></span>
-                                        </a>
-                                        <a href="@Url.Action("Delete", "Company", new { id = item.id })" class="btn btn-danger btn-xs">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            }
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ALIAS)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.rif)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.email)
+                        </td>
+                        <td class="text-right">
+                            <a href="@Url.Action("Edit", "Company", new { id = item.id })" class="btn btn-info btn-xs">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            <a href="@Url.Action("Delete", "Company", new { id = item.id })" class="btn btn-danger btn-xs">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                        </td>
+                        </tr>
+                        }
 
                         </tbody>
 

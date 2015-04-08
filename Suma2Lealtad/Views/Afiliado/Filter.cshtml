@@ -14,7 +14,7 @@
             <div class="panel panel-default">
 
                 <div class="panel-heading clearfix panel-gradient">
-                    <h3 class="panel-title">Solicitud de Afiliación / Filtro de Búsqueda de Cliente</h3>
+                    <h3 class="panel-title">Crear Afiliación / Filtro de Búsqueda</h3>
                 </div>
 
                 <div class="panel-body">
@@ -32,17 +32,6 @@
                             <input type="text" id="numdoc" name="numdoc" value="V-12919906" maxlength="10" placeholder="V-12345678" class="form-control" required>
                             <span id="someID"></span>
                         </div>
-
-                       @* 
-                       <div class="editor-label col-md-4 control-label">
-                            Correo Electrónico :
-                        </div>
-
-                        <div class="editor-field col-md-8">
-                            <input type="text" id="email" name="email" maxlength="10" placeholder="correo@ejemplo.com" class="form-control">
-                            <span id="someMail"></span>
-                        </div>
-                        *@
 
                         <div class="editor-label col-md-4 control-label"> <br /> </div>
                         <div class="editor-field col-md-8"> <br /> </div>
@@ -77,7 +66,6 @@
         function validatePass() {
 
             var patron1 = /^(V|E|J|G)\-\d{6,8}$/
-            //var patron2 = /^\d{6,8}$/
 
             if (document.form.numdoc.value.search(patron1) == -1) {
                 spanMessage();
@@ -92,7 +80,7 @@
             while (span.firstChild) {
                 span.removeChild(span.firstChild);
             }
-            span.appendChild(document.createTextNode("* Formato de Documento incorrecto. Ejm = V-12345678"));
+            span.appendChild(document.createTextNode("* Formato Número de Documento Incorrecto. (V-12345678)"));
 
         }
     </script>

@@ -14,7 +14,7 @@
             <div class="panel panel-default">
 
                 <div class="panel-heading clearfix panel-gradient">
-                    <h3 class="panel-title">Menu / Lista de Registros </h3>
+                    <h3 class="panel-title">Menú / Lista de Registros </h3>
                 </div>
 
                 <div class="panel-body">
@@ -22,60 +22,45 @@
                     <table class="table table-striped custab">
 
                         <thead>
-
-                            <tr>
-                                <th>
-                                    @*@Html.DisplayNameFor(model => model.)*@ Nombre
-                                </th>
-                                <th>
-                                    @*@Html.DisplayNameFor(model => model.)*@ parentid
-                                </th>
-                                <th>
-                                    @*@Html.DisplayNameFor(model => model.)*@ controller
-                                </th>
-                                <th>
-                                    @*@Html.DisplayNameFor(model => model.)*@ actions
-                                </th>
-                                <th>
-                                    @*@Html.DisplayNameFor(model => model.)*@ order
-                                </th>
-                                <th class="text-center"></th>
-                            </tr>
-
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Menú (Superior)</th>
+                            <th>Controladores</th>
+                            <th>Acciones</th>
+                            <th>Orden</th>
+                            <th class="text-center"></th>
+                        </tr>
                         </thead>
 
                         <tbody>
-
-
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.parentid)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.controller)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.actions)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.order)
-                                    </td>
-                                    <td class="text-right">
-                                        <a href="@Url.Action("Edit", "Menu", new { id = item.id })" class="btn btn-info btn-xs">
-                                            <span class="glyphicon glyphicon-edit"></span>
-                                        </a>
-                                        <a href="@Url.Action("Delete", "Menu", new { id = item.id })" class="btn btn-danger btn-xs">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            }
-
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.parentid)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.controller)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.actions)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.order)
+                            </td>
+                            <td class="text-right">
+                                <a href="@Url.Action("Edit", "Menu", new { id = item.id })" class="btn btn-info btn-xs">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                                <a href="@Url.Action("Delete", "Menu", new { id = item.id })" class="btn btn-danger btn-xs">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        }
                         </tbody>
 
                     </table>

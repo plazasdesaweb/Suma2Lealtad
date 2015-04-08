@@ -19,10 +19,11 @@
 	<div class="panel-body">
 
         @using (Html.BeginForm()) {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
+            
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
 
-            @Html.HiddenFor(model => model.id)
+        @Html.HiddenFor(model => model.id)
 
 		<form class="form-horizontal" role="form">
 
@@ -31,7 +32,7 @@
                 @Html.HiddenFor(model => model.id)
 
                 <div class="editor-label col-md-4 control-label">
-                    @*@Html.LabelFor(model => model.name)*@ Nombre :
+                    Nombre :
                 </div>
                 <div class="editor-field col-md-8">
                     @Html.TextBoxFor(model => model.name, new {@class="form-control" })
