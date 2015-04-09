@@ -1,0 +1,92 @@
+﻿@model Suma2Lealtad.Models.Afiliado
+
+@{
+    ViewBag.Title = "Acreditar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-push-2 col-md-8">
+
+            <div class="panel panel-default">
+
+                <div class="panel-heading clearfix panel-gradient">
+                    <h3 class="panel-title">Afiliado / Suspender Tarjeta</h3>
+                </div>
+
+                <div class="panel-body">
+
+                    <form action="@Url.Action("SuspenderTarjeta", "Afiliado")" name="form" method="post">
+
+                        <div class="form-group">
+
+                            <div class="editor-label col-md-4 control-label">
+                                Nombre del Afiliado :
+                            </div>
+                            <div class="editor-form col-md-6">
+                                @Html.TextBox("name", @Model.name + " " + @Model.lastname1, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Número de Documento/Cédula :
+                            </div>
+                            <div class="editor-form col-md-6">
+                                @Html.TextBox("docnumber", @Model.docnumber, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Número de Tarjeta :
+                            </div>
+                            <div class="editor-form col-md-6">
+                                @Html.TextBox("pan", @Model.pan, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Estatus de Tarjeta :
+                            </div>
+                            <div class="editor-form col-md-6">
+                                @Html.TextBox("estatustarjeta", @Model.estatustarjeta, new { @class = "form-control", @readonly = "true" })
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label"></div>
+                            <div class="editor-field col-md-6">
+                                <br />
+                            </div>
+
+                            <div>
+                                <h3 class="text-left text-danger">Advertencia: Esta operación suspenderá temporalmente la tarjeta actual.</h3>
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label"></div>
+                            <div class="editor-field col-md-6">
+                                <br />
+                            </div>
+
+                            <!-- buttons -->
+                            <div class="col-md-12 col-tabla-btn">
+                                <div class="pull-right">
+                                    @Html.HiddenFor(model => model.docnumber)
+                                    <input type="submit" class="btn btn-success btn-md" value="Suspender" />
+                                </div>
+                            </div>
+                            <!--// buttons -->
+
+                        </div>
+
+                    </form>
+
+                </div>
+                <!-- panel-body -->
+
+            </div>
+            <!-- panel -->
+
+        </div>
+        <!-- columns -->
+
+    </div>
+    <!-- row -->
+
+</div>
+<!-- container -->
+
