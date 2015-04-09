@@ -37,14 +37,14 @@
 
                         <div class="col-md-12 col-btn text-center">
 
-                            @using (Html.BeginForm())
-                            {
-                                @Html.AntiForgeryToken()
-                                <p>
-                                    <input type="submit" class="btn btn-success" value="Aceptar" />
-                                    <a href="@Url.Action("Index", "User")" class="btn btn-danger" role="button">Cancelar</a>
-                                </p>
-                            }
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <p>
+                                <input type="submit" class="btn btn-success" value="Aceptar" />
+                                <a href="@Url.Action("Index", "User")" class="btn btn-danger" role="button">Cancelar</a>
+                            </p>
+                        }
 
                         </div>
 

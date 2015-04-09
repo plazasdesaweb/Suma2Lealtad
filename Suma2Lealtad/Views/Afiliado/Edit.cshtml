@@ -37,14 +37,17 @@
 
                             @Html.HiddenFor(model => model.id)
                             @Html.HiddenFor(model => model.typeid)
+                            @Html.HiddenFor(model => model.reasonsid)
+                            @Html.HiddenFor(model => model.statusid)
+                            @Html.HiddenFor(model => model.clientid)
+                            @Html.HiddenFor(model => model.type)
 
                             <div class="editor-label col-md-4 control-label">
-                                * Número Documento/Cédula :
+                                * Número de Documento/Cédula :
                             </div>
 
-                            <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.docnumber, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.docnumber)
+                           <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.docnumber, new { @class = "form-control", @readonly = "true" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -52,8 +55,7 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.email, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.email)
+                                @Html.TextBoxFor(model => model.email, new { @class = "form-control", @readonly = "true" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -282,7 +284,7 @@
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
-                                Canal :
+                                * Canal :
                             </div>
 
                             <div class="editor-field col-md-6">

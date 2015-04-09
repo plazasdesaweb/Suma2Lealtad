@@ -2,6 +2,7 @@
 using Suma2Lealtad.Modules;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -10,6 +11,21 @@ namespace Suma2Lealtad.Models
     public class AfiliadoRepository
     {
         private int INITIAL_INTEGER_VALUE = 1;
+
+        private int ESTATUS_ID_INICIAL = 0;
+        private int REASONS_ID_INICIAL = 1;
+        private int ID_CORPORACION_PLAZAS = 1;
+        private int ID_ESTATUS_ACTIVA = 2;
+        private int ID_TYPE_SUMA = 1;
+        private int ID_TYPE_PREPAGO = 2;
+
+        //estatus tarjeta cards - decrle a daniel que revise que los retone bien en getclient
+        //private string ID_ESTATUS_TARJETA_NUEVA = "0";
+        //private string ID_ESTATUS_TARJETA_INACTIVA = 0;
+        //private int ID_ESTATUS_TARJETA_BLOQUEADA = ;
+        //private int ID_ESTATUS_TARJETA_BLOQUEADA = ;
+        //private string ID_ESTATUS_TARJETA_ACTIVA = "1";
+
         //private string INITIAL_STRING_VALUE = "";
 
         //public AfiliadoRepository() { }
@@ -135,6 +151,8 @@ namespace Suma2Lealtad.Models
                     afiliado = new Afiliado();
                     afiliado.id = 0;
                     afiliado.docnumber = numdoc;
+                    //LE COLOCO TIPO SUMA POR DEFECTO
+                    //afiliado.typeid = ID_TYPE_SUMA;
                 }
                 //ENTIDAD CustomerInterest
                 afiliado.Intereses = chargeInterestList(afiliado.id);
@@ -149,7 +167,7 @@ namespace Suma2Lealtad.Models
                 afiliado.name2 = clienteWebPlazas.name2; // +<*
                 afiliado.lastname1 = clienteWebPlazas.lastname1; // +<*
                 afiliado.lastname2 = clienteWebPlazas.lastname2; // +<*
-                afiliado.birthdate = clienteWebPlazas.birthdate; // +*
+                afiliado.birthdate = clienteWebPlazas.birthdate.Value.ToString("dd-MM-yyyy"); // +*
                 afiliado.gender = clienteWebPlazas.gender; //+*
                 afiliado.clientid = clienteWebPlazas.id; //
                 afiliado.maritalstatus = clienteWebPlazas.maritalstatus; // +*
@@ -194,7 +212,7 @@ namespace Suma2Lealtad.Models
                     ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<IEnumerable<ClienteCards>>(clienteCardsJson).FirstOrDefault();
                     afiliado.pan = clienteCards.pan; // !
                     afiliado.printed = clienteCards.printed; // !
-                    afiliado.estatustarjeta = clienteCards.tarjeta; // !
+                    afiliado.estatustarjeta = clienteCards.tarjeta; //afiliado.estatustarjeta = clienteCards.estatus == "1" ? "Activa" : "Inactiva"; // ! 
                 }
                 return afiliado;
             }
@@ -263,7 +281,7 @@ namespace Suma2Lealtad.Models
                 afiliado.name2 = clienteWebPlazas.name2; // +<*
                 afiliado.lastname1 = clienteWebPlazas.lastname1; // +<*
                 afiliado.lastname2 = clienteWebPlazas.lastname2; // +<*
-                afiliado.birthdate = clienteWebPlazas.birthdate; // +*
+                afiliado.birthdate = clienteWebPlazas.birthdate.Value.ToString("dd-MM-yyyy"); ; // +*
                 afiliado.gender = clienteWebPlazas.gender; //+*
                 afiliado.clientid = clienteWebPlazas.id; //
                 afiliado.maritalstatus = clienteWebPlazas.maritalstatus; // +*
@@ -308,7 +326,7 @@ namespace Suma2Lealtad.Models
                     ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<IEnumerable<ClienteCards>>(clienteCardsJson).FirstOrDefault();
                     afiliado.pan = clienteCards.pan; // !
                     afiliado.printed = clienteCards.printed; // !
-                    afiliado.estatustarjeta = clienteCards.tarjeta; // !
+                    afiliado.estatustarjeta = clienteCards.tarjeta; //afiliado.estatustarjeta = clienteCards.estatus == "1" ? "Activa" : "Inactiva"; // !                   
                 }
                 return afiliado;
             }
@@ -372,7 +390,7 @@ namespace Suma2Lealtad.Models
                         afiliado.name2 = clienteWebPlazas.name2; // +<*
                         afiliado.lastname1 = clienteWebPlazas.lastname1; // +<*
                         afiliado.lastname2 = clienteWebPlazas.lastname2; // +<*
-                        afiliado.birthdate = clienteWebPlazas.birthdate; // +*
+                        afiliado.birthdate = clienteWebPlazas.birthdate.Value.ToString("dd-MM-yyyy"); // +*
                         afiliado.gender = clienteWebPlazas.gender; //+*
                         afiliado.clientid = clienteWebPlazas.id; //
                         afiliado.maritalstatus = clienteWebPlazas.maritalstatus; // +*
@@ -417,7 +435,7 @@ namespace Suma2Lealtad.Models
                             ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<IEnumerable<ClienteCards>>(clienteCardsJson).FirstOrDefault();
                             afiliado.pan = clienteCards.pan; // !
                             afiliado.printed = clienteCards.printed; // !
-                            afiliado.estatustarjeta = clienteCards.tarjeta; // !
+                            afiliado.estatustarjeta = clienteCards.tarjeta; //afiliado.estatustarjeta = clienteCards.estatus == "1" ? "Activa" : "Inactiva"; // ! 
                         }
                     }
                 }
@@ -425,16 +443,19 @@ namespace Suma2Lealtad.Models
             }
         }
 
+        private bool SaveWebPlazas(Afiliado afiliado)
+        {
+            RespuestaWebPlazas RespuestaWebPlazas = new RespuestaWebPlazas();
+            string RespuestaWebPlazasJson = WSL.WebPlazas.UpdateClient(afiliado);
+            RespuestaWebPlazas = (RespuestaWebPlazas)JsonConvert.DeserializeObject<RespuestaWebPlazas>(RespuestaWebPlazasJson);
+            return (RespuestaWebPlazas.id == "0");
+        }
+
         public bool Save(Afiliado afiliado)
         {
             using (LealtadEntities db = new LealtadEntities())
             {
                 //ENTIDAD Affiliatte                   
-                //var buscarAffilliates = db.Affiliates.SingleOrDefault(a => a.docnumber == afiliado.docnumber);
-                //if (buscarAffilliates == null)
-                //{
-                //    return false;
-                //}
                 var Affiliate = new Affiliate()
                 {
                     id = AfilliatesID(),
@@ -443,7 +464,7 @@ namespace Suma2Lealtad.Models
                     clientid = afiliado.clientid,
                     storeid = afiliado.storeid,
                     channelid = afiliado.channelid,
-                    typeid = INITIAL_INTEGER_VALUE,
+                    typeid = ID_TYPE_SUMA,//afiliado.typeid, //INITIAL_INTEGER_VALUE,
                     affiliatedate = System.DateTime.Now,
                     typedelivery = afiliado.typedelivery,                    
                     storeiddelivery = afiliado.storeiddelivery,
@@ -452,8 +473,8 @@ namespace Suma2Lealtad.Models
                     creationuserid = (int)HttpContext.Current.Session["userid"],
                     modifieddate = DateTime.Now,
                     modifieduserid = (int)HttpContext.Current.Session["userid"],
-                    statusid = INITIAL_INTEGER_VALUE,
-                    reasonsid = INITIAL_INTEGER_VALUE,
+                    statusid = ESTATUS_ID_INICIAL,
+                    reasonsid = REASONS_ID_INICIAL,
                     twitter_account = afiliado.twitter_account,
                     facebook_account = afiliado.facebook_account,
                     instagram_account = afiliado.instagram_account,
@@ -461,11 +482,6 @@ namespace Suma2Lealtad.Models
                 };
                 db.Affiliates.Add(Affiliate);
                 //ENTIDAD CLIENTE
-                //var buscarCLIENTES = db.CLIENTES.SingleOrDefault(c => c.NRO_DOCUMENTO == afiliado.docnumber);
-                //if (buscarCLIENTES == null)
-                //{  
-                //    return false;
-                //}  
                 var CLIENTE = new CLIENTE()
                 {
                     TIPO_DOCUMENTO = afiliado.docnumber.Substring(0, 1),
@@ -475,7 +491,7 @@ namespace Suma2Lealtad.Models
                     NOMBRE_CLIENTE2 = afiliado.name2 == null ? "" : afiliado.name2,
                     APELLIDO_CLIENTE1 = afiliado.lastname1,
                     APELLIDO_CLIENTE2 = afiliado.lastname2 == null ? "" : afiliado.lastname2,
-                    FECHA_NACIMIENTO = afiliado.birthdate,
+                    FECHA_NACIMIENTO = DateTime.ParseExact(afiliado.birthdate, "dd-MM-yyyy", CultureInfo.InvariantCulture),
                     SEXO = afiliado.gender,
                     EDO_CIVIL = afiliado.maritalstatus,
                     OCUPACION = afiliado.occupation == null ? "" : afiliado.occupation,
@@ -499,7 +515,7 @@ namespace Suma2Lealtad.Models
                     {
                         customerid = Affiliate.id,
                         interestid = interes.id,
-                        comments = ""  //INITIAL_STRING_VALUE
+                        comments = "" 
                     };
                     db.CustomerInterests.Add(customerInterest);
                 }
@@ -509,7 +525,7 @@ namespace Suma2Lealtad.Models
                 var companyaffiliate = new CompanyAffiliate()
                 {
                     affiliateid = Affiliate.id,
-                    companyid = 1, //INITIAL_INTEGER_VALUE,
+                    companyid = ID_CORPORACION_PLAZAS,
                     begindate = DateTime.Now,
                     enddate = new DateTime(),
                     comments = afiliado.comments,
@@ -528,8 +544,15 @@ namespace Suma2Lealtad.Models
                     comments = afiliado.comments
                 };
                 db.AffiliateAuds.Add(affiliateauditoria);
-                db.SaveChanges();
-                return true;
+                if (SaveWebPlazas(afiliado))
+                {
+                    db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 
@@ -537,61 +560,50 @@ namespace Suma2Lealtad.Models
         {
             using (LealtadEntities db = new LealtadEntities())
             {
+                // Entidad : Affiliate
+                Affiliate affiliate = db.Affiliates.FirstOrDefault(a => a.id == afiliado.id);
+                if (affiliate != null)
+                {
+                    affiliate.storeid = afiliado.storeiddelivery;
+                    affiliate.channelid = afiliado.channelid;
+                    affiliate.typeid = afiliado.typeid;
+                    affiliate.typedelivery = afiliado.typedelivery;
+                    affiliate.storeiddelivery = afiliado.storeiddelivery;
+                    //affiliate.estimateddatedelivery = System.DateTime.Now;
+                    affiliate.modifieduserid = (int)HttpContext.Current.Session["userid"];
+                    affiliate.modifieddate = System.DateTime.Now;
+                    affiliate.statusid = afiliado.statusid;
+                    affiliate.reasonsid = afiliado.reasonsid;
+                    affiliate.twitter_account = afiliado.twitter_account;
+                    affiliate.facebook_account = afiliado.facebook_account;
+                    affiliate.instagram_account = afiliado.instagram_account;
+                    affiliate.comments = afiliado.comments;
+                }
+
                 // Entidad : Cliente 
-                CLIENTE cliente = db.CLIENTES.FirstOrDefault(c => c.NRO_DOCUMENTO == afiliado.docnumber);
+                CLIENTE cliente = db.CLIENTES.FirstOrDefault(c => c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO == afiliado.docnumber);
                 if (cliente != null)
                 {
-                    //cliente.TIPO_DOCUMENTO = afiliado.typeid.ToString();
-                    //cliente.NRO_DOCUMENTO = afiliado.docnumber;
                     cliente.NACIONALIDAD = afiliado.nationality;
                     cliente.NOMBRE_CLIENTE1 = afiliado.name;
                     cliente.NOMBRE_CLIENTE2 = afiliado.name2;
                     cliente.APELLIDO_CLIENTE1 = afiliado.lastname1;
                     cliente.APELLIDO_CLIENTE2 = afiliado.lastname2;
-                    cliente.FECHA_NACIMIENTO = afiliado.birthdate;
+                    cliente.FECHA_NACIMIENTO = DateTime.ParseExact(afiliado.birthdate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                     cliente.SEXO = afiliado.gender;
                     cliente.EDO_CIVIL = afiliado.maritalstatus;
                     cliente.OCUPACION = afiliado.occupation;
                     cliente.TELEFONO_HAB = afiliado.phone1;
                     cliente.TELEFONO_OFIC = afiliado.phone2;
                     cliente.TELEFONO_CEL = afiliado.phone3;
-                    //cliente.E_MAIL = afiliado.email;
                     cliente.COD_SUCURSAL = afiliado.storeid;
                     cliente.COD_ESTADO = afiliado.cod_estado;
                     cliente.COD_CIUDAD = afiliado.cod_ciudad;
                     cliente.COD_MUNICIPIO = afiliado.cod_municipio;
                     cliente.COD_PARROQUIA = afiliado.cod_parroquia;
                     cliente.COD_URBANIZACION = afiliado.cod_urbanizacion;
-                    //cliente.FECHA_CREACION = System.DateTime.Now;
                 }
 
-                // Entidad : Afiliado 
-                Affiliate affiliate = db.Affiliates.FirstOrDefault(a => a.id == afiliado.id);
-                if (affiliate != null)
-                {
-                    affiliate.id = afiliado.id;
-                    //affiliate.customerid = afiliado.customerid;
-                    //affiliate.docnumber = afiliado.docnumber;
-                    //affiliate.clientid = afiliado.clientid;
-                    affiliate.storeid = afiliado.storeiddelivery;
-                    affiliate.channelid = afiliado.channelid;
-                    affiliate.typeid = afiliado.typeid;
-                    //affiliate.affiliatedate = afiliado.a
-                    affiliate.typedelivery = afiliado.typedelivery;
-                    affiliate.storeiddelivery = afiliado.storeiddelivery;
-                    //affiliate.estimateddatedelivery = System.DateTime.Now;
-                    //affiliate.creationdate = System.DateTime.Now;
-                    //affiliate.creationuserid = (int)HttpContext.Current.Session["userid"];
-                    affiliate.modifieduserid = (int)HttpContext.Current.Session["userid"];
-                    affiliate.modifieddate = System.DateTime.Now;
-                    affiliate.statusid = afiliado.statusid;
-                    //affiliate.reasonsid = 1;
-                    affiliate.twitter_account = afiliado.twitter_account;
-                    affiliate.facebook_account = afiliado.facebook_account;
-                    affiliate.instagram_account = afiliado.instagram_account;
-                    affiliate.comments = afiliado.comments;
-
-                }
                 // Entidad : Temas de Interés del Afiliado. 
                 foreach (var m in db.CustomerInterests.Where(f => f.customerid == afiliado.id))
                 {
@@ -620,8 +632,15 @@ namespace Suma2Lealtad.Models
                     comments = afiliado.comments
                 };
                 //db.AffiliateAuds.Add(affiliateAuditoria);
-                db.SaveChanges();
-                return true;
+                if (SaveWebPlazas(afiliado))
+                {
+                    db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }            
         }
 
@@ -637,10 +656,10 @@ namespace Suma2Lealtad.Models
             string movimientosLealtadJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.Skip(1).First().accounttype, nrodocumento);
             SaldosMovimientos.MovimientosPrepago = (IEnumerable<Movimiento>)JsonConvert.DeserializeObject<IEnumerable<Movimiento>>(movimientosPrepagoJson);
             var MovimientosPrepagoOrdenados =  SaldosMovimientos.MovimientosPrepago.OrderByDescending(x => x.batchid);
-            SaldosMovimientos.MovimientosPrepago = MovimientosPrepagoOrdenados;
+            SaldosMovimientos.MovimientosPrepago = MovimientosPrepagoOrdenados.Take(3);
             SaldosMovimientos.MovimientosSuma = (IEnumerable<Movimiento>)JsonConvert.DeserializeObject<IEnumerable<Movimiento>>(movimientosLealtadJson);
             var MovimientosSumaOrdenados =  SaldosMovimientos.MovimientosSuma.OrderByDescending(x => x.batchid);
-            SaldosMovimientos.MovimientosSuma = MovimientosSumaOrdenados;
+            SaldosMovimientos.MovimientosSuma = MovimientosSumaOrdenados.Take(3);
             return SaldosMovimientos;
         }
 
@@ -652,6 +671,63 @@ namespace Suma2Lealtad.Models
             return RespuestaCards;
         }
 
+        public RespuestaCards BloquearTarjeta(string numdoc)
+        {
+            RespuestaCards RespuestaCards = new RespuestaCards();
+            string RespuestaCardsJson = WSL.Cards.addCard(numdoc.Substring(2));
+            RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
+            return RespuestaCards;
+        }
+
+        public bool SuspenderTarjeta(string numdoc)
+        {
+            Afiliado afiliado = Find(numdoc);
+            RespuestaCards RespuestaCards = new RespuestaCards();
+            string RespuestaCardsJson = WSL.Cards.cardInactive(afiliado.docnumber.Substring(2));
+            RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
+            if (RespuestaCards.code == "0")
+            {
+                afiliado.estatustarjeta = "Suspendida";
+                SaveChanges(afiliado);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool ReactivarTarjeta(string numdoc)
+        {
+            Afiliado afiliado = Find(numdoc);
+            RespuestaCards RespuestaCards = new RespuestaCards();
+            string RespuestaCardsJson = WSL.Cards.cardActive(afiliado.docnumber.Substring(2));
+            RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
+            if (RespuestaCards.code == "0")
+            {
+                afiliado.estatustarjeta = "Activa";
+                SaveChanges(afiliado);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public RespuestaCards ImprimirTarjeta(string numdoc)
+        {
+            RespuestaCards RespuestaCards = new RespuestaCards();
+            string RespuestaCardsJson = WSL.Cards.cardActive(numdoc.Substring(2));
+            RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
+            if (RespuestaCards.code == "0")
+            {
+                RespuestaCardsJson = WSL.Cards.cardPrint(numdoc.Substring(2));
+                RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
+            }
+            return RespuestaCards;
+        }
+
         public bool Aprobar(Afiliado afiliado)
         {
             RespuestaCards RespuestaCards = new RespuestaCards();
@@ -659,7 +735,7 @@ namespace Suma2Lealtad.Models
             RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
             if (RespuestaCards.code == "0" || RespuestaCards.code == "7")
             {
-                afiliado.statusid = 2;
+                afiliado.statusid = ID_ESTATUS_ACTIVA;
                 SaveChanges(afiliado);
                 return true;
             }

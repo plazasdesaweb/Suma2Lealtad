@@ -23,32 +23,30 @@
 
                         <thead>
                             <tr>
-                                <th>
-                                    @*@Html.DisplayNameFor(model => model.Nombre)*@ Nombre
-                                </th>
+                                <th>Nombre</th>
                                 <th class="text-center"></th>
                             </tr>
                         </thead>
 
                         <tbody>
 
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.name)
-                                    </td>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
 
-                                    <td class="text-right">
-                                        <a href="@Url.Action("Edit", "ReasonsBlock", new { id = item.id })" class="btn btn-info btn-xs">
-                                            <span class="glyphicon glyphicon-edit"></span>
-                                        </a>
-                                        <a href="@Url.Action("Delete", "ReasonsBlock", new { id = item.id })" class="btn btn-danger btn-xs">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            }
+                            <td class="text-right">
+                                <a href="@Url.Action("Edit", "ReasonsBlock", new { id = item.id })" class="btn btn-info btn-xs">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                                <a href="@Url.Action("Delete", "ReasonsBlock", new { id = item.id })" class="btn btn-danger btn-xs">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        }
 
                         </tbody>
 

@@ -21,37 +21,35 @@
 
                     @using (Html.BeginForm())
                     {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true)
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
 
-                        <form class="form-horizontal" role="form">
+                    <form class="form-horizontal" role="form">
 
-                            @*            @Html.HiddenFor(model => model.type)*@
-                            <input name="type" id="type" type="hidden" value="Rechazo">
+                        <input name="type" id="type" type="hidden" value="Rechazo">
 
-                            <div class="form-group">
-                                <div class="editor-label col-md-4 control-label">
-                                    @*@Html.LabelFor(model => model.name)*@ Nombre :
-                                </div>
-                                <div class="editor-field col-md-8">
-                                    @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.name)
+                        <div class="form-group">
+                            <div class="editor-label col-md-4 control-label">
+                                Nombre :
+                            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.name)
+                            </div>
+                        </div>
+
+                        <!-- buttons -->
+                        <div class="form-group">
+                            <div class="col-md-12 col-btn">
+                                <div class="pull-right">
+                                    <input type="submit" class="btn btn-success btn-md" value="Guardar" />
+                                    <a href="@Url.Action("Index", "Reasons")" class="btn btn-danger btn-md" role="button">Cancelar</a>
                                 </div>
                             </div>
+                        </div>
+                        <!--// buttons -->
 
-                            <!-- buttons -->
-                            <div class="form-group">
-                                <div class="col-md-12 col-btn">
-                                    <div class="pull-right">
-                                        <input type="submit" class="btn btn-success btn-md" value="Guardar" />
-                                        <a href="@Url.Action("Index", "Reasons")" class="btn btn-danger btn-md" role="button">Cancelar</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--// buttons -->
-
-                        </form>
-                
+                    </form>
                     }
 
                 </div>

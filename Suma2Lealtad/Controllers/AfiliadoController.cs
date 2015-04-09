@@ -52,7 +52,6 @@ namespace Suma2Lealtad.Controllers
             else if (afiliado.clientid != 0 && afiliado.id != 0)
             {
                 //CLIENTE/AFILIADO
-                afiliado.name = (afiliado.name + " " + afiliado.lastname1).ToUpper();
                 List<Afiliado> afiliados = new List<Afiliado> { afiliado };
                 return View("Index", afiliados);
             }
@@ -67,11 +66,11 @@ namespace Suma2Lealtad.Controllers
             }
         }
 
-        public ActionResult Create(int id)
-        {
-            Afiliado afiliado = rep.Find(id);
-            return View(afiliado);
-        }
+        //public ActionResult Create(int id)
+        //{
+        //    Afiliado afiliado = rep.Find(id);
+        //    return View(afiliado);
+        //}
 
         [HttpPost]
         public ActionResult Create(Afiliado afiliado, HttpPostedFileBase file)
@@ -87,27 +86,30 @@ namespace Suma2Lealtad.Controllers
                     }
                     catch (Exception ex)
                     {
-                        viewmodel.Title = "Crear Afiliación:";
+                        viewmodel.Title = "Afiliado / Crear Afiliación";
                         viewmodel.Message = "Error de aplicacion: No se pudo cargar archivo (" + ex.Message + ")";
                         viewmodel.ControllerName = "Afiliado";
                         viewmodel.ActionName = "Filter";
-                        //viewmodel.RouteValues = afiliado.docnumber;
+                        return RedirectToAction("GenericView", viewmodel);
                     }
                 else
                 {
-                    //ViewBag.Message2 = "Debe seleccionar un archivo.";
-                    //MessageBox.Show("Debe seleccionar un archivo");
+                    viewmodel.Title = "Afiliado / Crear Afiliación";
+                    viewmodel.Message = "Error de aplicacion: No se pudo cargar archivo (archivo inválido)";
+                    viewmodel.ControllerName = "Afiliado";
+                    viewmodel.ActionName = "Filter";
+                    return RedirectToAction("GenericView", viewmodel);
                 }
                 //PENDIENTE: SI FALLA ALGUNA DE LAS ACTIVIDADES. HAY QUE DESHACER LAS ACTIVIDADES ANTERIORES EXITOSAS.                
-                viewmodel.Title = "Crear Afiliación:";
+                viewmodel.Title = "Afiliado / Crear Afiliación";
                 viewmodel.Message = "Solicitud de afiliación creada exitosamente.";
                 viewmodel.ControllerName = "Afiliado";
                 viewmodel.ActionName = "Index";
                 viewmodel.RouteValues = afiliado.docnumber;
-            }
+            }                
             else
             {
-                viewmodel.Title = "Crear Afiliación:";
+                viewmodel.Title = "Afiliado / Crear Afiliación";
                 viewmodel.Message = "Error de aplicacion: No se pudo crear solicitud de afiliación.";
                 viewmodel.ControllerName = "Afiliado";
                 viewmodel.ActionName = "Filter";
@@ -140,7 +142,7 @@ namespace Suma2Lealtad.Controllers
             Afiliado afiliado = rep.Find(id);
             if (rep.Aprobar(afiliado))
             {
-                viewmodel.Title = "Aprobar Afiliación:";
+                viewmodel.Title = "Afiliado / Aprobar Afiliación:";
                 viewmodel.Message = "Afiliación Aprobada.";
                 viewmodel.ControllerName = "Afiliado";
                 viewmodel.ActionName = "Index";
@@ -148,7 +150,7 @@ namespace Suma2Lealtad.Controllers
             }
             else
             {
-                viewmodel.Title = "Aprobar Afiliación:";
+                viewmodel.Title = "Afiliado / Aprobar Afiliación:";
                 viewmodel.Message = "Aprobación Fallida.";
                 viewmodel.ControllerName = "Afiliado";
                 viewmodel.ActionName = "Index";
@@ -157,7 +159,6 @@ namespace Suma2Lealtad.Controllers
             return RedirectToAction("GenericView", viewmodel);
         }
 
-        //public ActionResult Edit(int id = 0)
         public ActionResult Edit(int id)
         {
             Afiliado afiliado = rep.Find(id);
@@ -170,9 +171,7 @@ namespace Suma2Lealtad.Controllers
             ViewModel viewmodel = new ViewModel();
             if (!rep.SaveChanges(afiliado))
             {
-                //return RedirectToAction("GenericView", new { msg = "Existen campos que son requeridos para procesar el formulario." });
-                //return RedirectToAction("FilterReview");
-                viewmodel.Title = "Revisar Afiliación:";
+                viewmodel.Title = "Afiliado / Revisar Afiliación:";
                 viewmodel.Message = "Existen campos que son requeridos para procesar el formulario.";
                 viewmodel.ControllerName = "Afiliado";
                 viewmodel.ActionName = "Index";
@@ -180,11 +179,7 @@ namespace Suma2Lealtad.Controllers
             }
             else
             {
-                //Aqui debo llamar a los servicios de actualización
-                //return RedirectToAction("GenericView", new { msg = "La información del afiliado ha sido actualizada satisfactoriamente." });
-                //return RedirectToAction("FilterReview");
-                //return View(afiliado);
-                viewmodel.Title = "Revisar Afiliación:";
+                viewmodel.Title = "Afiliado / Revisar Afiliación:";
                 viewmodel.Message = "La información del afiliado ha sido actualizada satisfactoriamente.";
                 viewmodel.ControllerName = "Afiliado";
                 viewmodel.ActionName = "Index";
@@ -197,6 +192,19 @@ namespace Suma2Lealtad.Controllers
         {
             Afiliado afiliado = rep.Find(id);
             return View("ImpresoraImprimirTarjeta", afiliado);
+        }
+
+        [HttpPost]
+        public ActionResult ImprimirTarjeta(string docnumber)
+        {
+            ViewModel viewmodel = new ViewModel();
+            RespuestaCards RespuestaCards = rep.ImprimirTarjeta(docnumber);
+            viewmodel.Title = "Afiliado / Operaciones con la Impresora / Imprimir Tarjeta";
+            viewmodel.Message = "Código de respuesta (" + RespuestaCards.code + "): " + RespuestaCards.detail;
+            viewmodel.ControllerName = "Afiliado";
+            viewmodel.ActionName = "Index";
+            viewmodel.RouteValues = docnumber;
+            return RedirectToAction("GenericView", viewmodel);
         }
 
         public ActionResult CrearPin(int id)
@@ -234,7 +242,7 @@ namespace Suma2Lealtad.Controllers
         {
             ViewModel viewmodel = new ViewModel();
             RespuestaCards RespuestaCards = rep.Acreditar(docnumber, monto);
-            viewmodel.Title = "Acreditar";
+            viewmodel.Title = "Afiliado / Acreditar";
             viewmodel.Message = "Código de respuesta (" + RespuestaCards.code + "): " + RespuestaCards.detail;
             viewmodel.ControllerName = "Afiliado";
             viewmodel.ActionName = "Index";
@@ -244,23 +252,78 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult BloquearTarjeta(int id)
         {
+            Afiliado afiliado = rep.Find(id);
+            return View(afiliado);
+        }
+
+        [HttpPost]
+        public ActionResult BloquearTarjeta(string docnumber)
+        {
             ViewModel viewmodel = new ViewModel();
-            viewmodel.Title = "";
-            viewmodel.Message = "";
-            viewmodel.ControllerName = "";
-            viewmodel.ActionName = "";
-            viewmodel.RouteValues = "";
+            RespuestaCards RespuestaCards = rep.BloquearTarjeta(docnumber);
+            viewmodel.Title = "Afiliado / Bloquear Tarjeta";
+            viewmodel.Message = "Código de respuesta (" + RespuestaCards.code + "): " + RespuestaCards.detail;
+            viewmodel.ControllerName = "Afiliado";
+            viewmodel.ActionName = "Index";
+            viewmodel.RouteValues = docnumber;
             return RedirectToAction("GenericView", viewmodel);
         }
 
         public ActionResult SuspenderTarjeta(int id)
         {
+            Afiliado afiliado = rep.Find(id);
+            return View(afiliado);
+        }
+
+        [HttpPost]
+        public ActionResult SuspenderTarjeta(string docnumber)
+        {
             ViewModel viewmodel = new ViewModel();
-            viewmodel.Title = "";
-            viewmodel.Message = "";
-            viewmodel.ControllerName = "";
-            viewmodel.ActionName = "";
-            viewmodel.RouteValues = "";
+            if (rep.SuspenderTarjeta(docnumber))
+            {
+                viewmodel.Title = "Afiliado / Suspender Tarjeta";
+                viewmodel.Message = "Tarjeta suspendida.";
+                viewmodel.ControllerName = "Afiliado";
+                viewmodel.ActionName = "Index";
+                viewmodel.RouteValues = docnumber;
+            }
+            else
+            {
+                viewmodel.Title = "Afiliado / Suspender Tarjeta";
+                viewmodel.Message = "No se pudo suspender la tarjeta.";
+                viewmodel.ControllerName = "Afiliado";
+                viewmodel.ActionName = "Index";
+                viewmodel.RouteValues = docnumber;
+            }
+            return RedirectToAction("GenericView", viewmodel);
+        }
+
+        public ActionResult ReactivarTarjeta(int id)
+        {
+            Afiliado afiliado = rep.Find(id);
+            return View(afiliado);
+        }
+
+        [HttpPost]
+        public ActionResult ReactivarTarjeta(string docnumber)
+        {
+            ViewModel viewmodel = new ViewModel();
+            if (rep.ReactivarTarjeta(docnumber))
+            {
+                viewmodel.Title = "Afiliado / Reactivar Tarjeta";
+                viewmodel.Message = "Tarjeta suspendida.";
+                viewmodel.ControllerName = "Afiliado";
+                viewmodel.ActionName = "Index";
+                viewmodel.RouteValues = docnumber;
+            }
+            else
+            {
+                viewmodel.Title = "Afiliado / Reactivar Tarjeta";
+                viewmodel.Message = "No se pudo reactivar la tarjeta.";
+                viewmodel.ControllerName = "Afiliado";
+                viewmodel.ActionName = "Index";
+                viewmodel.RouteValues = docnumber;
+            }
             return RedirectToAction("GenericView", viewmodel);
         }
 

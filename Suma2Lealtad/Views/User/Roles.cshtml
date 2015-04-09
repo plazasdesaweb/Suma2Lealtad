@@ -13,7 +13,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading clearfix panel-gradient">
-                    <h3 class="panel-title">Usuario / Asociar Roles al Usuario</h3>
+                    <h3 class="panel-title">Usuario / Asociar Roles</h3>
                 </div>
 
 
@@ -50,13 +50,13 @@
                                         <b>Roles :</b>
                                     </div>
                                     <div class="editor-field col-md-6">
-                                        @for (int i = 0; i < Model.Roles.Count; i++)
-                                        {
-                                            @Html.CheckBoxFor(m => m.Roles[i].Checked, new { id = i })
-                                            @Html.HiddenFor(m => m.Roles[i].RolID)
-                                            @Html.DisplayFor(m => m.Roles[i].RolName)
-                                            <br />
-                                        }
+                                    @for (int i = 0; i < Model.Roles.Count; i++)
+                                    {
+                                        @Html.CheckBoxFor(m => m.Roles[i].Checked, new { id = i })
+                                        @Html.HiddenFor(m => m.Roles[i].RolID)
+                                        @Html.DisplayFor(m => m.Roles[i].RolName)
+                                        <br />
+                                    }
                                     </div>
 
                                 </div>

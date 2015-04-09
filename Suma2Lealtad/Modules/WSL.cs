@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Suma2Lealtad.Models;
+using System;
 using System.IO;
 using System.Net;
 using System.Net.Cache;
@@ -11,10 +12,11 @@ namespace Suma2Lealtad.Modules
     {
         //servicios Cards
         private const string WSL_CARDS_ADDCLIENT = "addclient/{numdoc}/{name}/{phone}/{address}";
-        private const string WSL_CARDS_ADDBATCH = "/addbatch/{numdoc}/{transcode}/{monto}/{factoracred}/{factorcanje}";
+        private const string WSL_CARDS_ADDBATCH = "addbatch/{numdoc}/{transcode}/{monto}/{factoracred}/{factorcanje}";
         private const string WSL_CARDS_GETCLIENT = "getclient/{numdoc}";
         private const string WSL_CARDS_GETBALANCE = "getbalance/{numdoc}";
         private const string WSL_CARDS_GETBATCH = "getbatch/{accounttype}/{numdoc}";
+        private const string WSL_CARDS_ADDCARD = "addcard/{numdoc}";
         private const string WSL_CARDS_CARD_PRINT = "card/print/{numdoc}";
         private const string WSL_CARDS_CARD_ACTIVE = "card/active/{numdoc}";
         private const string WSL_CARDS_CARD_INACTIVE = "card/inactive/{numdoc}";
@@ -104,6 +106,13 @@ namespace Suma2Lealtad.Modules
                 return ConsumirServicioCards(req);
             }
 
+            public static string addCard(string numdoc)
+            {
+                string req = WSL_CARDS_ADDCARD;
+                req = req.Replace("{numdoc}", numdoc);
+                return ConsumirServicioCards(req);
+            }
+
             public static string cardPrint(string numdoc)
             {
                 string req = WSL_CARDS_CARD_PRINT;
@@ -151,25 +160,25 @@ namespace Suma2Lealtad.Modules
                 return ConsumirServicioPlazasWeb(req);
             }
 
-            public static string UpdateClient(Suma2Lealtad.Models.Afiliado record)
+            public static string UpdateClient(Afiliado record)
             {
                 string req = WSL_WEBPLAZAS_UPDCLIENT;
-                req = req.Replace("{id}", record.id.ToString());
+                req = req.Replace("{id}", record.clientid.ToString());
                 req = req.Replace("{docnumber}", record.docnumber);
-                req = req.Replace("{nationality}", record.nationality + "");
+                req = req.Replace("{nationality}", record.nationality);// + "");
                 req = req.Replace("{name}", record.name);
                 req = req.Replace("{name2}", record.name2 == null ? "NULO" : record.name2);
                 req = req.Replace("{lastname1}", record.lastname1);
                 req = req.Replace("{lastname2}", record.lastname2 == null ? "NULO" : record.lastname2);
-                req = req.Replace("{birthdate}", "19361217"); //record.birthdate + "");
-                req = req.Replace("{gender}", record.gender + "");
-                req = req.Replace("{maritalstatus}", record.maritalstatus + "");
-                req = req.Replace("{occupation}", record.occupation + "");
+                req = req.Replace("{birthdate}", record.birthdate.Substring(6, 4) + record.birthdate.Substring(3, 2) + record.birthdate.Substring(0, 2));// == null ? "19000101" : record.birthdate); 'yyyyMMdd'
+                req = req.Replace("{gender}", record.gender);// + "");
+                req = req.Replace("{maritalstatus}", record.maritalstatus);// + "");
+                req = req.Replace("{occupation}", record.occupation);// + "");
                 req = req.Replace("{phone1}", record.phone1);
                 req = req.Replace("{phone2}", record.phone2 == null ? "NULO" : record.phone2);
                 req = req.Replace("{phone3}", record.phone3 == null ? "NULO" : record.phone3);
                 req = req.Replace("{email}", record.email);
-                req = req.Replace("{type}", record.type + "");
+                req = req.Replace("{type}", record.type);// + "");
                 return ConsumirServicioPlazasWeb(req);
             }
 

@@ -18,30 +18,32 @@
 
                 <div class="panel-body">
 
-                    <!-- btn btn-success -->
-                    <div class="col-md-12 col-btn">
-                        <div class="text-center">
-                            <a href="javascript:ImprimirTarjeta()" class="btn btn-success btn-md" role="button">Imprimir Tarjeta</a>
-                            @*<a href="javascript:ReanudarImpresora()" class="btn btn-success btn-md" role="button">Reanudar Impresora</a>*@
-                            @*<a href="javascript:LimpiarErrores()" class="btn btn-success btn-md" role="button">Limpiar Errores Impresora</a>*@
+                    <form action="@Url.Action("ImprimirTarjeta", "Afiliado")" name="form" method="post">
+
+                        <!-- btn btn-success -->
+                        <div class="col-md-12 col-btn">
+                            <div class="text-center">
+                                <a href="javascript:ImprimirTarjeta()" class="btn btn-success btn-md" role="button">Imprimir Tarjeta</a>
+                                @*<a href="javascript:ReanudarImpresora()" class="btn btn-success btn-md" role="button">Reanudar Impresora</a>*@
+                                @*<a href="javascript:LimpiarErrores()" class="btn btn-success btn-md" role="button">Limpiar Errores Impresora</a>*@
+                            </div>
                         </div>
-                    </div>
-                    <!--// btn btn-success -->
+                        <!--// btn btn-success -->
 
-                    <!-- SilverLight -->
+                        <!-- SilverLight -->
 
-                    @{Html.RenderPartial("SilverlightImpresora");}
+                        @{Html.RenderPartial("SilverlightImpresora");}
 
-                    <!-- SECCION PARA VERIFICAR OPERACIONES Impresora-->
-                    <div class="col-md-12">
-                        <p class="text-left" id="ElementoControl" style="visibility: hidden">ElementoControl</p>
-                    </div>
+                        <!-- SECCION PARA VERIFICAR OPERACIONES Impresora-->
+                        <div class="col-md-12">
+                            <p class="text-left" id="ElementoControl" style="visibility: hidden">ElementoControl</p>
+                        </div>
 
-                    <!-- SilverLight -->
+                        <!-- SilverLight -->
 
-                    <!-- Sección pregunta modal -->
-                    <div class="source-code runnable">
-                        <!--BootstrapDialog.show({
+                        <!-- Sección pregunta modal -->
+                        <div class="source-code runnable">
+                            <!--BootstrapDialog.show({
                             title: 'Impresora de Tarjetas',
                             message: '¿La tarjeta fue impresa correctamente?',
                             type: BootstrapDialog.TYPE_WARNING,
@@ -55,54 +57,28 @@
                             }, {
                                 label: 'Si',
                                 action: function(dialogRef) {
-                                    alert('Aqui debo llamar al servicio que actualiza estatus de la tarjeta');
-                                    dialogRef.close();  
+                                    dialogRef.close();
+                                    //$("#botonguardar").submit(); 
+                                    $("#submit").show();                             
                                     $("#sl").show();
                                 }
                             }]
                         });-->
-                    </div>
-
-                    @*<script src="~/Scripts/PruebaBS3Dialog/assets/jquery/jquery.min.js"></script>*@
-                    <script src="~/Scripts/jquery-2.1.3.min.js"></script>
-                    @*<link href="~/Scripts/PruebaBS3Dialog/assets/bootstrap/css/bootstrap.css" rel="stylesheet" />*@
-                    @*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
-                    @*<script src="~/Scripts/PruebaBS3Dialog/assets/bootstrap/js/bootstrap.js"></script>*@
-                    <script src="~/Scripts/bootstrap.min.js"></script>
-                    <script src="~/Scripts/PruebaBS3Dialog/assets/prettify/run_prettify.js"></script>
-                    <link href="~/Scripts/PruebaBS3Dialog/assets/bootstrap-dialog/css/bootstrap-dialog.css" rel="stylesheet" />
-                    <script src="~/Scripts/PruebaBS3Dialog/assets/bootstrap-dialog/js/bootstrap-dialog.js"></script>
-
-                    <script type="text/javascript">
-                        var Myinterval = setInterval(function () {
-                            if (document.getElementById("ElementoControl").innerHTML == "Impresa") {
-                                //clearInterval(Myinterval)
-                                document.getElementById("ElementoControl").innerHTML = "ElementoControl";
-                                ActivarDialogBox();
-                            }
-                        }, 1000);
-
-                        function ActivarDialogBox() {
-                            $('.source-code').each(function (index) {
-                                var $section = $(this);
-                                var code = $(this).html().replace('<!--', '').replace('-->', '');
-
-                                // Run code
-                                if ($section.hasClass('runnable')) {
-                                    $("#sl").hide();
-                                    eval(code);
-                                }
-                            });
-                        }
-                    </script>
-
-                    @*fin sección de dialogo modal*@
-
-                    <div class="col-md-12 col-btn">
-                        <div class="pull-right">
-                            <a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.docnumber })" class="btn btn-success btn-md">Regresar</a>
                         </div>
-                    </div>
+
+                        @*fin sección de dialogo modal*@
+
+                        <div class="col-md-12 col-btn">
+                            <div class="pull-right">
+                                @*<a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.docnumber })" class="btn btn-success btn-md">Regresar</a>*@
+
+                                @Html.HiddenFor(model => model.docnumber)
+                                <input id="submit" name="submit" type="submit" class="btn btn-success btn-md" value="Guardar" style="display:none"/>
+                            </div>
+                        </div>
+
+                    </form>
+
                 </div>
 
             </div>
@@ -116,3 +92,37 @@
 
 </div>
 <!--// container -->
+
+@*<script src="~/Scripts/PruebaBS3Dialog/assets/jquery/jquery.min.js"></script>*@
+<script src="~/Scripts/jquery-2.1.3.min.js"></script>
+@*<link href="~/Scripts/PruebaBS3Dialog/assets/bootstrap/css/bootstrap.css" rel="stylesheet" />*@
+@*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
+@*<script src="~/Scripts/PruebaBS3Dialog/assets/bootstrap/js/bootstrap.js"></script>*@
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/PruebaBS3Dialog/assets/prettify/run_prettify.js"></script>
+<link href="~/Scripts/PruebaBS3Dialog/assets/bootstrap-dialog/css/bootstrap-dialog.css" rel="stylesheet" />
+<script src="~/Scripts/PruebaBS3Dialog/assets/bootstrap-dialog/js/bootstrap-dialog.js"></script>
+
+<script type="text/javascript">
+    var Myinterval = setInterval(function () {
+        if (document.getElementById("ElementoControl").innerHTML == "Impresa") {
+            //clearInterval(Myinterval)
+            document.getElementById("ElementoControl").innerHTML = "ElementoControl";
+            ActivarDialogBox();
+        }
+    }, 1000);
+
+    function ActivarDialogBox() {
+        $('.source-code').each(function (index) {
+            var $section = $(this);
+            var code = $(this).html().replace('<!--', '').replace('-->', '');
+
+            // Run code
+            if ($section.hasClass('runnable')) {
+                $("#sl").hide();
+                eval(code);
+            }
+        });
+    }
+</script>
+

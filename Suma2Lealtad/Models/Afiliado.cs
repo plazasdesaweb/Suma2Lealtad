@@ -52,7 +52,7 @@ namespace Suma2Lealtad.Models
         public string name2 { get; set; } // +<*
         public string lastname1 { get; set; } // +<*
         public string lastname2 { get; set; } // +<*
-	    public DateTime? birthdate { get; set; } // +*
+	    public string birthdate { get; set; } // +*
 	    public string gender { get; set; } //+*
         public string maritalstatus { get; set; } // +*
         public string occupation { get; set; } // +*
