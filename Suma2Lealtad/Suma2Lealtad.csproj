@@ -224,6 +224,7 @@
     </Compile>
     <Compile Include="Models\AfiliadoRepository.cs" />
     <Compile Include="Models\Afiliado.cs" />
+    <Compile Include="Models\AfiliadoSaldosMovimientos.cs" />
     <Compile Include="Models\Auditing.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>

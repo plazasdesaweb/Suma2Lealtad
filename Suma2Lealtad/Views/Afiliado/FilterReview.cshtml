@@ -88,25 +88,66 @@
     <script>
 
         function validateNumDoc() {
-
             var numdoc = document.getElementById('numdoc').value;
-
-            if (numdoc.length == 0)
+            if (numdoc.length == 0) {
                 return false;
-
-            console.log(numdoc);
-
-            if (!numdoc.match(/^(V|E|J|G)\-\d{6,8}$/)) {
-
-                var span = document.getElementById('field1');
-                span.innerHTML = "";
-                span.appendChild(document.createTextNode("ExpReg No Válida!!"));
-                return false;
-
             }
 
+            var RegExPattern = /^([VvEeJjGg]){1}(-){1}(\d){3,10}$/;
+            var RegExPattern2 = /^([VvEeJjGg]){1}(\d){3,10}$/;
+            var RegExPattern3 = /^([Pp]){1}(-){1}([A-Za-z0-9]){3,10}$/;
+            var RegExPattern4 = /^([Pp]){1}([A-Za-z0-9]){3,10}$/;
+            
+            if (RegExPattern.test(numdoc) == false && RegExPattern2.test(numdoc) == false && RegExPattern3.test(numdoc) == false && RegExPattern4.test(numdoc) == false) {
+                spanMessage('field1', '* Formato Número de Documento Incorrecto. (V-12345678)');
+                document.getElementById('numdoc').value = "";
+                document.getElementById('numdoc').focus();
+                return false;
+            }
+            else if (RegExPattern.test(numdoc) != false) {
+                document.getElementById('numdoc').value = numdoc.toUpperCase();
+            }
+            else if (RegExPattern2.test(numdoc) != false) {
+                document.getElementById('numdoc').value = numdoc.substring(0, 1).toUpperCase() + "-" + numdoc.substring(1).toUpperCase();
+            }
+            else if (RegExPattern3.test(numdoc) != false) {
+                document.getElementById('numdoc').value = numdoc.toUpperCase();
+            }
+            else if (RegExPattern4.test(numdoc) != false) {
+                document.getElementById('numdoc').value = numdoc.substring(0, 1).toUpperCase() + "-" + numdoc.substring(1).toUpperCase();
+            }
+            document.getElementById('field1').value = "";
             return true;
+        }
 
+        //function validateNumDoc() {
+
+        //    var numdoc = document.getElementById('numdoc').value;
+
+        //    if (numdoc.length == 0)
+        //        return false;
+
+        //    console.log(numdoc);
+
+        //    if (!numdoc.match(/^(V|E|J|G)\-\d{6,8}$/)) {
+
+        //        var span = document.getElementById('field1');
+        //        span.innerHTML = "";
+        //        span.appendChild(document.createTextNode("ExpReg No Válida!!"));
+        //        return false;
+
+        //    }
+
+        //    return true;
+
+        //}
+
+        function spanMessage(idelemento, mensaje) {
+            var span = document.getElementById(idelemento);
+            while (span.firstChild) {
+                span.removeChild(span.firstChild);
+            }
+            span.appendChild(document.createTextNode(mensaje));
         }
 
 
@@ -117,14 +158,18 @@
             if (name.length == 0)
                 return false;
 
-            console.log(name);
+            //console.log(name);
 
 
             if (!name.match(/^[a-zA-Z''-'\s]*$/)) {
 
-                var span = document.getElementById('field2');
-                span.innerHTML = "";
-                span.appendChild(document.createTextNode("ExpReg No Válida."));
+                //var span = document.getElementById('field2');
+                //span.innerHTML = "";
+                //span.appendChild(document.createTextNode("ExpReg No Válida."));
+                //return false;
+                spanMessage('field2', '* Formato Nombre Incorrecto.');
+                document.getElementById('name').value = " ";
+                document.getElementById('name').focus();
                 return false;
 
             }
@@ -146,7 +191,6 @@
         }
 
         function validateForm() {
-
             var numdoc = document.getElementById('numdoc').value;
             var name = document.getElementById('name').value;
             var email = document.getElementById('email').value;

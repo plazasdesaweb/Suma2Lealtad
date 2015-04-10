@@ -20,6 +20,7 @@ namespace Suma2Lealtad.Modules
         private const string WSL_CARDS_CARD_PRINT = "card/print/{numdoc}";
         private const string WSL_CARDS_CARD_ACTIVE = "card/active/{numdoc}";
         private const string WSL_CARDS_CARD_INACTIVE = "card/inactive/{numdoc}";
+        private const string WSL_CARDS_CARD_STATUS = "card/status/{numdoc}/{status}";
         //servicios WebPlazas
         private const string WSL_WEBPLAZAS_GETCLIENTBYNUMDOC = "getclientbynumdoc/{docnumber}";
         private const string WSL_WEBPLAZAS_UPDCLIENT = "updclient/{id}/{docnumber}/{nationality}/{name}/{name2}/{lastname1}/{lastname2}/{birthdate}/{gender}/{maritalstatus}/{occupation}/{phone1}/{phone2}/{phone3}/{email}/{type}";
@@ -134,6 +135,14 @@ namespace Suma2Lealtad.Modules
                 return ConsumirServicioCards(req);
             }
 
+            public static string cardStatus(string numdoc, string status)
+            {
+                string req = WSL_CARDS_CARD_STATUS;
+                req = req.Replace("{numdoc}", numdoc);
+                req = req.Replace("{status}", status);
+                return ConsumirServicioCards(req);
+            }
+
         }
 
         //implementa los servicios web
@@ -167,16 +176,16 @@ namespace Suma2Lealtad.Modules
                 req = req.Replace("{docnumber}", record.docnumber);
                 req = req.Replace("{nationality}", record.nationality);// + "");
                 req = req.Replace("{name}", record.name);
-                req = req.Replace("{name2}", record.name2 == null ? "NULO" : record.name2);
+                req = req.Replace("{name2}", record.name2 == "" ? "NULO" : record.name2);
                 req = req.Replace("{lastname1}", record.lastname1);
-                req = req.Replace("{lastname2}", record.lastname2 == null ? "NULO" : record.lastname2);
+                req = req.Replace("{lastname2}", record.lastname2 == "" ? "NULO" : record.lastname2);
                 req = req.Replace("{birthdate}", record.birthdate.Substring(6, 4) + record.birthdate.Substring(3, 2) + record.birthdate.Substring(0, 2));// == null ? "19000101" : record.birthdate); 'yyyyMMdd'
                 req = req.Replace("{gender}", record.gender);// + "");
                 req = req.Replace("{maritalstatus}", record.maritalstatus);// + "");
                 req = req.Replace("{occupation}", record.occupation);// + "");
-                req = req.Replace("{phone1}", record.phone1);
-                req = req.Replace("{phone2}", record.phone2 == null ? "NULO" : record.phone2);
-                req = req.Replace("{phone3}", record.phone3 == null ? "NULO" : record.phone3);
+                req = req.Replace("{phone1}", record.phone1 );
+                req = req.Replace("{phone2}", record.phone2 == "" ? "NULO" : record.phone2);
+                req = req.Replace("{phone3}", record.phone3 == "" ? "NULO" : record.phone3);
                 req = req.Replace("{email}", record.email);
                 req = req.Replace("{type}", record.type);// + "");
                 return ConsumirServicioPlazasWeb(req);

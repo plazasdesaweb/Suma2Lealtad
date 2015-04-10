@@ -36,12 +36,12 @@
                 <thead>
 
                     <tr>
-                    <th>Número de Documento</th>
-                    <th>Nombre del Afiliado</th>
-                    <th>Correo Electrónico</th>
-                    <th>Estatus de Afiliación</th>
-                    <th>Número de Tarjeta</th>
-                    <th>Estatus de Tarjeta</th>
+                        <th>Número de Documento</th>
+                        <th>Nombre del Afiliado</th>
+                        <th>Correo Electrónico</th>
+                        <th>Estatus de Afiliación</th>
+                        <th>Número de Tarjeta</th>
+                        <th>Estatus de Tarjeta</th>
                         <th class="text-center"></th>
                     </tr>
 
@@ -57,7 +57,7 @@
                             </td>
 
                             <td>
-                                @Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.lastname1) 
+                                @Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.lastname1)
                             </td>
 
                             <td>
@@ -99,7 +99,6 @@
             <!-- SECCION PARA botones de operaciones -->
             <div class="col-md-12 col-btn">
                 <div class="pull-left">
-                    @*<a id="CrearPin" href="@Url.Action("CrearPin", "Afiliado", new { id = idAfiliado })" class="btn btn-success btn-md disabled" role="button">Crear Pin</a>*@
                     <a id="CrearPin" class="btn btn-success btn-md" role="button">Crear Pin</a>
                     <a id="CambiarPin" class="btn btn-success btn-md" role="button">Cambiar Pin</a>
                     <a id="ReiniciarPin" class="btn btn-success btn-md" role="button">Reiniciar Pin</a>
@@ -123,10 +122,6 @@
                     var statusAfiliacion;
                     var statusTarjeta;
 
-
-                    $("#SuspenderTarjeta").hide();
-                    $("#ReactivarTarjeta").hide();
-
                     $("#CrearPin").hide();
                     $("#CambiarPin").hide();
                     $("#ReiniciarPin").hide();
@@ -137,16 +132,6 @@
                     $("#SaldosMovimientos").hide();
                     $("#Acreditar").hide();
 
-                    //$("#CrearPin").addClass("disabled");
-                    //$("#CambiarPin").addClass("disabled");
-                    //$("#ReiniciarPin").addClass("disabled");
-                    //$("#ImprimirTarjeta").addClass("disabled");
-                    //$("#BloquearTarjeta").addClass("disabled");
-                    //$("#SuspenderTarjeta").addClass("disabled");
-                    //$("#ReactivarTarjeta").addClass("disabled");
-                    //$("#SaldosMovimientos").addClass("disabled");
-                    //$("#Acreditar").addClass("disabled");
-
                     $('.table tr').click(function () {
                         rowId = $(this).data("row-key");
                         statusAfiliacion = $(this).data("statusafiliacion");
@@ -154,11 +139,6 @@
 
                         $('.table tbody tr').removeClass("active");
                         $(this).addClass("active");
-                        //$("#" + rowId + "_edit").removeClass("disabled");
-                        //$("#" + rowId + "_approve").removeClass("disabled");
-
-                        $("#SuspenderTarjeta").hide();
-                        $("#ReactivarTarjeta").hide();
 
                         $("#CrearPin").hide();
                         $("#CambiarPin").hide();
@@ -170,52 +150,23 @@
                         $("#SaldosMovimientos").hide();
                         $("#Acreditar").hide();
 
-                        //$("#CrearPin").addClass("disabled"); 
-                        //$("#CambiarPin").addClass("disabled"); 
-                        //$("#ReiniciarPin").addClass("disabled"); 
-                        //$("#ImprimirTarjeta").addClass("disabled"); 
-                        //$("#BloquearTarjeta").addClass("disabled"); 
-                        //$("#SuspenderTarjeta").addClass("disabled");
-                        //$("#ReactivarTarjeta").addClass("disabled");
-                        //$("#SaldosMovimientos").addClass("disabled"); 
-                        //$("#Acreditar").addClass("disabled"); 
-
-                        //Verificar combinaciones de estatus de afiliacion y tarjeta
-                        if (statusAfiliacion == "Nueva") {                            
+                        if (statusAfiliacion == "Nueva") {
                         }
-                        else if (statusAfiliacion == "Activa" && statusTarjeta == "Activa") {
-                            $("#SuspenderTarjeta").show();
-
-                            $("#CrearPin").show();
-                            $("#CambiarPin").show();
-                            $("#ReiniciarPin").show();
-                            $("#BloquearTarjeta").show();
-                            $("#SuspenderTarjeta").show();
-                            $("#SaldosMovimientos").show();
-                            $("#Acreditar").show();
-
-                            //$("#CrearPin").removeClass("disabled");
-                            //$("#CambiarPin").removeClass("disabled");
-                            //$("#ReiniciarPin").removeClass("disabled");
-                            //$("#BloquearTarjeta").removeClass("disabled");
-                            //$("#SuspenderTarjeta").removeClass("disabled");
-                            //$("#SaldosMovimientos").removeClass("disabled");
-                            //$("#Acreditar").removeClass("disabled");
-                        }
-                        else if (statusAfiliacion == "Activa" && statusTarjeta == "Inactiva") {
-                            $("#SuspenderTarjeta").show();
-
+                        else if (statusAfiliacion == "Activa" && statusTarjeta == "Nueva") {
                             $("#ImprimirTarjeta").show();
                             $("#SaldosMovimientos").show();
                             $("#Acreditar").show();
-
-                            //$("#ImprimirTarjeta").removeClass("disabled");
-                            //$("#SaldosMovimientos").removeClass("disabled");
-                            //$("#Acreditar").removeClass("disabled");
+                        }
+                        else if (statusAfiliacion == "Activa" && statusTarjeta == "Activa") {
+                            $("#CrearPin").show();
+                            $("#CambiarPin").show();
+                            $("#ReiniciarPin").show();
+                            $("#BloquearTarjeta").show();
+                            $("#SuspenderTarjeta").show();
+                            $("#SaldosMovimientos").show();
+                            $("#Acreditar").show();
                         }
                         else if (statusAfiliacion == "Activa" && statusTarjeta == "Suspendida") {
-                            $("#ReactivarTarjeta").show();
-
                             $("#CrearPin").show();
                             $("#CambiarPin").show();
                             $("#ReiniciarPin").show();
@@ -223,15 +174,7 @@
                             $("#ReactivarTarjeta").show();
                             $("#SaldosMovimientos").show();
                             $("#Acreditar").show();
-
-                            //$("#CrearPin").removeClass("disabled");
-                            //$("#CambiarPin").removeClass("disabled");
-                            //$("#ReiniciarPin").removeClass("disabled");
-                            //$("#BloquearTarjeta").removeClass("disabled");
-                            //$("#ReactivarTarjeta").removeClass("disabled");
-                            //$("#SaldosMovimientos").removeClass("disabled");
-                            //$("#Acreditar").removeClass("disabled");
-                        }                                           
+                        }
                     });
 
                     $("#CrearPin").click(function () {
@@ -278,6 +221,14 @@
                         var href = '@Url.Content("~/{controller}/{action}/{params}")'
                         href = href.replace("{controller}", "Afiliado");
                         href = href.replace("{action}", "SuspenderTarjeta");
+                        href = href.replace("{params}", rowId);
+                        window.location.href = href;
+                    });
+
+                    $("#ReactivarTarjeta").click(function () {
+                        var href = '@Url.Content("~/{controller}/{action}/{params}")'
+                        href = href.replace("{controller}", "Afiliado");
+                        href = href.replace("{action}", "ReactivarTarjeta");
                         href = href.replace("{params}", rowId);
                         window.location.href = href;
                     });

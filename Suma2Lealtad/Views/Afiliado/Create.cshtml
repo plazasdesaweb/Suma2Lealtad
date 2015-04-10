@@ -40,7 +40,7 @@
                             @Html.HiddenFor(model => model.type)
                             @Html.HiddenFor(model => model.clientid)
                             @Html.HiddenFor(model => model.typeid)
-                            
+
                             <div class="editor-label col-md-4 control-label">
                                 * Número de Documento/Cédula :
                             </div>
@@ -196,109 +196,107 @@
                                 @Html.ValidationMessageFor(model => model.instagram_account)
                             </div>
 
+                            <div class="editor-label col-md-4 control-label">
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                <p class="text-left text-danger">
+                                    Los campos marcados con (*) son requeridos.
+                                </p>
+                            </div>
+
                         </div>
                         <!--// DATOS BÁSICOS -->
-
 
                         <!-- SILVERLIGHT -->
                         <div class="tab-pane" id="tab2">
 
-                            @*<div class="editor-label col-md-2 control-label">
-                            </div>
-
-                            <div class="editor-field col-md-10">
-                                <img src="@Url.Content(@Model.picture)" />
-                            </div>*@
-
-                            @*<div class="editor-label col-md-4 control-label">
-                                <br />
-                            </div>
-                            <div class="editor-field col-md-8">
-                                <br />
-                            </div>*@
-
                             <div class="col-md-12">
-                                <h2 class="text-left text-primary">Escanee el documento de identidad, o bien, selecciónelo si ya está escaneado.</h2>
-                                <p class="text-left">Escanear documento.</p>
-                            </div>
-
-                            @{Html.RenderPartial("SilverlightEscaner");}
-                            
-                            <div class="col-md-12">
-                                <p class="text-left" id="ElementoControl" style="visibility: hidden">ElementoControl</p>
-                            </div>
-                            
-                            <div class="col-md-12">
-                                <p class="text-left">Seleccionar archivo.</p>
-                                <div id="capaarchivo">
-                                    <input type="file" name="file" id="file" onchange="ActualizaElementoControl('ElementoControl','Seleccionada', this, '@Model.docnumber')" />
+                                <div class="editor-field col-md-10">
+                                    <p class="text-left text-danger">
+                                        Escanee el documento de identidad, o seleccione el archivo si ya está escaneado.
+                                    </p>
                                 </div>
-                                @*<input type="file" name="file" id="file" onchange="ActualizaElementoControl('ElementoControl','Seleccionada', this, '@Model.docnumber')" />*@
+
+                                @{Html.RenderPartial("SilverlightEscaner");}
+
+                                <div class="col-md-12">
+                                    <p class="text-left" id="ElementoControl" style="visibility: hidden">ElementoControl</p>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div id="capaarchivo">
+                                        Seleccionar archivo:
+                                    <input type="file" name="file" id="file" onchange="ActualizaElementoControl('ElementoControl','Seleccionada', this, '@Model.docnumber')" />
+                                    </div>
+                                    @*<input type="file" name="file" id="file" onchange="ActualizaElementoControl('ElementoControl','Seleccionada', this, '@Model.docnumber')" />*@
+                                </div>
+
+                                <!-- SECCION PARA VERIFICAR OPERACIONES ESCANER-->
+                                <script src="~/Scripts/jquery-2.1.3.min.js"></script>
+                                <script>
+                                    //$(document).ready(function () {
+                                    //    $("#seccion2").hide();
+                                    //    $("#seccion3").hide();
+                                    //    $("#boton2").hide();
+                                    //    $("#boton3").hide();
+                                    //});
+
+                                    //function Siguiente() {
+                                    //    $("#seccion1").hide();
+                                    //    $("#seccion2").show();
+                                    //    $("#boton1").hide();
+                                    //    $("#boton2").show();
+                                    //}
+
+                                    //function Siguiente2() {
+                                    //    if (VerificarElementoControl("ElementoControl", "Escaneada") == true) {
+                                    //        alert("Error: Debe seleccionar el archivo para cargarlo en el servidor.");
+                                    //    }
+                                    //    else if (VerificarElementoControl("ElementoControl", "Seleccionada") == true) {
+                                    //        $("#seccion2").hide();
+                                    //        $("#seccion3").show();
+                                    //        $("#boton2").hide();
+                                    //        $("#boton3").show();
+                                    //    }
+                                    //    else {
+                                    //        alert("Error: Debe completar Paso 1 y Paso 2 para continuar.");
+                                    //    }
+                                    //}
+
+                                    //function VerificarElementoControl(ElementoControl, ValorDeControl) {
+                                    //    if (document.getElementById(ElementoControl).innerHTML == ValorDeControl)
+                                    //        return true;
+                                    //    else
+                                    //        return false;
+                                    //}
+
+                                    function ActualizaElementoControl(ElementoControl, ValorDeControl, InputFile, Docnumber) {
+                                        var NombreArchivo = InputFile.value.split('\\');
+                                        if (NombreArchivo[NombreArchivo.length - 1] == Docnumber + ".jpg") {
+                                            document.getElementById(ElementoControl).innerHTML = ValorDeControl;
+                                        }
+                                        else {
+                                            alert("El archivo seleccionado no corresponde con el cliente Número de Documento / Cédula: " + Docnumber);
+                                            Borracampofile();
+                                        }
+                                    }
+
+                                    function Borracampofile() {
+                                        var textofuncion = "ActualizaElementoControl('ElementoControl', 'Seleccionada', this, '@Model.docnumber')"
+                                        capa = window.capaarchivo;
+                                        varHTML = '';
+                                        capa.innerHTML = varHTML;
+                                        varHTML += '<input type="file" name="file" id="file" onchange="' + textofuncion + '" />';
+                                        capa.innerHTML = varHTML;
+                                    }
+                                </script>
+                                <!-- FIN SECCION PARA VERIFICAR OPERACIONES -->
+
                             </div>
 
-                            <!-- SECCION PARA VERIFICAR OPERACIONES ESCANER-->
-                            <script src="~/Scripts/jquery-2.1.3.min.js"></script>
-                            <script>
-                                //$(document).ready(function () {
-                                //    $("#seccion2").hide();
-                                //    $("#seccion3").hide();
-                                //    $("#boton2").hide();
-                                //    $("#boton3").hide();
-                                //});
-
-                                //function Siguiente() {
-                                //    $("#seccion1").hide();
-                                //    $("#seccion2").show();
-                                //    $("#boton1").hide();
-                                //    $("#boton2").show();
-                                //}
-
-                                //function Siguiente2() {
-                                //    if (VerificarElementoControl("ElementoControl", "Escaneada") == true) {
-                                //        alert("Error: Debe seleccionar el archivo para cargarlo en el servidor.");
-                                //    }
-                                //    else if (VerificarElementoControl("ElementoControl", "Seleccionada") == true) {
-                                //        $("#seccion2").hide();
-                                //        $("#seccion3").show();
-                                //        $("#boton2").hide();
-                                //        $("#boton3").show();
-                                //    }
-                                //    else {
-                                //        alert("Error: Debe completar Paso 1 y Paso 2 para continuar.");
-                                //    }
-                                //}
-
-                                //function VerificarElementoControl(ElementoControl, ValorDeControl) {
-                                //    if (document.getElementById(ElementoControl).innerHTML == ValorDeControl)
-                                //        return true;
-                                //    else
-                                //        return false;
-                                //}
-
-                                function ActualizaElementoControl(ElementoControl, ValorDeControl, InputFile, Docnumber) {
-                                    var NombreArchivo = InputFile.value.split('\\');
-                                    if (NombreArchivo[NombreArchivo.length - 1] == Docnumber + ".jpg") {
-                                        document.getElementById(ElementoControl).innerHTML = ValorDeControl;
-                                    }
-                                    else {
-                                        alert("El archivo seleccionado no corresponde con el cliente Número de Documento / Cédula: " + Docnumber);
-                                        Borracampofile();
-                                    }
-                                }
-
-                                function Borracampofile() {
-                                    var textofuncion = "ActualizaElementoControl('ElementoControl', 'Seleccionada', this, '@Model.docnumber')"
-                                    capa = window.capaarchivo;
-                                    varHTML = '';
-                                    capa.innerHTML = varHTML;
-                                    varHTML += '<input type="file" name="file" id="file" onchange="' + textofuncion + '" />';
-                                    capa.innerHTML = varHTML;
-                                }
-                            </script>
-                            <!-- FIN SECCION PARA VERIFICAR OPERACIONES -->
-
+                            <!--// SILVERLIGHT -->
                         </div>
-                        <!--// SILVERLIGHT -->
 
                         <!-- DIRECCIÓN -->
                         <div class="tab-pane" id="tab3">
@@ -434,6 +432,15 @@
                                 @Html.ValidationMessageFor(model => model.comments)
                             </div>
 
+                            <div class="editor-label col-md-4 control-label">
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                <p class="text-left text-danger">
+                                    Los campos marcados con (*) son requeridos.
+                                </p>
+                            </div>
+
                             <div class="editor-label col-md-4 control-label"></div>
                             <div class="editor-field col-md-6">
                                 <br />
@@ -456,7 +463,6 @@
                         <div class="editor-field col-md-6">
                             <!-- BOTONES -->
                             <ul class="pager wizard">
-
                                 <li class="previous"><a href="#">Anterior</a></li>
                                 <li class="next pull-left"><a href="#">Siguiente</a></li>
                             </ul>
@@ -478,7 +484,6 @@
 
                 </div>
                 <!--// rootwizard -->
-
             </form>
 
         </div>

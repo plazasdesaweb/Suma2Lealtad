@@ -48,15 +48,14 @@
                                 @Html.TextBox("estatustarjeta", @Model.estatustarjeta, new { @class = "form-control", @readonly = "true" })
                             </div>
 
-                            <div class="editor-label col-md-4 control-label"></div>
+                            <div class="editor-label col-md-4 control-label">
+                            </div>
+
                             <div class="editor-field col-md-6">
-                                <br />
+                                <p class="text-left text-danger">
+                                    Advertencia: Esta operación bloqueará la tarjeta actual y generará una nueva tarjeta.
+                                </p>
                             </div>
-
-                            <div">
-                                <h3 class="text-left text-danger">Advertencia: Esta operación bloqueará la tarjeta actual y generará una nueva tarjeta.</h3>
-                            </div>
-
                         </div>
 
                         <div class="editor-label col-md-4 control-label"></div>
@@ -68,7 +67,7 @@
                         <div class="col-md-12 col-tabla-btn">
                             <div class="pull-right">
                                 @Html.HiddenFor(model => model.docnumber)
-                                <input type="submit" class="btn btn-sucess btn-md" value="Bloquear" />
+                                <input type="submit" class="btn btn-success btn-md" value="Bloquear" />
                             </div>
                         </div>
                         <!--// buttons -->

@@ -8,7 +8,7 @@
 
     <div class="row">
 
-        <div class="col-md-7 col-md-offset-2">
+        <div class="col-md-push-2 col-md-8">
 
             <div class="panel panel-default">
 
@@ -17,6 +17,44 @@
                 </div>
 
                 <div class="panel-body">
+
+                    <div class="form-group">
+
+                        <div class="editor-label col-md-4 control-label">
+                            Nombre del Afiliado :
+                        </div>
+                        <div class="editor-form col-md-6">
+                            @Html.TextBox("name", @Model.name + " " + @Model.lastname1, new { @class = "form-control", @readonly = "true" })
+                        </div>
+                        <div class="editor-label col-md-4 control-label">
+                            Número de Documento/Cédula :
+                        </div>
+                        <div class="editor-form col-md-6">
+                            @Html.TextBox("docnumber", @Model.docnumber, new { @class = "form-control", @readonly = "true" })
+                        </div>
+                        <div class="editor-label col-md-4 control-label">
+                            Número de Tarjeta :
+                        </div>
+                        <div class="editor-form col-md-6">
+                            @Html.TextBox("pan", @Model.pan, new { @class = "form-control", @readonly = "true" })
+                        </div>
+                        <div class="editor-label col-md-4 control-label">
+                            Estatus de Tarjeta :
+                        </div>
+                        <div class="editor-form col-md-6">
+                            @Html.TextBox("estatustarjeta", @Model.estatustarjeta, new { @class = "form-control", @readonly = "true" })
+                        </div>
+
+                        <div class="editor-label col-md-4 control-label">
+                        </div>
+
+                        <div class="editor-field col-md-6">
+                            <p class="text-left text-danger">
+                                Coloque una tarjeta en la impresora y presione el botón Imprimir Tarjeta.
+                            </p>
+                        </div>
+
+                    </div>
 
                     <form action="@Url.Action("ImprimirTarjeta", "Afiliado")" name="form" method="post">
 
@@ -73,7 +111,7 @@
                                 @*<a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.docnumber })" class="btn btn-success btn-md">Regresar</a>*@
 
                                 @Html.HiddenFor(model => model.docnumber)
-                                <input id="submit" name="submit" type="submit" class="btn btn-success btn-md" value="Guardar" style="display:none"/>
+                                <input id="submit" name="submit" type="submit" class="btn btn-success btn-md" value="Guardar" style="display: none" />
                             </div>
                         </div>
 

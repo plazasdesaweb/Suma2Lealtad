@@ -19,15 +19,11 @@ namespace Suma2Lealtad.Models
         private int ID_TYPE_SUMA = 1;
         private int ID_TYPE_PREPAGO = 2;
 
-        //estatus tarjeta cards - decrle a daniel que revise que los retone bien en getclient
-        //private string ID_ESTATUS_TARJETA_NUEVA = "0";
-        //private string ID_ESTATUS_TARJETA_INACTIVA = 0;
-        //private int ID_ESTATUS_TARJETA_BLOQUEADA = ;
-        //private int ID_ESTATUS_TARJETA_BLOQUEADA = ;
-        //private string ID_ESTATUS_TARJETA_ACTIVA = "1";
+        private string ID_ESTATUS_TARJETA_NUEVA = "0";
+        private string ID_ESTATUS_TARJETA_ACTIVA = "1";
+        private string ID_ESTATUS_TARJETA_SUSPENDIDA = "6";
 
         //private string INITIAL_STRING_VALUE = "";
-
         //public AfiliadoRepository() { }
 
         public class customerInterest
@@ -151,8 +147,6 @@ namespace Suma2Lealtad.Models
                     afiliado = new Afiliado();
                     afiliado.id = 0;
                     afiliado.docnumber = numdoc;
-                    //LE COLOCO TIPO SUMA POR DEFECTO
-                    //afiliado.typeid = ID_TYPE_SUMA;
                 }
                 //ENTIDAD CustomerInterest
                 afiliado.Intereses = chargeInterestList(afiliado.id);
@@ -209,7 +203,7 @@ namespace Suma2Lealtad.Models
                     //Tercero se buscan los datos de Tarjeta de AFILIADO en Cards
                     //SERVICIO WSL.Cards.getClient !
                     string clienteCardsJson = WSL.Cards.getClient(afiliado.docnumber.Substring(2));
-                    ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<IEnumerable<ClienteCards>>(clienteCardsJson).FirstOrDefault();
+                    ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<ClienteCards>(clienteCardsJson);
                     afiliado.pan = clienteCards.pan; // !
                     afiliado.printed = clienteCards.printed; // !
                     afiliado.estatustarjeta = clienteCards.tarjeta; //afiliado.estatustarjeta = clienteCards.estatus == "1" ? "Activa" : "Inactiva"; // ! 
@@ -323,7 +317,7 @@ namespace Suma2Lealtad.Models
                     //Tercero se buscan los datos de Tarjeta de AFILIADO en Cards
                     //SERVICIO WSL.Cards.getClient !
                     string clienteCardsJson = WSL.Cards.getClient(afiliado.docnumber.Substring(2));
-                    ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<IEnumerable<ClienteCards>>(clienteCardsJson).FirstOrDefault();
+                    ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<ClienteCards>(clienteCardsJson);
                     afiliado.pan = clienteCards.pan; // !
                     afiliado.printed = clienteCards.printed; // !
                     afiliado.estatustarjeta = clienteCards.tarjeta; //afiliado.estatustarjeta = clienteCards.estatus == "1" ? "Activa" : "Inactiva"; // !                   
@@ -332,8 +326,16 @@ namespace Suma2Lealtad.Models
             }
         }
 
-        public List<Afiliado> Find(string numdoc, string name = null, string email = null)
+        public List<Afiliado> Find(string numdoc, string name, string email)
         {
+            if (name == "")
+            {
+                name = null;
+            }
+            if (email == "")
+            {
+                email = null;
+            }
             using (LealtadEntities db = new LealtadEntities())
             {
                 //Primero se buscan los datos de AFILIADO en SumaPlazas
@@ -341,7 +343,7 @@ namespace Suma2Lealtad.Models
                 //ENTIDAD CLIENTE
                 //ENTIDAD Status
                 //ENTIDAD CustomerInterest
-                //ENTIDAD Photos_Affiliate, FILEYSTEM ~/Picture/@filename@.jpg                                
+                //ENTIDAD Photos_Affiliate, FILEYSTEM ~/Picture/@filename@.jpg
                 List<Afiliado> afiliados = (from a in db.Affiliates
                                             join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
                                             join s in db.Status on a.statusid equals s.id
@@ -432,7 +434,7 @@ namespace Suma2Lealtad.Models
                             //Tercero se buscan los datos de Tarjeta de AFILIADO en Cards
                             //SERVICIO WSL.Cards.getClient !
                             string clienteCardsJson = WSL.Cards.getClient(afiliado.docnumber.Substring(2));
-                            ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<IEnumerable<ClienteCards>>(clienteCardsJson).FirstOrDefault();
+                            ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<ClienteCards>(clienteCardsJson);
                             afiliado.pan = clienteCards.pan; // !
                             afiliado.printed = clienteCards.printed; // !
                             afiliado.estatustarjeta = clienteCards.tarjeta; //afiliado.estatustarjeta = clienteCards.estatus == "1" ? "Activa" : "Inactiva"; // ! 
@@ -466,7 +468,7 @@ namespace Suma2Lealtad.Models
                     channelid = afiliado.channelid,
                     typeid = ID_TYPE_SUMA,//afiliado.typeid, //INITIAL_INTEGER_VALUE,
                     affiliatedate = System.DateTime.Now,
-                    typedelivery = afiliado.typedelivery,                    
+                    typedelivery = afiliado.typedelivery,
                     storeiddelivery = afiliado.storeiddelivery,
                     estimateddatedelivery = new DateTime(),
                     creationdate = DateTime.Now,
@@ -515,7 +517,7 @@ namespace Suma2Lealtad.Models
                     {
                         customerid = Affiliate.id,
                         interestid = interes.id,
-                        comments = "" 
+                        comments = ""
                     };
                     db.CustomerInterests.Add(customerInterest);
                 }
@@ -604,6 +606,13 @@ namespace Suma2Lealtad.Models
                     cliente.COD_URBANIZACION = afiliado.cod_urbanizacion;
                 }
 
+                // Entidad : Status
+                Status status = db.Status.FirstOrDefault(s => s.id == afiliado.statusid);
+                if (status != null)
+                {
+                    afiliado.estatus = status.name;
+                }
+
                 // Entidad : Temas de Interés del Afiliado. 
                 foreach (var m in db.CustomerInterests.Where(f => f.customerid == afiliado.id))
                 {
@@ -641,7 +650,7 @@ namespace Suma2Lealtad.Models
                 {
                     return false;
                 }
-            }            
+            }
         }
 
         public SaldosMovimientos FindSaldosMovimientos(int id)
@@ -655,10 +664,10 @@ namespace Suma2Lealtad.Models
             string movimientosPrepagoJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.First().accounttype, nrodocumento);
             string movimientosLealtadJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.Skip(1).First().accounttype, nrodocumento);
             SaldosMovimientos.MovimientosPrepago = (IEnumerable<Movimiento>)JsonConvert.DeserializeObject<IEnumerable<Movimiento>>(movimientosPrepagoJson);
-            var MovimientosPrepagoOrdenados =  SaldosMovimientos.MovimientosPrepago.OrderByDescending(x => x.batchid);
+            var MovimientosPrepagoOrdenados = SaldosMovimientos.MovimientosPrepago.OrderByDescending(x => x.batchid);
             SaldosMovimientos.MovimientosPrepago = MovimientosPrepagoOrdenados.Take(3);
             SaldosMovimientos.MovimientosSuma = (IEnumerable<Movimiento>)JsonConvert.DeserializeObject<IEnumerable<Movimiento>>(movimientosLealtadJson);
-            var MovimientosSumaOrdenados =  SaldosMovimientos.MovimientosSuma.OrderByDescending(x => x.batchid);
+            var MovimientosSumaOrdenados = SaldosMovimientos.MovimientosSuma.OrderByDescending(x => x.batchid);
             SaldosMovimientos.MovimientosSuma = MovimientosSumaOrdenados.Take(3);
             return SaldosMovimientos;
         }
@@ -679,40 +688,42 @@ namespace Suma2Lealtad.Models
             return RespuestaCards;
         }
 
-        public bool SuspenderTarjeta(string numdoc)
+        public RespuestaCards SuspenderTarjeta(string numdoc)
         {
             Afiliado afiliado = Find(numdoc);
             RespuestaCards RespuestaCards = new RespuestaCards();
-            string RespuestaCardsJson = WSL.Cards.cardInactive(afiliado.docnumber.Substring(2));
+            string RespuestaCardsJson = WSL.Cards.cardStatus(afiliado.docnumber.Substring(2),ID_ESTATUS_TARJETA_SUSPENDIDA);
             RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
-            if (RespuestaCards.code == "0")
-            {
-                afiliado.estatustarjeta = "Suspendida";
-                SaveChanges(afiliado);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return RespuestaCards; 
+            //if (RespuestaCards.code == "0")
+            //{
+            //    afiliado.estatustarjeta = "Suspendida";
+            //    SaveChanges(afiliado);
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
         }
 
-        public bool ReactivarTarjeta(string numdoc)
+        public RespuestaCards ReactivarTarjeta(string numdoc)
         {
             Afiliado afiliado = Find(numdoc);
             RespuestaCards RespuestaCards = new RespuestaCards();
             string RespuestaCardsJson = WSL.Cards.cardActive(afiliado.docnumber.Substring(2));
             RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
-            if (RespuestaCards.code == "0")
-            {
-                afiliado.estatustarjeta = "Activa";
-                SaveChanges(afiliado);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return RespuestaCards; 
+            //if (RespuestaCards.code == "0")
+            //{
+            //    afiliado.estatustarjeta = "Activa";
+            //    SaveChanges(afiliado);
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
         }
 
         public RespuestaCards ImprimirTarjeta(string numdoc)
@@ -736,8 +747,7 @@ namespace Suma2Lealtad.Models
             if (RespuestaCards.code == "0" || RespuestaCards.code == "7")
             {
                 afiliado.statusid = ID_ESTATUS_ACTIVA;
-                SaveChanges(afiliado);
-                return true;
+                return SaveChanges(afiliado);
             }
             else
             {
