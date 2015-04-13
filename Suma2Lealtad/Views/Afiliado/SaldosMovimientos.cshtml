@@ -114,7 +114,6 @@
                                             {
                                                 @Model.denominacionSuma;
                                             }
-
                                         </td>
                                     </tr>                            
                                 }
@@ -122,8 +121,14 @@
 
                         </table>
 
-                    </div>
+                        <div class="col-md-12 col-tabla-btn">
+                            <div class="pull-right">
+                                @*<a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.docnumber })" class="btn btn-success btn-md">Regresar</a>*@
+                                <input type="submit" class="btn btn-success btn-md" value="Regresar" style="padding-right: 15px; padding-left: 15px; margin-left: 0px;" />
+                            </div>
+                        </div>
 
+                    </div>
                     <!-- panel-body -->
 
                 </div>
@@ -195,19 +200,19 @@
 
                         </table>
 
+                        <!-- buttons -->
+                        <div class="col-md-12 col-tabla-btn">
+                            <div class="pull-right">
+                                <a href="javascript:OcultarMovimientos()" class="btn btn-success btn-md" role="button">Ocultar Movimientos</a>
+                            </div>
+                        </div>
+                        <!--// buttons -->
+
                     </div>
                     <!-- panel-body -->
 
                 </div>
                 <!-- panel -->
-
-                <!-- buttons -->
-                <div class="col-md-12 col-tabla-btn">
-                    <div class="pull-right">
-                        <a href="javascript:OcultarMovimientos()" class="btn btn-success btn-md" role="button">Ocultar Movimientos</a>
-                    </div>
-                </div>
-                <!--// buttons -->
 
             </div>
             <!-- columns -->
@@ -277,19 +282,19 @@
 
                         </table>
 
+                        <!-- buttons -->
+                        <div class="col-md-12 col-tabla-btn">
+                            <div class="pull-right">
+                                <a href="javascript:OcultarMovimientos()" class="btn btn-success btn-md" role="button">Ocultar Movimientos</a>
+                            </div>
+                        </div>
+                        <!--// buttons -->
+
                     </div>
                     <!-- panel-body -->
 
                 </div>
                 <!-- panel -->
-
-                <!-- buttons -->
-                <div class="col-md-12 col-tabla-btn">
-                    <div class="pull-right">
-                        <a href="javascript:OcultarMovimientos()" class="btn btn-success btn-md" role="button">Ocultar Movimientos</a>
-                    </div>
-                </div>
-                <!--// buttons -->
 
             </div>
             <!-- columns -->

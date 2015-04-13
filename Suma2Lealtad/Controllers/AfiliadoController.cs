@@ -123,11 +123,11 @@ namespace Suma2Lealtad.Controllers
             return View();
         }
 
-        //public ActionResult Index(string numdoc)
-        //{
-        //    List<Afiliado> afiliado = rep.FindSuma(numdoc, "", "");
-        //    return View(afiliado);
-        //}
+        public ActionResult Index(string numdoc)
+        {
+            List<Afiliado> afiliado = rep.Find(numdoc, "", "");
+            return View(afiliado);
+        }
 
         [HttpPost]
         public ActionResult Index(string numdoc, string name, string email)

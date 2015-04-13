@@ -76,14 +76,12 @@
                     <!-- SilverLight -->
 
                     <div class="form-group">
-                        <form id="commentForm" method="post" action="@Url.Action("Index", "Afiliado")" class="form-horizontal">
-                            <div class="col-md-12 col-btn">
-                                <div class="pull-right">
-                                    @*<a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.docnumber })" class="btn btn-success btn-md">Regresar</a>*@
-                                    <input type="submit" class="btn btn-success btn-md" value="Regresar" style="padding-right: 15px; padding-left: 15px; margin-left: 0px;" />
-                                </div>
-                            </div>@Html.TextBox("numdoc", @Model.docnumber, new { style = "visibility:hidden", @class = "form-control" })
-                        </form>
+                        <div class="col-md-12 col-btn">
+                            <div class="pull-right">
+                                <a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.docnumber })" class="btn btn-success btn-md">Regresar</a>
+                                @*<input type="submit" class="btn btn-success btn-md" value="Regresar" style="padding-right: 15px; padding-left: 15px; margin-left: 0px;" />*@
+                            </div>
+                        </div>
                     </div>
 
                 </div>

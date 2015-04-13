@@ -666,9 +666,18 @@ namespace Suma2Lealtad.Models
             SaldosMovimientos.MovimientosPrepago = (IEnumerable<Movimiento>)JsonConvert.DeserializeObject<IEnumerable<Movimiento>>(movimientosPrepagoJson);
             var MovimientosPrepagoOrdenados = SaldosMovimientos.MovimientosPrepago.OrderByDescending(x => x.batchid);
             SaldosMovimientos.MovimientosPrepago = MovimientosPrepagoOrdenados.Take(3);
+            foreach (var mov in SaldosMovimientos.MovimientosPrepago)
+            {
+                mov.fecha = mov.fecha.Substring(6, 2) + "-" + mov.fecha.Substring(4, 2) + "-" + mov.fecha.Substring(0, 4);
+            }
             SaldosMovimientos.MovimientosSuma = (IEnumerable<Movimiento>)JsonConvert.DeserializeObject<IEnumerable<Movimiento>>(movimientosLealtadJson);
             var MovimientosSumaOrdenados = SaldosMovimientos.MovimientosSuma.OrderByDescending(x => x.batchid);
             SaldosMovimientos.MovimientosSuma = MovimientosSumaOrdenados.Take(3);
+            foreach (var mov in SaldosMovimientos.MovimientosSuma)
+            {
+                mov.fecha = mov.fecha.Substring(6, 2) + "-" + mov.fecha.Substring(4, 2) + "-" + mov.fecha.Substring(0, 4);
+            }
+           
             return SaldosMovimientos;
         }
 
@@ -692,9 +701,9 @@ namespace Suma2Lealtad.Models
         {
             Afiliado afiliado = Find(numdoc);
             RespuestaCards RespuestaCards = new RespuestaCards();
-            string RespuestaCardsJson = WSL.Cards.cardStatus(afiliado.docnumber.Substring(2),ID_ESTATUS_TARJETA_SUSPENDIDA);
+            string RespuestaCardsJson = WSL.Cards.cardStatus(afiliado.docnumber.Substring(2), ID_ESTATUS_TARJETA_SUSPENDIDA);
             RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
-            return RespuestaCards; 
+            return RespuestaCards;
             //if (RespuestaCards.code == "0")
             //{
             //    afiliado.estatustarjeta = "Suspendida";
@@ -713,7 +722,7 @@ namespace Suma2Lealtad.Models
             RespuestaCards RespuestaCards = new RespuestaCards();
             string RespuestaCardsJson = WSL.Cards.cardActive(afiliado.docnumber.Substring(2));
             RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
-            return RespuestaCards; 
+            return RespuestaCards;
             //if (RespuestaCards.code == "0")
             //{
             //    afiliado.estatustarjeta = "Activa";

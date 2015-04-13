@@ -48,13 +48,13 @@
                                 @Html.TextBox("estatustarjeta", @Model.estatustarjeta, new { @class = "form-control", @readonly = "true" })
                             </div>
 
-                            <div class="editor-label col-md-4 control-label"></div>
-                            <div class="editor-field col-md-6">
-                                <br />
+                            <div class="editor-label col-md-4 control-label">
                             </div>
 
-                            <div>
-                                <h3 class="text-left text-danger">Advertencia: Esta operación suspenderá temporalmente la tarjeta actual.</h3>
+                            <div class="editor-field col-md-6">
+                                <p class="text-left text-danger">
+                                    Advertencia: Esta operación suspenderá temporalmente la tarjeta actual.
+                                </p>
                             </div>
 
                             <div class="editor-label col-md-4 control-label"></div>
@@ -65,7 +65,7 @@
                             <!-- buttons -->
                             <div class="col-md-12 col-tabla-btn">
                                 <div class="pull-right">
-                                    @Html.HiddenFor(model => model.docnumber)
+                                    <a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.docnumber })" class="btn btn-success btn-md">Regresar</a>
                                     <input type="submit" class="btn btn-success btn-md" value="Suspender" />
                                 </div>
                             </div>

@@ -67,7 +67,7 @@
                         <!-- buttons -->
                         <div class="col-md-12 col-tabla-btn">
                             <div class="pull-right">
-                                @Html.HiddenFor(model => model.docnumber)
+                                <a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.docnumber })" class="btn btn-success btn-md">Regresar</a>                                
                                 <input type="submit" class="btn btn-sucess btn-md" value="Reactivar" />
                             </div>
                         </div>
