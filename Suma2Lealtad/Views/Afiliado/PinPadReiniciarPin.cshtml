@@ -70,7 +70,8 @@
 
                     <!-- SECCION PARA VERIFICAR OPERACIONES PinPad-->
                     <div class="col-md-12">
-                        <p class="text-left" id="ElementoControl" style="visibility: hidden">ElementoControl</p>
+                        @*<p class="text-left" id="ElementoControl" style="visibility: hidden">ElementoControl</p>*@
+                        <p class="text-left" id="ElementoControl" style="display: none">ElementoControl</p>
                     </div>
 
                     <!-- SilverLight -->
@@ -78,7 +79,7 @@
                     <div class="form-group">
                         <div class="col-md-12 col-btn">
                             <div class="pull-right">
-                                <a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.docnumber })" class="btn btn-success btn-md">Regresar</a>
+                                <a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.docnumber })" class="btn btn-danger btn-md">Cancelar</a>
                                 @*<input type="submit" class="btn btn-success btn-md" value="Regresar" style="padding-right: 15px; padding-left: 15px; margin-left: 0px;" />*@
                             </div>
                         </div>
