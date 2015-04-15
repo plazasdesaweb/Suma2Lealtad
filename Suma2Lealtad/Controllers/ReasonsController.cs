@@ -16,7 +16,7 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Reasons.Where(c => c.type == "Rechazo").ToList());
+            return View(db.Reasons.Where(c => c.type == "Rechazo" && c.id > 1).ToList());
         }
 
         //
