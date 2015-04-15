@@ -128,7 +128,7 @@ namespace Suma2Lealtad.Models
                                          typedelivery = a.typedelivery,
                                          storeiddelivery = a.storeiddelivery == null ? 0 : (int)a.storeiddelivery,
                                          statusid = a.statusid,
-                                         reasonsid = a.reasonsid == null ? 0 : (int)a.reasonsid,
+                                         reasonsid = a.reasonsid == null ? 1 : (int) a.reasonsid,
                                          twitter_account = a.twitter_account, // +
                                          facebook_account = a.facebook_account, // +
                                          instagram_account = a.instagram_account, // +
@@ -239,7 +239,7 @@ namespace Suma2Lealtad.Models
                                          typedelivery = a.typedelivery,
                                          storeiddelivery = a.storeiddelivery == null ? 0 : (int)a.storeiddelivery,
                                          statusid = a.statusid,
-                                         reasonsid = a.reasonsid == null ? 0 : (int)a.reasonsid,
+                                         reasonsid = a.reasonsid == null ? 1 : (int)a.reasonsid,
                                          twitter_account = a.twitter_account, // +
                                          facebook_account = a.facebook_account, // +
                                          instagram_account = a.instagram_account, // +
@@ -361,7 +361,7 @@ namespace Suma2Lealtad.Models
                                                 typedelivery = a.typedelivery,
                                                 storeiddelivery = a.storeiddelivery == null ? 0 : (int)a.storeiddelivery,
                                                 statusid = a.statusid,
-                                                reasonsid = a.reasonsid == null ? 0 : (int)a.reasonsid,
+                                                reasonsid = a.reasonsid == null ? 1 : (int)a.reasonsid,
                                                 twitter_account = a.twitter_account, // +
                                                 facebook_account = a.facebook_account, // +
                                                 instagram_account = a.instagram_account, // +
