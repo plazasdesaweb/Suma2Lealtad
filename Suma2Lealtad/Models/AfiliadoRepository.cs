@@ -658,11 +658,10 @@ namespace Suma2Lealtad.Models
             SaldosMovimientos SaldosMovimientos = new SaldosMovimientos();
             Afiliado afiliado = Find(id);
             SaldosMovimientos.DocId = afiliado.docnumber;
-            string nrodocumento = SaldosMovimientos.DocId.Substring(2);
-            string saldosJson = WSL.Cards.getBalance(nrodocumento);
+            string saldosJson = WSL.Cards.getBalance(SaldosMovimientos.DocId.Substring(2));
             SaldosMovimientos.Saldos = (IEnumerable<Saldo>)JsonConvert.DeserializeObject<IEnumerable<Saldo>>(saldosJson);
-            string movimientosPrepagoJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.First().accounttype, nrodocumento);
-            string movimientosLealtadJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.Skip(1).First().accounttype, nrodocumento);
+            string movimientosPrepagoJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.First().accounttype, SaldosMovimientos.DocId.Substring(2));
+            string movimientosLealtadJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.Skip(1).First().accounttype, SaldosMovimientos.DocId.Substring(2));
             SaldosMovimientos.MovimientosPrepago = (IEnumerable<Movimiento>)JsonConvert.DeserializeObject<IEnumerable<Movimiento>>(movimientosPrepagoJson);
             var MovimientosPrepagoOrdenados = SaldosMovimientos.MovimientosPrepago.OrderByDescending(x => x.batchid);
             SaldosMovimientos.MovimientosPrepago = MovimientosPrepagoOrdenados.Take(3);
@@ -676,8 +675,7 @@ namespace Suma2Lealtad.Models
             foreach (var mov in SaldosMovimientos.MovimientosSuma)
             {
                 mov.fecha = mov.fecha.Substring(6, 2) + "-" + mov.fecha.Substring(4, 2) + "-" + mov.fecha.Substring(0, 4);
-            }
-           
+            }           
             return SaldosMovimientos;
         }
 
@@ -701,7 +699,7 @@ namespace Suma2Lealtad.Models
         {
             Afiliado afiliado = Find(numdoc);
             RespuestaCards RespuestaCards = new RespuestaCards();
-            string RespuestaCardsJson = WSL.Cards.cardStatus(afiliado.docnumber.Substring(2), ID_ESTATUS_TARJETA_SUSPENDIDA);
+            string RespuestaCardsJson = WSL.Cards.cardStatus(numdoc.Substring(2), ID_ESTATUS_TARJETA_SUSPENDIDA);
             RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
             return RespuestaCards;
             //if (RespuestaCards.code == "0")
@@ -720,7 +718,7 @@ namespace Suma2Lealtad.Models
         {
             Afiliado afiliado = Find(numdoc);
             RespuestaCards RespuestaCards = new RespuestaCards();
-            string RespuestaCardsJson = WSL.Cards.cardActive(afiliado.docnumber.Substring(2));
+            string RespuestaCardsJson = WSL.Cards.cardActive(numdoc.Substring(2));
             RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
             return RespuestaCards;
             //if (RespuestaCards.code == "0")
@@ -751,7 +749,7 @@ namespace Suma2Lealtad.Models
         public bool Aprobar(Afiliado afiliado)
         {
             RespuestaCards RespuestaCards = new RespuestaCards();
-            string RespuestaCardsJson = WSL.Cards.addClient(afiliado.docnumber, (afiliado.name + " " + afiliado.lastname1).ToUpper(), afiliado.phone1, "Plazas Baruta");
+            string RespuestaCardsJson = WSL.Cards.addClient(afiliado.docnumber.Substring(2), (afiliado.name + " " + afiliado.lastname1).ToUpper(), afiliado.phone1, "Plazas Baruta");
             RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
             if (RespuestaCards.code == "0" || RespuestaCards.code == "7")
             {
