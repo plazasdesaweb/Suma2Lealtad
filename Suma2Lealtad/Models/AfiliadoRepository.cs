@@ -640,7 +640,7 @@ namespace Suma2Lealtad.Models
                     reasonsid = 1,      //PENDIENTE
                     comments = afiliado.comments
                 };
-                //db.AffiliateAuds.Add(affiliateAuditoria);
+                db.AffiliateAuds.Add(affiliateAuditoria);
                 if (SaveWebPlazas(afiliado))
                 {
                     db.SaveChanges();
