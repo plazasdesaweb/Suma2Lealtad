@@ -51,5 +51,17 @@ namespace Suma2Lealtad.Models
         public DbSet<User> Users { get; set; }
         public DbSet<UserRol> UserRols { get; set; }
         public DbSet<Photos_Affiliate> Photos_Affiliate { get; set; }
+        public DbSet<TARJETA> TARJETAS { get; set; }
+        public DbSet<CIUDAD> CIUDADs { get; set; }
+        public DbSet<CIUDAD_MUNICIPIO> CIUDAD_MUNICIPIO { get; set; }
+        public DbSet<ESTADO> ESTADOes { get; set; }
+        public DbSet<ESTADO_CIUDAD> ESTADO_CIUDAD { get; set; }
+        public DbSet<MUNICIPIO> MUNICIPIOs { get; set; }
+        public DbSet<MUNICIPIO_PARROQUIA> MUNICIPIO_PARROQUIA { get; set; }
+        public DbSet<PAI> PAIS { get; set; }
+        public DbSet<PAIS_ESTADO> PAIS_ESTADO { get; set; }
+        public DbSet<PARROQUIA> PARROQUIAs { get; set; }
+        public DbSet<PARROQUIA_URBANIZACION> PARROQUIA_URBANIZACION { get; set; }
+        public DbSet<URBANIZACION> URBANIZACIONs { get; set; }
     }
 }

@@ -231,6 +231,12 @@
     <Compile Include="Models\Channel.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CIUDAD.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CIUDAD_MUNICIPIO.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CLIENTE.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -246,6 +252,12 @@
     <Compile Include="Models\CustomerInterest.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ESTADO.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ESTADO_CIUDAD.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FACTURA.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -257,6 +269,12 @@
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Movimiento.cs" />
+    <Compile Include="Models\MUNICIPIO.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MUNICIPIO_PARROQUIA.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Object.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -269,7 +287,19 @@
     <Compile Include="Models\OrderDetail.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PAI.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PAIS_ESTADO.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PARAMETRO.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PARROQUIA.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PARROQUIA_URBANIZACION.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Photos_Affiliate.cs">
@@ -313,7 +343,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SumaLealtad.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\TARJETA.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Type.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\URBANIZACION.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">

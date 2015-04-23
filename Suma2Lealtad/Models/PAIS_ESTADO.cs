@@ -12,10 +12,9 @@ namespace Suma2Lealtad.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class PAIS_ESTADO
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public int level { get; set; }
+        public string COD_PAIS { get; set; }
+        public string COD_ESTADO { get; set; }
     }
 }

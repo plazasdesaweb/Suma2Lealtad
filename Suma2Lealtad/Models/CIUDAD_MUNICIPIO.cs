@@ -12,10 +12,9 @@ namespace Suma2Lealtad.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class CIUDAD_MUNICIPIO
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public int level { get; set; }
+        public string COD_CIUDAD { get; set; }
+        public string COD_MUNICIPIO { get; set; }
     }
 }

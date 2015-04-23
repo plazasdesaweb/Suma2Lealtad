@@ -10,17 +10,17 @@ namespace Suma2Lealtad.Models
 {
     public class AfiliadoRepository
     {
-        private int INITIAL_INTEGER_VALUE = 1;
+        //private int INITIAL_INTEGER_VALUE = 1;
 
         private int ESTATUS_ID_INICIAL = 0;
         private int REASONS_ID_INICIAL = 1;
         private int ID_CORPORACION_PLAZAS = 1;
         private int ID_ESTATUS_ACTIVA = 2;
         private int ID_TYPE_SUMA = 1;
-        private int ID_TYPE_PREPAGO = 2;
+        //private int ID_TYPE_PREPAGO = 2;
 
-        private string ID_ESTATUS_TARJETA_NUEVA = "0";
-        private string ID_ESTATUS_TARJETA_ACTIVA = "1";
+        //private string ID_ESTATUS_TARJETA_NUEVA = "0";
+        //private string ID_ESTATUS_TARJETA_ACTIVA = "1";
         private string ID_ESTATUS_TARJETA_SUSPENDIDA = "6";
 
         //private string INITIAL_STRING_VALUE = "";
@@ -466,7 +466,7 @@ namespace Suma2Lealtad.Models
                     clientid = afiliado.clientid,
                     storeid = afiliado.storeid,
                     channelid = afiliado.channelid,
-                    typeid = ID_TYPE_SUMA,//afiliado.typeid, //INITIAL_INTEGER_VALUE,
+                    typeid = ID_TYPE_SUMA,
                     affiliatedate = System.DateTime.Now,
                     typedelivery = afiliado.typedelivery,
                     storeiddelivery = afiliado.storeiddelivery,
@@ -571,7 +571,7 @@ namespace Suma2Lealtad.Models
                     affiliate.typeid = afiliado.typeid;
                     affiliate.typedelivery = afiliado.typedelivery;
                     affiliate.storeiddelivery = afiliado.storeiddelivery;
-                    //affiliate.estimateddatedelivery = System.DateTime.Now;
+                    affiliate.estimateddatedelivery = new DateTime();
                     affiliate.modifieduserid = (int)HttpContext.Current.Session["userid"];
                     affiliate.modifieddate = System.DateTime.Now;
                     affiliate.statusid = afiliado.statusid;
@@ -636,8 +636,8 @@ namespace Suma2Lealtad.Models
                     affiliateid = afiliado.id,
                     modifieduserid = (int)HttpContext.Current.Session["userid"],
                     modifieddate = System.DateTime.Now,
-                    statusid = afiliado.statusid,       //PENDIENTE
-                    reasonsid = 1,      //PENDIENTE
+                    statusid = afiliado.statusid,       
+                    reasonsid = 1,      
                     comments = afiliado.comments
                 };
                 db.AffiliateAuds.Add(affiliateAuditoria);

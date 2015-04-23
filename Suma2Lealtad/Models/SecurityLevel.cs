@@ -11,15 +11,11 @@ namespace Suma2Lealtad.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class SecurityLevel
     {
         public int id { get; set; }
-
-        [Required(ErrorMessage = "* EL Nombre es requerido.")]
         public string name { get; set; }
-
         public string comments { get; set; }
     }
 }
