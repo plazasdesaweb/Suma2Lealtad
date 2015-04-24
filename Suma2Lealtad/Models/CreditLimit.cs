@@ -12,24 +12,18 @@ namespace Suma2Lealtad.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Order
+    public partial class CreditLimit
     {
-        public Order()
-        {
-            this.OrderDetails = new HashSet<OrderDetail>();
-        }
-    
         public int id { get; set; }
         public int companyid { get; set; }
-        public decimal totalamount { get; set; }
-        public string paymenttype { get; set; }
-        public System.DateTime creationdate { get; set; }
+        public decimal credit { get; set; }
+        public decimal balance { get; set; }
+        public Nullable<System.DateTime> creationdate { get; set; }
         public int creationuserid { get; set; }
-        public System.DateTime processdate { get; set; }
-        public string comments { get; set; }
-        public string status { get; set; }
+        public System.DateTime modifieddate { get; set; }
+        public int modifieduserid { get; set; }
+        public bool activecredit { get; set; }
     
         public virtual Company Company { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

@@ -12,9 +12,15 @@ namespace Suma2Lealtad.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class MUNICIPIO_PARROQUIA
+    public partial class OrdersDetail
     {
-        public string COD_MUNICIPIO { get; set; }
-        public string COD_PARROQUIA { get; set; }
+        public int id { get; set; }
+        public int orderid { get; set; }
+        public int customerid { get; set; }
+        public decimal amount { get; set; }
+        public string comments { get; set; }
+        public string status { get; set; }
+    
+        public virtual Orders Order { get; set; }
     }
 }

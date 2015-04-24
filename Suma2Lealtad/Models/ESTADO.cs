@@ -14,7 +14,14 @@ namespace Suma2Lealtad.Models
     
     public partial class ESTADO
     {
+        public ESTADO()
+        {
+            this.CIUDADs = new HashSet<CIUDAD>();
+        }
+    
         public string COD_ESTADO { get; set; }
         public string DESCRIPC_ESTADO { get; set; }
+    
+        public virtual ICollection<CIUDAD> CIUDADs { get; set; }
     }
 }

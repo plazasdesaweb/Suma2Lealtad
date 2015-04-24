@@ -18,45 +18,45 @@
 
                 <div class="panel-body">
 
-                    <div class="form-group">
-
-                        <div class="editor-label col-md-4 control-label">
-                            Nombre del Afiliado :
-                        </div>
-                        <div class="editor-form col-md-6">
-                            @Html.TextBox("name", @Model.name + " " + @Model.lastname1, new { @class = "form-control", @readonly = "true" })
-                        </div>
-                        <div class="editor-label col-md-4 control-label">
-                            Número de Documento/Cédula :
-                        </div>
-                        <div class="editor-form col-md-6">
-                            @Html.TextBox("docnumber", @Model.docnumber, new { @class = "form-control", @readonly = "true" })
-                        </div>
-                        <div class="editor-label col-md-4 control-label">
-                            Número de Tarjeta :
-                        </div>
-                        <div class="editor-form col-md-6">
-                            @Html.TextBox("pan", @Model.pan, new { @class = "form-control", @readonly = "true" })
-                        </div>
-                        <div class="editor-label col-md-4 control-label">
-                            Estatus de Tarjeta :
-                        </div>
-                        <div class="editor-form col-md-6">
-                            @Html.TextBox("estatustarjeta", @Model.estatustarjeta, new { @class = "form-control", @readonly = "true" })
-                        </div>
-
-                        <div class="editor-label col-md-4 control-label">
-                        </div>
-
-                        <div class="editor-field col-md-6">
-                            <p class="text-left text-danger">
-                                Coloque una tarjeta en la impresora y presione el botón Imprimir Tarjeta.
-                            </p>
-                        </div>
-
-                    </div>
-
                     <form action="@Url.Action("ImprimirTarjeta", "Afiliado")" name="form" method="post">
+
+                        <div class="form-group">
+
+                            <div class="editor-label col-md-4 control-label">
+                                Nombre del Afiliado :
+                            </div>
+                            <div class="editor-form col-md-6">
+                                @Html.TextBox("name", @Model.name + " " + @Model.lastname1, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Número de Documento/Cédula :
+                            </div>
+                            <div class="editor-form col-md-6">
+                                @Html.TextBox("docnumber", @Model.docnumber, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Número de Tarjeta :
+                            </div>
+                            <div class="editor-form col-md-6">
+                                @Html.TextBox("pan", @Model.pan, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Estatus de Tarjeta :
+                            </div>
+                            <div class="editor-form col-md-6">
+                                @Html.TextBox("estatustarjeta", @Model.estatustarjeta, new { @class = "form-control", @readonly = "true" })
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                <p class="text-left text-danger">
+                                    Coloque una tarjeta en la impresora y presione el botón Imprimir Tarjeta.
+                                </p>
+                            </div>
+
+                        </div>
 
                         <!-- btn btn-success -->
                         <div class="col-md-12 col-btn">
@@ -109,8 +109,9 @@
                         <div class="col-md-12 col-btn">
                             <div class="pull-right">
                                 <input id="submit" name="submit" type="submit" class="btn btn-success btn-md" value="Guardar" style="display: none" />
-                                <a href="@Url.Action("Index", "Afiliado", new { numdoc = @Model.docnumber })" class="btn btn-danger btn-md">Cancelar</a>                                                                
+                                <a href="@Url.Action("Index", "Afiliado", new { numdoc = @Model.docnumber })" class="btn btn-danger btn-md">Cancelar</a>
                             </div>
+
                         </div>
 
                     </form>

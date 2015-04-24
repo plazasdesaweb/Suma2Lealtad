@@ -12,9 +12,12 @@ namespace Suma2Lealtad.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PARROQUIA_URBANIZACION
+    public partial class sysdiagram
     {
-        public string COD_PARROQUIA { get; set; }
-        public string COD_URBANIZACION { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

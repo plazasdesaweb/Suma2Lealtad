@@ -14,7 +14,16 @@ namespace Suma2Lealtad.Models
     
     public partial class PARROQUIA
     {
+        public PARROQUIA()
+        {
+            this.MUNICIPIOs = new HashSet<MUNICIPIO>();
+            this.URBANIZACIONs = new HashSet<URBANIZACION>();
+        }
+    
         public string COD_PARROQUIA { get; set; }
         public string DESCRIPC_PARROQUIA { get; set; }
+    
+        public virtual ICollection<MUNICIPIO> MUNICIPIOs { get; set; }
+        public virtual ICollection<URBANIZACION> URBANIZACIONs { get; set; }
     }
 }

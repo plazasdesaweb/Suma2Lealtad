@@ -234,9 +234,6 @@
     <Compile Include="Models\CIUDAD.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CIUDAD_MUNICIPIO.cs">
-      <DependentUpon>SumaLealtad.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\CLIENTE.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -249,13 +246,13 @@
     <Compile Include="Models\CompanyAffiliate.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CreditLimit.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CustomerInterest.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ESTADO.cs">
-      <DependentUpon>SumaLealtad.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ESTADO_CIUDAD.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FACTURA.cs">
@@ -272,22 +269,19 @@
     <Compile Include="Models\MUNICIPIO.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\MUNICIPIO_PARROQUIA.cs">
-      <DependentUpon>SumaLealtad.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Object.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Operation.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Order.cs">
+    <Compile Include="Models\Orders.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\OrderDetail.cs">
+    <Compile Include="Models\OrdersDetail.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PAI.cs">
+    <Compile Include="Models\PAIS.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PAIS_ESTADO.cs">
@@ -299,9 +293,6 @@
     <Compile Include="Models\PARROQUIA.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PARROQUIA_URBANIZACION.cs">
-      <DependentUpon>SumaLealtad.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Photos_Affiliate.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -310,7 +301,7 @@
     </Compile>
     <Compile Include="Models\RespuestaCards.cs" />
     <Compile Include="Models\RespuestaWebPlazas.cs" />
-    <Compile Include="Models\RESTRICCIONE.cs">
+    <Compile Include="Models\RESTRICCION.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Role.cs">
@@ -342,6 +333,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SumaLealtad.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TARJETA.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
@@ -423,6 +417,12 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\html5shiv.min.js" />
     <Content Include="App_Code\Helpers.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
     <EntityDeploy Include="Models\SumaLealtad.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SumaLealtad.Designer.cs</LastGenOutput>
@@ -440,12 +440,6 @@
       <DependentUpon>SumaLealtad.edmx</DependentUpon>
       <LastGenOutput>SumaLealtad.cs</LastGenOutput>
     </Content>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
     <None Include="Properties\PublishProfiles\Suma.pubxml" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />

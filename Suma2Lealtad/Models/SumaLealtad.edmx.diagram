@@ -4,50 +4,53 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c403a11fbb154526ba0556042a77238b" Name="Diagram1" ZoomLevel="68">
-        <EntityTypeShape EntityType="LealtadModel.Affiliate" Width="1.5" PointX="10" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.AffiliateAud" Width="1.5" PointX="7.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.Auditing" Width="1.5" PointX="9.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.Channel" Width="1.5" PointX="7.75" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.CLIENTE" Width="1.5" PointX="11.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.Company" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.CompanyAffiliate" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.CustomerInterest" Width="1.5" PointX="8" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.FACTURA" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.Interest" Width="1.5" PointX="5.75" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.Menu" Width="1.5" PointX="2.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.Object" Width="1.5" PointX="4.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.Operation" Width="1.5" PointX="12.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.Order" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.OrderDetail" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.PARAMETRO" Width="1.5" PointX="6.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.Reason" Width="1.5" PointX="13.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.RESTRICCIONE" Width="1.5" PointX="8.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.Role" Width="1.5" PointX="13.75" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.SecurityLevel" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.SecurityMenu" Width="1.5" PointX="14.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.Status" Width="1.5" PointX="13.75" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.Type" Width="1.5" PointX="15.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.User" Width="1.5" PointX="15.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LealtadModel.UserRol" Width="1.5" PointX="10.75" PointY="15.75" IsExpanded="true" />
-        <AssociationConnector Association="LealtadModel.FK_Affiliate_Channel" ManuallyRouted="false" />
-        <AssociationConnector Association="LealtadModel.FK_CompanyAffiliate_Company" ManuallyRouted="false" />
-        <AssociationConnector Association="LealtadModel.FK_Order_Company" ManuallyRouted="false" />
-        <AssociationConnector Association="LealtadModel.FK_CustomerInterest_Interest" ManuallyRouted="false" />
-        <AssociationConnector Association="LealtadModel.FK_OrderDetail_Order" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="LealtadModel.Photos_Affiliate" Width="1.5" PointX="3.375" PointY="4.75" />
-        <EntityTypeShape EntityType="LealtadModel.TARJETA" Width="1.5" PointX="0.75" PointY="16.75" />
-        <EntityTypeShape EntityType="LealtadModel.CIUDAD" Width="1.5" PointX="3.375" PointY="16.75" />
-        <EntityTypeShape EntityType="LealtadModel.CIUDAD_MUNICIPIO" Width="1.5" PointX="16.375" PointY="13.75" />
-        <EntityTypeShape EntityType="LealtadModel.ESTADO" Width="1.5" PointX="16.375" PointY="16.75" />
-        <EntityTypeShape EntityType="LealtadModel.ESTADO_CIUDAD" Width="1.5" PointX="17.375" PointY="0.75" />
-        <EntityTypeShape EntityType="LealtadModel.MUNICIPIO" Width="1.5" PointX="17.375" PointY="3.75" />
-        <EntityTypeShape EntityType="LealtadModel.MUNICIPIO_PARROQUIA" Width="1.5" PointX="13.375" PointY="17.75" />
-        <EntityTypeShape EntityType="LealtadModel.PAI" Width="1.5" PointX="5.375" PointY="18.75" />
-        <EntityTypeShape EntityType="LealtadModel.PAIS_ESTADO" Width="1.5" PointX="18.375" PointY="6.75" />
-        <EntityTypeShape EntityType="LealtadModel.PARROQUIA" Width="1.5" PointX="7.375" PointY="18.75" />
-        <EntityTypeShape EntityType="LealtadModel.PARROQUIA_URBANIZACION" Width="1.5" PointX="18.375" PointY="9.75" />
-        <EntityTypeShape EntityType="LealtadModel.URBANIZACION" Width="1.5" PointX="9.375" PointY="18.75" />
+      <Diagram DiagramId="0e5f8dd43e0b4597adc10aa85accc1f8" Name="Diagram1" ZoomLevel="29">
+        <EntityTypeShape EntityType="SumaLealtadModel.Affiliate" Width="1.5" PointX="10" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.AffiliateAud" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.Auditing" Width="1.5" PointX="2.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.Channel" Width="1.5" PointX="7.75" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.CIUDAD" Width="1.5" PointX="5.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.CLIENTE" Width="1.5" PointX="4.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.Company" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.CompanyAffiliate" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.CreditLimit" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.CustomerInterest" Width="1.5" PointX="10" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.ESTADO" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.FACTURA" Width="1.5" PointX="12.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.Interest" Width="1.5" PointX="7.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.Menu" Width="1.5" PointX="12.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.MUNICIPIO" Width="1.5" PointX="8" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.Object" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.Operation" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.Orders" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.OrdersDetail" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.PAIS" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.PAIS_ESTADO" Width="1.5" PointX="14.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.PARAMETRO" Width="1.5" PointX="14.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.PARROQUIA" Width="1.5" PointX="10.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.Photos_Affiliate" Width="1.5" PointX="6.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.Reason" Width="1.5" PointX="14.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.RESTRICCION" Width="1.5" PointX="14.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.Role" Width="1.5" PointX="16.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.SecurityLevel" Width="1.5" PointX="0.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.SecurityMenu" Width="1.5" PointX="16.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.Status" Width="1.5" PointX="16.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.sysdiagram" Width="1.5" PointX="8.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.TARJETA" Width="1.5" PointX="16.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.Type" Width="1.5" PointX="10.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.URBANIZACION" Width="1.5" PointX="12.5" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.User" Width="1.5" PointX="16.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.UserRol" Width="1.5" PointX="18.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="SumaLealtadModel.FK_Affiliate_Channel" ManuallyRouted="false" />
+        <AssociationConnector Association="SumaLealtadModel.FK_CompanyAffiliate_Company" ManuallyRouted="false" />
+        <AssociationConnector Association="SumaLealtadModel.FK_CreditLimit_Company" ManuallyRouted="false" />
+        <AssociationConnector Association="SumaLealtadModel.FK_Orders_Company" ManuallyRouted="false" />
+        <AssociationConnector Association="SumaLealtadModel.FK_CustomerInterest_Interest" ManuallyRouted="false" />
+        <AssociationConnector Association="SumaLealtadModel.FK_OrdersDetail_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="SumaLealtadModel.CIUDAD_MUNICIPIO" ManuallyRouted="false" />
+        <AssociationConnector Association="SumaLealtadModel.ESTADO_CIUDAD" ManuallyRouted="false" />
+        <AssociationConnector Association="SumaLealtadModel.MUNICIPIO_PARROQUIA" ManuallyRouted="false" />
+        <AssociationConnector Association="SumaLealtadModel.PARROQUIA_URBANIZACION" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
