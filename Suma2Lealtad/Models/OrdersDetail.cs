@@ -21,6 +21,6 @@ namespace Suma2Lealtad.Models
         public string comments { get; set; }
         public string status { get; set; }
     
-        public virtual Orders Order { get; set; }
+        public virtual Order Order { get; set; }
     }
 }

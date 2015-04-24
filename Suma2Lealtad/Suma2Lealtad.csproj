@@ -275,7 +275,7 @@
     <Compile Include="Models\Operation.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Orders.cs">
+    <Compile Include="Models\Order.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OrdersDetail.cs">
@@ -301,7 +301,7 @@
     </Compile>
     <Compile Include="Models\RespuestaCards.cs" />
     <Compile Include="Models\RespuestaWebPlazas.cs" />
-    <Compile Include="Models\RESTRICCION.cs">
+    <Compile Include="Models\RESTRICCIONES.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Role.cs">
@@ -333,9 +333,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SumaLealtad.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TARJETA.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>

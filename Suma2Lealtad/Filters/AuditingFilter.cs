@@ -10,7 +10,7 @@ namespace Suma2Lealtad.Filters
     {
 
 
-    void IActionFilter.OnActionExecuting(ActionExecutingContext filterContext){
+        void IActionFilter.OnActionExecuting(ActionExecutingContext filterContext){
 
         if (HttpContext.Current.Session["login"] == null)
         {
@@ -27,10 +27,18 @@ namespace Suma2Lealtad.Filters
         {
             using (LealtadEntities db = new LealtadEntities())
             {
-
-                Auditing log = new Auditing()
+                int idlog;
+                if (db.Auditings.Count() > 0)
                 {
-                    id = db.Auditings.Max(x => x.id) + 1,
+                    idlog = db.Auditings.Max(x => x.id) + 1;
+                }
+                else
+                {
+                    idlog = 1;
+                }
+                Auditing log = new Auditing()
+                {                
+                    id = idlog,
                     objectid = 1,
                     operationsid = 1,
                     userid = (int) HttpContext.Current.Session["userid"],     
@@ -42,9 +50,7 @@ namespace Suma2Lealtad.Filters
 
                 db.Auditings.Add(log);
                 db.SaveChanges();
-
             }
-
         }
 
         this.OnActionExecuting(filterContext);

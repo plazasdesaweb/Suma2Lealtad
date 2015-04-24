@@ -12,9 +12,9 @@ namespace Suma2Lealtad.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Orders
+    public partial class Order
     {
-        public Orders()
+        public Order()
         {
             this.OrdersDetails = new HashSet<OrdersDetail>();
         }

@@ -18,7 +18,7 @@ namespace Suma2Lealtad.Models
         {
             this.CompanyAffiliates = new HashSet<CompanyAffiliate>();
             this.CreditLimits = new HashSet<CreditLimit>();
-            this.Orders = new HashSet<Orders>();
+            this.Orders = new HashSet<Order>();
         }
     
         public int id { get; set; }
@@ -33,6 +33,6 @@ namespace Suma2Lealtad.Models
     
         public virtual ICollection<CompanyAffiliate> CompanyAffiliates { get; set; }
         public virtual ICollection<CreditLimit> CreditLimits { get; set; }
-        public virtual ICollection<Orders> Orders { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }
