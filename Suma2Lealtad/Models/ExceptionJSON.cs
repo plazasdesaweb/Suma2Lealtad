@@ -11,4 +11,5 @@ namespace Suma2Lealtad.Models
         public string detail { get; set; }
         public string source { get; set; }
     }
+
 }
