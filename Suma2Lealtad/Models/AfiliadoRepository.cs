@@ -115,7 +115,6 @@ namespace Suma2Lealtad.Models
                 }
 
                 return lista;
-
             }
         }
         #endregion
@@ -141,6 +140,23 @@ namespace Suma2Lealtad.Models
             }
         }
         #endregion
+
+        //retorna el ojeto Photos_Affiliate a partr del id del afiliado
+        private Photos_Affiliate GetPhoto(int idAfiliado)
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                Photos_Affiliate photo_affiliate = db.Photos_Affiliates.FirstOrDefault(p => p.Affiliate_id == idAfiliado);
+                if (photo_affiliate != null)
+                {
+                    return photo_affiliate;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
 
         //busca un cliente en la WebPlazas a partir del documento de identificación
         public Afiliado Find(string numdoc)
@@ -322,7 +338,6 @@ namespace Suma2Lealtad.Models
                 //ENTIDAD CLIENTE
                 //ENTIDAD Status
                 //ENTIDAD CustomerInterest
-                //ENTIDAD Photos_Affiliate, FILEYSTEM ~/Picture/@filename@.jpg                
                 Afiliado afiliado = (from a in db.Affiliates
                                      join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
                                      join s in db.Status on a.statusid equals s.id
@@ -404,9 +419,10 @@ namespace Suma2Lealtad.Models
                 {
                     afiliado.estatustarjeta = "";
                 }
-                //ENTIDAD Photos_Affiliate, FILEYSTEM ~/Picture/@filename@.jpg
-                afiliado.picture = AppModule.GetPathPicture().Replace("@filename@", afiliado.docnumber);
-
+                //FILEYSTEM ~/Picture/@filename@.jpg
+                //afiliado.picture = AppModule.GetPathPicture().Replace("@filename@", afiliado.docnumber);
+                //ENTIDAD Photos_Affiliate 
+                afiliado.picture = GetPhoto(afiliado.id);                               
                 //POR AHORA NO HAY COLUMNA EN NINGUNA ENTIDAD PARA ALMACENAR ESTE DATO QUE VIENE DE LA WEB
                 if (afiliado.WebType == null)
                 {
@@ -429,7 +445,7 @@ namespace Suma2Lealtad.Models
         }
 
         //crea el afiliado en SumaPlazas (solicitud de afiliación)
-        public bool Save(Afiliado afiliado)
+        public bool Save(Afiliado afiliado, HttpPostedFileBase file)
         {
             using (LealtadEntities db = new LealtadEntities())
             {
@@ -498,8 +514,31 @@ namespace Suma2Lealtad.Models
                     };
                     db.CustomerInterests.Add(customerInterest);
                 }
-                //ENTIDAD Photos_Affiliate, FILEYSTEM ~/Picture/@filename@.jpg 
-                //var Photos_Affiliate = new Photos_Affiliate();
+                //ENTIDAD Photos_Affiliate
+                if (file != null)
+                {
+                    try
+                    {
+                        int length = file.ContentLength;
+                        byte[] buffer = new byte[length];
+                        file.InputStream.Read(buffer, 0, length);
+                        var Photos_Affiliate = new Photos_Affiliate()
+                        {
+                            photo = buffer,
+                            photo_type = file.ContentType,
+                            Affiliate_id = Affiliate.id
+                        };
+                        db.Photos_Affiliates.Add(Photos_Affiliate);
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }                
                 //ENTIDAD CompanyAffiliate
                 var companyaffiliate = new CompanyAffiliate()
                 {

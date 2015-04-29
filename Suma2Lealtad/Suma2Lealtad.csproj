@@ -203,6 +203,7 @@
     <Compile Include="Controllers\InterestController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\MyDatabaseEntities.cs" />
+    <Compile Include="Controllers\Prepago\AfiliadoPrepagoController.cs" />
     <Compile Include="Controllers\ReasonsBlockController.cs" />
     <Compile Include="Controllers\ReasonsController.cs" />
     <Compile Include="Controllers\RoleController.cs" />

@@ -202,20 +202,18 @@
                         </div>
                         <!--// DATOS BÁSICOS -->
 
-
-                        <!-- SILVERLIGHT -->
+                        <!-- FOTO DEL DOCUMENTO DE IDENTIFICACION -->
                         <div class="tab-pane" id="tab2">
-
                             <div class="editor-label col-md-2 control-label">
                             </div>
 
                             <div class="editor-field col-md-10">
-                                <img src="@Url.Content(@Model.picture)" />
+                                @*<img src="@Url.Content(@Model.picture)" />*@
+                                <img src="@Url.Action("GetImage", "Afiliado", new { id = Model.id })" />
                             </div>
-
                         </div>
-                        <!--// SILVERLIGHT -->
-
+                        <!-- //FOTO DEL DOCUMENTO DE IDENTIFICACION -->
+                       
 
                         <!-- DIRECCIÓN -->
                         <div class="tab-pane" id="tab3">

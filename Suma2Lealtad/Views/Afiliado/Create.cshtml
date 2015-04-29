@@ -240,50 +240,19 @@
                             <!-- SECCION PARA VERIFICAR OPERACIONES ESCANER-->
                             <script src="~/Scripts/jquery-2.1.3.min.js"></script>
                             <script>
-                                //$(document).ready(function () {
-                                //    $("#seccion2").hide();
-                                //    $("#seccion3").hide();
-                                //    $("#boton2").hide();
-                                //    $("#boton3").hide();
-                                //});
-
-                                //function Siguiente() {
-                                //    $("#seccion1").hide();
-                                //    $("#seccion2").show();
-                                //    $("#boton1").hide();
-                                //    $("#boton2").show();
-                                //}
-
-                                //function Siguiente2() {
-                                //    if (VerificarElementoControl("ElementoControl", "Escaneada") == true) {
-                                //        alert("Error: Debe seleccionar el archivo para cargarlo en el servidor.");
-                                //    }
-                                //    else if (VerificarElementoControl("ElementoControl", "Seleccionada") == true) {
-                                //        $("#seccion2").hide();
-                                //        $("#seccion3").show();
-                                //        $("#boton2").hide();
-                                //        $("#boton3").show();
-                                //    }
-                                //    else {
-                                //        alert("Error: Debe completar Paso 1 y Paso 2 para continuar.");
-                                //    }
-                                //}
-
-                                //function VerificarElementoControl(ElementoControl, ValorDeControl) {
-                                //    if (document.getElementById(ElementoControl).innerHTML == ValorDeControl)
-                                //        return true;
-                                //    else
-                                //        return false;
-                                //}
-
                                 function ActualizaElementoControl(ElementoControl, ValorDeControl, InputFile, Docnumber) {
                                     var NombreArchivo = InputFile.value.split('\\');
-                                    if (NombreArchivo[NombreArchivo.length - 1] == Docnumber + ".jpg") {
-                                        document.getElementById(ElementoControl).innerHTML = ValorDeControl;
-                                    }
-                                    else {
+                                    var TamañoArchivo = InputFile.files[0].size;
+                                    if (NombreArchivo[NombreArchivo.length - 1] != Docnumber + ".jpg") {
                                         alert("El archivo seleccionado no corresponde con el cliente Número de Documento / Cédula: " + Docnumber);
                                         Borracampofile();
+                                    }
+                                    else if (TamañoArchivo > 51200) {
+                                        alert("El tamaño del archivo seleccionado no puede ser mayor a 50 Kb");
+                                        Borracampofile();
+                                    }
+                                    else {
+                                        document.getElementById(ElementoControl).innerHTML = ValorDeControl;
                                     }
                                 }
 

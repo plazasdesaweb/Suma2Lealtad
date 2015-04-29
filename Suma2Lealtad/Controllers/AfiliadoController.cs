@@ -84,31 +84,30 @@ namespace Suma2Lealtad.Controllers
         public ActionResult Create(Afiliado afiliado, HttpPostedFileBase file)
         {
             ViewModel viewmodel = new ViewModel();
-            if (rep.Save(afiliado))
+            if (rep.Save(afiliado, file))
             {
-                if (file != null && file.ContentLength > 0)
-                    try
-                    {
-                        string path = Server.MapPath(AppModule.GetPathPicture().Replace("@filename@", afiliado.docnumber));
-                        file.SaveAs(path);
-                    }
-                    catch (Exception ex)
-                    {
-                        viewmodel.Title = "Afiliado / Crear Afiliación";
-                        viewmodel.Message = "Error de aplicacion: No se pudo cargar archivo (" + ex.Message + ")";
-                        viewmodel.ControllerName = "Afiliado";
-                        viewmodel.ActionName = "Filter";
-                        return RedirectToAction("GenericView", viewmodel);
-                    }
-                else
-                {
-                    viewmodel.Title = "Afiliado / Crear Afiliación";
-                    viewmodel.Message = "Error de aplicacion: No se pudo cargar archivo (archivo inválido)";
-                    viewmodel.ControllerName = "Afiliado";
-                    viewmodel.ActionName = "Filter";
-                    return RedirectToAction("GenericView", viewmodel);
-                }
-                //PENDIENTE: SI FALLA ALGUNA DE LAS ACTIVIDADES. HAY QUE DESHACER LAS ACTIVIDADES ANTERIORES EXITOSAS.                
+                //if (file != null && file.ContentLength > 0)
+                //    try
+                //    {
+                //        string path = Server.MapPath(AppModule.GetPathPicture().Replace("@filename@", afiliado.docnumber));
+                //        file.SaveAs(path);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        viewmodel.Title = "Afiliado / Crear Afiliación";
+                //        viewmodel.Message = "Error de aplicacion: No se pudo cargar archivo (" + ex.Message + ")";
+                //        viewmodel.ControllerName = "Afiliado";
+                //        viewmodel.ActionName = "Filter";
+                //        return RedirectToAction("GenericView", viewmodel);
+                //    }
+                //else
+                //{
+                //    viewmodel.Title = "Afiliado / Crear Afiliación";
+                //    viewmodel.Message = "Error de aplicacion: No se pudo cargar archivo (archivo inválido)";
+                //    viewmodel.ControllerName = "Afiliado";
+                //    viewmodel.ActionName = "Filter";
+                //    return RedirectToAction("GenericView", viewmodel);
+                //}
                 viewmodel.Title = "Afiliado / Crear Afiliación";
                 viewmodel.Message = "Solicitud de afiliación creada exitosamente.";
                 viewmodel.ControllerName = "Afiliado";
@@ -121,7 +120,6 @@ namespace Suma2Lealtad.Controllers
                 viewmodel.Message = "Error de aplicacion: No se pudo crear solicitud de afiliación.";
                 viewmodel.ControllerName = "Afiliado";
                 viewmodel.ActionName = "Filter";
-                //viewmodel.RouteValues = afiliado.docnumber;
             }
             return RedirectToAction("GenericView", viewmodel);
         }
@@ -181,6 +179,19 @@ namespace Suma2Lealtad.Controllers
                 viewmodel.RouteValues = afiliado.docnumber;
             }
             return RedirectToAction("GenericView", viewmodel);
+        }
+
+        public FileContentResult GetImage(int id)
+        {
+            Photos_Affiliate Photo = rep.Find(id).picture;
+            if (Photo.photo != null)
+            {
+                return File(Photo.photo, Photo.photo_type);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public ActionResult Aprobar(int id)
