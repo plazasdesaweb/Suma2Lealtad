@@ -36,11 +36,13 @@
                             </div>
 
                             @Html.HiddenFor(model => model.id)
-                            @Html.HiddenFor(model => model.typeid)
                             @Html.HiddenFor(model => model.reasonsid)
                             @Html.HiddenFor(model => model.statusid)
+                            @*@Html.HiddenFor(model => model.type)*@
                             @Html.HiddenFor(model => model.clientid)
-                            @Html.HiddenFor(model => model.type)
+                            @Html.HiddenFor(model => model.typeid)
+                            @Html.HiddenFor(model => model.WebType)
+                            @Html.HiddenFor(model => model.estatustarjeta)
 
                             <div class="editor-label col-md-4 control-label">
                                 * Número de Documento/Cédula :

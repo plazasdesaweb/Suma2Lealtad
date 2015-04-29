@@ -42,9 +42,9 @@ namespace Suma2Lealtad.Modules
         }
 
         // retornar excepcion JSON.
-        private static string GetExcepcionJSON(string ExcepcionMessage)
+        private static string GetExcepcionJSON(string ExcepcionMessage, string Source)
         {
-            return "{\"code\":\"100\",\"detail\":\" @ex.Message@\", \"source\": \"WebServices PlazasWeb\" }".Replace("@ex.Message@", ExcepcionMessage);
+            return "{\"code\":\"100\",\"detail\":\" @Message@\", \"source\": \" @Source@\" }".Replace("@Message@", ExcepcionMessage).Replace("@Source@",Source);
         }
 
         //implementa los servicios cards
@@ -53,21 +53,21 @@ namespace Suma2Lealtad.Modules
             // consumir los servicios asociados a Cards.
             private static string ConsumirServicioCards(string nameService)
             {
+                string str = AppModule.CardsServerRoute() + nameService;                                                        
                 try
                 {
-                    string str = AppModule.CardsServerRoute() + nameService;
                     return GetResponseJSON(str.Trim());
                 }
                 catch (Exception ex)
                 {
-                    return GetExcepcionJSON(ex.Message);
+                    return GetExcepcionJSON(ex.Message, str);
                 }
             }
 
             public static string addClient(string numdoc, string name, string phone, string address)
             {
                 string req = WSL_CARDS_ADDCLIENT;
-                req = req.Replace("{numdoc}", numdoc);
+                req = req.Replace("{numdoc}", numdoc); 
                 req = req.Replace("{name}", name);
                 req = req.Replace("{phone}", phone);
                 req = req.Replace("{address}", address);
@@ -151,14 +151,14 @@ namespace Suma2Lealtad.Modules
             // consumir los servicios asociados a PlazasWeb.
             private static string ConsumirServicioPlazasWeb(string nameService)
             {
+                string str = AppModule.WebServerRoute() + nameService;
                 try
                 {
-                    string str = AppModule.WebServerRoute() + nameService;
                     return GetResponseJSON(str.Trim());
                 }
                 catch (Exception ex)
                 {
-                    return GetExcepcionJSON(ex.Message);
+                    return GetExcepcionJSON(ex.Message, str);
                 }
             }
 
@@ -187,7 +187,7 @@ namespace Suma2Lealtad.Modules
                 req = req.Replace("{phone2}", (record.phone2 == null || record.phone2 == "") ? "NULO" : record.phone2);
                 req = req.Replace("{phone3}", (record.phone3 == null || record.phone3 == "") ? "NULO" : record.phone3);
                 req = req.Replace("{email}", record.email);
-                req = req.Replace("{type}", record.type);// + "");
+                req = req.Replace("{type}", record.WebType);// + "");
                 return ConsumirServicioPlazasWeb(req);
             }
 

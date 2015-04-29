@@ -203,6 +203,7 @@
     <Compile Include="Controllers\InterestController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\MyDatabaseEntities.cs" />
+    <Compile Include="Controllers\Prepago\PrepagoController.cs" />
     <Compile Include="Controllers\ReasonsBlockController.cs" />
     <Compile Include="Controllers\ReasonsController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -255,6 +256,7 @@
     <Compile Include="Models\ESTADO.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ExceptionJSON.cs" />
     <Compile Include="Models\FACTURA.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -568,6 +570,7 @@
     <Content Include="Views\Afiliado\SuspenderTarjeta.cshtml" />
     <Content Include="Views\Afiliado\BloquearTarjeta.cshtml" />
     <Content Include="Views\Afiliado\ReactivarTarjeta.cshtml" />
+    <Content Include="Views\Prepago\Afiliado\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
