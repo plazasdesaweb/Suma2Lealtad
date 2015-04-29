@@ -43,6 +43,14 @@
                             @Html.HiddenFor(model => model.WebType)
 
                             <div class="editor-label col-md-4 control-label">
+                                * Tipo de Afiliado :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBox("type","Suma", new { @class = "form-control", @readonly = "true" })
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
                                 * Número de Documento/Cédula :
                             </div>
 
@@ -229,11 +237,13 @@
 
                             </div>
                             <!--// SILVERLIGHT -->
-
-                            <div class="editor-label col-md-10 control-label">
-                                <div id="capaarchivo" class="editor-label col-md-10 control-label">
-                                    <p class="text-left">Seleccione archivo: </p>
-                                    <input type="file" name="file" id="file" onchange="ActualizaElementoControl('ElementoControl','Seleccionada', this, '@Model.docnumber')"/>
+                            <div class="col-md-12 col-btn">
+                                <div id="capaarchivo" class="text-left">
+                                    @*<p class="text-left">Seleccione archivo: </p>*@
+                                    @*<input type="file" name="file" id="file" onchange="ActualizaElementoControl('ElementoControl','Seleccionada', this, '@Model.docnumber')"/>*@
+                                    <input id="file" type=file name="file" style="visibility:hidden;position:absolute;top:0;left:0" onchange="ActualizaElementoControl('ElementoControl','Seleccionada', this, '@Model.docnumber')">
+                                    <input type="button" value="Seleccione Archivo" class="btn btn-success btn-md" onclick="this.form.file.click()">
+                                    <span id="info" style="border: 0px solid black"></span>
                                 </div>
                             </div>
 
@@ -253,6 +263,8 @@
                                     }
                                     else {
                                         document.getElementById(ElementoControl).innerHTML = ValorDeControl;
+                                        document.getElementById("info").innerHTML = NombreArchivo[NombreArchivo.length - 1];
+                                        document.getElementById("file-error").innerHTML = "";
                                     }
                                 }
 
@@ -261,7 +273,10 @@
                                     capa = window.capaarchivo;
                                     varHTML = '';
                                     capa.innerHTML = varHTML;
-                                    varHTML += '<input type="file" name="file" id="file" onchange="' + textofuncion + '" />';
+                                    //varHTML += '<input type="file" name="file" id="file" onchange="' + textofuncion + '" />';
+                                    varHTML += '<input id="file" type=file name="file" style="visibility:hidden;position:absolute;top:0;left:0" onchange="' + textofuncion + '" />';
+                                    varHTML += '<input type="button" value="Seleccione Archivo" class="btn btn-success btn-md" onclick="this.form.file.click()">'
+                                    varHTML += '<span id="info" style="border: 0px solid black"></span>'
                                     capa.innerHTML = varHTML;
                                 }
                             </script>
