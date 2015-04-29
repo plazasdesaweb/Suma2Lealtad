@@ -5,106 +5,61 @@ namespace Suma2Lealtad.Models
 {
     public class Afiliado
     {
-        // Affiliate */
-        //public int id { get; set; }
-        //public int customerid { get; set; }
-        //public string docnumber { get; set; }
-        //public int clientid { get; set; }
-        //public string storeid { get; set; }
-        //public int channelid { get; set; }
-        //public int typeid { get; set; }
-        //public string typedelivery { get; set; }
-        //public int storeiddelivery { get; set; }
-        //public int statusid { get; set; }
-        //public string estatus { get; set; }
-        //public int reasonsid { get; set; }
-        //public string twitter_account { get; set; }
-        //public string facebook_account { get; set; }
-        //public string instagram_account { get; set; }
-        //public string comments { get; set; }
-        // Cliente */
-        //public string type { get; set; }
-        //public string name { get; set; }
-        //public string name2 { get; set; }
-        //public string lastname1 { get; set; }
-        //public string lastname2 { get; set; }
-        //public string email { get; set; }
-        //public string phone1 { get; set; }
-        //public string phone2 { get; set; }
-        //public string gender { get; set; }
-        //public string maritalstatus { get; set; }
-        //public DateTime? birthdate { get; set; }
-        //public string nationality { get; set; }
-        //public string occupation { get; set; }
-        //public string phone3 { get; set; }
-        //public List<Interest> Intereses { get; set; }
-        //public string cod_estado { get; set; }
-        //public string cod_ciudad { get; set; }
-        //public string cod_municipio { get; set; }
-        //public string cod_parroquia { get; set; }
-        //public string cod_urbanizacion { get; set; }
-        //public string picture { get; set; }
-
-        /* Elementos que sustentan la carga */
-        //SERVICIO WSL.WebPlazas.getClientByNumDoc // +
-        public string nationality { get; set; } // +*
-        public string name { get; set; } // +<*
-        public string name2 { get; set; } // +<*
-        public string lastname1 { get; set; } // +<*
-        public string lastname2 { get; set; } // +<*
-	    public string birthdate { get; set; } // +*
-	    public string gender { get; set; } //+*
-        public string maritalstatus { get; set; } // +*
-        public string occupation { get; set; } // +*
-        public string phone1 { get; set; } // +<*
-        public string phone2 { get; set; } // +*
-        public string phone3 { get; set; } // +*
-        public string email { get; set; } // +*
-        public string type { get; set; } // +*
-        //SERVICIO WSL.Cards.getClient !
-	    public string pan { get; set; } // !
-	    public string printed { get; set; } // !
-	    public string estatustarjeta { get; set; } // !
-        //METODO Tarjeta.ConstruirTrackI
-	    public string trackI { get; set; }
-        //METODO Tarjeta.ConstruirTrackII
-	    public string trackII { get; set; }
-        //ENTIDAD Affiliate 
-	    public int id { get; set; }
-	    public int customerid { get; set; } // (No se a que corresponde)                	 
-	    public string docnumber { get; set; } // +<*    
-        public int clientid { get; set; }  // +* (corresponde al id de WEBPLAZAS)
-        public int storeid { get; set; }
-        public int channelid { get; set; }
-        public int typeid { get; set; }
-        public string typedelivery { get; set; }
-        public int storeiddelivery { get; set; }
-        public int statusid { get; set; }
-	    public int reasonsid { get; set; }
-	    public string twitter_account { get; set; } // +
-        public string facebook_account { get; set; } // +
-        public string instagram_account { get; set; } // +
-        public string comments { get; set; }
-        //ENTIDAD Status
-	    public string estatus { get; set; }        
+        //ENTIDAD Affiliate
+        public int id { get; set; }                     // id del Afiliado en SUMAPLAZAS
+        public int customerid { get; set; }             // id del Afiliado en CARDS                	 
+        public string docnumber { get; set; }           // Documento de Identificación del Afiliado
+        public int clientid { get; set; }               // id de Cliente del Afiliado en WEBPLAZAS
+        public int storeid { get; set; }                // id de Sucursal de Afiliación
+        public int channelid { get; set; }              // id de Canal de Afiliación
+        public int typeid { get; set; }                 // id de Tipo de Afiliación
+        public string typedelivery { get; set; }        // Tipo de Envío de WEBPLAZAS
+        public int? storeiddelivery { get; set; }       // id Sucursal de Envío DE WEBPLAZAS
+        public int statusid { get; set; }               // id de Estatus de Afiliación
+        public int? reasonsid { get; set; }             // id de Razon de Cambio de Estatus
+        public string twitter_account { get; set; }     // cuenta de Twitter
+        public string facebook_account { get; set; }    // cuenta de Facebook
+        public string instagram_account { get; set; }   // cuenta de Instagram
+        public string comments { get; set; }            // Coentarios
         //ENTIDAD CLIENTE
-        public string cod_estado { get; set; }
-        public string cod_ciudad { get; set; }
-        public string cod_municipio { get; set; }
-        public string cod_parroquia { get; set; }
-        public string cod_urbanizacion { get; set; }        
-        //ENTIDAD Photos_Affiliate, FILEYSTEM ~/Picture/@filename@.jpg
-	    public string picture { get; set; }
+        public string nationality { get; set; }         // Nacionalidad
+        public string name { get; set; }                // Primer Nombre
+        public string name2 { get; set; }               // Segundo Nombre 
+        public string lastname1 { get; set; }           // Primer Apellido
+        public string lastname2 { get; set; }           // Segundo Apellido 
+        public string birthdate { get; set; }           // Fecha de Nacimiento
+        public string gender { get; set; }              // Sexo
+        public string maritalstatus { get; set; }       // Estado Civil
+        public string occupation { get; set; }          // Ocupación
+        public string phone1 { get; set; }              // Teléfono Habitación
+        public string phone2 { get; set; }              // Teléfono Oficina
+        public string phone3 { get; set; }              // Teléfono Celular
+        public string email { get; set; }               // Email
+        public string cod_estado { get; set; }          // Dirección Codigo Estado
+        public string cod_ciudad { get; set; }          // Dirección Codigo Ciudad
+        public string cod_municipio { get; set; }       // Dirección Codigo Municipio
+        public string cod_parroquia { get; set; }       // Dirección Codigo Parroquia
+        public string cod_urbanizacion { get; set; }    // Dirección Codigo Urbanización    
         //ENTIDAD CustomerInterest
-	    public List<Interest> Intereses { get; set; }
-        /* Elementos que sustentan la actualización */
-        //ENTITYFRAMEWORK LealtadEntities
-        //SERVICIO WSL_CARDS_ADDCLIENT <
-        //SERVICIO WSL_WEBPLAZAS_UPDATECLIENT *       
+        public List<Interest> Intereses { get; set; }   // Lista de Intereses del Afiliado
+        //ENTIDAD Type
+        public string type { get; set; }                // Tipo de Afiliación (Suma, Prepago)
+        //ENTIDAD Status
+        public string estatus { get; set; }             // Estatus de Afiliación
+        //ENTIDAD TARJETA
+        public string pan { get; set; }                 // Número de Tarjeta
+        public string estatustarjeta { get; set; }      // Estatus de la Tarjeta
+        public string printed { get; set; }             // Fecha de Impresión de la Tarjeta
+        public string trackI { get; set; }              // TrackI de la Tarjeta
+        public string trackII { get; set; }             // TrackII de la Tarjeta
+        //FILEYSTEM ~/Picture/@filename@.jpg luego será ENTIDAD Photos_Affiliate 
+        public string picture { get; set; }             // imagen del Documento de Identificación del Afiliado
+        //Campos extras que no se almacenan en Entidades
+        public string WebType { get; set; }             // Type de Afiliado en WEBPLAZAS
 
         /* Excepciones */
-        public string exnumber { get; set; }
-        public string exdetail { get; set; }
+        //public string exnumber { get; set; }
+        //public string exdetail { get; set; }
 
         public class Sexo
         {
@@ -119,7 +74,6 @@ namespace Suma2Lealtad.Models
               new Sexo { id = 1, sexo = "Masculino" },
               new Sexo { id = 2, sexo = "Femenino"  }
         };
-
 
         public class MaritalStatus
         {
@@ -224,7 +178,6 @@ namespace Suma2Lealtad.Models
             new Parroquia {id = "3", parroquia = "San Juan" },
             new Parroquia {id = "4", parroquia = "Baruta"   },
             new Parroquia {id = "5", parroquia = "Hatillo"  }
-
         };
 
         public class Urbanizacion
@@ -241,7 +194,6 @@ namespace Suma2Lealtad.Models
             new Urbanizacion {id = "2", urbanizacion = "Las Acacias" },
             new Urbanizacion {id = "3", urbanizacion = "Baruta"      },
             new Urbanizacion {id = "4", urbanizacion = "Hatillo"     }
-
         };
 
         public class Channel

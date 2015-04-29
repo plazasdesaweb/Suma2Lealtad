@@ -1,13 +1,12 @@
 ﻿@model Suma2Lealtad.Models.Afiliado
 
 @{
-    //DEBO SACAR LA INFO DEL NRO DEL DOCUMENTO DEL MODELO Y PASARLO COMO PARAMETRO AL HELPER SE SILVERLIGHT
     var InitParams = "Nombre=" + Model.name;
     InitParams = InitParams + "," + "Apellido=" + Model.lastname1;
     InitParams = InitParams + "," + "NroTarjeta=" + Model.pan;
     InitParams = InitParams + "," + "Track1=" + Model.trackI;
     InitParams = InitParams + "," + "Track2=" + Model.trackII;
-    InitParams = InitParams + "," + "TipoTarjeta=" + "Suma";
+    InitParams = InitParams + "," + "TipoTarjeta=" + Model.type;
     InitParams = InitParams + "," + "Corporacion=" + "Corporacion";
     InitParams = InitParams + "," + "FechaVencimiento=" + "12-99";
     InitParams = InitParams + "," + "idElementoHtmlControl=ElementoControl";   

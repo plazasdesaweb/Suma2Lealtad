@@ -255,6 +255,7 @@
     <Compile Include="Models\ESTADO.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ExceptionJSON.cs" />
     <Compile Include="Models\FACTURA.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
