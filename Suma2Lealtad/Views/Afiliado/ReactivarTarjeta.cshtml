@@ -22,6 +22,13 @@
                     <form action="@Url.Action("ReactivarTarjeta", "Afiliado")" name="form" method="post">
 
                         <div class="form-group">
+                            <div class="editor-label col-md-4 control-label">
+                                Tipo de Afiliado :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.type, new { @class = "form-control", @readonly = "true" })
+                            </div>
 
                             <div class="editor-label col-md-4 control-label">
                                 Nombre del Afiliado :

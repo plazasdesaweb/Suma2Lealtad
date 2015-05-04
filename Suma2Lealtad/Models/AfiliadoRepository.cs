@@ -158,6 +158,12 @@ namespace Suma2Lealtad.Models
             }
         }
 
+        private int TipoAfiliacionUsuario(int userId)
+        { 
+            //Aqui se debe determinar el tipo de afiliación que puede crear el usuario
+            return ID_TYPE_SUMA;
+        }
+
         //busca un cliente en la WebPlazas a partir del documento de identificación
         public Afiliado Find(string numdoc)
         {
@@ -212,20 +218,20 @@ namespace Suma2Lealtad.Models
                 else
                 {
                     //Está afiliado, se busca lo necesario para llenar el index de editar
-                    afiliado.statusid = (from a in db.Affiliates
-                                         where a.docnumber.Equals(afiliado.docnumber)
-                                         select a.statusid
-                                         ).SingleOrDefault();
-                    afiliado.estatus = (from s in db.Status
-                                        where s.id.Equals(afiliado.statusid)
-                                        select s.name
-                                        ).SingleOrDefault();
+                    //afiliado.statusid = (from a in db.Affiliates
+                    //                     where a.docnumber.Equals(afiliado.docnumber)
+                    //                     select a.statusid
+                    //                     ).SingleOrDefault();
+                    afiliado.statusid = db.Affiliates.FirstOrDefault(a => a.docnumber == afiliado.docnumber).statusid;
+                    //afiliado.estatus = (from s in db.Status
+                    //                    where s.id.Equals(afiliado.statusid)
+                    //                    select s.name
+                    //                    ).SingleOrDefault();
+                    afiliado.estatus = db.Status.FirstOrDefault(s => s.id == afiliado.statusid).name;
                 }
-                //ENTIDAD TYPE
-                afiliado.type = (from t in db.Types
-                                 where t.id.Equals(afiliado.typeid)
-                                 select t.name
-                                 ).SingleOrDefault();
+                //ENTIDAD TYPE 
+                afiliado.typeid = TipoAfiliacionUsuario((int)HttpContext.Current.Session["userid"]); 
+                afiliado.type = db.Types.FirstOrDefault(t => t.id == afiliado.typeid).name;
             }
             return afiliado;
         }
@@ -253,6 +259,7 @@ namespace Suma2Lealtad.Models
                     afiliados = (from a in db.Affiliates
                                  join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
                                  join s in db.Status on a.statusid equals s.id
+                                 join t in db.Types on a.typeid equals t.id
                                  where a.docnumber.Equals(numdoc)
                                  select new Afiliado()
                                  {
@@ -264,7 +271,9 @@ namespace Suma2Lealtad.Models
                                      lastname1 = c.APELLIDO_CLIENTE1,
                                      email = c.E_MAIL,
                                      //ENTIDAD Status
-                                     estatus = s.name
+                                     estatus = s.name,
+                                     //ENTIDAD Type
+                                     type = t.name
                                  }).ToList();
                 }
                 else
@@ -276,6 +285,7 @@ namespace Suma2Lealtad.Models
                     afiliados = (from a in db.Affiliates
                                  join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
                                  join s in db.Status on a.statusid equals s.id
+                                 join t in db.Types on a.typeid equals t.id
                                  where a.docnumber.Equals(numdoc) || c.E_MAIL == email || c.NOMBRE_CLIENTE1.Contains(name) || c.APELLIDO_CLIENTE1.Contains(name)
                                  select new Afiliado()
                                  {
@@ -287,7 +297,9 @@ namespace Suma2Lealtad.Models
                                      lastname1 = c.APELLIDO_CLIENTE1,
                                      email = c.E_MAIL,
                                      //ENTIDAD Status
-                                     estatus = s.name
+                                     estatus = s.name,
+                                     //ENTIDAD Type
+                                     type = t.name
                                  }).ToList();
                 }
                 if (afiliados != null)
@@ -341,6 +353,7 @@ namespace Suma2Lealtad.Models
                 Afiliado afiliado = (from a in db.Affiliates
                                      join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
                                      join s in db.Status on a.statusid equals s.id
+                                     join t in db.Types on a.typeid equals t.id
                                      where a.id.Equals(id)
                                      select new Afiliado()
                                      {
@@ -380,6 +393,8 @@ namespace Suma2Lealtad.Models
                                          cod_urbanizacion = c.COD_URBANIZACION,
                                          //ENTIDAD Status
                                          estatus = s.name,
+                                         //ENTIDAD Type
+                                         type = t.name
                                      }).Single();
                 DateTime? d = (from c in db.CLIENTES
                                where (c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO).Equals(afiliado.docnumber)
@@ -389,11 +404,6 @@ namespace Suma2Lealtad.Models
                 afiliado.birthdate = d.Value.ToString("dd-MM-yyyy");
                 //ENTIDAD CustomerInterest
                 afiliado.Intereses = chargeInterestList(afiliado.id);
-                //ENTIDAD TYPE
-                afiliado.type = (from t in db.Types
-                                 where t.id.Equals(afiliado.typeid)
-                                 select t.name
-                                 ).SingleOrDefault();
                 //ENTIDAD TARJETA
                 Decimal p = (from t in db.TARJETAS
                              where t.NRO_AFILIACION.Equals(afiliado.id)
@@ -441,7 +451,7 @@ namespace Suma2Lealtad.Models
                 return false;
             }
             RespuestaWebPlazas RespuestaWebPlazas = (RespuestaWebPlazas)JsonConvert.DeserializeObject<RespuestaWebPlazas>(RespuestaWebPlazasJson);
-            return (RespuestaWebPlazas.id == "0");
+            return (RespuestaWebPlazas.excode == "0");
         }
 
         //crea el afiliado en SumaPlazas (solicitud de afiliación)
@@ -458,8 +468,7 @@ namespace Suma2Lealtad.Models
                     clientid = afiliado.clientid,
                     storeid = afiliado.storeid,
                     channelid = afiliado.channelid,
-                    //por ahora todos son suma
-                    typeid = ID_TYPE_SUMA,
+                    typeid = afiliado.typeid,
                     affiliatedate = System.DateTime.Now,
                     typedelivery = afiliado.typedelivery,
                     storeiddelivery = afiliado.storeiddelivery,
@@ -703,7 +712,7 @@ namespace Suma2Lealtad.Models
                 return false;
             }
             RespuestaCards RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
-            if (RespuestaCards.code == "0" || RespuestaCards.code == "7")
+            if (RespuestaCards.excode == "0" || RespuestaCards.excode == "7")
             {
                 //Se buscan los datos de Tarjeta del AFILIADO en Cards
                 //SERVICIO WSL.Cards.getClient !
@@ -794,7 +803,7 @@ namespace Suma2Lealtad.Models
                 return false;
             }
             RespuestaCards RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
-            if (RespuestaCards.code == "0")
+            if (RespuestaCards.excode == "0")
             {
                 return true;
             }
@@ -813,7 +822,7 @@ namespace Suma2Lealtad.Models
                 return false;
             }
             RespuestaCards RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
-            if (RespuestaCards.code == "0")
+            if (RespuestaCards.excode == "0")
             {
                 if (BorrarTarjeta(afiliado.pan))
                 {
@@ -851,7 +860,7 @@ namespace Suma2Lealtad.Models
                 return false;
             }
             RespuestaCards RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
-            if (RespuestaCards.code == "0")
+            if (RespuestaCards.excode == "0")
             {
                 //Se buscan los datos de Tarjeta del AFILIADO en Cards
                 //SERVICIO WSL.Cards.getClient !
@@ -881,7 +890,7 @@ namespace Suma2Lealtad.Models
                 return false;
             }
             RespuestaCards RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
-            if (RespuestaCards.code == "0")
+            if (RespuestaCards.excode == "0")
             {
                 //Se buscan los datos de Tarjeta del AFILIADO en Cards
                 //SERVICIO WSL.Cards.getClient !
@@ -911,7 +920,7 @@ namespace Suma2Lealtad.Models
                 return false;
             }
             RespuestaCards RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
-            if (RespuestaCards.code == "0")
+            if (RespuestaCards.excode == "0")
             {
                 RespuestaCardsJson = WSL.Cards.cardPrint(afiliado.docnumber.Substring(2));
                 if (ExceptionServicioCards(RespuestaCardsJson))
@@ -924,7 +933,7 @@ namespace Suma2Lealtad.Models
             {
                 return false;
             }
-            if (RespuestaCards.code == "0")
+            if (RespuestaCards.excode == "0")
             {
                 //Se buscan los datos de Tarjeta del AFILIADO en Cards
                 //SERVICIO WSL.Cards.getClient !

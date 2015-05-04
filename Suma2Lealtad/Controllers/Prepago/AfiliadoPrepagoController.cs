@@ -11,10 +11,12 @@ namespace Suma2Lealtad.Controllers.Prepago
     {
         private AfiliadoRepository rep = new AfiliadoRepository();
 
-        public ActionResult Edit()
+        public ActionResult Edit(int id)
         {
-            //obtengo el id del prepago y se lo paso al controlador afiliado
-            return RedirectToAction("Edit", "Afiliado", new { id = 1 });
+            //asigno temporal para pruebas
+            id = 1;            
+            //obtengo el id del Afiliado prepago que viene como parámetro y se lo paso al controlador afiliado            
+            return RedirectToAction("Edit", "Afiliado", new { id = id });
         }
 
     }

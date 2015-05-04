@@ -16,12 +16,12 @@
                 @Html.ValidationSummary(true)
 
                 <div id="rootwizard">
-                    <div class="nav-gradient navbar navbar-default ">
+                    <div class="nav-gradient navbar navbar-default">
                         <div class="nav navbar-nav">
                             <ul class="nav navbar-nav">
-                                <li><a href="#tab1" data-toggle="tab">Datos Básicos</a></li>
-                                <li><a href="#tab2" data-toggle="tab">Documentos</a></li>
-                                <li><a href="#tab3" data-toggle="tab">Temas de Interés</a></li>
+                                <li ><a href="#tab1" data-toggle="tab" class="disabled">Datos Básicos</a></li>
+                                <li ><a href="#tab2" data-toggle="tab" class="disabled">Documentos</a></li>
+                                <li ><a href="#tab3" data-toggle="tab" class="disabled">Temas de Interés</a></li>
                             </ul>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBox("type","Suma", new { @class = "form-control", @readonly = "true" })
+                                @Html.TextBoxFor(model => model.type, new { @class = "form-control", @readonly = "true" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
