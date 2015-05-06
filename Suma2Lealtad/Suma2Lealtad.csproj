@@ -286,9 +286,6 @@
     <Compile Include="Models\PAIS.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PAIS_ESTADO.cs">
-      <DependentUpon>SumaLealtad.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\PARAMETRO.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -405,7 +402,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="HtmlPage5.html" />
     <Content Include="Icon.png" />
     <Content Include="Images\conectado.jpg" />
     <Content Include="Images\plzlogo.jpg" />

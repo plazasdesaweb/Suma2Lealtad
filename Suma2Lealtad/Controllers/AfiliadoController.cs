@@ -416,6 +416,34 @@ namespace Suma2Lealtad.Controllers
             return View(viewmodel);
         }
 
+        public JsonResult CiudadList(string id)
+        {
+            Array ciudades = rep.GetCiudades(id);
+
+            return Json(new SelectList(ciudades, "COD_CIUDAD", "DESCRIPC_CIUDAD"), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult MunicipioList(string id)
+        {
+            Array municipios = rep.GetMunicipios(id);
+
+            return Json(new SelectList(municipios, "COD_MUNICIPIO", "DESCRIPC_MUNICIPIO"), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ParroquiaList(string id)
+        {
+            Array parroquias = rep.GetParroquias(id);
+
+            return Json(new SelectList(parroquias, "COD_PARROQUIA", "DESCRIPC_PARROQUIA"), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UrbanizacionList(string id)
+        {
+            Array urb = rep.GetUrbanizaciones(id);
+
+            return Json(new SelectList(urb, "COD_URBANIZACION", "DESCRIPC_URBANIZACION"), JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

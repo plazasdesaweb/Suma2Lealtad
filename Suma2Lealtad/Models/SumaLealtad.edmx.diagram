@@ -24,7 +24,6 @@
         <EntityTypeShape EntityType="SumaLealtadModel.Order" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtadModel.OrdersDetail" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtadModel.PAIS" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SumaLealtadModel.PAIS_ESTADO" Width="1.5" PointX="14.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtadModel.PARAMETRO" Width="1.5" PointX="14.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtadModel.PARROQUIA" Width="1.5" PointX="10.25" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtadModel.Photos_Affiliate" Width="1.5" PointX="6.75" PointY="14.75" IsExpanded="true" />

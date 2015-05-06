@@ -238,9 +238,14 @@
 
                             <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.cod_estado,
+                                new SelectList(Model.ListaEstados,
+                                "COD_ESTADO", "DESCRIPC_ESTADO",
+                                Model.ListaEstados), new { @class = "form-control" })
+@*                                @Html.DropDownListFor(m => m.cod_estado,
                                 new SelectList(Model.EstadoOptions,
                                 "id", "estado",
-                                Model.EstadoOptions), new { @class = "form-control" })
+                                Model.EstadoOptions), new { @class = "form-control" })*@
+
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -248,10 +253,12 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.DropDownListFor(m => m.cod_ciudad,
-                                new SelectList(Model.CiudadOptions,
-                                "id", "ciudad",
-                                Model.CiudadOptions), new { @class = "form-control" })
+                                <select id="COD_CIUDAD" name="DESCRIPC_CIUDAD" class = "form-control"></select>
+                                @Html.ValidationMessage("Ciudad")
+@*                                @Html.DropDownListFor(m => m.cod_ciudad,
+                                new SelectList(Model.ListaCiudades,
+                                "COD_CIUDAD", "DESCRIPC_CIUDAD",
+                                Model.ListaCiudades), new { @class = "form-control" })*@
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -259,10 +266,12 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.DropDownListFor(m => m.cod_municipio,
-                                new SelectList(Model.MunicipioOptions,
-                                "id", "municipio",
-                                Model.MunicipioOptions), new { @class = "form-control" })
+                                <select id="COD_MUNICIPIO" name="DESCRIPC_MUNICIPIO" class = "form-control"></select>
+                                @Html.ValidationMessage("Municipio")
+@*                                @Html.DropDownListFor(m => m.cod_municipio,
+                                new SelectList(Model.ListaMunicipios,
+                                "COD_MUNICIPIO", "DESCRIPC_MUNICIPIO",
+                                Model.ListaMunicipios), new { @class = "form-control" })*@
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -270,10 +279,12 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.DropDownListFor(m => m.cod_parroquia,
-                                new SelectList(Model.ParroquiaOptions,
-                                "id", "parroquia",
-                                Model.ParroquiaOptions), new { @class = "form-control" })
+                                <select id="COD_PARROQUIA" name="DESCRIPC_PARROQUIA" class="form-control"></select>
+                                @Html.ValidationMessage("Parroquia")
+@*                                @Html.DropDownListFor(m => m.cod_parroquia,
+                                new SelectList(Model.ListaParroquias,
+                                "COD_PARROQUIA", "DESCRIPC_PARROQUIA",
+                                Model.ListaParroquias), new { @class = "form-control" })*@
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -281,10 +292,12 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.DropDownListFor(m => m.cod_urbanizacion,
-                                new SelectList(Model.UrbanizacionOptions,
-                                "id", "urbanizacion",
-                                Model.UrbanizacionOptions), new { @class = "form-control" })
+                                <select id="COD_URBANIZACION" name="DESCRIPC_URBANIZACION" class="form-control"></select>
+                                @Html.ValidationMessage("Urbanización")
+@*                                @Html.DropDownListFor(m => m.cod_urbanizacion,
+                                new SelectList(Model.ListaUrbanizaciones,
+                                "COD_URBANIZACION", "DESCRIPC_URBANIZACION",
+                                Model.ListaUrbanizaciones), new { @class = "form-control" })*@
                             </div>
 
                             <div class="editor-label col-md-4 control-label"></div>
@@ -416,3 +429,18 @@
 
 </div>
 <!--// container -->
+
+@*@Scripts.Render("~/bundles/jquery")*@
+@*<script type="text/jscript">
+$(function () {
+    $('#cod_estado').change(function () {
+        $.getJSON('/CiudadList/' + $('#cod_estado').val(), function (data) {
+            var items = '<option>Seleccione una Ciudad</option>';
+            $.each(data, function (i, district) {
+                items += "<option value='" + district. + "'>" + district.DESCRIPC_CIUDAD + "</option>";
+            });
+            $('#COD_CIUDAD').html(items);
+        });
+    });
+});
+</script>*@

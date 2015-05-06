@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace Suma2Lealtad.Models
 {
@@ -61,6 +62,13 @@ namespace Suma2Lealtad.Models
         //public string exnumber { get; set; }
         //public string exdetail { get; set; }
 
+        //DATOS GEOGRÁFICOS
+        public List<ESTADO> ListaEstados { get; set; }
+        public List<CIUDAD> ListaCiudades { get; set; }
+        public List<MUNICIPIO> ListaMunicipios { get; set; }
+        public List<PARROQUIA> ListaParroquias { get; set; }
+        public List<URBANIZACION> ListaUrbanizaciones { get; set; }
+
         public class Sexo
         {
             public int id { get; set; }
@@ -70,7 +78,7 @@ namespace Suma2Lealtad.Models
         public IEnumerable<Sexo> SexoOptions =
             new List<Sexo>
         {
-              new Sexo { id = 0, sexo = "" },
+              new Sexo { id = 0, sexo = ""          },
               new Sexo { id = 1, sexo = "Masculino" },
               new Sexo { id = 2, sexo = "Femenino"  }
         };
@@ -125,76 +133,78 @@ namespace Suma2Lealtad.Models
             public string estado { get; set; }
         }
 
-        public IEnumerable<Estado> EstadoOptions =
-            new List<Estado>
-        {
-            new Estado {id = " ", estado = ""        },
-            new Estado {id = "1", estado = "DC"      },
-            new Estado {id = "2", estado = "Miranda" },
-            new Estado {id = "3", estado = "Vargas"  },
-            new Estado {id = "4", estado = "Aragua"  }
-        };
+        public IEnumerable<Estado> EstadoOptions;
 
-        public class Ciudad
-        {
-            public string id { get; set; }
-            public string ciudad { get; set; }
-        }
+        //public IEnumerable<Estado> EstadoOptions =
+        //    new List<Estado>
+        //{
+        //    new Estado {id = " ", estado = ""        },
+        //    new Estado {id = "1", estado = "DC"      },
+        //    new Estado {id = "2", estado = "Miranda" },
+        //    new Estado {id = "3", estado = "Vargas"  },
+        //    new Estado {id = "4", estado = "Aragua"  }
+        //};
 
-        public IEnumerable<Ciudad> CiudadOptions =
-            new List<Ciudad>
-        {
-            new Ciudad {id = " ", ciudad = ""        },
-            new Ciudad {id = "1", ciudad = "Caracas" },
-            new Ciudad {id = "2", ciudad = "Maracay" }
-        };
+        //public class Ciudad
+        //{
+        //    public string id { get; set; }
+        //    public string ciudad { get; set; }
+        //}
 
-        public class Municipio
-        {
-            public string id { get; set; }
-            public string municipio { get; set; }
-        }
+        //public IEnumerable<Ciudad> CiudadOptions =
+        //    new List<Ciudad>
+        //{
+        //    new Ciudad {id = " ", ciudad = ""        },
+        //    new Ciudad {id = "1", ciudad = "Caracas" },
+        //    new Ciudad {id = "2", ciudad = "Maracay" }
+        //};
 
-        public IEnumerable<Municipio> MunicipioOptions =
-            new List<Municipio>
-        {
-            new Municipio {id = " ", municipio = ""           },
-            new Municipio {id = "1", municipio = "Libertador" },
-            new Municipio {id = "2", municipio = "Baruta"     }
-        };
+        //public class Municipio
+        //{
+        //    public string id { get; set; }
+        //    public string municipio { get; set; }
+        //}
 
-        public class Parroquia
-        {
-            public string id { get; set; }
-            public string parroquia { get; set; }
-        }
+        //public IEnumerable<Municipio> MunicipioOptions =
+        //    new List<Municipio>
+        //{
+        //    new Municipio {id = " ", municipio = ""           },
+        //    new Municipio {id = "1", municipio = "Libertador" },
+        //    new Municipio {id = "2", municipio = "Baruta"     }
+        //};
 
-        public IEnumerable<Parroquia> ParroquiaOptions =
-            new List<Parroquia>
-        {
-            new Parroquia {id = " ", parroquia = ""         },
-            new Parroquia {id = "1", parroquia = "Paraíso"  },
-            new Parroquia {id = "2", parroquia = "San José" },
-            new Parroquia {id = "3", parroquia = "San Juan" },
-            new Parroquia {id = "4", parroquia = "Baruta"   },
-            new Parroquia {id = "5", parroquia = "Hatillo"  }
-        };
+        //public class Parroquia
+        //{
+        //    public string id { get; set; }
+        //    public string parroquia { get; set; }
+        //}
 
-        public class Urbanizacion
-        {
-            public string id { get; set; }
-            public string urbanizacion { get; set; }
-        }
+        //public IEnumerable<Parroquia> ParroquiaOptions =
+        //    new List<Parroquia>
+        //{
+        //    new Parroquia {id = " ", parroquia = ""         },
+        //    new Parroquia {id = "1", parroquia = "Paraíso"  },
+        //    new Parroquia {id = "2", parroquia = "San José" },
+        //    new Parroquia {id = "3", parroquia = "San Juan" },
+        //    new Parroquia {id = "4", parroquia = "Baruta"   },
+        //    new Parroquia {id = "5", parroquia = "Hatillo"  }
+        //};
 
-        public IEnumerable<Urbanizacion> UrbanizacionOptions =
-            new List<Urbanizacion>
-        {
-            new Urbanizacion {id = " ", urbanizacion = ""            },
-            new Urbanizacion {id = "1", urbanizacion = "El Paraíso"  },
-            new Urbanizacion {id = "2", urbanizacion = "Las Acacias" },
-            new Urbanizacion {id = "3", urbanizacion = "Baruta"      },
-            new Urbanizacion {id = "4", urbanizacion = "Hatillo"     }
-        };
+        //public class Urbanizacion
+        //{
+        //    public string id { get; set; }
+        //    public string urbanizacion { get; set; }
+        //}
+
+        //public IEnumerable<Urbanizacion> UrbanizacionOptions =
+        //    new List<Urbanizacion>
+        //{
+        //    new Urbanizacion {id = " ", urbanizacion = ""            },
+        //    new Urbanizacion {id = "1", urbanizacion = "El Paraíso"  },
+        //    new Urbanizacion {id = "2", urbanizacion = "Las Acacias" },
+        //    new Urbanizacion {id = "3", urbanizacion = "Baruta"      },
+        //    new Urbanizacion {id = "4", urbanizacion = "Hatillo"     }
+        //};
 
         public class Channel
         {
