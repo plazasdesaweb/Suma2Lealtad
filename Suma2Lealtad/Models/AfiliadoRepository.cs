@@ -74,47 +74,7 @@ namespace Suma2Lealtad.Models
             public int interestID { get; set; }
         }
 
-        // PARA ELMIMINAR.
-        #region DatosGeograf
-        //private List<ESTADO> GetEstados()
-        //{
-        //    using(LealtadEntities db = new LealtadEntities())
-        //    {
-        //        return db.ESTADOS.OrderBy(u => u.DESCRIPC_ESTADO).ToList(); 
-        //    }
-        //}
-        //private List<CIUDAD> GetCiudades()
-        //{
-        //    using (LealtadEntities db = new LealtadEntities())
-        //    {
-        //        return db.CIUDADES.OrderBy(u => u.DESCRIPC_CIUDAD).ToList();
-        //    }
-        //}
-        //private List<MUNICIPIO> GetMunicipios()
-        //{
-        //    using (LealtadEntities db = new LealtadEntities())
-        //    {
-        //        return db.MUNICIPIOS.OrderBy(u => u.DESCRIPC_MUNICIPIO).ToList();
-        //    }
-        //}
-        //private List<PARROQUIA> GetParroquias()
-        //{
-        //    using (LealtadEntities db = new LealtadEntities())
-        //    {
-        //        return db.PARROQUIAS.OrderBy(u => u.DESCRIPC_PARROQUIA).ToList();
-        //    }
-        //}
-        //private List<URBANIZACION> GetUrbanizaciones()
-        //{
-        //    using (LealtadEntities db = new LealtadEntities())
-        //    {
-        //        return db.URBANIZACIONES.OrderBy(u => u.DESCRIPC_URBANIZACION).ToList();
-        //    }
-        //}
-        
-        #endregion
-
-        #region InterestList
+        #region Lista_Intereses_Cliente
         private List<Interest> chargeInterestList()
         {
             using (LealtadEntities db = new LealtadEntities())
@@ -159,7 +119,7 @@ namespace Suma2Lealtad.Models
         }
         #endregion
 
-        #region sequenceID
+        #region Funciones_Valores_Consecutivos
         private int AfilliatesID()
         {
             using (LealtadEntities db = new LealtadEntities())
@@ -183,7 +143,7 @@ namespace Suma2Lealtad.Models
 
         // Métodos DDL para Datos Geográficos.
         // Abstenerse a las consecuencias físicas, la persona que modifique éste código.
-        #region DatosGeograficos
+        #region Lista_de_Datos_Geograficos
 
         // retornar la lista de Estados.
         private List<ESTADO> GetEstados()
@@ -504,7 +464,7 @@ namespace Suma2Lealtad.Models
                 afiliado.birthdate = d.Value.ToString("dd-MM-yyyy");
                 //ENTIDAD CustomerInterest
                 afiliado.Intereses = chargeInterestList(afiliado.id);
-
+                //Llenar las listas de Datos Geográficos.
                 afiliado.ListaEstados = GetEstados();
                 afiliado.ListaCiudades = GetCiudades(afiliado.cod_estado);
                 afiliado.ListaMunicipios = GetMunicipios(afiliado.cod_ciudad);
