@@ -10,8 +10,16 @@
 
         <div class="panel-body col-md-offset-1 col-md-10">
 
-            <form id="commentForm" method="post" action="@Url.Action("Edit", "Afiliado")" class="form-horizontal">
-
+            @{ if(Model.type == "Suma")
+               {
+                   @:<form id="commentForm" method="post" action="@Url.Action("Edit", "Afiliado")" class="form-horizontal">
+               }
+               else
+               {
+                   @:<form id="commentForm" method="post" action="@Url.Action("EditBeneficiario", "CompanyPrepago")" class="form-horizontal">
+               }
+            }
+                    
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
 
@@ -20,9 +28,9 @@
                     <div class="nav-gradient navbar navbar-default">
                         <div class="nav navbar-nav">
                             <ul class="nav navbar-nav">
-                                <li ><a href="#tab1" data-toggle="tab" class="disabled">Datos Básicos</a></li>
-                                <li ><a href="#tab2" data-toggle="tab" class="disabled">Documentos</a></li>
-                                <li ><a href="#tab3" data-toggle="tab" class="disabled">Temas de Interés</a></li>
+                                <li><a href="#tab1" data-toggle="tab" class="disabled">Datos Básicos</a></li>
+                                <li><a href="#tab2" data-toggle="tab" class="disabled">Documentos</a></li>
+                                <li><a href="#tab3" data-toggle="tab" class="disabled">Temas de Interés</a></li>
                             </ul>
                         </div>
                     </div>

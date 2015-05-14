@@ -82,17 +82,16 @@
                             </td>
 
                             <td class="text-right">
+                                @{if (item.estatus == "Nueva")
+                                  {
+                                    <a id="@(item.id)_approve" href="@Url.Action("Aprobar", "Afiliado", new { id = item.id })" class="btn btn-success btn-xs" >
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    </a>
+                                  }
+                                }
                                 <a id="@(item.id)_edit" href="@Url.Action("Edit", "Afiliado", new { id = item.id })" class="btn btn-info btn-xs" >
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </a>
-                                @{
-                        if (item.estatus == "Nueva")
-                        {
-                                    <a id="@(item.id)_approve" href="@Url.Action("Aprobar", "Afiliado", new { id = item.id })" class="btn btn-info btn-xs" >
-                                        <span class="glyphicon glyphicon-ok"></span>
-                                    </a>
-                        }
-                                }
                             </td>
                         </tr>
                     }
@@ -143,7 +142,7 @@
                     var filatabla = $(this).closest('tr');
                     rowId = $(filatabla).data("row-key");
                     statusAfiliacion = $(filatabla).data("statusafiliacion");
-                    statusTarjeta = $(filatabla).data("statustarjeta");                    
+                    statusTarjeta = $(filatabla).data("statustarjeta");
                     $('.table tbody tr').removeClass("active");
                     $(filatabla).addClass("active");
 

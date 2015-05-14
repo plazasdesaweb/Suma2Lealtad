@@ -1,10 +1,7 @@
-﻿using Newtonsoft.Json;
-using Suma2Lealtad.Filters;
+﻿using Suma2Lealtad.Filters;
 using Suma2Lealtad.Models;
 using Suma2Lealtad.Modules;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -164,7 +161,7 @@ namespace Suma2Lealtad.Controllers
             ViewModel viewmodel = new ViewModel();
             if (!rep.SaveChanges(afiliado))
             {
-                viewmodel.Title = "Afiliado / Revisar Afiliación:";
+                viewmodel.Title = "Afiliado / Revisar Afiliación";
                 viewmodel.Message = "Existen campos que son requeridos para procesar el formulario.";
                 viewmodel.ControllerName = "Afiliado";
                 viewmodel.ActionName = "Index";
@@ -172,7 +169,7 @@ namespace Suma2Lealtad.Controllers
             }
             else
             {
-                viewmodel.Title = "Afiliado / Revisar Afiliación:";
+                viewmodel.Title = "Afiliado / Revisar Afiliación";
                 viewmodel.Message = "La información del afiliado ha sido actualizada satisfactoriamente.";
                 viewmodel.ControllerName = "Afiliado";
                 viewmodel.ActionName = "Index";

@@ -204,6 +204,7 @@
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\MyDatabaseEntities.cs" />
     <Compile Include="Controllers\Prepago\AfiliadoPrepagoController.cs" />
+    <Compile Include="Controllers\Prepago\CompanyPrepagoController.cs" />
     <Compile Include="Controllers\ReasonsBlockController.cs" />
     <Compile Include="Controllers\ReasonsController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -247,6 +248,7 @@
     <Compile Include="Models\CompanyAffiliate.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CompanyRepository.cs" />
     <Compile Include="Models\CreditLimit.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -298,6 +300,7 @@
     <Compile Include="Models\Photos_Affiliate.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PrepagoCompanyAffiliattes.cs" />
     <Compile Include="Models\Reason.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -405,7 +408,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="HtmlPage5.html" />
     <Content Include="Icon.png" />
     <Content Include="Images\conectado.jpg" />
     <Content Include="Images\plzlogo.jpg" />
@@ -571,6 +573,14 @@
     <Content Include="Views\Afiliado\SuspenderTarjeta.cshtml" />
     <Content Include="Views\Afiliado\BloquearTarjeta.cshtml" />
     <Content Include="Views\Afiliado\ReactivarTarjeta.cshtml" />
+    <Content Include="Views\CompanyPrepago\Create.cshtml" />
+    <Content Include="Views\CompanyPrepago\Delete.cshtml" />
+    <Content Include="Views\CompanyPrepago\Edit.cshtml" />
+    <Content Include="Views\CompanyPrepago\Index.cshtml" />
+    <Content Include="Views\CompanyPrepago\Beneficiarios.cshtml" />
+    <Content Include="Views\CompanyPrepago\FilterCompany.cshtml" />
+    <Content Include="Views\CompanyPrepago\FilterBeneficiarios.cshtml" />
+    <Content Include="Views\CompanyPrepago\GenericView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

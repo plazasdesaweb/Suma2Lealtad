@@ -1,0 +1,150 @@
+﻿@model Suma2Lealtad.Models.PrepagoCompanyAffiliattes
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<link href="css/bootstrap.css" rel="stylesheet">*@
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+@*<link href="css/style.css" rel="stylesheet">*@
+<link href="~/Content/style.css" rel="stylesheet" />
+
+<style type="text/css" media="screen">
+    .table-hover {
+        cursor: pointer;
+    }
+
+    .table tbody tr.active td {
+        background-color: #1C2B2B; /*#476B6B #29A329;*/
+        color: white;
+    }
+</style>
+
+@*<form id="commentForm" method="post" action="@Url.Action("Index", "Afiliado")" class="form-horizontal">*@
+<div class="form-group">
+
+    <div class="panel panel-default">
+
+        <div class="panel-heading clearfix panel-gradient">
+            @*<h3 class="panel-title">Afiliado  @Model.DocId / Saldos <a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.DocId })" class="btn btn-success btn-md">Regresar</a></h3>*@
+            <h3 class="panel-title">Prepago / Compañia / Beneficiarios</h3>
+            @*<input type="submit" class="btn btn-success btn-md" value="Regresar" style="padding-right: 15px; padding-left: 15px; margin-left: 0px;" />*@
+        </div>
+
+        <div class="panel-body">
+
+            <div class="form-group">
+
+                @Html.HiddenFor(model => model.id)
+
+                <div class="editor-label col-md-4 control-label">
+                    Compañia :
+                </div>
+
+                <div class="editor-field col-md-6">
+                    @Html.TextBoxFor(model => model.namecompañia, new { @class = "form-control", @readonly = "true" })
+                </div>
+
+                <div class="editor-label col-md-4 control-label">
+                    RIF :
+                </div>
+                <div class="editor-form col-md-6">
+                    @Html.TextBoxFor(model => model.rif, new { @class = "form-control", @readonly = "true" })
+                </div>
+                <div class="editor-label col-md-4 control-label">
+                    Teléfono :
+                </div>
+                <div class="editor-form col-md-6">
+                    @Html.TextBoxFor(model => model.phone, new { @class = "form-control", @readonly = "true" })
+                </div>
+
+            </div>
+
+            <div class="editor-field col-md-6">
+                <br />
+            </div>
+
+            @*<table class="table table-striped custab">*@
+            <table id="beneficiarios" class="table table-hover">
+
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Número de Documento</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Estatus de Afiliación</th>
+                        <th>Número de Tarjeta</th>
+                        <th>Estatus de Tarjeta</th>
+                        <th class="text-center"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model.Beneficiarios)
+                    {                            
+                        <tr data-row-key="@item.id" data-statusafiliacion="@item.estatus" data-statustarjeta="@item.estatustarjeta">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.type)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.docnumber)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.lastname1)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.email)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.estatus)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.pan)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.estatustarjeta)
+                            </td>
+
+                            <td class="text-right">
+                                @{if (item.estatus == "Nueva")
+                                  {
+                                    <a id="@(item.id)_approve" href="@Url.Action("Aprobar", "Afiliado", new { id = item.id })" class="btn btn-success btn-xs" >
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    </a>
+                                  }
+                                }
+                                <a id="@(item.id)_edit" href="@Url.Action("Edit", "Afiliado", new { id = item.id })" class="btn btn-info btn-xs" >
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            </td>
+                        </tr>                 
+                    }
+                </tbody>
+
+            </table>
+
+            <div class="col-md-12 col-tabla-btn">
+                <div class="pull-right">
+                    @*<a href="@Url.Action("AgregarBeneficiario", "CompanyPrepago", new { id = Model.id })" class="btn btn-success btn-md">Agregar Nuevo Beneficiario</a>*@
+                    <a href="@Url.Action("FilterBeneficiarios", "CompanyPrepago", new { id = Model.id })" class="btn btn-success btn-md">Filtrar Beneficiarios</a>
+                    <a href="@Url.Action("FilterCompany", "CompanyPrepago")" class="btn btn-danger btn-md">Cancelar</a>
+                    @*<input type="submit" class="btn btn-success btn-md" value="Regresar" style="padding-right: 15px; padding-left: 15px; margin-left: 0px;" />*@
+                </div>
+            </div>
+
+        </div>
+        <!-- panel-body -->
+
+    </div>
+    <!-- panel -->
+
+</div>

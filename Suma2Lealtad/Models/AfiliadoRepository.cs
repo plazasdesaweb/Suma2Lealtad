@@ -399,8 +399,7 @@ namespace Suma2Lealtad.Models
                 DateTime? d = (from c in db.CLIENTES
                                where (c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO).Equals(afiliado.docnumber)
                                select c.FECHA_NACIMIENTO
-                                      ).SingleOrDefault();
-
+                               ).SingleOrDefault();
                 afiliado.birthdate = d.Value.ToString("dd-MM-yyyy");
                 //ENTIDAD CustomerInterest
                 afiliado.Intereses = chargeInterestList(afiliado.id);
@@ -752,7 +751,6 @@ namespace Suma2Lealtad.Models
                 {
                     return false;
                 }
-
             }
         }
 
