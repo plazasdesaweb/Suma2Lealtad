@@ -16,12 +16,13 @@
                 @Html.ValidationSummary(true)
 
                 <div id="rootwizard">
-                    <div class="nav-gradient navbar navbar-default ">
+
+                    <div class="nav-gradient navbar navbar-default">
                         <div class="nav navbar-nav">
                             <ul class="nav navbar-nav">
-                                <li><a href="#tab1" data-toggle="tab">Datos Básicos</a></li>
-                                <li><a href="#tab2" data-toggle="tab">Documentos</a></li>
-                                <li><a href="#tab3" data-toggle="tab">Temas de Interés</a></li>
+                                <li ><a href="#tab1" data-toggle="tab" class="disabled">Datos Básicos</a></li>
+                                <li ><a href="#tab2" data-toggle="tab" class="disabled">Documentos</a></li>
+                                <li ><a href="#tab3" data-toggle="tab" class="disabled">Temas de Interés</a></li>
                             </ul>
                         </div>
                     </div>
@@ -45,10 +46,18 @@
                             @Html.HiddenFor(model => model.estatustarjeta)
 
                             <div class="editor-label col-md-4 control-label">
+                                * Tipo de Afiliado :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.type, new { @class = "form-control", @readonly = "true" })
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
                                 * Número de Documento/Cédula :
                             </div>
 
-                           <div class="editor-field col-md-6">
+                            <div class="editor-field col-md-6">
                                 @Html.TextBoxFor(model => model.docnumber, new { @class = "form-control", @readonly = "true" })
                             </div>
 
@@ -202,19 +211,17 @@
                         </div>
                         <!--// DATOS BÁSICOS -->
 
-
-                        <!-- SILVERLIGHT -->
+                        <!-- FOTO DEL DOCUMENTO DE IDENTIFICACION -->
                         <div class="tab-pane" id="tab2">
-
                             <div class="editor-label col-md-2 control-label">
                             </div>
 
                             <div class="editor-field col-md-10">
-                                <img src="@Url.Content(@Model.picture)" />
+                                @*<img src="@Url.Content(@Model.picture)" />*@
+                                <img src="@Url.Action("GetImage", "Afiliado", new { id = Model.id })" />
                             </div>
-
                         </div>
-                        <!--// SILVERLIGHT -->
+                        <!-- //FOTO DEL DOCUMENTO DE IDENTIFICACION -->
 
 
                         <!-- DIRECCIÓN -->
@@ -231,9 +238,9 @@
 
                             <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.cod_estado,
-                                new SelectList(Model.EstadoOptions,
-                                "id", "estado",
-                                Model.EstadoOptions), new { @class = "form-control" })
+                                new SelectList(Model.ListaEstados,
+                                "COD_ESTADO", "DESCRIPC_ESTADO",
+                                Model.ListaEstados), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -242,9 +249,9 @@
 
                             <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.cod_ciudad,
-                                new SelectList(Model.CiudadOptions,
-                                "id", "ciudad",
-                                Model.CiudadOptions), new { @class = "form-control" })
+                                new SelectList(Model.ListaCiudades,
+                                "cod_ciudad", "descripc_ciudad",
+                                Model.ListaCiudades), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -253,9 +260,9 @@
 
                             <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.cod_municipio,
-                                new SelectList(Model.MunicipioOptions,
-                                "id", "municipio",
-                                Model.MunicipioOptions), new { @class = "form-control" })
+                                new SelectList(Model.ListaMunicipios,
+                                "cod_municipio", "descripc_municipio",
+                                Model.ListaMunicipios), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -264,9 +271,9 @@
 
                             <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.cod_parroquia,
-                                new SelectList(Model.ParroquiaOptions,
-                                "id", "parroquia",
-                                Model.ParroquiaOptions), new { @class = "form-control" })
+                                new SelectList(Model.ListaParroquias,
+                                "cod_parroquia", "descripc_parroquia",
+                                Model.ListaCiudades), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -275,9 +282,9 @@
 
                             <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.cod_urbanizacion,
-                                new SelectList(Model.UrbanizacionOptions,
-                                "id", "urbanizacion",
-                                Model.UrbanizacionOptions), new { @class = "form-control" })
+                                new SelectList(Model.ListaUrbanizaciones,
+                                "cod_urbanizacion", "descripc_urbanizacion",
+                                Model.ListaUrbanizaciones), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label"></div>
@@ -352,7 +359,9 @@
                             </div>
 
                             <div class="editor-label col-md-4 control-label"></div>
-                            <div class="editor-field col-md-6"><br /></div>
+                            <div class="editor-field col-md-6">
+                                <br />
+                            </div>
 
                             <div class="editor-label col-md-4 control-label"></div>
                             <div class="editor-field col-md-6">
@@ -371,15 +380,15 @@
                         <div class="editor-label col-md-4 control-label"></div>
                         <div class="editor-field col-md-6">
                             <!-- BOTONES -->
-                        <ul class="pager wizard">
+                            <ul class="pager wizard">
 
-                            <li class="previous"><a href="#">Anterior</a></li>
-                            <li class="next pull-left"><a href="#">Siguiente</a></li>
-                        </ul>
-                        <!--// BOTONES -->
+                                <li class="previous"><a href="#">Anterior</a></li>
+                                <li class="next pull-left"><a href="#">Siguiente</a></li>
+                            </ul>
+                            <!--// BOTONES -->
                         </div>
 
-                        
+
 
                         <div class="editor-label col-md-4 control-label"></div>
                         <div class="editor-field col-md-6">

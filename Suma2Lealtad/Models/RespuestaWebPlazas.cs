@@ -7,7 +7,7 @@ namespace Suma2Lealtad.Models
 {
     public class RespuestaWebPlazas
     {
-        public string id { get; set; }
-        public string value { get; set; }
+        public string excode { get; set; }
+        public string exdetail { get; set; }
     }
 }

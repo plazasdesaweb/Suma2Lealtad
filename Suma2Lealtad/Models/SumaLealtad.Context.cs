@@ -44,7 +44,6 @@ namespace Suma2Lealtad.Models
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrdersDetail> OrdersDetails { get; set; }
         public DbSet<PAIS> PAISES { get; set; }
-        public DbSet<PAIS_ESTADO> PAIS_ESTADOS { get; set; }
         public DbSet<PARAMETRO> PARAMETROS { get; set; }
         public DbSet<PARROQUIA> PARROQUIAS { get; set; }
         public DbSet<Photos_Affiliate> Photos_Affiliates { get; set; }

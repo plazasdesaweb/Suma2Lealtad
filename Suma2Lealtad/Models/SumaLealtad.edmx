@@ -44,7 +44,6 @@
           <EntitySet Name="Orders" EntityType="SumaLealtadModel.Store.Orders" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OrdersDetail" EntityType="SumaLealtadModel.Store.OrdersDetail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PAIS" EntityType="SumaLealtadModel.Store.PAIS" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="PAIS_ESTADO" EntityType="SumaLealtadModel.Store.PAIS_ESTADO" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PARAMETROS" EntityType="SumaLealtadModel.Store.PARAMETROS" store:Type="Tables" store:Schema="dbo" store:Name="PARAMETROS">
             <DefiningQuery>SELECT 
       [PARAMETROS].[ID_PARAM] AS [ID_PARAM], 
@@ -407,14 +406,6 @@
           <Property Name="COD_PAIS" Type="varchar" Nullable="false" MaxLength="12" />
           <Property Name="DESCRIPC_PAIS" Type="varchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="PAIS_ESTADO">
-          <Key>
-            <PropertyRef Name="COD_PAIS" />
-            <PropertyRef Name="COD_ESTADO" />
-          </Key>
-          <Property Name="COD_PAIS" Type="varchar" Nullable="false" MaxLength="12" />
-          <Property Name="COD_ESTADO" Type="varchar" Nullable="false" MaxLength="12" />
-        </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'SumaLealtad_QA.dbo.PARAMETROS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
@@ -760,7 +751,6 @@
           <EntitySet Name="Orders" EntityType="SumaLealtadModel.Order" />
           <EntitySet Name="OrdersDetails" EntityType="SumaLealtadModel.OrdersDetail" />
           <EntitySet Name="PAISES" EntityType="SumaLealtadModel.PAIS" />
-          <EntitySet Name="PAIS_ESTADOS" EntityType="SumaLealtadModel.PAIS_ESTADO" />
           <EntitySet Name="PARAMETROS" EntityType="SumaLealtadModel.PARAMETRO" />
           <EntitySet Name="PARROQUIAS" EntityType="SumaLealtadModel.PARROQUIA" />
           <EntitySet Name="Photos_Affiliates" EntityType="SumaLealtadModel.Photos_Affiliate" />
@@ -870,8 +860,8 @@
           </Key>
           <Property Name="COD_CIUDAD" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
           <Property Name="DESCRIPC_CIUDAD" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="MUNICIPIOs" Relationship="SumaLealtadModel.CIUDAD_MUNICIPIO" FromRole="CIUDAD" ToRole="MUNICIPIO" />
-          <NavigationProperty Name="ESTADOes" Relationship="SumaLealtadModel.ESTADO_CIUDAD" FromRole="CIUDAD" ToRole="ESTADO" />
+          <NavigationProperty Name="MUNICIPIOS" Relationship="SumaLealtadModel.CIUDAD_MUNICIPIO" FromRole="CIUDAD" ToRole="MUNICIPIO" />
+          <NavigationProperty Name="ESTADOS" Relationship="SumaLealtadModel.ESTADO_CIUDAD" FromRole="CIUDAD" ToRole="ESTADO" />
         </EntityType>
         <EntityType Name="CLIENTE">
           <Key>
@@ -962,7 +952,7 @@
           </Key>
           <Property Name="COD_ESTADO" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
           <Property Name="DESCRIPC_ESTADO" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="CIUDADs" Relationship="SumaLealtadModel.ESTADO_CIUDAD" FromRole="ESTADO" ToRole="CIUDAD" />
+          <NavigationProperty Name="CIUDADES" Relationship="SumaLealtadModel.ESTADO_CIUDAD" FromRole="ESTADO" ToRole="CIUDAD" />
         </EntityType>
         <EntityType Name="FACTURA">
           <Key>
@@ -1015,8 +1005,8 @@
           </Key>
           <Property Name="COD_MUNICIPIO" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
           <Property Name="DESCRIPC_MUNICIPIO" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="CIUDADs" Relationship="SumaLealtadModel.CIUDAD_MUNICIPIO" FromRole="MUNICIPIO" ToRole="CIUDAD" />
-          <NavigationProperty Name="PARROQUIAs" Relationship="SumaLealtadModel.MUNICIPIO_PARROQUIA" FromRole="MUNICIPIO" ToRole="PARROQUIA" />
+          <NavigationProperty Name="CIUDADES" Relationship="SumaLealtadModel.CIUDAD_MUNICIPIO" FromRole="MUNICIPIO" ToRole="CIUDAD" />
+          <NavigationProperty Name="PARROQUIAS" Relationship="SumaLealtadModel.MUNICIPIO_PARROQUIA" FromRole="MUNICIPIO" ToRole="PARROQUIA" />
         </EntityType>
         <EntityType Name="Object">
           <Key>
@@ -1069,14 +1059,6 @@
           <Property Name="COD_PAIS" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
           <Property Name="DESCRIPC_PAIS" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
         </EntityType>
-        <EntityType Name="PAIS_ESTADO">
-          <Key>
-            <PropertyRef Name="COD_PAIS" />
-            <PropertyRef Name="COD_ESTADO" />
-          </Key>
-          <Property Name="COD_PAIS" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
-          <Property Name="COD_ESTADO" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
-        </EntityType>
         <EntityType Name="PARAMETRO">
           <Key>
             <PropertyRef Name="ID_PARAM" />
@@ -1101,8 +1083,8 @@
           </Key>
           <Property Name="COD_PARROQUIA" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
           <Property Name="DESCRIPC_PARROQUIA" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="MUNICIPIOs" Relationship="SumaLealtadModel.MUNICIPIO_PARROQUIA" FromRole="PARROQUIA" ToRole="MUNICIPIO" />
-          <NavigationProperty Name="URBANIZACIONs" Relationship="SumaLealtadModel.PARROQUIA_URBANIZACION" FromRole="PARROQUIA" ToRole="URBANIZACION" />
+          <NavigationProperty Name="MUNICIPIOS" Relationship="SumaLealtadModel.MUNICIPIO_PARROQUIA" FromRole="PARROQUIA" ToRole="MUNICIPIO" />
+          <NavigationProperty Name="URBANIZACIONES" Relationship="SumaLealtadModel.PARROQUIA_URBANIZACION" FromRole="PARROQUIA" ToRole="URBANIZACION" />
         </EntityType>
         <EntityType Name="Photos_Affiliate">
           <Key>
@@ -1200,7 +1182,7 @@
           </Key>
           <Property Name="COD_URBANIZACION" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
           <Property Name="DESCRIPC_URBANIZACION" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="PARROQUIAs" Relationship="SumaLealtadModel.PARROQUIA_URBANIZACION" FromRole="URBANIZACION" ToRole="PARROQUIA" />
+          <NavigationProperty Name="PARROQUIAS" Relationship="SumaLealtadModel.PARROQUIA_URBANIZACION" FromRole="URBANIZACION" ToRole="PARROQUIA" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1569,14 +1551,6 @@
               <MappingFragment StoreEntitySet="PAIS">
                 <ScalarProperty Name="COD_PAIS" ColumnName="COD_PAIS" />
                 <ScalarProperty Name="DESCRIPC_PAIS" ColumnName="DESCRIPC_PAIS" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PAIS_ESTADOS">
-            <EntityTypeMapping TypeName="SumaLealtadModel.PAIS_ESTADO">
-              <MappingFragment StoreEntitySet="PAIS_ESTADO">
-                <ScalarProperty Name="COD_PAIS" ColumnName="COD_PAIS" />
-                <ScalarProperty Name="COD_ESTADO" ColumnName="COD_ESTADO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

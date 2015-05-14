@@ -84,31 +84,30 @@ namespace Suma2Lealtad.Controllers
         public ActionResult Create(Afiliado afiliado, HttpPostedFileBase file)
         {
             ViewModel viewmodel = new ViewModel();
-            if (rep.Save(afiliado))
+            if (rep.Save(afiliado, file))
             {
-                if (file != null && file.ContentLength > 0)
-                    try
-                    {
-                        string path = Server.MapPath(AppModule.GetPathPicture().Replace("@filename@", afiliado.docnumber));
-                        file.SaveAs(path);
-                    }
-                    catch (Exception ex)
-                    {
-                        viewmodel.Title = "Afiliado / Crear Afiliación";
-                        viewmodel.Message = "Error de aplicacion: No se pudo cargar archivo (" + ex.Message + ")";
-                        viewmodel.ControllerName = "Afiliado";
-                        viewmodel.ActionName = "Filter";
-                        return RedirectToAction("GenericView", viewmodel);
-                    }
-                else
-                {
-                    viewmodel.Title = "Afiliado / Crear Afiliación";
-                    viewmodel.Message = "Error de aplicacion: No se pudo cargar archivo (archivo inválido)";
-                    viewmodel.ControllerName = "Afiliado";
-                    viewmodel.ActionName = "Filter";
-                    return RedirectToAction("GenericView", viewmodel);
-                }
-                //PENDIENTE: SI FALLA ALGUNA DE LAS ACTIVIDADES. HAY QUE DESHACER LAS ACTIVIDADES ANTERIORES EXITOSAS.                
+                //if (file != null && file.ContentLength > 0)
+                //    try
+                //    {
+                //        string path = Server.MapPath(AppModule.GetPathPicture().Replace("@filename@", afiliado.docnumber));
+                //        file.SaveAs(path);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        viewmodel.Title = "Afiliado / Crear Afiliación";
+                //        viewmodel.Message = "Error de aplicacion: No se pudo cargar archivo (" + ex.Message + ")";
+                //        viewmodel.ControllerName = "Afiliado";
+                //        viewmodel.ActionName = "Filter";
+                //        return RedirectToAction("GenericView", viewmodel);
+                //    }
+                //else
+                //{
+                //    viewmodel.Title = "Afiliado / Crear Afiliación";
+                //    viewmodel.Message = "Error de aplicacion: No se pudo cargar archivo (archivo inválido)";
+                //    viewmodel.ControllerName = "Afiliado";
+                //    viewmodel.ActionName = "Filter";
+                //    return RedirectToAction("GenericView", viewmodel);
+                //}
                 viewmodel.Title = "Afiliado / Crear Afiliación";
                 viewmodel.Message = "Solicitud de afiliación creada exitosamente.";
                 viewmodel.ControllerName = "Afiliado";
@@ -121,7 +120,6 @@ namespace Suma2Lealtad.Controllers
                 viewmodel.Message = "Error de aplicacion: No se pudo crear solicitud de afiliación.";
                 viewmodel.ControllerName = "Afiliado";
                 viewmodel.ActionName = "Filter";
-                //viewmodel.RouteValues = afiliado.docnumber;
             }
             return RedirectToAction("GenericView", viewmodel);
         }
@@ -181,6 +179,19 @@ namespace Suma2Lealtad.Controllers
                 viewmodel.RouteValues = afiliado.docnumber;
             }
             return RedirectToAction("GenericView", viewmodel);
+        }
+
+        public FileContentResult GetImage(int id)
+        {
+            Photos_Affiliate Photo = rep.Find(id).picture;
+            if (Photo.photo != null)
+            {
+                return File(Photo.photo, Photo.photo_type);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public ActionResult Aprobar(int id)
@@ -403,6 +414,34 @@ namespace Suma2Lealtad.Controllers
         public ActionResult GenericView(ViewModel viewmodel)
         {
             return View(viewmodel);
+        }
+
+        public JsonResult CiudadList(string id)
+        {
+            List<CIUDAD> ciudades = rep.GetCiudades(id);
+
+            return Json(new SelectList(ciudades, "COD_CIUDAD", "DESCRIPC_CIUDAD"), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult MunicipioList(string id)
+        {
+            List<MUNICIPIO> municipios = rep.GetMunicipios(id);
+
+            return Json(new SelectList(municipios, "COD_MUNICIPIO", "DESCRIPC_MUNICIPIO"), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ParroquiaList(string id)
+        {
+            List<PARROQUIA> parroquias = rep.GetParroquias(id);
+
+            return Json(new SelectList(parroquias, "COD_PARROQUIA", "DESCRIPC_PARROQUIA"), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UrbanizacionList(string id)
+        {
+            List<URBANIZACION> urb = rep.GetUrbanizaciones(id);
+
+            return Json(new SelectList(urb, "COD_URBANIZACION", "DESCRIPC_URBANIZACION"), JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

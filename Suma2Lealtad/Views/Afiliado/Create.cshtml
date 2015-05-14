@@ -16,12 +16,12 @@
                 @Html.ValidationSummary(true)
 
                 <div id="rootwizard">
-                    <div class="nav-gradient navbar navbar-default ">
+                    <div class="nav-gradient navbar navbar-default">
                         <div class="nav navbar-nav">
                             <ul class="nav navbar-nav">
-                                <li><a href="#tab1" data-toggle="tab">Datos Básicos</a></li>
-                                <li><a href="#tab2" data-toggle="tab">Documentos</a></li>
-                                <li><a href="#tab3" data-toggle="tab">Temas de Interés</a></li>
+                                <li ><a href="#tab1" data-toggle="tab" class="disabled">Datos Básicos</a></li>
+                                <li ><a href="#tab2" data-toggle="tab" class="disabled">Documentos</a></li>
+                                <li ><a href="#tab3" data-toggle="tab" class="disabled">Temas de Interés</a></li>
                             </ul>
                         </div>
                     </div>
@@ -41,6 +41,14 @@
                             @Html.HiddenFor(model => model.clientid)
                             @Html.HiddenFor(model => model.typeid)
                             @Html.HiddenFor(model => model.WebType)
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Tipo de Afiliado :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.type, new { @class = "form-control", @readonly = "true" })
+                            </div>
 
                             <div class="editor-label col-md-4 control-label">
                                 * Número de Documento/Cédula :
@@ -229,61 +237,34 @@
 
                             </div>
                             <!--// SILVERLIGHT -->
-
-                            <div class="editor-label col-md-10 control-label">
-                                <div id="capaarchivo" class="editor-label col-md-10 control-label">
-                                    <p class="text-left">Seleccione archivo: </p>
-                                    <input type="file" name="file" id="file" onchange="ActualizaElementoControl('ElementoControl','Seleccionada', this, '@Model.docnumber')"/>
+                            <div class="col-md-12 col-btn">
+                                <div id="capaarchivo" class="text-left">
+                                    @*<p class="text-left">Seleccione archivo: </p>*@
+                                    @*<input type="file" name="file" id="file" onchange="ActualizaElementoControl('ElementoControl','Seleccionada', this, '@Model.docnumber')"/>*@
+                                    <input id="file" type=file name="file" style="visibility:hidden;position:absolute;top:0;left:0" onchange="ActualizaElementoControl('ElementoControl','Seleccionada', this, '@Model.docnumber')">
+                                    <input type="button" value="Seleccione Archivo" class="btn btn-success btn-md" onclick="this.form.file.click()">
+                                    <span id="info" style="border: 0px solid black"></span>
                                 </div>
                             </div>
 
                             <!-- SECCION PARA VERIFICAR OPERACIONES ESCANER-->
                             <script src="~/Scripts/jquery-2.1.3.min.js"></script>
                             <script>
-                                //$(document).ready(function () {
-                                //    $("#seccion2").hide();
-                                //    $("#seccion3").hide();
-                                //    $("#boton2").hide();
-                                //    $("#boton3").hide();
-                                //});
-
-                                //function Siguiente() {
-                                //    $("#seccion1").hide();
-                                //    $("#seccion2").show();
-                                //    $("#boton1").hide();
-                                //    $("#boton2").show();
-                                //}
-
-                                //function Siguiente2() {
-                                //    if (VerificarElementoControl("ElementoControl", "Escaneada") == true) {
-                                //        alert("Error: Debe seleccionar el archivo para cargarlo en el servidor.");
-                                //    }
-                                //    else if (VerificarElementoControl("ElementoControl", "Seleccionada") == true) {
-                                //        $("#seccion2").hide();
-                                //        $("#seccion3").show();
-                                //        $("#boton2").hide();
-                                //        $("#boton3").show();
-                                //    }
-                                //    else {
-                                //        alert("Error: Debe completar Paso 1 y Paso 2 para continuar.");
-                                //    }
-                                //}
-
-                                //function VerificarElementoControl(ElementoControl, ValorDeControl) {
-                                //    if (document.getElementById(ElementoControl).innerHTML == ValorDeControl)
-                                //        return true;
-                                //    else
-                                //        return false;
-                                //}
-
                                 function ActualizaElementoControl(ElementoControl, ValorDeControl, InputFile, Docnumber) {
                                     var NombreArchivo = InputFile.value.split('\\');
-                                    if (NombreArchivo[NombreArchivo.length - 1] == Docnumber + ".jpg") {
-                                        document.getElementById(ElementoControl).innerHTML = ValorDeControl;
-                                    }
-                                    else {
+                                    var TamañoArchivo = InputFile.files[0].size;
+                                    if (NombreArchivo[NombreArchivo.length - 1] != Docnumber + ".jpg") {
                                         alert("El archivo seleccionado no corresponde con el cliente Número de Documento / Cédula: " + Docnumber);
                                         Borracampofile();
+                                    }
+                                    else if (TamañoArchivo > 51200) {
+                                        alert("El tamaño del archivo seleccionado no puede ser mayor a 50 Kb");
+                                        Borracampofile();
+                                    }
+                                    else {
+                                        document.getElementById(ElementoControl).innerHTML = ValorDeControl;
+                                        document.getElementById("info").innerHTML = NombreArchivo[NombreArchivo.length - 1];
+                                        document.getElementById("file-error").innerHTML = "";
                                     }
                                 }
 
@@ -292,7 +273,10 @@
                                     capa = window.capaarchivo;
                                     varHTML = '';
                                     capa.innerHTML = varHTML;
-                                    varHTML += '<input type="file" name="file" id="file" onchange="' + textofuncion + '" />';
+                                    //varHTML += '<input type="file" name="file" id="file" onchange="' + textofuncion + '" />';
+                                    varHTML += '<input id="file" type=file name="file" style="visibility:hidden;position:absolute;top:0;left:0" onchange="' + textofuncion + '" />';
+                                    varHTML += '<input type="button" value="Seleccione Archivo" class="btn btn-success btn-md" onclick="this.form.file.click()">'
+                                    varHTML += '<span id="info" style="border: 0px solid black"></span>'
                                     capa.innerHTML = varHTML;
                                 }
                             </script>
@@ -314,9 +298,9 @@
 
                             <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.cod_estado,
-                                new SelectList(Model.EstadoOptions,
-                                "id", "estado",
-                                Model.EstadoOptions), new { @class = "form-control" })
+                                new SelectList(Model.ListaEstados,
+                                "COD_ESTADO", "DESCRIPC_ESTADO",
+                                Model.ListaEstados), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -324,10 +308,8 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.DropDownListFor(m => m.cod_ciudad,
-                                new SelectList(Model.CiudadOptions,
-                                "id", "ciudad",
-                                Model.CiudadOptions), new { @class = "form-control" })
+                                <select id="cod_ciudad" name="cod_ciudad" class = "form-control"></select>
+                                @Html.ValidationMessage("Ciudad")
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -335,10 +317,8 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.DropDownListFor(m => m.cod_municipio,
-                                new SelectList(Model.MunicipioOptions,
-                                "id", "municipio",
-                                Model.MunicipioOptions), new { @class = "form-control" })
+                                <select id="cod_municipio" name="cod_municipio" class = "form-control"></select>
+                                @Html.ValidationMessage("Municipio")
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -346,10 +326,8 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.DropDownListFor(m => m.cod_parroquia,
-                                new SelectList(Model.ParroquiaOptions,
-                                "id", "parroquia",
-                                Model.ParroquiaOptions), new { @class = "form-control" })
+                                <select id="cod_parroquia" name="cod_parroquia" class="form-control"></select>
+                                @Html.ValidationMessage("Parroquia")
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -357,10 +335,8 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.DropDownListFor(m => m.cod_urbanizacion,
-                                new SelectList(Model.UrbanizacionOptions,
-                                "id", "urbanizacion",
-                                Model.UrbanizacionOptions), new { @class = "form-control" })
+                                <select id="cod_urbanizacion" name="cod_urbanizacion" class="form-control"></select>
+                                @Html.ValidationMessage("Urbanización")
                             </div>
 
                             <div class="editor-label col-md-4 control-label"></div>
