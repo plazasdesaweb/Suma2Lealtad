@@ -1,7 +1,6 @@
-﻿@model Suma2Lealtad.Models.Type
+﻿@model Suma2Lealtad.Models.URBANIZACION
 
 @{
-    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,7 +13,7 @@
             <div class="panel panel-default">
 
                 <div class="panel-heading clearfix panel-gradient">
-                    <h3 class="panel-title">Tipo / Agregar Nuevo Registro</h3>
+                    <h3 class="panel-title">Urbanización / Editar Registro</h3>
                 </div>
 
                 <div class="panel-body">
@@ -24,30 +23,34 @@
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true)
 
+                        @Html.HiddenFor(model => model.COD_URBANIZACION)
+
                         <form class="form-horizontal" role="form">
 
                             <div class="form-group">
 
-                                <div class="editor-label col-md-4 control-label">
-                                    Nombre :
-                                </div>
-                                <div class="editor-field col-md-8">
-                                    @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.name)
-                                </div>
+                            @Html.HiddenFor(model => model.COD_URBANIZACION)
+
+                            <div class="editor-label col-md-4 control-label">
+                                Estado :
+                            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.DESCRIPC_URBANIZACION, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.DESCRIPC_URBANIZACION)
+                            </div>
 
                             </div>
 
-                            <!-- btn btn-success -->
+                            <!-- buttons -->
                             <div class="form-group">
                                 <div class="col-md-12 col-btn">
                                     <div class="pull-right">
                                         <input type="submit" class="btn btn-success btn-md" value="Guardar" />
-                                        <a href="@Url.Action("Index", "Type")" class="btn btn-danger btn-md" role="button">Cancelar</a>
+                                        <a class="btn btn-danger btn-md" href="@Url.Action("Index", "Urbanizacion")">Cancelar</a>
                                     </div>
                                 </div>
                             </div>
-                            <!--// btn btn-success -->
+                            <!--// buttons -->
 
                         </form>
                 
@@ -57,7 +60,7 @@
                 <!--// panel-body -->
 
             </div>
-            <!--// panel -->
+            <!--// panel panel-default -->
 
         </div>
         <!--// columns -->

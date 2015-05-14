@@ -74,7 +74,7 @@ namespace Suma2Lealtad.Models
             public int interestID { get; set; }
         }
 
-        #region InterestList
+        #region Lista_Intereses_Cliente
         private List<Interest> chargeInterestList()
         {
             using (LealtadEntities db = new LealtadEntities())
@@ -119,7 +119,7 @@ namespace Suma2Lealtad.Models
         }
         #endregion
 
-        #region sequenceID
+        #region Funciones_Valores_Consecutivos
         private int AfilliatesID()
         {
             using (LealtadEntities db = new LealtadEntities())
@@ -139,6 +139,65 @@ namespace Suma2Lealtad.Models
                 return (db.AffiliateAuds.Max(a => a.id) + 1);
             }
         }
+        #endregion
+
+        // Métodos DDL para Datos Geográficos.
+        // Abstenerse a las consecuencias físicas, la persona que modifique éste código.
+        #region Lista_de_Datos_Geograficos
+
+        // retornar la lista de Estados.
+        private List<ESTADO> GetEstados()
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                return db.ESTADOS.OrderBy(u => u.DESCRIPC_ESTADO).ToList();
+            }
+        }
+        
+        // retornar la lista de Ciudades asociadas al campo clave de la entidad Estado.
+        public List<CIUDAD> GetCiudades(string id)
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                var query = db.CIUDADES.Where(a => a.ESTADOS.Select(b => b.COD_ESTADO).Contains(id));
+
+                return query.ToList(); //.ToArray();
+            }
+        }
+        
+        // retornar la lista de Municipios asociadas al campo clave de la entidad Ciudad.
+        public List<MUNICIPIO> GetMunicipios(string id)
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                var query = db.MUNICIPIOS.Where(a => a.CIUDADES.Select(b => b.COD_CIUDAD).Contains(id));
+
+                return query.ToList();
+            }
+        }
+        
+        // retornar la lista de Parroquias asociadas al campo clave de la entidad Municipio.
+        public List<PARROQUIA> GetParroquias(string id)
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                var query = db.PARROQUIAS.Where(a => a.MUNICIPIOS.Select(b => b.COD_MUNICIPIO).Contains(id)); 
+
+                return query.ToList();
+            }
+        }
+        
+        // retornar la lista de Urbanizaciones asociadas al campo clave de la entidad Parroquia.
+        public List<URBANIZACION> GetUrbanizaciones(string id)
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                var query = db.URBANIZACIONES.Where(a => a.PARROQUIAS.Select(b => b.COD_PARROQUIA).Contains(id));
+
+                return query.ToList();
+            }
+        }
+        
         #endregion
 
         //retorna el ojeto Photos_Affiliate a partr del id del afiliado
@@ -201,6 +260,7 @@ namespace Suma2Lealtad.Models
                 afiliado.phone3 = clienteWebPlazas.phone3;
                 afiliado.email = clienteWebPlazas.email;
                 afiliado.WebType = clienteWebPlazas.type;
+                afiliado.ListaEstados = GetEstados();       //++
             }
             //Segundo se buscan los datos del AFILIADO en SumaPlazas
             using (LealtadEntities db = new LealtadEntities())
@@ -403,6 +463,13 @@ namespace Suma2Lealtad.Models
                 afiliado.birthdate = d.Value.ToString("dd-MM-yyyy");
                 //ENTIDAD CustomerInterest
                 afiliado.Intereses = chargeInterestList(afiliado.id);
+                //Llenar las listas de Datos Geográficos.
+                afiliado.ListaEstados = GetEstados();
+                afiliado.ListaCiudades = GetCiudades(afiliado.cod_estado);
+                afiliado.ListaMunicipios = GetMunicipios(afiliado.cod_ciudad);
+                afiliado.ListaParroquias = GetParroquias(afiliado.cod_municipio);
+                afiliado.ListaUrbanizaciones = GetUrbanizaciones(afiliado.cod_parroquia);
+
                 //ENTIDAD TARJETA
                 Decimal p = (from t in db.TARJETAS
                              where t.NRO_AFILIACION.Equals(afiliado.id)

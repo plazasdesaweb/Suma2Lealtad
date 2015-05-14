@@ -16,12 +16,12 @@ namespace Suma2Lealtad.Models
     {
         public ESTADO()
         {
-            this.CIUDADs = new HashSet<CIUDAD>();
+            this.CIUDADES = new HashSet<CIUDAD>();
         }
     
         public string COD_ESTADO { get; set; }
         public string DESCRIPC_ESTADO { get; set; }
     
-        public virtual ICollection<CIUDAD> CIUDADs { get; set; }
+        public virtual ICollection<CIUDAD> CIUDADES { get; set; }
     }
 }
