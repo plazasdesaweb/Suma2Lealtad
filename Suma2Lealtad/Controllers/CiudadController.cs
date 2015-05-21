@@ -21,6 +21,14 @@ namespace Suma2Lealtad.Controllers
             return View(db.CIUDADES.OrderBy(x=> x.DESCRIPC_CIUDAD).ToList());
         }
 
+        [HttpPost]
+        public ActionResult Index(CIUDAD ciudad)
+        {
+            List<CIUDAD> modelo = db.CIUDADES.Where(c => c.DESCRIPC_CIUDAD.Contains(ciudad.DESCRIPC_CIUDAD)).OrderBy(x => x.DESCRIPC_CIUDAD).ToList();
+
+            return View("Index", modelo);
+        }
+
         //
         // GET: /Ciudad/Details/5
 
@@ -130,6 +138,11 @@ namespace Suma2Lealtad.Controllers
             db.CIUDADES.Remove(ciudad);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult FilterCiudad()
+        {
+            return View();
         }
 
         protected override void Dispose(bool disposing)
