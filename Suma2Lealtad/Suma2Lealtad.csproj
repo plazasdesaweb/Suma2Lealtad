@@ -611,6 +611,10 @@
     <Content Include="Views\CompanyPrepago\FilterBeneficiarios.cshtml" />
     <Content Include="Views\CompanyPrepago\GenericView.cshtml" />
     <Content Include="Views\CompanyPrepago\Filter.cshtml" />
+    <Content Include="Views\Ciudad\FilterCiudad.cshtml" />
+    <Content Include="Views\Municipio\FilterMunicipio.cshtml" />
+    <Content Include="Views\Parroquia\FilterParroquia.cshtml" />
+    <Content Include="Views\Urbanizacion\FilterUrbanizacion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

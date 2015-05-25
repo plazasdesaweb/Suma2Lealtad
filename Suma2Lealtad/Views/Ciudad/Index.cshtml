@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Suma2Lealtad.Models.CIUDAD>
 
 @{
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -55,6 +56,7 @@
                     <div class="col-md-12 col-tabla-btn">
                         <div class="pull-right">
                             <a class="btn btn-success btn-md" href="@Url.Action("Create", "Ciudad")">Agregar Nuevo Registro</a>
+                            <a class="btn btn-success btn-md" href="@Url.Action("FilterCiudad", "Ciudad")">Regresar</a>
                         </div>
                     </div>
                     <!--// buttons -->

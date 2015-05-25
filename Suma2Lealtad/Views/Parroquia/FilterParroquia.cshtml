@@ -1,7 +1,7 @@
-﻿@model Suma2Lealtad.Models.URBANIZACION
+﻿@model Suma2Lealtad.Models.PARROQUIA
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "FilterParroquia";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,28 +14,21 @@
             <div class="panel panel-default">
 
                 <div class="panel-heading clearfix panel-gradient">
-                    <h3 class="panel-title">Urbanización / Agregar Nuevo Registro</h3>
+                    <h3 class="panel-title">Buscar / Parroquia</h3>
                 </div>
 
                 <div class="panel-body">
-
-                    @using (Html.BeginForm())
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true)
-
-                        @Html.HiddenFor(model => model.COD_URBANIZACION)
-
-                        <form class="form-horizontal" role="form">
+                    
+                    <form action="@Url.Action("Index", "Parroquia")" method="post" class="form-horizontal" role="form">
 
                             <div class="form-group">
 
                                 <div class="editor-label col-md-4 control-label">
-                                    Urbanización :
+                                    Parroquia :
                                 </div>
                                 <div class="editor-field col-md-8">
-                                    @Html.TextBoxFor(model => model.DESCRIPC_URBANIZACION, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.DESCRIPC_URBANIZACION)
+                                    @Html.TextBoxFor(model => model.DESCRIPC_PARROQUIA, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.DESCRIPC_PARROQUIA)
                                 </div>
 
                             </div>
@@ -44,16 +37,14 @@
                             <div class="form-group">
                                 <div class="col-md-12 col-btn">
                                     <div class="pull-right">
-                                        <input type="submit" class="btn btn-success btn-md" value="Guardar" />
-                                        <a class="btn btn-danger btn-md" href="@Url.Action("FilterUrbanizacion", "Urbanizacion")">Cancelar</a>
+                                        <input type="submit" class="btn btn-success btn-md" value="Buscar" />
+                                        <a class="btn btn-success btn-md" href="@Url.Action("Create", "Parroquia")">Agregar Nuevo</a>
                                     </div>
                                 </div>
                             </div>
                             <!--// buttons -->
 
                         </form>
-                
-                    }
 
                 </div>
                 <!--// panel-body -->

@@ -21,6 +21,14 @@ namespace Suma2Lealtad.Controllers
             return View(db.PARROQUIAS.OrderBy(x=> x.DESCRIPC_PARROQUIA).ToList());
         }
 
+        [HttpPost]
+        public ActionResult Index(PARROQUIA parroquia)
+        {
+            List<PARROQUIA> modelo = db.PARROQUIAS.Where(c => c.DESCRIPC_PARROQUIA.Contains(parroquia.DESCRIPC_PARROQUIA)).OrderBy(x => x.DESCRIPC_PARROQUIA).ToList();
+
+            return View("Index", modelo);
+        }
+
         //
         // GET: /Parroquia/Details/5
 
@@ -130,6 +138,11 @@ namespace Suma2Lealtad.Controllers
             db.PARROQUIAS.Remove(parroquia);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult FilterParroquia()
+        {
+            return View();
         }
 
         protected override void Dispose(bool disposing)
