@@ -18,8 +18,17 @@
                 </div>
 
                 <div class="panel-body">
-
-                    <form action="@Url.Action("ReactivarTarjeta", "Afiliado")" name="form" method="post">
+                     @{ if (Model.type == "Suma")
+                       {
+                        @:<form action="@Url.Action("ReactivarTarjeta", "Afiliado")" name="form" method="post">
+               }
+                       else
+                       {
+                        @:<form action="@Url.Action("ReactivarTarjeta", "CompanyPrepago")" name="form" method="post">
+               }
+                    }
+                    
+                            @Html.HiddenFor(model => model.id)
 
                         <div class="form-group">
                             <div class="editor-label col-md-4 control-label">

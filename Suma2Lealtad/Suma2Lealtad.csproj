@@ -610,6 +610,7 @@
     <Content Include="Views\CompanyPrepago\FilterCompany.cshtml" />
     <Content Include="Views\CompanyPrepago\FilterBeneficiarios.cshtml" />
     <Content Include="Views\CompanyPrepago\GenericView.cshtml" />
+    <Content Include="Views\CompanyPrepago\Filter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

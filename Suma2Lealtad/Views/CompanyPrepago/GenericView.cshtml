@@ -13,6 +13,7 @@
         @*@Html.HiddenFor(model => model.RouteValues)*@
         @Html.TextBox("id", @Model.RouteValues, new { style="visibility:hidden", @class = "form-control" })
         @Html.TextBox("rif", @Model.RouteValues, new { style="visibility:hidden", @class = "form-control" })
+        @Html.TextBox("companyid", @Model.RouteValues, new { style="visibility:hidden", @class = "form-control" })
         <input type="submit" class="btn btn-success btn-md" value="Continuar" style="padding-right: 15px; padding-left: 15px; margin-left: 0px;" />
     </form>
 </div>

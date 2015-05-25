@@ -86,7 +86,16 @@
                     <div class="form-group">
                         <div class="col-md-12 col-btn">
                             <div class="pull-right">
-                                <a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.docnumber })" class="btn btn-danger btn-md">Cancelar</a>
+                                 @{ if (Model.type == "Suma")
+                                   {
+                                    @:<a href="@Url.Action("Index", "Afiliado", new { numdoc = @Model.docnumber })" class="btn btn-danger btn-md">Cancelar</a>
+               }
+                                   else
+                                   {
+                                    @:<a href="@Url.Action("FilterBeneficiarios", "CompanyPrepago", new { companyid = Model.companyid })" class="btn btn-danger btn-md">Cancelar</a>
+               }
+                                }
+                                
                                 @*<input type="submit" class="btn btn-success btn-md" value="Regresar" style="padding-right: 15px; padding-left: 15px; margin-left: 0px;" />*@
                             </div>
                         </div>

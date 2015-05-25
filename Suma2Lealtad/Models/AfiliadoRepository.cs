@@ -12,20 +12,20 @@ namespace Suma2Lealtad.Models
     public class AfiliadoRepository
     {
         //private int INITIAL_INTEGER_VALUE = 1;
-        private int ID_REASONS_INICIAL = 1;
-        private int ID_CORPORACION_PLAZAS = 1;
-        private int ID_ESTATUS_AFILIACION_INICIAL = 0;        
-        private int ID_ESTATUS_AFILIACION_ACTIVA = 2;
-        private int ID_TYPE_SUMA = 1;
-        //private int ID_TYPE_PREPAGO = 2;
+        private const int ID_REASONS_INICIAL = 1;
+        private const int ID_CORPORACION_PLAZAS = 1;
+        private const int ID_ESTATUS_AFILIACION_INICIAL = 0;
+        private const int ID_ESTATUS_AFILIACION_ACTIVA = 2;
+        private const int ID_TYPE_SUMA = 1;
+        private const int ID_COMPANY_PLAZAS = 1;
+        private const int ID_AFILIADO_NO_CORRESPONDE = -1;
         //actualmente no hay donde guardar este valor en BD
-        private string WEB_TYPE = "1";
-        //private string ID_ESTATUS_TARJETA_NUEVA = "0";
-        //private string ID_ESTATUS_TARJETA_ACTIVA = "1";
-        private string ID_ESTATUS_TARJETA_SUSPENDIDA = "6";
-        //private string INITIAL_STRING_VALUE = "";
-        //public AfiliadoRepository() { }
-
+        private const string WEB_TYPE = "1";
+        //private const string ID_ESTATUS_TARJETA_NUEVA = "0";
+        //private const string ID_ESTATUS_TARJETA_ACTIVA = "1";
+        private const string ID_ESTATUS_TARJETA_SUSPENDIDA = "6";
+        //private const string INITIAL_STRING_VALUE = "";
+        
         //determina si hubo excepción en llamada a servicio Cards
         private bool ExceptionServicioCards(string RespuestaServicioCards)
         {
@@ -143,8 +143,8 @@ namespace Suma2Lealtad.Models
 
         // Métodos DDL para Datos Geográficos.
         // Abstenerse a las consecuencias físicas, la persona que modifique éste código.
-        #region Lista_de_Datos_Geograficos
 
+        #region Lista_de_Datos_Geograficos
         // retornar la lista de Estados.
         private List<ESTADO> GetEstados()
         {
@@ -196,8 +196,7 @@ namespace Suma2Lealtad.Models
 
                 return query.ToList();
             }
-        }
-        
+        }      
         #endregion
 
         //retorna el ojeto Photos_Affiliate a partr del id del afiliado
@@ -217,14 +216,14 @@ namespace Suma2Lealtad.Models
             }
         }
 
-        private int TipoAfiliacionUsuario(int userId)
-        { 
-            //Aqui se debe determinar el tipo de afiliación que puede crear el usuario
-            return ID_TYPE_SUMA;
-        }
+        //private int TipoAfiliacionUsuario(int userId)
+        //{ 
+        //    //Aqui se debe determinar el tipo de afiliación que puede crear el usuario
+        //    return ID_TYPE_SUMA;
+        //}
 
         //busca un cliente en la WebPlazas a partir del documento de identificación
-        public Afiliado Find(string numdoc)
+        public Afiliado Find(string numdoc, int typeid = ID_TYPE_SUMA, int companyid = ID_COMPANY_PLAZAS)
         {
             //Primero se buscan los datos de CLIENTE en WebPlazas
             //SERVICIO WSL.WebPlazas.getClientByNumDoc 
@@ -265,7 +264,7 @@ namespace Suma2Lealtad.Models
             //Segundo se buscan los datos del AFILIADO en SumaPlazas
             using (LealtadEntities db = new LealtadEntities())
             {
-                //Busco en la Entidad Affiliate
+                //Entidad Affiliate                
                 afiliado.id = (from a in db.Affiliates
                                where a.docnumber.Equals(afiliado.docnumber)
                                select a.id
@@ -274,30 +273,56 @@ namespace Suma2Lealtad.Models
                 {
                     //No está en SumaPlazas
                     afiliado.Intereses = chargeInterestList();
-                }
+                    afiliado.typeid = typeid;
+                    afiliado.type = db.Types.FirstOrDefault(t => t.id == afiliado.typeid).name;
+                    afiliado.companyid = companyid;
+                } 
                 else
                 {
-                    //Está afiliado, se busca lo necesario para llenar el index de editar
-                    //afiliado.statusid = (from a in db.Affiliates
-                    //                     where a.docnumber.Equals(afiliado.docnumber)
-                    //                     select a.statusid
-                    //                     ).SingleOrDefault();
-                    afiliado.statusid = db.Affiliates.FirstOrDefault(a => a.docnumber == afiliado.docnumber).statusid;
-                    //afiliado.estatus = (from s in db.Status
-                    //                    where s.id.Equals(afiliado.statusid)
-                    //                    select s.name
-                    //                    ).SingleOrDefault();
-                    afiliado.estatus = db.Status.FirstOrDefault(s => s.id == afiliado.statusid).name;
-                }
-                //ENTIDAD TYPE 
-                afiliado.typeid = TipoAfiliacionUsuario((int)HttpContext.Current.Session["userid"]); 
-                afiliado.type = db.Types.FirstOrDefault(t => t.id == afiliado.typeid).name;
+                    //Esta en Suma, busco compañia asociada
+                    //Entidad CompanyAffiliate
+                    afiliado.companyid = (from co in db.CompanyAffiliates
+                                          where co.affiliateid.Equals(afiliado.id)
+                                          select co.companyid
+                                          ).SingleOrDefault();
+                    //ENTIDAD TYPE 
+                    //afiliado.typeid = TipoAfiliacionUsuario((int)HttpContext.Current.Session["userid"]);
+                    afiliado.typeid = (from a in db.Affiliates
+                                       where a.id.Equals(afiliado.id)
+                                       select a.typeid
+                                       ).SingleOrDefault();
+                    afiliado.type = db.Types.FirstOrDefault(t => t.id == afiliado.typeid).name;
+                    if (afiliado.typeid != typeid)
+                    {
+                        //EL AFILIADO EXISTE Y NO PERTENECE AL TIPO DE AFILIACION SUMINISTRADO
+                        afiliado.id = -1;
+                    }
+                    else if (afiliado.companyid != companyid)
+                    {
+                        //EL AFILIADO EXISTE Y NO PERTENECE A LA COMPAÑIA SUMINISTRADA
+                        afiliado.id = -2;
+                    }
+                    else
+                    {
+                        //AFILIADO EXISTE Y PERTENECE AL TIPO DE AFILIACION Y A LA COMPAÑIA SUMINISTRADOS, se busca lo necesario para llenar el index de editar
+                        //afiliado.statusid = (from a in db.Affiliates
+                        //                     where a.docnumber.Equals(afiliado.docnumber)
+                        //                     select a.statusid
+                        //                     ).SingleOrDefault();
+                        afiliado.statusid = db.Affiliates.FirstOrDefault(a => a.docnumber == afiliado.docnumber).statusid;
+                        //afiliado.estatus = (from s in db.Status
+                        //                    where s.id.Equals(afiliado.statusid)
+                        //                    select s.name
+                        //                    ).SingleOrDefault();
+                        afiliado.estatus = db.Status.FirstOrDefault(s => s.id == afiliado.statusid).name;
+                    }
+                }                                
             }
             return afiliado;
         }
 
         //busca una lista de afiliados CON UN SUBCONJUNTO DE ATRIBUTOS en SumaPLazas a partir del documento de identifación, el nombre o el email
-        public List<Afiliado> Find(string numdoc, string name, string email)
+        public List<Afiliado> Find(string numdoc, string name, string email, int typeid = ID_TYPE_SUMA, int companyid = ID_COMPANY_PLAZAS)
         {
             List<Afiliado> afiliados;
             using (LealtadEntities db = new LealtadEntities())
@@ -316,11 +341,13 @@ namespace Suma2Lealtad.Models
                     //ENTIDAD Affiliado
                     //ENTIDAD CLIENTE
                     //ENTIDAD Status
+                    //ENTIDAD CompanyAffiliates
                     afiliados = (from a in db.Affiliates
                                  join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
                                  join s in db.Status on a.statusid equals s.id
                                  join t in db.Types on a.typeid equals t.id
-                                 where a.docnumber.Equals(numdoc)
+                                 join co in db.CompanyAffiliates on a.id equals co.affiliateid
+                                 where a.docnumber.Equals(numdoc) && co.companyid.Equals(companyid) && a.typeid.Equals(typeid)
                                  select new Afiliado()
                                  {
                                      //ENTIDAD Affiliate 
@@ -346,7 +373,8 @@ namespace Suma2Lealtad.Models
                                  join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
                                  join s in db.Status on a.statusid equals s.id
                                  join t in db.Types on a.typeid equals t.id
-                                 where a.docnumber.Equals(numdoc) || c.E_MAIL == email || c.NOMBRE_CLIENTE1.Contains(name) || c.APELLIDO_CLIENTE1.Contains(name)
+                                 join co in db.CompanyAffiliates on a.id equals co.affiliateid
+                                 where (a.docnumber.Equals(numdoc) || c.E_MAIL == email || c.NOMBRE_CLIENTE1.Contains(name) || c.APELLIDO_CLIENTE1.Contains(name)) && co.companyid.Equals(companyid) && a.typeid.Equals(typeid)
                                  select new Afiliado()
                                  {
                                      //ENTIDAD Affiliate 
@@ -414,6 +442,7 @@ namespace Suma2Lealtad.Models
                                      join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
                                      join s in db.Status on a.statusid equals s.id
                                      join t in db.Types on a.typeid equals t.id
+                                     join co in db.CompanyAffiliates on a.id equals co.affiliateid
                                      where a.id.Equals(id)
                                      select new Afiliado()
                                      {
@@ -454,7 +483,9 @@ namespace Suma2Lealtad.Models
                                          //ENTIDAD Status
                                          estatus = s.name,
                                          //ENTIDAD Type
-                                         type = t.name
+                                         type = t.name,
+                                         //ENTIDAD CompanyAffiliate
+                                         companyid = co.companyid
                                      }).Single();
                 DateTime? d = (from c in db.CLIENTES
                                where (c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO).Equals(afiliado.docnumber)
@@ -469,7 +500,6 @@ namespace Suma2Lealtad.Models
                 afiliado.ListaMunicipios = GetMunicipios(afiliado.cod_ciudad);
                 afiliado.ListaParroquias = GetParroquias(afiliado.cod_municipio);
                 afiliado.ListaUrbanizaciones = GetUrbanizaciones(afiliado.cod_parroquia);
-
                 //ENTIDAD TARJETA
                 Decimal p = (from t in db.TARJETAS
                              where t.NRO_AFILIACION.Equals(afiliado.id)
@@ -618,7 +648,7 @@ namespace Suma2Lealtad.Models
                 var companyaffiliate = new CompanyAffiliate()
                 {
                     affiliateid = Affiliate.id,
-                    companyid = ID_CORPORACION_PLAZAS,
+                    companyid = afiliado.companyid,
                     begindate = DateTime.Now,
                     enddate = new DateTime(),
                     comments = afiliado.comments,
@@ -654,7 +684,7 @@ namespace Suma2Lealtad.Models
         {
             using (LealtadEntities db = new LealtadEntities())
             {
-                // Entidad : Affiliate
+                // Entidad: Affiliate
                 Affiliate affiliate = db.Affiliates.FirstOrDefault(a => a.id == afiliado.id);
                 if (affiliate != null)
                 {
@@ -672,7 +702,7 @@ namespace Suma2Lealtad.Models
                     affiliate.instagram_account = afiliado.instagram_account;
                     affiliate.comments = afiliado.comments;
                 }
-                // Entidad : CLIENTE 
+                // Entidad: CLIENTE 
                 CLIENTE cliente = db.CLIENTES.FirstOrDefault(c => c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO == afiliado.docnumber);
                 if (cliente != null)
                 {
@@ -695,7 +725,7 @@ namespace Suma2Lealtad.Models
                     cliente.COD_PARROQUIA = afiliado.cod_parroquia;
                     cliente.COD_URBANIZACION = afiliado.cod_urbanizacion;
                 }
-                // Entidad : TARJETA
+                // Entida: TARJETA
                 TARJETA tarjeta = db.TARJETAS.FirstOrDefault(t => t.NRO_AFILIACION.Equals(afiliado.id));
                 if (tarjeta != null)
                 {
@@ -722,7 +752,7 @@ namespace Suma2Lealtad.Models
                     };
                     db.TARJETAS.Add(tarjeta);
                 }
-                // Entidad : Temas de Interés del Afiliado. 
+                // Entidad: CustomerInterest
                 foreach (var m in db.CustomerInterests.Where(f => f.customerid == afiliado.id))
                 {
                     db.CustomerInterests.Remove(m);
@@ -737,7 +767,7 @@ namespace Suma2Lealtad.Models
                     };
                     db.CustomerInterests.Add(customerInterest);
                 }
-                //Entidad : Auditoría del registro de Afiliado. 
+                //Entidad: AffiliateAud 
                 int statusidactual = (from a in db.Affiliates
                                        where a.id.Equals(afiliado.id)
                                        select a.statusid

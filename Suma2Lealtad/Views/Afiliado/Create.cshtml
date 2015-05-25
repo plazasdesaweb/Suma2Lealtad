@@ -10,9 +10,17 @@
 
         <div class="panel-body col-md-offset-1 col-md-10">
 
-            <form id="commentForm" method="post" action="@Url.Action("Create", "Afiliado")" class="form-horizontal" enctype = "multipart/form-data">
+             @{ if(Model.type == "Suma")
+               {
+                   @:<form id="commentForm" method="post" action="@Url.Action("Create", "Afiliado")" class="form-horizontal enctype = "multipart/form-data">
+               }
+               else
+               {
+                   @:<form id="commentForm" method="post" action="@Url.Action("CreateBeneficiario", "CompanyPrepago")" class="form-horizontal" enctype = "multipart/form-data">
+               }
+            }
 
-                @Html.AntiForgeryToken()
+            @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
 
                 <div id="rootwizard">
@@ -41,6 +49,7 @@
                             @Html.HiddenFor(model => model.clientid)
                             @Html.HiddenFor(model => model.typeid)
                             @Html.HiddenFor(model => model.WebType)
+                            @Html.HiddenFor(model => model.companyid)
 
                             <div class="editor-label col-md-4 control-label">
                                 * Tipo de Afiliado :

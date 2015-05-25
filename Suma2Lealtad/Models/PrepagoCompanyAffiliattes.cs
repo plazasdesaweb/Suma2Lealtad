@@ -7,7 +7,7 @@ namespace Suma2Lealtad.Models
 {
     public class PrepagoCompanyAffiliattes
     {
-        public int id { get; set; }                   
+        public int companyid { get; set; }                   
         public string namecompañia { get; set; }             
         public string alias { get; set; }        
         public string rif { get; set; }             

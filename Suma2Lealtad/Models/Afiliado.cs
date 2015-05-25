@@ -55,6 +55,8 @@ namespace Suma2Lealtad.Models
         public string trackII { get; set; }             // TrackII de la Tarjeta
         //ENTIDAD Photos_Affiliate 
         public Photos_Affiliate picture { get; set; }   // imagen del Documento de Identificación del Afiliado
+        //Entidad CompanyAffiliatte
+        public int companyid { get; set; }              // id de compañia a que se asocia el afiliado
         //Campos extras que no se almacenan en Entidades
         public string WebType { get; set; }             // Type de Afiliado en WEBPLAZAS
 

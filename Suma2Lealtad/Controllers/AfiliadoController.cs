@@ -24,15 +24,17 @@ namespace Suma2Lealtad.Controllers
             //        //NOCLIENTE            (no registrado en WEBPLAZAS)
             //        //NOAFILIADO           (no afiliado en SUMAPLAZAS)
             //        //CLIENTE              (registrado en WEBPLAZAS)
-            //        //AFILIADO             (afiliado en SUMAPLAZAS)
+            //        //AFILIADO SUMA        (afiliado en SUMAPLAZAS)
+            //        //BENEFCIARIO PREPAGO  (afiliado en SUMAPLAZAS)
             //        //El estado deseado es:
-            //        //AFILIADO/CLIENTE     (registrado en WEBPLAZAS y afiliado en SUMAPLAZAS) 
-            //        //Existen 4 resultados posibles para esta búsqueda
-            //        //NOCLIENTE/NOAFILIADO -> por definir acción para crear registro de CLIENTE y crear afiliación de AFILIADO => Redireccionar a GenericView con mensaje descriptivo
-            //        //NOCLIENTE/AFILIADO   -> por definir acción para crear registro de CLIENTE => Redireccionar a GenericView con mensaje descriptivo
-            //        //CLIENTE/NOAFILIADO   -> acción: editar registro de CLIENTE y crear afiliación de AFILIADO => CREAR AFILIACION (retornar vista Create)
-            //        //CLIENTE/AFILIADO     -> acción: editar registro de CLIENTE y editar afiliación de AFILIADO => REVISAR AFILIACION (Redirecciónar a acción Index ó Edit)
-
+            //        //CLIENTE/AFILIADO SUMA     (registrado en WEBPLAZAS y afiliado en SUMAPLAZAS TIPO SUMA) 
+            //        //Existen los siguientes resultados posibles para esta búsqueda
+            //        //NOCLIENTE/NOAFILIADO            -> por definir acción para crear registro de CLIENTE y crear afiliación de AFILIADO => Redireccionar a GenericView con mensaje descriptivo
+            //        //NOCLIENTE/AFILIADO              -> por definir acción para crear registro de CLIENTE => Redireccionar a GenericView con mensaje descriptivo
+            //        //CLIENTE/NOAFILIADO              -> acción: editar registro de CLIENTE y crear afiliación de AFILIADO => CREAR AFILIACION SUMA (retornar vista Create)
+            //        //CLIENTE/AFILIADO SUMA           -> acción: editar registro de CLIENTE y editar afiliación de AFILIADO => REVISAR AFILIACION (Redirecciónar a acción Index ó Edit)
+            //        //CLIENTE/BENEFCIARIO PREPAGO     -> acción: error cliente prepago => Redireccionar a GenericView con mensaje descriptivo
+            
             Afiliado afiliado = rep.Find(numdoc);
             if (afiliado == null)
             {
@@ -44,7 +46,18 @@ namespace Suma2Lealtad.Controllers
                 viewmodel.ActionName = "Filter";
                 return RedirectToAction("GenericView", viewmodel);
             }
-            if (afiliado.clientid == 0 && afiliado.id == 0)
+            //OJO
+            if (afiliado.id == -1)
+            {
+                //ERROR EN METODO FIND
+                ViewModel viewmodel = new ViewModel();
+                viewmodel.Title = "Afiliado / Crear Afiliación / Buscar Cliente";
+                viewmodel.Message = "Error: El Afiliado ya es beneficiario Prepago.";
+                viewmodel.ControllerName = "Afiliado";
+                viewmodel.ActionName = "Filter";
+                return RedirectToAction("GenericView", viewmodel);
+            }
+           if (afiliado.clientid == 0 && afiliado.id == 0)
             {
                 //NOCLIENTE/NOAFILIADO
                 ViewModel viewmodel = new ViewModel();
@@ -77,12 +90,19 @@ namespace Suma2Lealtad.Controllers
             }
         }
 
+        public ActionResult Create(string numdoc, int typeid, int companyid)
+        {
+            Afiliado afiliado = rep.Find(numdoc, typeid, companyid);
+            return View("Create", afiliado);
+        }
+
         [HttpPost]
         public ActionResult Create(Afiliado afiliado, HttpPostedFileBase file)
         {
             ViewModel viewmodel = new ViewModel();
             if (rep.Save(afiliado, file))
             {
+                #region validacion de carga de archivo 
                 //if (file != null && file.ContentLength > 0)
                 //    try
                 //    {
@@ -105,6 +125,7 @@ namespace Suma2Lealtad.Controllers
                 //    viewmodel.ActionName = "Filter";
                 //    return RedirectToAction("GenericView", viewmodel);
                 //}
+                #endregion
                 viewmodel.Title = "Afiliado / Crear Afiliación";
                 viewmodel.Message = "Solicitud de afiliación creada exitosamente.";
                 viewmodel.ControllerName = "Afiliado";

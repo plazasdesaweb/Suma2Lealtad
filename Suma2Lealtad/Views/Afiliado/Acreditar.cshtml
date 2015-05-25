@@ -19,9 +19,18 @@
 
                 <div class="panel-body">
 
-                    <form action="@Url.Action("Acreditar", "Afiliado")" name="form" method="post" onsubmit="return ValidarMonto();">
+                    @{ if (Model.type == "Suma")
+                       {
+                        @: <form action="@Url.Action("Acreditar", "Afiliado")" name="form" method="post" onsubmit="return ValidarMonto();">
+               }
+                       else
+                       {
+                        @:<form action="@Url.Action("Acreditar", "CompanyPrepago")" name="form" method="post" onsubmit="return ValidarMonto();">
+               }
+                    }
+                            @Html.HiddenFor(model => model.id)
 
-                        <div class="form-group">
+                    <div class="form-group">
                             <div class="editor-label col-md-4 control-label">
                                 Tipo de Afiliado :
                             </div>

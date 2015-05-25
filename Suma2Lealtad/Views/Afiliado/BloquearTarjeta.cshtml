@@ -19,7 +19,16 @@
 
                 <div class="panel-body">
 
-                    <form action="@Url.Action("BloquearTarjeta", "Afiliado")" name="form" method="post">
+                    @{ if (Model.type == "Suma")
+                       {
+                        @:<form action="@Url.Action("BloquearTarjeta", "Afiliado")" name="form" method="post">
+               }
+                       else
+                       {
+                        @:<form action="@Url.Action("BloquearTarjeta", "CompanyPrepago")" name="form" method="post">
+               }
+                    }
+
 
                         <div class="form-group">
                             <div class="editor-label col-md-4 control-label">

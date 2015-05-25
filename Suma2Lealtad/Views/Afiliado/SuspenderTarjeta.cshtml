@@ -18,10 +18,26 @@
                 </div>
 
                 <div class="panel-body">
+                     @{ if (Model.type == "Suma")
+                       {
+                        @:<form action="@Url.Action("SuspenderTarjeta", "Afiliado")" name="form" method="post">
+               }
+                       else
+                       {
+                        @:<form action="@Url.Action("SuspenderTarjeta", "CompanyPrepago")" name="form" method="post">
+               }
+                    }
+                    
+                            @Html.HiddenFor(model => model.id)
+                            
+                             <div class="form-group">
+                             <div class="editor-label col-md-4 control-label">
+                                Tipo de Afiliado :
+                            </div>
 
-                    <form action="@Url.Action("SuspenderTarjeta", "Afiliado")" name="form" method="post">
-
-                        <div class="form-group">
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.type, new { @class = "form-control", @readonly = "true" })
+                            </div>
 
                             <div class="editor-label col-md-4 control-label">
                                 Nombre del Afiliado :

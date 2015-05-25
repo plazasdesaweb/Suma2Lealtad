@@ -7,6 +7,8 @@ namespace Suma2Lealtad.Models
 {
     public class CompanyRepository
     {
+        private const int ID_TYPE_PREPAGO = 2;
+
         #region SequenceID
         private int CompanyID()
         {
@@ -19,7 +21,7 @@ namespace Suma2Lealtad.Models
         }
         #endregion
 
-        //busca una lista de compañias en SumaPLazas a partir del documento de identifación o el nombre
+        //busca una lista de compañias en SumaPLazas a partir del documento de identificación o el nombre
         public List<PrepagoCompanyAffiliattes> Find(string numdoc, string name = "")
         {
             List<PrepagoCompanyAffiliattes> compañias;
@@ -33,7 +35,7 @@ namespace Suma2Lealtad.Models
                              where c.rif.Equals(numdoc) || c.name.Contains(name)
                              select new PrepagoCompanyAffiliattes()
                              {
-                                 id = c.id,
+                                 companyid = c.id,
                                  namecompañia = c.name,
                                  alias = c.ALIAS,
                                  rif = c.rif,
@@ -45,16 +47,25 @@ namespace Suma2Lealtad.Models
             return compañias;
         }
 
+        //busca sólo los datos de la compañia a partir de su id
+        public Company FindCompany(int id)
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                return db.Companies.Find(id);
+            }
+        }
+
         //busca una compañia CON TODOS SUS BENEFICIARIOS en SumaPlazas a partir del id
-        public PrepagoCompanyAffiliattes Find(int id)
+        public PrepagoCompanyAffiliattes Find(int companyid)
         {
             using (LealtadEntities db = new LealtadEntities())
             {
                 PrepagoCompanyAffiliattes compañiaBeneficiarios = (from c in db.Companies
-                                                                   where c.id.Equals(id)
+                                                                   where c.id.Equals(companyid)
                                                                    select new PrepagoCompanyAffiliattes()
                                                                    {
-                                                                       id = c.id,
+                                                                       companyid = c.id,
                                                                        namecompañia = c.name,
                                                                        alias = c.ALIAS,
                                                                        rif = c.rif,
@@ -67,7 +78,7 @@ namespace Suma2Lealtad.Models
                                                        join s in db.Status on a.statusid equals s.id
                                                        join t in db.Types on a.typeid equals t.id
                                                        join b in db.CompanyAffiliates on a.id equals b.affiliateid
-                                                       where b.companyid.Equals(id) && a.typeid.Equals(2)
+                                                       where b.companyid.Equals(companyid) && a.typeid.Equals(ID_TYPE_PREPAGO)
                                                        select new Afiliado()
                                                        {
                                                            //ENTIDAD Affiliate 
@@ -116,17 +127,8 @@ namespace Suma2Lealtad.Models
             }
         }
 
-        //busca sólo los datos de la compañia a partir de su id
-        public Company Find(int id, string tipo)
-        {
-            using (LealtadEntities db = new LealtadEntities())
-            {
-                return db.Companies.Find(id);
-            }
-        }
-
         //busca los beneficiarios por cedula o nombre para una compañia con id 
-        public PrepagoCompanyAffiliattes FindBeneficiarios(int id, string numdoc, string name, string email)
+        public PrepagoCompanyAffiliattes FindBeneficiarios(int companyid, string numdoc, string name, string email)
         {
             using (LealtadEntities db = new LealtadEntities())
             {
@@ -139,10 +141,10 @@ namespace Suma2Lealtad.Models
                     email = null;
                 }
                 PrepagoCompanyAffiliattes compañiaBeneficiarios = (from c in db.Companies
-                                                                   where c.id.Equals(id)
+                                                                   where c.id.Equals(companyid)
                                                                    select new PrepagoCompanyAffiliattes()
                                                                    {
-                                                                       id = c.id,
+                                                                       companyid = c.id,
                                                                        namecompañia = c.name,
                                                                        alias = c.ALIAS,
                                                                        rif = c.rif,
@@ -157,12 +159,13 @@ namespace Suma2Lealtad.Models
                                                            join s in db.Status on a.statusid equals s.id
                                                            join t in db.Types on a.typeid equals t.id
                                                            join b in db.CompanyAffiliates on a.id equals b.affiliateid
-                                                           where b.companyid.Equals(id) && a.typeid.Equals(2) && a.docnumber.Equals(numdoc)
+                                                           where b.companyid.Equals(companyid) && a.typeid.Equals(ID_TYPE_PREPAGO) && a.docnumber.Equals(numdoc)
                                                            select new Afiliado()
                                                            {
                                                                //ENTIDAD Affiliate 
                                                                id = a.id,
                                                                docnumber = a.docnumber,
+                                                               typeid = a.typeid,
                                                                //ENTIDAD CLIENTE
                                                                name = c.NOMBRE_CLIENTE1,
                                                                lastname1 = c.APELLIDO_CLIENTE1,
@@ -180,12 +183,13 @@ namespace Suma2Lealtad.Models
                                                            join s in db.Status on a.statusid equals s.id
                                                            join t in db.Types on a.typeid equals t.id
                                                            join b in db.CompanyAffiliates on a.id equals b.affiliateid
-                                                           where b.companyid.Equals(id) && a.typeid.Equals(2) && (c.E_MAIL == email || c.NOMBRE_CLIENTE1.Contains(name) || c.APELLIDO_CLIENTE1.Contains(name))
+                                                           where b.companyid.Equals(companyid) && a.typeid.Equals(ID_TYPE_PREPAGO) && (c.E_MAIL == email || c.NOMBRE_CLIENTE1.Contains(name) || c.APELLIDO_CLIENTE1.Contains(name))
                                                            select new Afiliado()
                                                            {
                                                                //ENTIDAD Affiliate 
                                                                id = a.id,
                                                                docnumber = a.docnumber,
+                                                               typeid = a.typeid,
                                                                //ENTIDAD CLIENTE
                                                                name = c.NOMBRE_CLIENTE1,
                                                                lastname1 = c.APELLIDO_CLIENTE1,
@@ -271,15 +275,15 @@ namespace Suma2Lealtad.Models
             }
         }
 
-        public int BuscarCompañia(Afiliado afiliado)
-        {
-            using (LealtadEntities db = new LealtadEntities())
-            {
-                return (from c in db.CompanyAffiliates
-                        where c.affiliateid.Equals(afiliado.id)
-                        select c.companyid).SingleOrDefault();
-            }
-        }
+        //public int BuscarCompañia(Afiliado afiliado)
+        //{
+        //    using (LealtadEntities db = new LealtadEntities())
+        //    {
+        //        return (from c in db.CompanyAffiliates
+        //                where c.affiliateid.Equals(afiliado.id)
+        //                select c.companyid).SingleOrDefault();
+        //    }
+        //}
 
         public bool BorrarCompañia (int id)
         {
@@ -298,5 +302,6 @@ namespace Suma2Lealtad.Models
                 }
             }
         }
+
     }
 }
