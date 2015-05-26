@@ -615,6 +615,7 @@
     <Content Include="Views\Municipio\FilterMunicipio.cshtml" />
     <Content Include="Views\Parroquia\FilterParroquia.cshtml" />
     <Content Include="Views\Urbanizacion\FilterUrbanizacion.cshtml" />
+    <Content Include="Views\CompanyPrepago\RecargaIndividual.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
