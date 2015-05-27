@@ -303,5 +303,10 @@ namespace Suma2Lealtad.Models
             }
         }
 
+
+        internal PrepagoCompanyAffiliattes Find()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

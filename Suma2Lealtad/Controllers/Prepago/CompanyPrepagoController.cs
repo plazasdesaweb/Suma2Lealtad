@@ -561,6 +561,11 @@ namespace Suma2Lealtad.Controllers
             return RedirectToAction("GenericView", viewmodel);
         }
 
+        public ActionResult RecargaMasiva()
+        {
+            return View(viewmodel);
+        }
+
 
         public ActionResult GenericView(ViewModel viewmodel)
         {
@@ -572,5 +577,7 @@ namespace Suma2Lealtad.Controllers
             base.Dispose(disposing);
         }
 
+
+        public string viewmodel { get; set; }
     }
 }
