@@ -561,11 +561,12 @@ namespace Suma2Lealtad.Controllers
             return RedirectToAction("GenericView", viewmodel);
         }
 
-        public ActionResult RecargaMasiva()
+        public ActionResult RecargaIndividual(int companyid)
         {
-            return View(viewmodel);
+            PrepagoCompanyAffiliattes compañiaBeneficiarios = rep.Find(companyid);
+            compañiaBeneficiarios.Beneficiarios = compañiaBeneficiarios.Beneficiarios.FindAll(m => m.estatus.Equals("Activa"));
+            return View(compañiaBeneficiarios);
         }
-
 
         public ActionResult GenericView(ViewModel viewmodel)
         {
@@ -577,7 +578,5 @@ namespace Suma2Lealtad.Controllers
             base.Dispose(disposing);
         }
 
-
-        public string viewmodel { get; set; }
     }
 }
