@@ -563,9 +563,34 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult RecargaIndividual(int companyid)
         {
-            PrepagoCompanyAffiliattes compañiaBeneficiarios = rep.Find(companyid);
-            compañiaBeneficiarios.Beneficiarios = compañiaBeneficiarios.Beneficiarios.FindAll(m => m.estatus.Equals("Activa"));
+            List<CompanyAfiliadoRecarga> compañiaBeneficiarios = rep.FindRecarga(companyid);
+            compañiaBeneficiarios = compañiaBeneficiarios.FindAll(m => m.estatus.Equals("Activa"));
             return View(compañiaBeneficiarios);
+        }
+
+        [HttpPost]
+        public ActionResult RecargaIndividual(List<CompanyAfiliadoRecarga> beneficiarios)
+        {
+            ViewModel viewmodel = new ViewModel();
+            List<CompanyAfiliadoRecarga> recargas = beneficiarios.FindAll(b => b.MontoRecarga > 0);
+            int companyid = beneficiarios.FirstOrDefault().companyid;
+            if (rep.CrearOrden(companyid, recargas))
+            {
+                viewmodel.Title = "Prepago / Beneficiario / Recarga Individual / Crear Orden de Recarga";
+                viewmodel.Message = "Creación de orden de recarga exitosa";
+                viewmodel.ControllerName = "CompanyPrepago";
+                viewmodel.ActionName = "FilterBeneficiarios";
+                viewmodel.RouteValues = companyid.ToString();;
+            }
+            else
+            {
+                viewmodel.Title = "Prepago / Beneficiario / Recarga Individual / Crear Orden de Recarga";
+                viewmodel.Message = "Creación de orden de recarga fallida";
+                viewmodel.ControllerName = "CompanyPrepago";
+                viewmodel.ActionName = "FilterBeneficiarios";
+                viewmodel.RouteValues = companyid.ToString();;
+            }
+            return RedirectToAction("GenericView", viewmodel);
         }
 
         public ActionResult GenericView(ViewModel viewmodel)

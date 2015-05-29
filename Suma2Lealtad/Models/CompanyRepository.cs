@@ -19,6 +19,26 @@ namespace Suma2Lealtad.Models
                 return (db.Companies.Max(c => c.id) + 1);
             }
         }
+
+        private int OrderID()
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                if (db.Orders.Count() == 0)
+                    return 1;
+                return (db.Orders.Max(c => c.id) + 1);
+            }
+        }
+
+        private int OrderDetailID()
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                if (db.OrdersDetails.Count() == 0)
+                    return 0;
+                return (db.OrdersDetails.Max(c => c.id));
+            }
+        }
         #endregion
 
         //busca una lista de compañias en SumaPLazas a partir del documento de identificación o el nombre
@@ -232,6 +252,73 @@ namespace Suma2Lealtad.Models
                 }
                 return compañiaBeneficiarios;
             }
+        }
+
+        public List<CompanyAfiliadoRecarga> FindRecarga(int companyid)
+        {
+            List<CompanyAfiliadoRecarga> compañiaafiliados = new List<CompanyAfiliadoRecarga>();
+            PrepagoCompanyAffiliattes ca = new PrepagoCompanyAffiliattes();
+            ca = Find(companyid);            
+            foreach (Afiliado afiliado in ca.Beneficiarios)
+            {
+                CompanyAfiliadoRecarga temp = new CompanyAfiliadoRecarga();
+                temp.companyid = ca.companyid;
+                temp.namecompañia = ca.namecompañia;
+                temp.rif = ca.rif;
+                temp.phone = ca.phone;
+                temp.address = ca.phone;
+                temp.email = ca.email;
+                temp.Afiliadoid = afiliado.id;
+                temp.docnumber = afiliado.docnumber;
+                temp.name = afiliado.name;
+                temp.lastname1 = afiliado.lastname1;
+                temp.typeid = afiliado.typeid;
+                temp.type = afiliado.type;
+                temp.statusid = afiliado.statusid;
+                temp.estatus = afiliado.estatus;
+                compañiaafiliados.Add(temp);
+                temp = null;
+            }
+            return compañiaafiliados;
+        }
+
+        public bool CrearOrden(int companyid, List<CompanyAfiliadoRecarga> recargas)
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                //ENTIDAD Order                   
+                var Order = new Order()
+                {
+                    id = OrderID(),
+                    companyid = companyid,
+                    totalamount = 600,
+                    paymenttype = "1",
+                    creationdate = DateTime.Now,
+                    creationuserid = (int)HttpContext.Current.Session["userid"],
+                    processdate = DateTime.Now,
+                    status = "N"
+                };
+                db.Orders.Add(Order);
+                var OrderDetail = new OrdersDetail();
+                int idbase = OrderDetailID();
+                foreach (CompanyAfiliadoRecarga b in recargas)
+                {
+                    idbase = idbase + 1;
+                    //ENTIDAD OrderDetail    
+                    OrderDetail = new OrdersDetail()
+                    {
+                        id = idbase,
+                        orderid = Order.id,
+                        customerid = b.Afiliadoid,
+                        amount = b.MontoRecarga,
+                        status = "N"
+                    };
+                    db.OrdersDetails.Add(OrderDetail);
+                    OrderDetail = null;
+                }
+                db.SaveChanges();
+                return true;
+            }   
         }
 
         public bool Save(Company company)
