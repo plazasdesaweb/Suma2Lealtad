@@ -1,7 +1,7 @@
 ﻿@model Suma2Lealtad.Models.PrepagoCompanyAffiliattes
 
 @{
-    ViewBag.Title = "Beneficiarios";
+    ViewBag.Title = "Ordenes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -64,16 +64,16 @@
                     <br />
                 </div>
 
-                <div class="col-md-12 col-tabla-btn">
+                @*<div class="col-md-12 col-tabla-btn">
                     <div class="pull-right">
-                        <a href="@Url.Action("Ordenes", "CompanyPrepago", new { companyid = Model.companyid })" class="btn btn-success btn-md">Órdenes de Recarga</a>
+                        <a href="@Url.Action("", "")" class="btn btn-success btn-md">Órdenes de Recarga</a>
                         <a href="@Url.Action("Recargas", "CompanyPrepago", new { companyid = Model.companyid })" class="btn btn-success btn-md">Recarga Individual</a>
                         <a href="@Url.Action("", "")" class="btn btn-success btn-md">Recarga Masiva</a>
                         <a href="@Url.Action("Filter", "CompanyPrepago", new { companyid = Model.companyid })" class="btn btn-success btn-md">Agregar Nuevo Beneficiario</a>
                         <a href="@Url.Action("FilterBeneficiarios", "CompanyPrepago", new { companyid = Model.companyid })" class="btn btn-success btn-md">Filtrar Beneficiarios</a>
                         <a href="@Url.Action("FilterCompany", "CompanyPrepago")" class="btn btn-danger btn-md">Cancelar</a>
                     </div>
-                </div>
+                </div>*@
 
             </div>
 
@@ -82,43 +82,45 @@
             </div>
 
             @*<table class="table table-striped custab">*@
-            <table id="beneficiarios" class="table table-hover">
+            <table id="Ordenes" class="table table-hover">
 
                 <thead>
                     <tr>
-                        <th>Tipo</th>
-                        <th>Número de Documento</th>
-                        <th>Nombre</th>
-                        <th>Correo</th>
-                        <th>Estatus de Afiliación</th>
-                        <th>Número de Tarjeta</th>
-                        <th>Estatus de Tarjeta</th>
+                        <th>id</th>
+                        <th>creationdate</th>
+                        <th>status</th>
+                        <th>totalamount</th>
                         <th class="text-center"></th>
                     </tr>
                 </thead>
 
                 <tbody>
 
-                    @foreach (var item in Model.Beneficiarios)
+                    @foreach (var item in Model.Ordenes)
                     {                            
-                        <tr data-row-key="@item.id" data-statusafiliacion="@item.estatus" data-statustarjeta="@item.estatustarjeta">
+                        <tr data-row-key="@item.id" >
+
                             <td>
-                                @Html.DisplayFor(modelItem => item.type)
+                                @Html.DisplayFor(modelItem => item.id)
                             </td>
 
                             <td>
-                                @Html.DisplayFor(modelItem => item.docnumber)
+                                @Html.DisplayFor(modelItem => item.creationdate)
                             </td>
 
                             <td>
+                                @Html.DisplayFor(modelItem => item.status)
+                            </td>
+
+                            @*<td>
                                 @Html.DisplayFor(modelItem => item.name) @Html.DisplayFor(modelItem => item.lastname1)
-                            </td>
+                            </td>*@
 
                             <td>
-                                @Html.DisplayFor(modelItem => item.email)
+                                @Html.DisplayFor(modelItem => item.totalamount)
                             </td>
 
-                            <td>
+                            @*<td>
                                 @Html.DisplayFor(modelItem => item.estatus)
                             </td>
 
@@ -128,19 +130,19 @@
 
                             <td>
                                 @Html.DisplayFor(modelItem => item.estatustarjeta)
-                            </td>
+                            </td>*@
 
                             <td class="text-right">
-                                @{if (item.estatus == "Nueva")
+                                @{if (item.status == "N")
                                   {
-                                    <a id="@(item.id)_approve" href="@Url.Action("AprobarBeneficiario", "CompanyPrepago", new { id = item.id })" class="btn btn-success btn-xs" >
+                                    <a id="@(item.id)_approve" href="@Url.Action("ProcesarOrden", "CompanyPrepago", new {companyid = Model.companyid, id = item.id })" class="btn btn-success btn-xs" >
                                         <span class="glyphicon glyphicon-ok"></span>
                                     </a>
                                   }
                                 }
-                                <a id="@(item.id)_edit" href="@Url.Action("EditBeneficiario", "CompanyPrepago", new { id = item.id })" class="btn btn-info btn-xs" >
+                                @*<a id="@(item.id)_edit" href="@Url.Action("EditBeneficiario", "CompanyPrepago", new { id = item.id })" class="btn btn-info btn-xs" >
                                     <span class="glyphicon glyphicon-edit"></span>
-                                </a>
+                                </a>*@
                             </td>
                         </tr>                 
                     }
@@ -149,7 +151,7 @@
             </table>
 
             <!-- SECCION PARA botones de operaciones -->
-            <div class="col-md-12 col-btn">
+            @*<div class="col-md-12 col-btn">
                 <div class="pull-left">
                     <a id="CrearPin" class="btn btn-success btn-md" role="button">Crear Pin</a>
                     <a id="CambiarPin" class="btn btn-success btn-md" role="button">Cambiar Pin</a>
@@ -164,10 +166,10 @@
                 <div class="pull-right">
                     <a href="@Url.Action("FilterBeneficiarios", "CompanyPrepago", new { companyid = Model.companyid })" class="btn btn-danger btn-md">Regresar</a>
                 </div>
-            </div>
+            </div>*@
 
             <script src="~/Scripts/jquery-2.1.3.min.js"></script>
-            <script>
+            @*<script>
                 $(document).ready(function () {
                     var rowId;
                     var colId;
@@ -300,7 +302,7 @@
                     href = href.replace("{params}", rowId);
                     window.location.href = href;
                 });
-            </script>
+            </script>*@
             <!-- SECCION PARA botones de operaciones -->
 
             @*<div class="col-md-12 col-tabla-btn">

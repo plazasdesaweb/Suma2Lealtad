@@ -1,7 +1,7 @@
 ﻿@model IList<Suma2Lealtad.Models.CompanyAfiliadoRecarga>
 
 @{
-    ViewBag.Title = "RecargaIndividual";
+    ViewBag.Title = "Recargas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -80,7 +80,7 @@
                 <br />
             </div>
 
-            <form id="commentForm" method="post" action="@Url.Action("RecargaIndividual", "CompanyPrepago")" class="form-horizontal" onsubmit="return verificarforma();">
+            <form id="commentForm" method="post" action="@Url.Action("Recargas", "CompanyPrepago")" class="form-horizontal" onsubmit="return verificarforma();">
 
                 @*<table class="table table-striped custab">*@
                 <table id="beneficiarios" class="table table-hover">
