@@ -1,9 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using LinqToExcel;
+using Newtonsoft.Json;
 using Suma2Lealtad.Modules;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Helpers;
 
@@ -25,7 +27,7 @@ namespace Suma2Lealtad.Models
         //private const string ID_ESTATUS_TARJETA_ACTIVA = "1";
         private const string ID_ESTATUS_TARJETA_SUSPENDIDA = "6";
         //private const string INITIAL_STRING_VALUE = "";
-        
+
         //determina si hubo excepción en llamada a servicio Cards
         private bool ExceptionServicioCards(string RespuestaServicioCards)
         {
@@ -42,7 +44,7 @@ namespace Suma2Lealtad.Models
                 }
             }
             catch
-            { 
+            {
                 return false;
             }
         }
@@ -65,7 +67,7 @@ namespace Suma2Lealtad.Models
             catch
             {
                 return false;
-            }            
+            }
         }
 
         public class customerInterest
@@ -153,7 +155,7 @@ namespace Suma2Lealtad.Models
                 return db.ESTADOS.OrderBy(u => u.DESCRIPC_ESTADO).ToList();
             }
         }
-        
+
         // retornar la lista de Ciudades asociadas al campo clave de la entidad Estado.
         public List<CIUDAD> GetCiudades(string id)
         {
@@ -164,7 +166,7 @@ namespace Suma2Lealtad.Models
                 return query.ToList(); //.ToArray();
             }
         }
-        
+
         // retornar la lista de Municipios asociadas al campo clave de la entidad Ciudad.
         public List<MUNICIPIO> GetMunicipios(string id)
         {
@@ -175,18 +177,18 @@ namespace Suma2Lealtad.Models
                 return query.ToList();
             }
         }
-        
+
         // retornar la lista de Parroquias asociadas al campo clave de la entidad Municipio.
         public List<PARROQUIA> GetParroquias(string id)
         {
             using (LealtadEntities db = new LealtadEntities())
             {
-                var query = db.PARROQUIAS.Where(a => a.MUNICIPIOS.Select(b => b.COD_MUNICIPIO).Contains(id)); 
+                var query = db.PARROQUIAS.Where(a => a.MUNICIPIOS.Select(b => b.COD_MUNICIPIO).Contains(id));
 
                 return query.ToList();
             }
         }
-        
+
         // retornar la lista de Urbanizaciones asociadas al campo clave de la entidad Parroquia.
         public List<URBANIZACION> GetUrbanizaciones(string id)
         {
@@ -196,7 +198,7 @@ namespace Suma2Lealtad.Models
 
                 return query.ToList();
             }
-        }      
+        }
         #endregion
 
         //retorna el ojeto Photos_Affiliate a partr del id del afiliado
@@ -276,7 +278,7 @@ namespace Suma2Lealtad.Models
                     afiliado.typeid = typeid;
                     afiliado.type = db.Types.FirstOrDefault(t => t.id == afiliado.typeid).name;
                     afiliado.companyid = companyid;
-                } 
+                }
                 else
                 {
                     //Esta en Suma, busco compañia asociada
@@ -316,7 +318,7 @@ namespace Suma2Lealtad.Models
                         //                    ).SingleOrDefault();
                         afiliado.estatus = db.Status.FirstOrDefault(s => s.id == afiliado.statusid).name;
                     }
-                }                                
+                }
             }
             return afiliado;
         }
@@ -528,7 +530,7 @@ namespace Suma2Lealtad.Models
                 //FILEYSTEM ~/Picture/@filename@.jpg
                 //afiliado.picture = AppModule.GetPathPicture().Replace("@filename@", afiliado.docnumber);
                 //ENTIDAD Photos_Affiliate 
-                afiliado.picture = GetPhoto(afiliado.id);                               
+                afiliado.picture = GetPhoto(afiliado.id);
                 //POR AHORA NO HAY COLUMNA EN NINGUNA ENTIDAD PARA ALMACENAR ESTE DATO QUE VIENE DE LA WEB
                 if (afiliado.WebType == null)
                 {
@@ -537,7 +539,7 @@ namespace Suma2Lealtad.Models
                 return afiliado;
             }
         }
-        
+
         //actualiza los datos en WebPlazas
         private bool SaveWebPlazas(Afiliado afiliado)
         {
@@ -643,7 +645,7 @@ namespace Suma2Lealtad.Models
                 else
                 {
                     return false;
-                }                
+                }
                 //ENTIDAD CompanyAffiliate
                 var companyaffiliate = new CompanyAffiliate()
                 {
@@ -769,8 +771,8 @@ namespace Suma2Lealtad.Models
                 }
                 //Entidad: AffiliateAud 
                 int statusidactual = (from a in db.Affiliates
-                                       where a.id.Equals(afiliado.id)
-                                       select a.statusid
+                                      where a.id.Equals(afiliado.id)
+                                      select a.statusid
                                        ).SingleOrDefault();
                 //Solo inserto registros cuando hay cambio de estado de Afiliación
                 if (statusidactual != afiliado.statusid)
@@ -1049,5 +1051,38 @@ namespace Suma2Lealtad.Models
             }
         }
 
+
+        public List<Afiliado> GetBeneficiarios(string fichero)
+        {
+            //var excel = new Excel();
+            List<Afiliado> resultado = ToListaAfiliado(fichero);
+
+            foreach (var item in resultado)
+            {
+                //if (item.docnumber == null || item.Monto == null || Regex.IsMatch(item.docnumber, @"^[A-Za-z]*$") || Regex.IsMatch(item.Monto.ToString(), @"^[A-Za-z]*$"))
+
+                if (item.docnumber == null || Regex.IsMatch(item.docnumber, @"^[A-Za-z]*$") || Regex.IsMatch(item.Monto.ToString(), @"^[A-Za-z]*$"))
+                {
+                    return null;
+                }
+            }
+
+            return resultado.Where(r => r.Monto > 0).ToList();
+        }
+
+        private List<Afiliado> ToListaAfiliado(string pathDelFicheroExcel)
+        {
+            var book = new ExcelQueryFactory(pathDelFicheroExcel);
+            var resultado = (from row in book.Worksheet("Hoja1")
+                             let item = new Afiliado
+                             {
+                                 docnumber = row["Cedula"].Cast<string>(),
+                                 Monto = int.Parse(row["Monto"].Cast<string>())
+                             }
+                             select item).ToList();
+
+            book.Dispose();
+            return resultado.ToList();
+        }
     }
 }

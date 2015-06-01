@@ -308,5 +308,7 @@ namespace Suma2Lealtad.Models
         {
             throw new NotImplementedException();
         }
+
+
     }
 }

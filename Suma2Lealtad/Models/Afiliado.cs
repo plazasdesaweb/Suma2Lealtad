@@ -59,6 +59,7 @@ namespace Suma2Lealtad.Models
         public int companyid { get; set; }              // id de compañia a que se asocia el afiliado
         //Campos extras que no se almacenan en Entidades
         public string WebType { get; set; }             // Type de Afiliado en WEBPLAZAS
+        public int Monto { get; set; }    
 
         /* Excepciones */
         //public string exnumber { get; set; }
