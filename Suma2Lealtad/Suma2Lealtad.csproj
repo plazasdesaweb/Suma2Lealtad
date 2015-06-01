@@ -273,6 +273,7 @@
     <Compile Include="Models\CompanyAffiliate.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CompanyAfiliadoRecarga.cs" />
     <Compile Include="Models\CompanyRepository.cs" />
     <Compile Include="Models\CreditLimit.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
@@ -280,6 +281,7 @@
     <Compile Include="Models\CustomerInterest.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DetalleOrden.cs" />
     <Compile Include="Models\ESTADO.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -304,6 +306,7 @@
     <Compile Include="Models\Operation.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Orden.cs" />
     <Compile Include="Models\Order.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -638,6 +641,8 @@
     <Content Include="Views\Urbanizacion\FilterUrbanizacion.cshtml" />
     <Content Include="Views\CompanyPrepago\RecargaIndividual.cshtml" />
     <Content Include="Views\CompanyPrepago\RecargaMasiva.cshtml" />
+    <Content Include="Views\CompanyPrepago\Recargas.cshtml" />
+    <Content Include="Views\CompanyPrepago\Ordenes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

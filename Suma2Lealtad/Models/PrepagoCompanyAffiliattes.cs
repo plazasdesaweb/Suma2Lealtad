@@ -15,7 +15,7 @@ namespace Suma2Lealtad.Models
         public string phone { get; set; }           
         public string email { get; set; }
         public List<Afiliado> Beneficiarios { set; get; }
-        public List<Order> Ordenes { set; get; }
+        public List<Orden> Ordenes { set; get; }
     }
 
 }
