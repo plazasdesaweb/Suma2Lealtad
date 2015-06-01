@@ -13,7 +13,7 @@ namespace Suma2Lealtad.Models
         public string rif { get; set; }             
         public string address { get; set; }         
         public string phone { get; set; }           
-        public string email { get; set; }           
+        public string email { get; set; }
         public List<Afiliado> Beneficiarios { set; get; }
         public List<Orden> Ordenes { set; get; }
     }

@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 
 namespace Suma2Lealtad.Controllers
 {
@@ -601,27 +602,60 @@ namespace Suma2Lealtad.Controllers
             return View(compañiaBeneficiarios);
         }
 
-        public ActionResult ProcesarOrden(int companyid, int id)
+        [HttpPost]
+        public ActionResult RecargaMasiva(PrepagoCompanyAffiliattes model)
         {
-            ViewModel viewmodel = new ViewModel();            
-            if (rep.ProcesarOrden(id))
+
+            if (System.IO.File.Exists(model.alias))
             {
-                viewmodel.Title = "Prepago / Beneficiario / Ordenes de Recarga / Procesar Orden";
-                viewmodel.Message = "Orden Procesada. Recarga efectiva.";
-                viewmodel.ControllerName = "CompanyPrepago";
-                viewmodel.ActionName = "Ordenes";
-                viewmodel.RouteValues = companyid.ToString();
+                List<Afiliado> ListaRecargaAfiliado = repAfiliado.GetBeneficiarios(model.alias);
+
+                if (ListaRecargaAfiliado == null)
+                {
+                    return View(viewmodel);
+                }
+                else
+                {
+
+                    PrepagoCompanyAffiliattes compañiaBeneficiarios = rep.Find(model.companyid);
+                    compañiaBeneficiarios.Beneficiarios = compañiaBeneficiarios.Beneficiarios.FindAll(m => m.estatus.Equals("Activa"));
+
+                    foreach (var item in compañiaBeneficiarios.Beneficiarios)
+                    {
+
+                        foreach (var item2 in ListaRecargaAfiliado)
+                        {
+
+                            if (item.docnumber == item2.docnumber)
+                            {
+                                item.Monto = item2.Monto;
+                                break;
+                            }
+
+                        }
+
+                    }
+
+                    foreach (var item in compañiaBeneficiarios.Beneficiarios.Where(a => a.Monto > 0))
+                    {
+                        return redirectToAction("RecargaIndividual", "compañiaBeneficiarios.Beneficiarios.Where(a => a.Monto > 0)");
+                        //return View(compañiaBeneficiarios.Beneficiarios.Where(a => a.Monto > 0));
+                    }
+
+                }
+
             }
-            else
-            {
-                viewmodel.Title = "Prepago / Beneficiario / Ordenes de Recarga / Procesar Orden";
-                viewmodel.Message = "Orden procesada con errores, verifique.";
-                viewmodel.ControllerName = "CompanyPrepago";
-                viewmodel.ActionName = "Ordenes";
-                viewmodel.RouteValues = companyid.ToString();
-            }
-            return RedirectToAction("GenericView", viewmodel);
+            return View();
         }
+
+        public ActionResult RecargaMasiva(int companyid)
+        {
+            PrepagoCompanyAffiliattes compañiaBeneficiarios = rep.Find(companyid);
+            compañiaBeneficiarios.Beneficiarios = compañiaBeneficiarios.Beneficiarios.FindAll(m => m.estatus.Equals("Activa"));
+            return View(compañiaBeneficiarios);
+        }
+
+
 
         public ActionResult GenericView(ViewModel viewmodel)
         {
@@ -633,5 +667,12 @@ namespace Suma2Lealtad.Controllers
             base.Dispose(disposing);
         }
 
+        private ActionResult redirectToAction(string p1, string p2)
+        {
+            throw new System.NotImplementedException();
+        }
+
+
+        public IView viewmodel { get; set; }
     }
 }
