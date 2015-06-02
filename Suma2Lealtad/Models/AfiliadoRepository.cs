@@ -3,11 +3,13 @@ using Newtonsoft.Json;
 using Suma2Lealtad.Modules;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Helpers;
+using System.Web.Mvc;
 
 namespace Suma2Lealtad.Models
 {
@@ -1054,35 +1056,49 @@ namespace Suma2Lealtad.Models
 
         public List<Afiliado> GetBeneficiarios(string fichero)
         {
-            //var excel = new Excel();
             List<Afiliado> resultado = ToListaAfiliado(fichero);
 
-            foreach (var item in resultado)
+            if (resultado != null)
             {
-                //if (item.docnumber == null || item.Monto == null || Regex.IsMatch(item.docnumber, @"^[A-Za-z]*$") || Regex.IsMatch(item.Monto.ToString(), @"^[A-Za-z]*$"))
-
-                if (item.docnumber == null || Regex.IsMatch(item.docnumber, @"^[A-Za-z]*$") || Regex.IsMatch(item.Monto.ToString(), @"^[A-Za-z]*$"))
+                foreach (var item in resultado)
+            {
+                if (item.docnumber == null || Regex.IsMatch(item.docnumber, @"^[JGVE][-][0-9]{8}[-][0-9]$") || Regex.IsMatch(item.Monto.ToString(), @"^[JGVE][-][0-9]{8}[-][0-9]$"))
                 {
                     return null;
                 }
             }
 
             return resultado.Where(r => r.Monto > 0).ToList();
+            }
+
+            return null;
+
         }
 
         private List<Afiliado> ToListaAfiliado(string pathDelFicheroExcel)
         {
-            var book = new ExcelQueryFactory(pathDelFicheroExcel);
-            var resultado = (from row in book.Worksheet("Hoja1")
-                             let item = new Afiliado
-                             {
-                                 docnumber = row["Cedula"].Cast<string>(),
-                                 Monto = int.Parse(row["Monto"].Cast<string>())
-                             }
-                             select item).ToList();
 
-            book.Dispose();
-            return resultado.ToList();
-        }
+            //Filter:("*.xls;*.xlsx)|*.xls;*.xlsx"); //le indicamos el tipo de filtro en este caso que busque solo los archivos excel
+
+            try {
+
+                var book = new ExcelQueryFactory(pathDelFicheroExcel);
+                var resultado = (from row in book.Worksheet("Hoja1")
+                                 let item = new Afiliado
+                                 {
+                                     docnumber = row["Cedula"].Cast<string>(),
+                                     Monto = int.Parse(row["Monto"].Cast<string>())
+                                 }
+                                 select item).ToList();
+
+                book.Dispose();
+                return resultado.ToList();
+            
+            }catch (Exception dbEx)
+                {
+                    return null;
+                }
+         }
+
     }
 }

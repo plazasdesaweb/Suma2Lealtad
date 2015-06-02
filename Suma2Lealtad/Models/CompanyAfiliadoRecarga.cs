@@ -22,5 +22,6 @@ namespace Suma2Lealtad.Models
         public int statusid { get; set; }
         public string estatus { get; set; }
         public int MontoRecarga { get; set; }
+        public string TipoRecarga { get; set; }
     }
 }

@@ -1,13 +1,10 @@
-﻿@model Suma2Lealtad.Models.PrepagoCompanyAffiliattes
-
+﻿@model IList<Suma2Lealtad.Models.CompanyAfiliadoRecarga>
 @{
     ViewBag.Title = "RecargaMasiva";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*<link href="css/bootstrap.css" rel="stylesheet">*@
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
-@*<link href="css/style.css" rel="stylesheet">*@
 <link href="~/Content/style.css" rel="stylesheet" />
 
 <style type="text/css" media="screen">
@@ -16,7 +13,7 @@
     }
 
     .table tbody tr.active td {
-        background-color: #1C2B2B; /*#476B6B #29A329;*/
+        background-color: #1C2B2B;
         color: white;
     }
 </style>
@@ -27,38 +24,36 @@
     <div class="panel panel-default">
 
         <div class="panel-heading clearfix panel-gradient">
-            @*<h3 class="panel-title">Afiliado  @Model.DocId / Saldos <a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.DocId })" class="btn btn-success btn-md">Regresar</a></h3>*@
-            <h3 class="panel-title">Prepago / Compañia / Beneficiarios / Recarga Masiva</h3>
-            @*<input type="submit" class="btn btn-success btn-md" value="Regresar" style="padding-right: 15px; padding-left: 15px; margin-left: 0px;" />*@
+            <h3 class="panel-title">Prepago / Compañia / Beneficiarios / Recargas</h3>
         </div>
 
         <div class="panel-body">
 
-            <form id="commentForm" method="post" action="@Url.Action("RecargaMasiva", "CompanyPrepago")" class="form-horizontal">
+            <form id="commentForm" method="post" action="@Url.Action("RecargaMasiva", "CompanyPrepago", new { companyid = Model[0].companyid})" class="form-horizontal">
 
                 <div class="form-group">
 
-                    @Html.HiddenFor(model => model.companyid)
+                    @Html.HiddenFor(model => model[0].companyid)
 
                     <div class="editor-label col-md-4 control-label">
                         Compañia :
                     </div>
 
                     <div class="editor-field col-md-6">
-                        @Html.TextBoxFor(model => model.namecompañia, new { @class = "form-control", @readonly = "true" })
+                        @Html.TextBoxFor(model => model[0].namecompañia, new { @class = "form-control", @readonly = "true" })
                     </div>
 
                     <div class="editor-label col-md-4 control-label">
                         RIF :
                     </div>
                     <div class="editor-form col-md-6">
-                        @Html.TextBoxFor(model => model.rif, new { @class = "form-control", @readonly = "true" })
+                        @Html.TextBoxFor(model => model[0].rif, new { @class = "form-control", @readonly = "true" })
                     </div>
                     <div class="editor-label col-md-4 control-label">
                         Teléfono :
                     </div>
                     <div class="editor-form col-md-6">
-                        @Html.TextBoxFor(model => model.phone, new { @class = "form-control", @readonly = "true" })
+                        @Html.TextBoxFor(model => model[0].phone, new { @class = "form-control", @readonly = "true" })
                     </div>
 
                     <div class="editor-field col-md-4">
@@ -69,20 +64,13 @@
                         <input type="file" class="filestyle" data-badge="true" name="alias">
                     </div>
 
-                    @*<div class="editor-form col-md-6 control-label">
-                        @Html.TextBoxFor(model => model.alias, new { @class = "form-control"})
-                        @Html.ValidationMessageFor(model => model.alias)
-                    </div>*@
-
-            </form>
-
-        
+            </form>        
 
         <!-- SECCION PARA botones de operaciones -->
         <div class="col-md-12 col-tabla-btn">
             <div class="pull-right">
                 <input type="submit" class="btn btn-success btn-md" value="Procesar" />
-                <a href="@Url.Action("FilterBeneficiarios", "CompanyPrepago", new { companyid = Model.companyid })" class="btn btn-danger btn-md">Regresar</a>
+                <a href="@Url.Action("FilterBeneficiarios", "CompanyPrepago", new { companyid = Model[0].companyid })" class="btn btn-danger btn-md">Regresar</a>
             </div>
         </div>
 
@@ -130,8 +118,6 @@
 
 </div>
 <!-- panel -->
-
-</div>
 
 
 
