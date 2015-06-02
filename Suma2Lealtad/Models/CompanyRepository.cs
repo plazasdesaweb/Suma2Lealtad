@@ -309,6 +309,86 @@ namespace Suma2Lealtad.Models
             return compañiaafiliados;
         }
 
+        public List<CompanyAfiliadoRecarga> FindRecarga(int companyid, string numdoc, string name, string email)
+        {
+            if (name == "")
+            {
+                name = null;
+            }
+            if (email == "")
+            {
+                email = null;
+            }
+            List<CompanyAfiliadoRecarga> compañiaafiliados = new List<CompanyAfiliadoRecarga>();
+            PrepagoCompanyAffiliattes ca = new PrepagoCompanyAffiliattes();
+            ca = Find(companyid);
+            if (name == null && email == null)
+            {
+                foreach (Afiliado afiliado in ca.Beneficiarios)
+                {
+                    if (afiliado.docnumber == numdoc)
+                    {
+                        CompanyAfiliadoRecarga temp = new CompanyAfiliadoRecarga();
+                        temp.companyid = ca.companyid;
+                        temp.namecompañia = ca.namecompañia;
+                        temp.rif = ca.rif;
+                        temp.phone = ca.phone;
+                        temp.address = ca.phone;
+                        temp.email = ca.email;
+                        temp.Afiliadoid = afiliado.id;
+                        temp.docnumber = afiliado.docnumber;
+                        temp.name = afiliado.name;
+                        temp.lastname1 = afiliado.lastname1;
+                        temp.typeid = afiliado.typeid;
+                        temp.type = afiliado.type;
+                        temp.statusid = afiliado.statusid;
+                        temp.estatus = afiliado.estatus;
+                        compañiaafiliados.Add(temp);
+                        temp = null;
+                    }
+                }
+            }
+            else
+            {
+                foreach (Afiliado afiliado in ca.Beneficiarios)
+                {
+                    if (afiliado.name.ToLower().Contains(name.ToLower()) || afiliado.lastname1.ToLower().Contains(name.ToLower()) || afiliado.email == email)
+                    {
+                        CompanyAfiliadoRecarga temp = new CompanyAfiliadoRecarga();
+                        temp.companyid = ca.companyid;
+                        temp.namecompañia = ca.namecompañia;
+                        temp.rif = ca.rif;
+                        temp.phone = ca.phone;
+                        temp.address = ca.phone;
+                        temp.email = ca.email;
+                        temp.Afiliadoid = afiliado.id;
+                        temp.docnumber = afiliado.docnumber;
+                        temp.name = afiliado.name;
+                        temp.lastname1 = afiliado.lastname1;
+                        temp.typeid = afiliado.typeid;
+                        temp.type = afiliado.type;
+                        temp.statusid = afiliado.statusid;
+                        temp.estatus = afiliado.estatus;
+                        compañiaafiliados.Add(temp);
+                        temp = null;
+                    }
+                }
+            }
+            if (compañiaafiliados.Count == 0)
+            {
+                CompanyAfiliadoRecarga temp = new CompanyAfiliadoRecarga();
+                temp.companyid = ca.companyid;
+                temp.namecompañia = ca.namecompañia;
+                temp.rif = ca.rif;
+                temp.phone = ca.phone;
+                temp.address = ca.phone;
+                temp.email = ca.email;
+                temp.estatus = "Activa";
+                compañiaafiliados.Add(temp);
+            }
+            return compañiaafiliados;
+        }
+
         public bool CrearOrden(int companyid, decimal MontoTotalRecargas, List<CompanyAfiliadoRecarga> recargas)
         {
             using (LealtadEntities db = new LealtadEntities())
@@ -509,12 +589,10 @@ namespace Suma2Lealtad.Models
             }
         }
 
-
-        internal PrepagoCompanyAffiliattes Find()
-        {
-            throw new NotImplementedException();
-        }
-
+        //internal PrepagoCompanyAffiliattes Find()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
     }
 }

@@ -28,7 +28,7 @@
 
         <div class="panel-heading clearfix panel-gradient">
             @*<h3 class="panel-title">Afiliado  @Model.DocId / Saldos <a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.DocId })" class="btn btn-success btn-md">Regresar</a></h3>*@
-            <h3 class="panel-title">Prepago / Compañia / Beneficiarios / Recarga Individual</h3>
+            <h3 class="panel-title">Prepago / Compañia / Beneficiarios / Recargas</h3>
             @*<input type="submit" class="btn btn-success btn-md" value="Regresar" style="padding-right: 15px; padding-left: 15px; margin-left: 0px;" />*@
         </div>
 
@@ -65,22 +65,23 @@
                 <br />
             </div>
 
-            <div class="col-md-12 col-tabla-btn">
-                <div class="pull-right">
-                    @*<a href="@Url.Action("", "")" class="btn btn-success btn-md">Órdenes de Recarga</a>
+            <form id="commentForm" method="post" action="@Url.Action("Recargas", "CompanyPrepago")" class="form-horizontal" onsubmit="return verificarforma();">
+
+                <div class="col-md-12 col-tabla-btn">
+                    <div class="pull-right">
+                        @*<a href="@Url.Action("", "")" class="btn btn-success btn-md">Órdenes de Recarga</a>
                         <a href="@Url.Action("", "")" class="btn btn-success btn-md">Recarga Individual</a>
                         <a href="@Url.Action("", "")" class="btn btn-success btn-md">Recarga Masiva</a>
                         <a href="@Url.Action("Filter", "CompanyPrepago", new { companyid = Model.companyid })" class="btn btn-success btn-md">Agregar Nuevo Beneficiario</a>*@
-                    <a href="@Url.Action("FilterBeneficiarios", "CompanyPrepago", new { companyid = Model.FirstOrDefault().companyid })" class="btn btn-success btn-md">Filtrar Beneficiarios</a>
-                    <a href="@Url.Action("FilterCompany", "CompanyPrepago")" class="btn btn-danger btn-md">Cancelar</a>
+                        <a href="@Url.Action("FilterBeneficiariosRecargas", "CompanyPrepago", new { companyid = Model.FirstOrDefault().companyid })" class="btn btn-success btn-md">Filtrar Beneficiarios</a>
+                        @*<a href="@Url.Action("FilterCompany", "CompanyPrepago")" class="btn btn-danger btn-md">Cancelar</a>*@
+                        <a href="@Url.Action("Index", "CompanyPrepago", new { rif = Model.FirstOrDefault().rif })" class="btn btn-danger btn-md">Regresar</a>
+                    </div>
                 </div>
-            </div>
 
-            <div class="editor-field col-md-6">
-                <br />
-            </div>
-
-            <form id="commentForm" method="post" action="@Url.Action("Recargas", "CompanyPrepago")" class="form-horizontal" onsubmit="return verificarforma();">
+                <div class="editor-field col-md-6">
+                    <br />
+                </div>
 
                 @*<table class="table table-striped custab">*@
                 <table id="beneficiarios" class="table table-hover">
@@ -105,10 +106,10 @@
                         @for (int i = 0; i < Model.Count; i++)
                         {     
                             <tr data-row-key="@Model[i].Afiliadoid">
-                                
+
                                 @Html.HiddenFor(modelItem => Model[i].companyid)
                                 @Html.HiddenFor(modelItem => Model[i].Afiliadoid)
-                                
+
                                 <td>
                                     @Html.DisplayFor(modelItem => Model[i].type, new { @class = "form-control" })
                                 </td>
@@ -181,10 +182,11 @@
                 </div>
 
                 <!-- SECCION PARA botones de operaciones -->
+
                 <div class="col-md-12 col-tabla-btn">
                     <div class="pull-right">
                         <input type="submit" class="btn btn-success btn-md" value="Procesar" />
-                        <a href="@Url.Action("FilterBeneficiarios", "CompanyPrepago", new { companyid = Model.FirstOrDefault().companyid })" class="btn btn-danger btn-md">Regresar</a>
+                        @*<a href="@Url.Action("FilterBeneficiarios", "CompanyPrepago", new { companyid = Model.FirstOrDefault().companyid })" class="btn btn-danger btn-md">Regresar</a>*@
                     </div>
                 </div>
 
