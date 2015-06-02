@@ -548,14 +548,6 @@ namespace Suma2Lealtad.Controllers
             return View("Recargas", compañiaBeneficiarios);
         }
 
-        public ActionResult Ordenes(int id)
-        {
-            PrepagoCompanyAffiliattes compañiaBeneficiarios = rep.Find(id);
-            List<Orden> ordenes = rep.BuscarOrdenes(id);
-            compañiaBeneficiarios.Ordenes = ordenes;
-            return View(compañiaBeneficiarios);
-        }
-
         public ActionResult Recargas(int id)
         {
             List<CompanyAfiliadoRecarga> compañiaBeneficiarios = rep.FindRecarga(id);
@@ -644,26 +636,86 @@ namespace Suma2Lealtad.Controllers
             return View();
         }
 
-        public ActionResult ProcesarOrden(int companyid, int id)
+        public ActionResult Ordenes(int id)
+        {
+            PrepagoCompanyAffiliattes compañiaBeneficiarios = rep.Find(id);
+            List<Orden> ordenes = rep.BuscarOrdenes(id);
+            compañiaBeneficiarios.Ordenes = ordenes;
+            return View(compañiaBeneficiarios);
+        }
+
+        public ActionResult DetalleOrden(int companyid, int id)
+        {
+            List<CompanyAfiliadoRecarga> compañiaBeneficiarios = rep.FindRecargaDetalle(companyid, id);
+            return View(compañiaBeneficiarios);
+        }
+
+        public ActionResult AprobarOrden(int companyid, int id)
         {
             ViewModel viewmodel = new ViewModel();
-            if (rep.ProcesarOrden(id))
+            if (rep.AprobarOrden(id))
             {
-                viewmodel.Title = "Prepago / Beneficiario / Ordenes de Recarga / Procesar Orden";
-                viewmodel.Message = "Orden Procesada. Recarga efectiva.";
+                viewmodel.Title = "Prepago / Beneficiario / Ordenes de Recarga / Aprobar Orden";
+                viewmodel.Message = "Orden Aprobada.";
                 viewmodel.ControllerName = "CompanyPrepago";
                 viewmodel.ActionName = "Ordenes";
                 viewmodel.RouteValues = companyid.ToString();
             }
             else
             {
-                viewmodel.Title = "Prepago / Beneficiario / Ordenes de Recarga / Procesar Orden";
-                viewmodel.Message = "Orden procesada con errores, verifique.";
+                viewmodel.Title = "Prepago / Beneficiario / Ordenes de Recarga / Aprobar Orden";
+                viewmodel.Message = "No se pudo Aprobar Orden.";
                 viewmodel.ControllerName = "CompanyPrepago";
                 viewmodel.ActionName = "Ordenes";
                 viewmodel.RouteValues = companyid.ToString();
             }
             return RedirectToAction("GenericView", viewmodel);
+        }
+
+        public ActionResult RechazarOrden(int companyid, int id)
+        {
+            ViewModel viewmodel = new ViewModel();
+            if (rep.RechazarOrden(id))
+            {
+                viewmodel.Title = "Prepago / Beneficiario / Ordenes de Recarga / Rechazar Orden";
+                viewmodel.Message = "Orden Rechazada.";
+                viewmodel.ControllerName = "CompanyPrepago";
+                viewmodel.ActionName = "Ordenes";
+                viewmodel.RouteValues = companyid.ToString();
+            }
+            else
+            {
+                viewmodel.Title = "Prepago / Beneficiario / Ordenes de Recarga / Rechazar Orden";
+                viewmodel.Message = "No se pudo Rechazar Orden.";
+                viewmodel.ControllerName = "CompanyPrepago";
+                viewmodel.ActionName = "Ordenes";
+                viewmodel.RouteValues = companyid.ToString();
+            }
+            return RedirectToAction("GenericView", viewmodel);
+        }
+
+        public ActionResult ProcesarOrden(int companyid, int id)
+        {
+            if (rep.ProcesarOrden(id))
+            {
+                List<CompanyAfiliadoRecarga> compañiaBeneficiarios = rep.FindRecargaProcesada(companyid,id);
+                //viewmodel.Title = "Prepago / Beneficiario / Ordenes de Recarga / Procesar Orden";
+                //viewmodel.Message = "Orden Procesada. Recarga efectiva.";
+                //viewmodel.ControllerName = "CompanyPrepago";
+                //viewmodel.ActionName = "Ordenes";
+                //viewmodel.RouteValues = companyid.ToString();
+                return View("ResultadoOrden", compañiaBeneficiarios) ;
+            }
+            else
+            {
+                ViewModel viewmodel = new ViewModel();            
+                viewmodel.Title = "Prepago / Beneficiario / Ordenes de Recarga / Procesar Orden";
+                viewmodel.Message = "No se pudo procesar la Orden.";
+                viewmodel.ControllerName = "CompanyPrepago";
+                viewmodel.ActionName = "Ordenes";
+                viewmodel.RouteValues = companyid.ToString();
+                return RedirectToAction("GenericView", viewmodel);
+            }            
         }
 
         public ActionResult GenericView(ViewModel viewmodel)

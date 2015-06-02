@@ -389,6 +389,96 @@ namespace Suma2Lealtad.Models
             return compañiaafiliados;
         }
 
+        //busca el detalle de una orden para procesar
+        public List<CompanyAfiliadoRecarga> FindRecargaDetalle(int companyid, int id)
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                List<CompanyAfiliadoRecarga> compañiaafiliados = new List<CompanyAfiliadoRecarga>();
+                PrepagoCompanyAffiliattes ca = new PrepagoCompanyAffiliattes();
+                ca = Find(companyid);
+                decimal montorecarga;
+                foreach (Afiliado afiliado in ca.Beneficiarios)
+                {
+                    CompanyAfiliadoRecarga temp = new CompanyAfiliadoRecarga();
+                    montorecarga = (from o in db.OrdersDetails
+                                    where o.customerid.Equals(afiliado.id) && o.orderid.Equals(id)
+                                    select o.amount
+                                    ).FirstOrDefault();
+                    if (montorecarga != 0)
+                    {
+                        temp.companyid = ca.companyid;
+                        temp.namecompañia = ca.namecompañia;
+                        temp.rif = ca.rif;
+                        temp.phone = ca.phone;
+                        temp.address = ca.phone;
+                        temp.email = ca.email;
+                        temp.Afiliadoid = afiliado.id;
+                        temp.docnumber = afiliado.docnumber;
+                        temp.name = afiliado.name;
+                        temp.lastname1 = afiliado.lastname1;
+                        temp.typeid = afiliado.typeid;
+                        temp.type = afiliado.type;
+                        temp.statusid = afiliado.statusid;
+                        temp.estatus = afiliado.estatus;
+                        temp.Orderid = id;
+                        temp.Orderstatus = db.Orders.Find(id).status;
+                        temp.MontoRecarga = Math.Truncate(montorecarga);
+                        compañiaafiliados.Add(temp);
+                        temp = null;
+                    }
+                }
+                return compañiaafiliados;
+            }
+        }
+
+        //Busca el resultado de una orden de recarga
+        public List<CompanyAfiliadoRecarga> FindRecargaProcesada(int companyid, int id)
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                List<CompanyAfiliadoRecarga> compañiaafiliados = new List<CompanyAfiliadoRecarga>();
+                PrepagoCompanyAffiliattes ca = new PrepagoCompanyAffiliattes();
+                ca = Find(companyid);
+                decimal montorecarga;
+                string resultadorecarga;
+                foreach (Afiliado afiliado in ca.Beneficiarios)
+                {
+                    CompanyAfiliadoRecarga temp = new CompanyAfiliadoRecarga();
+                    montorecarga = (from o in db.OrdersDetails
+                                    where o.customerid.Equals(afiliado.id) && o.orderid.Equals(id)
+                                    select o.amount
+                                    ).FirstOrDefault();
+                    resultadorecarga = (from o in db.OrdersDetails
+                                        where o.customerid.Equals(afiliado.id) && o.orderid.Equals(id)
+                                        select o.comments
+                                        ).FirstOrDefault();
+                    if (montorecarga != null && resultadorecarga != null)
+                    {
+                        temp.companyid = ca.companyid;
+                        temp.namecompañia = ca.namecompañia;
+                        temp.rif = ca.rif;
+                        temp.phone = ca.phone;
+                        temp.address = ca.phone;
+                        temp.email = ca.email;
+                        temp.Afiliadoid = afiliado.id;
+                        temp.docnumber = afiliado.docnumber;
+                        temp.name = afiliado.name;
+                        temp.lastname1 = afiliado.lastname1;
+                        temp.typeid = afiliado.typeid;
+                        temp.type = afiliado.type;
+                        temp.statusid = afiliado.statusid;
+                        temp.estatus = afiliado.estatus;                   
+                        temp.MontoRecarga = montorecarga;
+                        temp.ResultadoRecarga = resultadorecarga;
+                        compañiaafiliados.Add(temp);
+                        temp = null;
+                    }
+                }
+                return compañiaafiliados;
+            }
+        }
+
         public bool CrearOrden(int companyid, decimal MontoTotalRecargas, List<CompanyAfiliadoRecarga> recargas)
         {
             using (LealtadEntities db = new LealtadEntities())
@@ -485,12 +575,36 @@ namespace Suma2Lealtad.Models
             }
         }
 
+        public bool AprobarOrden(int orderid)
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {             
+                Order orden = db.Orders.FirstOrDefault(o => o.id.Equals(orderid));
+                orden.status = "A"; // A = Orden Aprobada
+                orden.processdate = DateTime.Now;
+                db.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool RechazarOrden(int orderid)
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                Order orden = db.Orders.FirstOrDefault(o => o.id.Equals(orderid));
+                orden.status = "R"; // A = Orden Rechazada
+                orden.processdate = DateTime.Now;
+                db.SaveChanges();
+                return true;
+            }
+        }
+
         public bool ProcesarOrden(int orderid)
         {
             List<DetalleOrden> detalleorden = BuscarDetalleOrden(orderid);
             string docnumber;
             decimal amount;
-            bool resultado = true;
+            //bool resultado = true;
             using (LealtadEntities db = new LealtadEntities())
             {
                 foreach (DetalleOrden o in detalleorden)
@@ -505,7 +619,7 @@ namespace Suma2Lealtad.Models
                     else
                     {
                         o.status = "F";
-                        resultado = false;
+                        //resultado = false;
                     }
                     OrdersDetail d = db.OrdersDetails.FirstOrDefault(x => x.id.Equals(o.id));
                     d.status = o.status;
@@ -513,10 +627,11 @@ namespace Suma2Lealtad.Models
                     db.SaveChanges();
                 }
                 Order orden = db.Orders.FirstOrDefault(o => o.id.Equals(orderid));
-                orden.status = "E";
+                orden.status = "E"; // E = Orden Efectiva - Procesada
                 orden.processdate = DateTime.Now;
                 db.SaveChanges();
-                return resultado;
+                //return resultado;
+                return true;
             }
         }
 
