@@ -176,13 +176,6 @@ namespace Suma2Lealtad.Controllers
             return View(compañiaBeneficiarios);
         }
 
-        //[HttpPost]
-        //public ActionResult CargarBeneficiarios(int companyid)
-        //{
-        //    PrepagoCompanyAffiliattes compañiaBeneficiarios = rep.Find(companyid);
-        //    return View("Beneficiarios",compañiaBeneficiarios);
-        //}
-
         public ActionResult Filter(int companyid)
         {
             Afiliado afiliado = new Afiliado();
@@ -507,27 +500,6 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult SaldosMovimientos(int id)
         {
-            //Afiliado afiliado = repAfiliado.Find(id);
-            //SaldosMovimientos SaldosMovimientos = repAfiliado.FindSaldosMovimientos(afiliado);
-            //if (SaldosMovimientos == null)
-            //{
-            //    //ERROR EN METODO FIND
-            //    ViewModel viewmodel = new ViewModel();
-            //    viewmodel.Title = "Prepago / Beneficiario / Saldos y Movimientos";
-            //    viewmodel.Message = "Ha ocurrido un error de aplicación (FindSaldosMovimientos). Notifique al Administrador.";
-            //    viewmodel.ControllerName = "CompanyPrepago";
-            //    viewmodel.ActionName = "FilterBeneficiarios";
-            //    viewmodel.RouteValues = afiliado.companyid.ToString();
-            //    return RedirectToAction("GenericView", viewmodel);
-            //}
-            //AfiliadoSaldosMovimientos AfiliadoSaldosMovimientos = new AfiliadoSaldosMovimientos()
-            //{
-            //    denominacionPrepago = "Bs.",
-            //    denominacionSuma = "Más.",
-            //    Afiliado = afiliado,
-            //    SaldosMovimientos = SaldosMovimientos
-            //};
-            //return View(AfiliadoSaldosMovimientos);
             Afiliado afiliado = repAfiliado.Find(id);
             return RedirectToAction("SaldosMovimientos", "Afiliado", new { id = afiliado.id });
         }
@@ -608,67 +580,28 @@ namespace Suma2Lealtad.Controllers
             compañiaBeneficiarios = rep.FindRecarga(companyid, numdoc, name, email).FindAll(m => m.estatus.Equals("Activa"));
             return View("Recargas", compañiaBeneficiarios);
         }
-
-        public ActionResult Ordenes(int id)
+        
+        public ActionResult ProcesarOrden(int companyid, int id)
         {
-            PrepagoCompanyAffiliattes compañiaBeneficiarios = rep.Find(id);
-            List<Orden> ordenes = rep.BuscarOrdenes(id);
-            compañiaBeneficiarios.Ordenes = ordenes;
-            return View(compañiaBeneficiarios);
+            ViewModel viewmodel = new ViewModel();
+            if (rep.ProcesarOrden(id))
+            {
+                viewmodel.Title = "Prepago / Beneficiario / Ordenes de Recarga / Procesar Orden";
+                viewmodel.Message = "Orden Procesada. Recarga efectiva.";
+                viewmodel.ControllerName = "CompanyPrepago";
+                viewmodel.ActionName = "Ordenes";
+                viewmodel.RouteValues = companyid.ToString();
+            }
+            else
+            {
+                viewmodel.Title = "Prepago / Beneficiario / Ordenes de Recarga / Procesar Orden";
+                viewmodel.Message = "Orden procesada con errores, verifique.";
+                viewmodel.ControllerName = "CompanyPrepago";
+                viewmodel.ActionName = "Ordenes";
+                viewmodel.RouteValues = companyid.ToString();
+            }
+            return RedirectToAction("GenericView", viewmodel);
         }
-
-        public ActionResult RecargaMasiva(int id)
-        {
-            PrepagoCompanyAffiliattes compañiaBeneficiarios = rep.Find(id);
-            compañiaBeneficiarios.Beneficiarios = compañiaBeneficiarios.Beneficiarios.FindAll(m => m.estatus.Equals("Activa"));
-            return View(compañiaBeneficiarios);
-        }
-       
-        //[HttpPost]
-        //public ActionResult RecargaMasiva(PrepagoCompanyAffiliattes model)
-        //{
-        //    ViewModel viewmodel = new ViewModel();
-        //    if (System.IO.File.Exists(model.alias))
-        //    {
-        //        List<Afiliado> ListaRecargaAfiliado = repAfiliado.GetBeneficiarios(model.alias);
-
-        //        if (ListaRecargaAfiliado == null)
-        //        {
-        //            return View(viewmodel);
-        //        }
-        //        else
-        //        {
-
-        //            PrepagoCompanyAffiliattes compañiaBeneficiarios = rep.Find(model.companyid);
-        //            compañiaBeneficiarios.Beneficiarios = compañiaBeneficiarios.Beneficiarios.FindAll(m => m.estatus.Equals("Activa"));
-
-        //            foreach (var item in compañiaBeneficiarios.Beneficiarios)
-        //            {
-
-        //                foreach (var item2 in ListaRecargaAfiliado)
-        //                {
-
-        //                    if (item.docnumber == item2.docnumber)
-        //                    {
-        //                        item.Monto = item2.Monto;
-        //                        break;
-        //                    }
-
-        //                }
-
-        //            }
-
-        //            foreach (var item in compañiaBeneficiarios.Beneficiarios.Where(a => a.Monto > 0))
-        //            {
-        //                return redirectToAction("RecargaIndividual", "compañiaBeneficiarios.Beneficiarios.Where(a => a.Monto > 0)");
-        //                //return View(compañiaBeneficiarios.Beneficiarios.Where(a => a.Monto > 0));
-        //            }
-
-        //        }
-
-        //    }
-        //    return View();
-        //}
 
         public ActionResult GenericView(ViewModel viewmodel)
         {
@@ -680,12 +613,5 @@ namespace Suma2Lealtad.Controllers
             base.Dispose(disposing);
         }
 
-        //private ActionResult redirectToAction(string p1, string p2)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
-
-
-        //public IView viewmodel { get; set; }
     }
 }
