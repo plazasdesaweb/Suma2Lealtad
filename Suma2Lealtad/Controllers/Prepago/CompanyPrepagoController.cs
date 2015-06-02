@@ -534,6 +534,28 @@ namespace Suma2Lealtad.Controllers
             return RedirectToAction("GenericView", viewmodel);
         }
 
+        public ActionResult FilterBeneficiariosRecargas(int companyid)
+        {
+            PrepagoCompanyAffiliattes compañiaBeneficiarios = rep.Find(companyid);
+            return View(compañiaBeneficiarios);
+        }
+
+        [HttpPost]
+        public ActionResult FilterBeneficiariosRecargas(int companyid, string numdoc, string name, string email)
+        {
+            List<CompanyAfiliadoRecarga> compañiaBeneficiarios;
+            compañiaBeneficiarios = rep.FindRecarga(companyid, numdoc, name, email).FindAll(m => m.estatus.Equals("Activa"));
+            return View("Recargas", compañiaBeneficiarios);
+        }
+
+        public ActionResult Ordenes(int id)
+        {
+            PrepagoCompanyAffiliattes compañiaBeneficiarios = rep.Find(id);
+            List<Orden> ordenes = rep.BuscarOrdenes(id);
+            compañiaBeneficiarios.Ordenes = ordenes;
+            return View(compañiaBeneficiarios);
+        }
+
         public ActionResult Recargas(int id)
         {
             List<CompanyAfiliadoRecarga> compañiaBeneficiarios = rep.FindRecarga(id);
@@ -567,20 +589,61 @@ namespace Suma2Lealtad.Controllers
             return RedirectToAction("GenericView", viewmodel);
         }
 
-        public ActionResult FilterBeneficiariosRecargas(int companyid)
+        public ActionResult RecargaMasiva(int id)
         {
-            PrepagoCompanyAffiliattes compañiaBeneficiarios = rep.Find(companyid);
+            List<CompanyAfiliadoRecarga> compañiaBeneficiarios = rep.FindRecarga(id);
+            compañiaBeneficiarios = compañiaBeneficiarios.FindAll(m => m.estatus.Equals("Activa"));
             return View(compañiaBeneficiarios);
         }
 
         [HttpPost]
-        public ActionResult FilterBeneficiariosRecargas(int companyid, string numdoc, string name, string email)
+        public ActionResult RecargaMasiva(string alias, int companyid)
         {
-            List<CompanyAfiliadoRecarga> compañiaBeneficiarios;
-            compañiaBeneficiarios = rep.FindRecarga(companyid, numdoc, name, email).FindAll(m => m.estatus.Equals("Activa"));
-            return View("Recargas", compañiaBeneficiarios);
+            ViewModel viewmodel = new ViewModel();
+            if (System.IO.File.Exists(alias))
+            {
+                List<Afiliado> ListaRecargaAfiliado = repAfiliado.GetBeneficiarios(alias);
+
+                if (ListaRecargaAfiliado == null)
+                {
+                    viewmodel.Title = "Prepago / Beneficiario / Recarga Masiva";
+                    viewmodel.Message = "El archivo se encuentra abierto o los registros no cumplen con los parametros establecidos.";
+                    viewmodel.ControllerName = "CompanyPrepago";
+                    viewmodel.ActionName = "FilterCompany";
+                    return RedirectToAction("GenericView", viewmodel);
+                }
+                else
+                {
+
+                    List<CompanyAfiliadoRecarga> compañiaBeneficiarios = rep.FindRecarga(companyid);
+                    compañiaBeneficiarios = compañiaBeneficiarios.FindAll(m => m.estatus.Equals("Activa"));
+
+
+                    foreach (var item in compañiaBeneficiarios)
+                    {
+
+                        foreach (var item2 in ListaRecargaAfiliado)
+                        {
+
+                            if (item.docnumber == item2.docnumber)
+                            {
+                                item.TipoRecarga = "Recarga Masiva";
+                                item.MontoRecarga = item2.Monto;
+                                break;
+                            }
+
+                        }
+
+                    }
+                    List<CompanyAfiliadoRecarga> recargas = compañiaBeneficiarios.FindAll(b => b.MontoRecarga > 0);
+                    return View("Recargas", recargas);
+
+                }
+
+            }
+            return View();
         }
-        
+
         public ActionResult ProcesarOrden(int companyid, int id)
         {
             ViewModel viewmodel = new ViewModel();
