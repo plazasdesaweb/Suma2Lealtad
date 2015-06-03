@@ -27,8 +27,6 @@
     <div class="panel panel-default">
 
         <div class="panel-heading clearfix panel-gradient">
-            <h3 class="panel-title">Prepago / Compañia / Beneficiarios / @Html.DisplayFor(model => Model.FirstOrDefault().TipoRecarga)</h3>
-            @*<h3 class="panel-title">Afiliado  @Model.DocId / Saldos <a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.DocId })" class="btn btn-success btn-md">Regresar</a></h3>*@
             <h3 class="panel-title">Prepago / Compañia / Beneficiarios / Recargas</h3>
             @*<input type="submit" class="btn btn-success btn-md" value="Regresar" style="padding-right: 15px; padding-left: 15px; margin-left: 0px;" />*@
         </div>
@@ -101,6 +99,7 @@
                             <tr data-row-key="@Model[i].Afiliadoid">
                                 
                                 @Html.HiddenFor(modelItem => Model[i].companyid)
+                                @Html.HiddenFor(modelItem => Model[i].rif)
                                 @Html.HiddenFor(modelItem => Model[i].Afiliadoid)
                                 
                                 <td>
@@ -201,7 +200,7 @@
                 spanMessage('field_' + idrow, '* Monto invalido (' + campo4 + ')');
                 resultado = false;
             }
-            else if (campo4 > 500) {
+            else if (campo4 > 5000) {
                 spanMessage('field_' + idrow, '* El monto excede el valor máximo permitido (500)');
                 resultado = false;
             }
