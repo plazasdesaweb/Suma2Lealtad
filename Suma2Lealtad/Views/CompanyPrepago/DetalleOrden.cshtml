@@ -61,7 +61,17 @@
                 <br />
             </div>
 
-            @*<form id="commentForm" method="post" action="@Url.Action("Recargas", "CompanyPrepago")" class="form-horizontal" onsubmit="return verificarforma();">*@
+            <div class="editor-label col-md-4 control-label">
+                Nro. de Orden :
+            </div>
+
+            <div class="editor-form col-md-6">
+                @Html.TextBoxFor(model => model.FirstOrDefault().Orderid, new { @class = "form-control", @readonly = "true" })
+            </div>
+
+            <div class="editor-field col-md-6">
+                <br />
+            </div>
 
             <div class="col-md-12 col-tabla-btn">
                 <div class="pull-right">
@@ -73,10 +83,6 @@
                         <a href="@Url.Action("FilterCompany", "CompanyPrepago")" class="btn btn-danger btn-md">Cancelar</a>*@
                     <a href="@Url.Action("Ordenes", "CompanyPrepago", new { id = Model.FirstOrDefault().companyid })" class="btn btn-danger btn-md">Regresar</a>
                 </div>
-            </div>
-
-            <div class="editor-field col-md-6">
-                <br />
             </div>
 
             @*<table class="table table-striped custab">*@
@@ -113,7 +119,7 @@
                             </td>
 
                             <td class="text-right">
-                                @Html.TextBoxFor(modelItem => Model[i].MontoRecarga, new { @class = "form-control Monto", @readonly = true })
+                                @Html.DisplayFor(modelItem => Model[i].MontoRecarga, new { @class = "form-control Monto" })
                             </td>
                         </tr>                 
                     }
@@ -188,13 +194,17 @@
             var campo4 = 0;
             $(this).children("td").each(function (index2) {
                 switch (index2) {
-                    case 0: campo1 = $(this).text();
+                    case 0:
+                        campo1 = $(this).text();
                         break;
-                    case 1: campo2 = $(this).text();
+                    case 1:
+                        campo2 = $(this).text();
                         break;
-                    case 2: campo3 = $(this).text();
+                    case 2:
+                        campo3 = $(this).text();
                         break;
-                    case 3: campo4 = $(this).find('.Monto').val();
+                    case 3:
+                        campo4 = $(this).text();
                         break;
                 }
             });

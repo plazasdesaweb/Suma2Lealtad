@@ -113,8 +113,18 @@
                 <br />
             </div>
 
-            @*<form id="commentForm" method="post" action="@Url.Action("Recargas", "CompanyPrepago")" class="form-horizontal" onsubmit="return verificarforma();">*@
+            <div class="editor-label col-md-4 control-label">
+                Nro. de Orden :
+            </div>
 
+            <div class="editor-form col-md-6">
+                @Html.TextBoxFor(model => model.FirstOrDefault().Orderid, new { @class = "form-control", @readonly = "true" })
+            </div>
+
+            <div class="editor-field col-md-6">
+                <br />
+            </div>
+            
             <div class="col-md-12 col-tabla-btn">
                 <div class="pull-right">
                         @*<a href="@Url.Action("", "")" class="btn btn-success btn-md">Órdenes de Recarga</a>
@@ -123,7 +133,7 @@
                         <a href="@Url.Action("Filter", "CompanyPrepago", new { companyid = Model.companyid })" class="btn btn-success btn-md">Agregar Nuevo Beneficiario</a>
                         <a href="@Url.Action("FilterBeneficiariosRecargas", "CompanyPrepago", new { companyid = Model.FirstOrDefault().companyid })" class="btn btn-success btn-md">Filtrar Beneficiarios</a>
                         <a href="@Url.Action("FilterCompany", "CompanyPrepago")" class="btn btn-danger btn-md">Cancelar</a>*@
-                        <a href="@Url.Action("Ordenes", "CompanyPrepago", new { id = Model.FirstOrDefault().companyid })" class="btn btn-danger btn-md">Regresar</a>
+                        <a href="@Url.Action("Ordenes", "CompanyPrepago", new { id = Model.FirstOrDefault().companyid })" class="btn btn-success btn-md">Continuar</a>
                 </div>
             </div>
 

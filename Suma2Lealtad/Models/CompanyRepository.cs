@@ -537,26 +537,6 @@ namespace Suma2Lealtad.Models
             }
         }
 
-        //recarga bs en la cuenta del afiliado
-        private bool Recargar(DetalleOrden detalleorden, string docnumber, decimal monto)
-        {
-            string RespuestaCardsJson = WSL.Cards.addBatch(docnumber, Math.Truncate(monto).ToString(), TRANS_CODE_RECARGA);
-            if (ExceptionServicioCards(RespuestaCardsJson))
-            {
-                return false;
-            }
-            RespuestaCards RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
-            if (RespuestaCards.excode == "0")
-            {
-                return true;
-            }
-            else
-            {
-                detalleorden.comments = RespuestaCards.exdetail;
-                return false;
-            }
-        }
-
         //busca el detalle de una orden a partir del id
         private List<DetalleOrden> BuscarDetalleOrden(int orderid)
         {
@@ -599,6 +579,26 @@ namespace Suma2Lealtad.Models
             }
         }
 
+        //recarga bs en la cuenta del afiliado
+        private bool Recargar(DetalleOrden detalleorden, string docnumber, decimal monto)
+        {
+            string RespuestaCardsJson = WSL.Cards.addBatch(docnumber, Math.Truncate(monto).ToString(), TRANS_CODE_RECARGA);
+            if (ExceptionServicioCards(RespuestaCardsJson))
+            {
+                return false;
+            }
+            RespuestaCards RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
+            if (RespuestaCards.excode == "0")
+            {
+                return true;
+            }
+            else
+            {
+                detalleorden.comments = RespuestaCards.exdetail;
+                return false;
+            }
+        }
+        
         public bool ProcesarOrden(int orderid)
         {
             List<DetalleOrden> detalleorden = BuscarDetalleOrden(orderid);
@@ -676,16 +676,6 @@ namespace Suma2Lealtad.Models
             }
         }
 
-        //public int BuscarCompañia(Afiliado afiliado)
-        //{
-        //    using (LealtadEntities db = new LealtadEntities())
-        //    {
-        //        return (from c in db.CompanyAffiliates
-        //                where c.affiliateid.Equals(afiliado.id)
-        //                select c.companyid).SingleOrDefault();
-        //    }
-        //}
-
         public bool BorrarCompañia(int id)
         {
             using (LealtadEntities db = new LealtadEntities())
@@ -703,11 +693,6 @@ namespace Suma2Lealtad.Models
                 }
             }
         }
-
-        //internal PrepagoCompanyAffiliattes Find()
-        //{
-        //    throw new NotImplementedException();
-        //}
 
     }
 }
