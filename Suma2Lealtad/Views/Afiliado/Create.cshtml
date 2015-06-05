@@ -12,7 +12,7 @@
 
              @{ if(Model.type == "Suma")
                {
-                   @:<form id="commentForm" method="post" action="@Url.Action("Create", "Afiliado")" class="form-horizontal enctype = "multipart/form-data">
+                   @:<form id="commentForm" method="post" action="@Url.Action("Create", "Afiliado")" class="form-horizontal" enctype = "multipart/form-data">
                }
                else
                {
@@ -273,7 +273,7 @@
                                     else {
                                         document.getElementById(ElementoControl).innerHTML = ValorDeControl;
                                         document.getElementById("info").innerHTML = NombreArchivo[NombreArchivo.length - 1];
-                                        document.getElementById("file-error").innerHTML = "";
+                                        //document.getElementById("file-error").innerHTML = "";
                                     }
                                 }
 

@@ -302,7 +302,6 @@ namespace Suma2Lealtad.Controllers
             return RedirectToAction("GenericView", viewmodel);
         }
 
-
         public ActionResult EditBeneficiario(int id)
         {
             Afiliado afiliado = repAfiliado.Find(id);

@@ -9,7 +9,7 @@
 
     <div class="row">
 
-        <div class="col-md-7 col-md-offset-2">
+        <div class="col-md-8 col-md-offset-2">
 
             <div class="panel panel-default">
 
@@ -29,7 +29,7 @@
                     <form action="@Url.Action("Find", "Afiliado")" name="form" method="post" onsubmit="return validarDocumento();">
 
                         <div class="editor-label col-md-4 control-label">
-                            Número de Documento :
+                            Número de Documento/Cédula :
                         </div>
 
                         <div class="editor-field col-md-8">
@@ -110,7 +110,7 @@
             while (span.firstChild) {
                 span.removeChild(span.firstChild);
             }
-            span.appendChild(document.createTextNode("* Formato Número de Documento Incorrecto. (V-12345678)"));
+            span.appendChild(document.createTextNode("* Formato Número de Documento/Cédula Incorrecto. (V-12345678)"));
         }
     </script>
 

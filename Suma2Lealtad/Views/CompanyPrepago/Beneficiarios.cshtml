@@ -27,9 +27,7 @@
     <div class="panel panel-default">
 
         <div class="panel-heading clearfix panel-gradient">
-            @*<h3 class="panel-title">Afiliado  @Model.DocId / Saldos <a href="@Url.Action("Index", "Afiliado", new { numdoc = Model.DocId })" class="btn btn-success btn-md">Regresar</a></h3>*@
             <h3 class="panel-title">Prepago / Compañia / Beneficiarios</h3>
-            @*<input type="submit" class="btn btn-success btn-md" value="Regresar" style="padding-right: 15px; padding-left: 15px; margin-left: 0px;" />*@
         </div>
 
         <div class="panel-body">
@@ -84,12 +82,13 @@
                 <thead>
                     <tr>
                         <th>Tipo</th>
-                        <th>Número de Documento</th>
+                        <th>Número de Documento/Cédula</th>
                         <th>Nombre</th>
                         <th>Correo</th>
                         <th>Estatus de Afiliación</th>
                         <th>Número de Tarjeta</th>
                         <th>Estatus de Tarjeta</th>
+                        <th class="text-center"></th>
                         <th class="text-center"></th>
                     </tr>
                 </thead>
@@ -127,18 +126,22 @@
                                 @Html.DisplayFor(modelItem => item.estatustarjeta)
                             </td>
 
-                            <td class="text-right">
+                            <td>
                                 @{if (item.estatus == "Nueva")
                                   {
-                                    <a id="@(item.id)_approve" href="@Url.Action("AprobarBeneficiario", "CompanyPrepago", new { id = item.id })" class="btn btn-success btn-xs" >
+                                    <a id="@(item.id)_approve" href="@Url.Action("AprobarBeneficiario", "CompanyPrepago", new { id = item.id })" class="btn btn-success btn-sm" >
                                         <span class="glyphicon glyphicon-ok"></span>
                                     </a>
                                   }
                                 }
-                                <a id="@(item.id)_edit" href="@Url.Action("EditBeneficiario", "CompanyPrepago", new { id = item.id })" class="btn btn-info btn-xs" >
+                            </td>
+
+                            <td>
+                                <a id="@(item.id)_edit" href="@Url.Action("EditBeneficiario", "CompanyPrepago", new { id = item.id })" class="btn btn-info btn-sm" >
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </a>
                             </td>
+
                         </tr>                 
                     }
                 </tbody>

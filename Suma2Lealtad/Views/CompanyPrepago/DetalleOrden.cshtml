@@ -74,7 +74,28 @@
             </div>
 
             <div class="editor-form col-md-6">
-                @Html.TextBoxFor(model => model.FirstOrDefault().Orderstatus, new { @class = "form-control", @readonly = "true" })
+                @Html.HiddenFor(model => model.FirstOrDefault().Orderstatus)
+                @{if (Model.FirstOrDefault().Orderstatus == "N")
+                  {
+                    @Html.TextBox("Nueva","Nueva", new { @class = "form-control", @readonly = "true" })               
+                  }
+                  else if (Model.FirstOrDefault().Orderstatus == "A")
+                  {
+                    @Html.TextBox("Aprobada", "Aprobada", new { @class = "form-control", @readonly = "true" })  
+                  }
+                  else if (Model.FirstOrDefault().Orderstatus == "R")
+                  {
+                    @Html.TextBox("Rechazada", "Rechazada", new { @class = "form-control", @readonly = "true" })  
+                  }
+                  else if (Model.FirstOrDefault().Orderstatus == "E")
+                  {
+                    @Html.TextBox("Efectiva/Procesada", "Efectiva/Procesada", new { @class = "form-control", @readonly = "true" })  
+                  }
+                  else
+                  {
+                    @Html.TextBox("No definido", "No definido", new { @class = "form-control", @readonly = "true" })  
+                  }
+                }
             </div>
 
             <div class="editor-field col-md-6">
@@ -179,7 +200,7 @@
                 </div>
               }
             }
-            
+
         </div>
         <!-- SECCION PARA botones de operaciones -->
 

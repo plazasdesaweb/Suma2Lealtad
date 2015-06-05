@@ -9,7 +9,7 @@
 
     <div class="row">
 
-        <div class="col-md-7 col-md-offset-2">
+        <div class="col-md-8 col-md-offset-2">
 
             <div class="panel panel-default">
 
@@ -57,7 +57,7 @@
                         </div>
 
                         <div class="editor-label col-md-4 control-label">
-                            Número de Documento :
+                            Número de Documento/Cédula :
                         </div>
 
                         <div class="editor-field col-md-8">
@@ -127,7 +127,7 @@
             var RegExPattern4 = /^([Pp]){1}([A-Za-z0-9]){3,10}$/;
 
             if (RegExPattern.test(numdoc) == false && RegExPattern2.test(numdoc) == false && RegExPattern3.test(numdoc) == false && RegExPattern4.test(numdoc) == false) {
-                spanMessage('field1', '* Formato Número de Documento Incorrecto. (V-12345678)');
+                spanMessage('field1', '* Formato Número de Documento/Cédula Incorrecto. (V-12345678)');
                 document.getElementById('numdoc').value = "";
                 document.getElementById('numdoc').focus();
                 return false;

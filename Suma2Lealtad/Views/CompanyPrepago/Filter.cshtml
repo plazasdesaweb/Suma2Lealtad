@@ -31,7 +31,7 @@
                         @Html.HiddenFor(model => model.companyid)
 
                         <div class="editor-label col-md-4 control-label">
-                            Número de Documento :
+                            Número de Documento/Cédula :
                         </div>
 
                         <div class="editor-field col-md-8">
@@ -112,7 +112,7 @@
             while (span.firstChild) {
                 span.removeChild(span.firstChild);
             }
-            span.appendChild(document.createTextNode("* Formato Número de Documento Incorrecto. (V-12345678)"));
+            span.appendChild(document.createTextNode("* Formato Número de Documento/Cédula Incorrecto. (V-12345678)"));
         }
     </script>
 

@@ -232,8 +232,13 @@
     function verificarforma() {
         if (!ValidarMontos()) {
             alert("Hay campos invalidos, verifique.");
+            return false;
         }
-        return ValidarMontos();
+        if (document.getElementById('MontoTotalRecargas').value == 0) {
+            alert("Debe incluir al menos una recarga.");
+            return false;
+        }
+        return true;
     }
 </script>
 
