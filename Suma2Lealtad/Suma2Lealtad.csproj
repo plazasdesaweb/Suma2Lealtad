@@ -645,6 +645,7 @@
     <Content Include="Views\CompanyPrepago\FilterBeneficiariosRecargas.cshtml" />
     <Content Include="Views\CompanyPrepago\DetalleOrden.cshtml" />
     <Content Include="Views\CompanyPrepago\ResultadoOrden.cshtml" />
+    <Content Include="Views\CompanyPrepago\ConfirmacionRecargas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
