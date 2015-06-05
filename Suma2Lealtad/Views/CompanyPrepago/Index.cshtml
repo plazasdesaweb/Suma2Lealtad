@@ -78,10 +78,10 @@
                                         <a href="@Url.Action("FilterBeneficiarios", "CompanyPrepago", new { companyid = item.companyid })" class="btn btn-success btn-xs">
                                             <span class="glyphicon glyphicon-user"></span>
                                         </a>
-                                        <a href="@Url.Action("Edit", "CompanyPrepago", new { companyid = item.companyid })" class="btn btn-info btn-xs">
+                                        <a href="@Url.Action("Edit", "CompanyPrepago", new { id =  item.companyid })" class="btn btn-info btn-xs">
                                             <span class="glyphicon glyphicon-edit"></span>
                                         </a>
-                                        <a href="@Url.Action("Delete", "CompanyPrepago", new { companyid = item.companyid })" class="btn btn-danger btn-xs">
+                                        <a href="@Url.Action("Delete", "CompanyPrepago", new { id = item.companyid })" class="btn btn-danger btn-xs">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </a>
                                     </td>

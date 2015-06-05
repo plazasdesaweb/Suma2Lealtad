@@ -69,6 +69,14 @@
                 @Html.TextBoxFor(model => model.FirstOrDefault().Orderid, new { @class = "form-control", @readonly = "true" })
             </div>
 
+            <div class="editor-label col-md-4 control-label">
+                Estatus de la Orden :
+            </div>
+
+            <div class="editor-form col-md-6">
+                @Html.TextBoxFor(model => model.FirstOrDefault().Orderstatus, new { @class = "form-control", @readonly = "true" })
+            </div>
+
             <div class="editor-field col-md-6">
                 <br />
             </div>
