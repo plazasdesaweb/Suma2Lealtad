@@ -649,14 +649,15 @@ namespace Suma2Lealtad.Controllers
         {
             ViewModel viewmodel = new ViewModel();
             List<CompanyAfiliadoRecarga> compañiaBeneficiarios = rep.FindRecarga(companyid);
-            string rif = compañiaBeneficiarios.FirstOrDefault().rif;       
-            string path = "";           
+            string rif = compañiaBeneficiarios.FirstOrDefault().rif;
+            string path = "";
+            string idtemp = System.Web.HttpContext.Current.Session.SessionID + ".xls";
             if (file != null && file.ContentLength > 0)
             {
                 //subir y guardar el archivo en el server
                 try
                 {
-                    path = Server.MapPath(AppModule.GetPathPicture().Replace("@filename@.jpg", "Temp.xls"));
+                    path = Server.MapPath(AppModule.GetPathPicture().Replace("@filename@.jpg", idtemp));
                     file.SaveAs(path);
                 }
                 catch (Exception ex)
@@ -733,7 +734,7 @@ namespace Suma2Lealtad.Controllers
                 viewmodel.ActionName = "Index";
                 viewmodel.RouteValues = rif;
                 return RedirectToAction("GenericView", viewmodel);
-            }   
+            }
         }
 
         public ActionResult Ordenes(int id)

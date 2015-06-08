@@ -14,7 +14,6 @@ namespace Suma2Lealtad.Models
         private const string ESTATUS_ORDEN_RECARGA_EFECTIVA = "E";
         private const string TRANS_CODE_RECARGA = "200";
 
-
         //determina si hubo excepción en llamada a servicio Cards
         private bool ExceptionServicioCards(string RespuestaServicioCards)
         {
