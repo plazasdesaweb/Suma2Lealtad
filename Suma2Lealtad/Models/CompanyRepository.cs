@@ -452,7 +452,7 @@ namespace Suma2Lealtad.Models
                                         where o.customerid.Equals(afiliado.id) && o.orderid.Equals(id)
                                         select o.comments
                                         ).FirstOrDefault();
-                    if (montorecarga != null && resultadorecarga != null)
+                    if (montorecarga != 0 && resultadorecarga != null)
                     {
                         temp.companyid = ca.companyid;
                         temp.namecompañia = ca.namecompañia;
