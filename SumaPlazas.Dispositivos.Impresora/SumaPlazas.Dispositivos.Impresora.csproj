@@ -63,6 +63,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>3B91844E561B3E80B6A7DE56F2685CBEE5587379</ManifestCertificateThumbprint>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="mscorlib" />

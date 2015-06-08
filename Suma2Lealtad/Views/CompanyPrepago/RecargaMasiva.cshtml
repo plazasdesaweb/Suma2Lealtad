@@ -29,7 +29,7 @@
 
         <div class="panel-body">
 
-            <form id="commentForm" method="post" action="@Url.Action("ConfirmacionRecargas", "CompanyPrepago", new { companyid = Model[0].companyid})" class="form-horizontal">
+            <form id="commentForm" method="post" action="@Url.Action("ConfirmacionRecargas", "CompanyPrepago", new { companyid = Model[0].companyid})" class="form-horizontal" enctype = "multipart/form-data">
 
                 <div class="form-group">
 
@@ -61,7 +61,7 @@
                     </div>
 
                     <div class="editor-label col-md-6 control-label">
-                        <input type="file" class="filestyle" data-badge="true" name="alias">
+                        <input type="file" class="filestyle" data-badge="true" id="file" name="file">
                     </div>
 
                 </div>

@@ -164,10 +164,10 @@ namespace Suma2Lealtad.Controllers
             {
                 compañiaBeneficiarios = rep.Find(companyid);
             }
-            else 
+            else
             {
                 compañiaBeneficiarios = rep.FindBeneficiarios(companyid, numdoc, name, email);
-            }           
+            }
             return View(compañiaBeneficiarios);
         }
 
@@ -305,7 +305,7 @@ namespace Suma2Lealtad.Controllers
         public ActionResult EditBeneficiario(int id)
         {
             Afiliado afiliado = repAfiliado.Find(id);
-            return RedirectToAction("Edit", "Afiliado", new { id = afiliado.id});
+            return RedirectToAction("Edit", "Afiliado", new { id = afiliado.id });
         }
 
         [HttpPost]
@@ -588,92 +588,112 @@ namespace Suma2Lealtad.Controllers
             return View(compañiaBeneficiarios);
         }
 
+        //[HttpPost]
+        //public ActionResult RecargaMasiva(string alias, int companyid)
+        //{
+        //    ViewModel viewmodel = new ViewModel();
+        //    if (System.IO.File.Exists(alias))
+        //    {
+        //        List<Afiliado> ListaRecargaAfiliado = repAfiliado.GetBeneficiarios(alias);
+
+        //        if (ListaRecargaAfiliado == null)
+        //        {
+        //            viewmodel.Title = "Prepago / Beneficiario / Confirmacion Recarga";
+        //            viewmodel.Message = "El archivo se encuentra abierto o los registros no cumplen con los parametros establecidos.";
+        //            viewmodel.ControllerName = "CompanyPrepago";
+        //            viewmodel.ActionName = "FilterCompany";
+        //            return RedirectToAction("GenericView", viewmodel);
+        //        }
+        //        else
+        //        {
+
+        //            List<CompanyAfiliadoRecarga> compañiaBeneficiarios = rep.FindRecarga(companyid);
+        //            compañiaBeneficiarios = compañiaBeneficiarios.FindAll(m => m.estatus.Equals("Activa"));
+
+
+        //            foreach (var item in compañiaBeneficiarios)
+        //            {
+
+        //                foreach (var item2 in ListaRecargaAfiliado)
+        //                {
+
+        //                    if (item.docnumber == item2.docnumber)
+        //                    {
+        //                        item.TipoRecarga = "Recarga Masiva";
+        //                        item.docnumber = item2.docnumber;
+        //                        item.MontoRecarga = item2.Monto;
+        //                        break;
+        //                    }
+
+        //                }
+
+        //            }
+        //            List<CompanyAfiliadoRecarga> recargas = compañiaBeneficiarios.FindAll(b => b.MontoRecarga > 0);
+        //            return View("Recargas", recargas);
+
+        //        }
+
+        //    }
+        //    return View();
+        //}
+
+        //public ActionResult ConfirmacionRecargas(int id)
+        //{
+        //    List<CompanyAfiliadoRecarga> compañiaBeneficiarios = rep.FindRecarga(id);
+        //    compañiaBeneficiarios = compañiaBeneficiarios.FindAll(m => m.estatus.Equals("Activa"));
+        //    return View(compañiaBeneficiarios);
+        //}
+
         [HttpPost]
-        public ActionResult RecargaMasiva(string alias, int companyid)
+        public ActionResult ConfirmacionRecargas(int companyid, HttpPostedFileBase file)
         {
             ViewModel viewmodel = new ViewModel();
-            if (System.IO.File.Exists(alias))
+            List<CompanyAfiliadoRecarga> compañiaBeneficiarios = rep.FindRecarga(companyid);
+            string rif = compañiaBeneficiarios.FirstOrDefault().rif;       
+            string path = "";           
+            if (file != null && file.ContentLength > 0)
             {
-                List<Afiliado> ListaRecargaAfiliado = repAfiliado.GetBeneficiarios(alias);
-
-                if (ListaRecargaAfiliado == null)
+                //subir y guardar el archivo en el server
+                try
                 {
-                    viewmodel.Title = "Prepago / Beneficiario / Confirmacion Recarga";
-                    viewmodel.Message = "El archivo se encuentra abierto o los registros no cumplen con los parametros establecidos.";
+                    path = Server.MapPath(AppModule.GetPathPicture().Replace("@filename@.jpg", "Temp.xls"));
+                    file.SaveAs(path);
+                }
+                catch (Exception ex)
+                {
+                    viewmodel.Title = "Prepago / Beneficiario / Confirmación de Recarga";
+                    viewmodel.Message = "Error de aplicacion: No se pudo cargar archivo (" + ex.Message + ")";
                     viewmodel.ControllerName = "CompanyPrepago";
-                    viewmodel.ActionName = "FilterCompany";
+                    viewmodel.ActionName = "Index";
+                    viewmodel.RouteValues = rif;
                     return RedirectToAction("GenericView", viewmodel);
                 }
-                else
-                {
-
-                    List<CompanyAfiliadoRecarga> compañiaBeneficiarios = rep.FindRecarga(companyid);
-                    compañiaBeneficiarios = compañiaBeneficiarios.FindAll(m => m.estatus.Equals("Activa"));
-
-
-                    foreach (var item in compañiaBeneficiarios)
-                    {
-
-                        foreach (var item2 in ListaRecargaAfiliado)
-                        {
-
-                            if (item.docnumber == item2.docnumber)
-                            {
-                                item.TipoRecarga = "Recarga Masiva";
-                                item.docnumber = item2.docnumber;
-                                item.MontoRecarga = item2.Monto;
-                                break;
-                            }
-
-                        }
-
-                    }
-                    List<CompanyAfiliadoRecarga> recargas = compañiaBeneficiarios.FindAll(b => b.MontoRecarga > 0);
-                    return View("Recargas", recargas);
-
-                }
-
-            }
-            return View();
-        }
-
-        public ActionResult ConfirmacionRecargas(int id)
-        {
-            List<CompanyAfiliadoRecarga> compañiaBeneficiarios = rep.FindRecarga(id);
-            compañiaBeneficiarios = compañiaBeneficiarios.FindAll(m => m.estatus.Equals("Activa"));
-            return View(compañiaBeneficiarios);
-        }
-
-        [HttpPost]
-        public ActionResult ConfirmacionRecargas(string alias, int companyid)
-        {
-            ViewModel viewmodel = new ViewModel();
-            if (System.IO.File.Exists(alias))
-            {
-                List<Afiliado> ListaRecargaAfiliado = repAfiliado.GetBeneficiarios(alias);
-
+                //leer archivo
+                List<Afiliado> ListaRecargaAfiliado = repAfiliado.GetBeneficiarios(path);
                 if (ListaRecargaAfiliado == null)
                 {
+                    //borrar el archivo
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
                     viewmodel.Title = "Prepago / Beneficiario / Confirmación de Recarga";
                     viewmodel.Message = "El archivo se encuentra abierto o los registros no cumplen con los parametros establecidos.";
                     viewmodel.ControllerName = "CompanyPrepago";
-                    viewmodel.ActionName = "FilterCompany";
+                    viewmodel.ActionName = "Index";
+                    viewmodel.RouteValues = rif;
                     return RedirectToAction("GenericView", viewmodel);
                 }
                 else
                 {
-                    List<CompanyAfiliadoRecarga> compañiaBeneficiarios = rep.FindRecarga(companyid);
                     compañiaBeneficiarios = compañiaBeneficiarios.FindAll(m => m.estatus.Equals("Activa"));
-
                     List<CompanyAfiliadoRecarga> CargaRevisada = new List<CompanyAfiliadoRecarga>();
-
-                    CompanyAfiliadoRecarga temp; 
-
+                    CompanyAfiliadoRecarga temp;
                     foreach (var item2 in ListaRecargaAfiliado)
                     {
                         temp = compañiaBeneficiarios.Find(t => t.docnumber.Equals(item2.docnumber));
                         if (temp == null)
-	                    {
+                        {
                             temp = new CompanyAfiliadoRecarga()
                             {
                                 docnumber = item2.docnumber,
@@ -684,20 +704,36 @@ namespace Suma2Lealtad.Controllers
                             };
                             CargaRevisada.Add(temp);
                             temp = null;
-	                    }
+                        }
                         else
                         {
                             temp.MontoRecarga = Convert.ToDecimal(item2.Monto);
                             temp.estatus = "OK";
                             CargaRevisada.Add(temp);
-                        }                      
+                        }
                     }
-
+                    //borrar el archivo
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
                     return View(CargaRevisada);
                 }
-
             }
-            return View();
+            else
+            {
+                //borrar el archivo
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+                viewmodel.Title = "Prepago / Beneficiario / Confirmación de Recarga";
+                viewmodel.Message = "El archivo está vacío";
+                viewmodel.ControllerName = "CompanyPrepago";
+                viewmodel.ActionName = "Index";
+                viewmodel.RouteValues = rif;
+                return RedirectToAction("GenericView", viewmodel);
+            }   
         }
 
         public ActionResult Ordenes(int id)
@@ -762,24 +798,24 @@ namespace Suma2Lealtad.Controllers
         {
             if (rep.ProcesarOrden(id))
             {
-                List<CompanyAfiliadoRecarga> compañiaBeneficiarios = rep.FindRecargaProcesada(companyid,id);
+                List<CompanyAfiliadoRecarga> compañiaBeneficiarios = rep.FindRecargaProcesada(companyid, id);
                 //viewmodel.Title = "Prepago / Beneficiario / Ordenes de Recarga / Procesar Orden";
                 //viewmodel.Message = "Orden Procesada. Recarga efectiva.";
                 //viewmodel.ControllerName = "CompanyPrepago";
                 //viewmodel.ActionName = "Ordenes";
                 //viewmodel.RouteValues = companyid.ToString();
-                return View("ResultadoOrden", compañiaBeneficiarios) ;
+                return View("ResultadoOrden", compañiaBeneficiarios);
             }
             else
             {
-                ViewModel viewmodel = new ViewModel();            
+                ViewModel viewmodel = new ViewModel();
                 viewmodel.Title = "Prepago / Beneficiario / Ordenes de Recarga / Procesar Orden";
                 viewmodel.Message = "No se pudo procesar la Orden.";
                 viewmodel.ControllerName = "CompanyPrepago";
                 viewmodel.ActionName = "Ordenes";
                 viewmodel.RouteValues = companyid.ToString();
                 return RedirectToAction("GenericView", viewmodel);
-            }            
+            }
         }
 
         public ActionResult GenericView(ViewModel viewmodel)

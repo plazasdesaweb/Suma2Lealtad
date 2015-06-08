@@ -1053,7 +1053,6 @@ namespace Suma2Lealtad.Models
             }
         }
 
-
         public List<Afiliado> GetBeneficiarios(string fichero)
         {
             List<Afiliado> resultado = ToListaAfiliado(fichero);
@@ -1061,14 +1060,14 @@ namespace Suma2Lealtad.Models
             if (resultado != null)
             {
                 foreach (var item in resultado)
-            {
-                if (item.docnumber == null || Regex.IsMatch(item.docnumber, @"^[JGVE][-][0-9]{8}[-][0-9]$") || Regex.IsMatch(item.Monto.ToString(), @"^[JGVE][-][0-9]{8}[-][0-9]$"))
                 {
-                    return null;
+                    if (item.docnumber == null || Regex.IsMatch(item.docnumber, @"^[JGVE][-][0-9]{8}[-][0-9]$") || Regex.IsMatch(item.Monto.ToString(), @"^[JGVE][-][0-9]{8}[-][0-9]$"))
+                    {
+                        return null;
+                    }
                 }
-            }
 
-            return resultado.Where(r => r.Monto > 0).ToList();
+                return resultado.Where(r => r.Monto > 0).ToList();
             }
 
             return null;
@@ -1077,10 +1076,9 @@ namespace Suma2Lealtad.Models
 
         private List<Afiliado> ToListaAfiliado(string pathDelFicheroExcel)
         {
-
             //Filter:("*.xls;*.xlsx)|*.xls;*.xlsx"); //le indicamos el tipo de filtro en este caso que busque solo los archivos excel
-
-            try {
+            try
+            {
 
                 var book = new ExcelQueryFactory(pathDelFicheroExcel);
                 var resultado = (from row in book.Worksheet("Hoja1")
@@ -1090,15 +1088,14 @@ namespace Suma2Lealtad.Models
                                      Monto = int.Parse(row["Monto"].Cast<string>())
                                  }
                                  select item).ToList();
-
                 book.Dispose();
                 return resultado.ToList();
-            
-            }catch (Exception dbEx)
-                {
-                    return null;
-                }
-         }
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
     }
 }
