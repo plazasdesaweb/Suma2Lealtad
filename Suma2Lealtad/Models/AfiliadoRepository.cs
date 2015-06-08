@@ -248,20 +248,20 @@ namespace Suma2Lealtad.Models
             }
             else
             {
-                afiliado.nationality = clienteWebPlazas.nationality;
-                afiliado.name = clienteWebPlazas.name;
-                afiliado.name2 = clienteWebPlazas.name2;
-                afiliado.lastname1 = clienteWebPlazas.lastname1;
-                afiliado.lastname2 = clienteWebPlazas.lastname2;
+                afiliado.nationality = clienteWebPlazas.nationality.Replace("/","").Replace("\\","");
+                afiliado.name = clienteWebPlazas.name.Replace("/", "").Replace("\\", "");
+                afiliado.name2 = clienteWebPlazas.name2.Replace("/", "").Replace("\\", "");
+                afiliado.lastname1 = clienteWebPlazas.lastname1.Replace("/", "").Replace("\\", "");
+                afiliado.lastname2 = clienteWebPlazas.lastname2.Replace("/", "").Replace("\\", "");
                 afiliado.birthdate = clienteWebPlazas.birthdate.Value.ToString("dd-MM-yyyy");
-                afiliado.gender = clienteWebPlazas.gender;
+                afiliado.gender = clienteWebPlazas.gender.Replace("/", "").Replace("\\", "");
                 afiliado.clientid = clienteWebPlazas.id;
-                afiliado.maritalstatus = clienteWebPlazas.maritalstatus;
-                afiliado.occupation = clienteWebPlazas.occupation;
-                afiliado.phone1 = clienteWebPlazas.phone1;
-                afiliado.phone2 = clienteWebPlazas.phone2;
-                afiliado.phone3 = clienteWebPlazas.phone3;
-                afiliado.email = clienteWebPlazas.email;
+                afiliado.maritalstatus = clienteWebPlazas.maritalstatus.Replace("/", "").Replace("\\", "");
+                afiliado.occupation = clienteWebPlazas.occupation.Replace("/", "").Replace("\\", "");
+                afiliado.phone1 = clienteWebPlazas.phone1.Replace("/", "").Replace("\\", "");
+                afiliado.phone2 = clienteWebPlazas.phone2.Replace("/", "").Replace("\\", "");
+                afiliado.phone3 = clienteWebPlazas.phone3.Replace("/", "").Replace("\\", "");
+                afiliado.email = clienteWebPlazas.email.Replace("/", "").Replace("\\", "");
                 afiliado.WebType = clienteWebPlazas.type;
                 afiliado.ListaEstados = GetEstados();       //++
             }
