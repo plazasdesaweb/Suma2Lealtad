@@ -28,7 +28,7 @@
 
         <div class="panel-heading clearfix panel-gradient">
             @*<h3 class="panel-title">Prepago / Compañia / Beneficiarios / @Html.DisplayFor(model => Model.FirstOrDefault().TipoRecarga)</h3>*@
-            <h3 class="panel-title">Prepago / Compañia / Beneficiarios </h3>
+            <h3 class="panel-title">Prepago / Compañia / Beneficiarios / Confirmación Recarga Masiva </h3>
         </div>
 
         <div class="panel-body">
@@ -64,6 +64,18 @@
 
             <form id="commentForm" method="post" action="@Url.Action("Recargas", "CompanyPrepago")" class="form-horizontal">
 
+                <div class="col-md-12 col-tabla-btn">
+                <div class="pull-right">
+                        @*<a href="@Url.Action("", "")" class="btn btn-success btn-md">Órdenes de Recarga</a>
+                        <a href="@Url.Action("", "")" class="btn btn-success btn-md">Recarga Individual</a>
+                        <a href="@Url.Action("", "")" class="btn btn-success btn-md">Recarga Masiva</a>
+                        <a href="@Url.Action("Filter", "CompanyPrepago", new { companyid = Model.companyid })" class="btn btn-success btn-md">Agregar Nuevo Beneficiario</a>*@
+                        @*<a href="@Url.Action("FilterBeneficiariosRecargas", "CompanyPrepago", new { companyid = Model.FirstOrDefault().companyid })" class="btn btn-success btn-md">Filtrar Beneficiarios</a>*@
+                        @*<a href="@Url.Action("FilterCompany", "CompanyPrepago")" class="btn btn-danger btn-md">Cancelar</a>*@
+                        <a href="@Url.Action("Index", "CompanyPrepago", new { rif = Model.FirstOrDefault().rif })" class="btn btn-danger btn-md">Regresar</a>
+                </div>
+            </div>
+
                 <div class="editor-field col-md-6">
                     <br />
                 </div>
@@ -87,7 +99,9 @@
                             <tr data-row-key="@Model[i].Afiliadoid">
 
                                 @Html.HiddenFor(modelItem => Model[i].companyid)
+                                @Html.HiddenFor(modelItem => Model[i].rif)
                                 @Html.HiddenFor(modelItem => Model[i].Afiliadoid)
+                                @Html.HiddenFor(modelItem => Model[i].MontoRecarga)
 
                                 <td>
                                     @Html.DisplayFor(modelItem => Model[i].type, new { @class = "form-control" })
@@ -139,7 +153,7 @@
                 <div class="col-md-12 col-tabla-btn">
                     <div class="pull-right">
                         <input type="submit" class="btn btn-success btn-md" value="Procesar" />
-                        <a href="@Url.Action("Index", "CompanyPrepago", new { rif = Model.FirstOrDefault().rif })" class="btn btn-danger btn-md">Regresar</a>
+                        @*<a href="@Url.Action("Index", "CompanyPrepago", new { rif = Model.FirstOrDefault().rif })" class="btn btn-danger btn-md">Regresar</a>*@
                     </div>
                 </div>
 
