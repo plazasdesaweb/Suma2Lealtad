@@ -100,7 +100,7 @@
         });
 
         $('#cod_ciudad').change(function () {
-            $.getJSON('@Url.Action("/MunicipoList/")' + $('#cod_ciudad').val(), function (data) {
+            $.getJSON('@Url.Action("/MunicipioList/")' + $('#cod_ciudad').val(), function (data) {
                 var items = '<option value=" ">Seleccione un Municipio</option>';
                 $.each(data, function (i, record) {
                     items += "<option value='" + record.Value + "'>" + record.Text + "</option>";
