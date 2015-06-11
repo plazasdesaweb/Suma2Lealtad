@@ -90,7 +90,7 @@
     $(document).ready(function() {
 
         $('#cod_estado').change(function () {
-            $.getJSON('/Afiliado/CiudadList/' + $('#cod_estado').val(), function (data) {
+            $.getJSON('@Url.Action("/CiudadList/")' + $('#cod_estado').val(), function (data) {
                 var items = '<option value=" ">Seleccione una Ciudad</option>';
                 $.each(data, function (i, district) {
                     items += "<option value='" + district.Value + "'>" + district.Text + "</option>";
@@ -100,7 +100,7 @@
         });
 
         $('#cod_ciudad').change(function () {
-            $.getJSON('/Afiliado/MunicipioList/' + $('#cod_ciudad').val(), function (data) {
+            $.getJSON('@Url.Action("/MunicipoList/")' + $('#cod_ciudad').val(), function (data) {
                 var items = '<option value=" ">Seleccione un Municipio</option>';
                 $.each(data, function (i, record) {
                     items += "<option value='" + record.Value + "'>" + record.Text + "</option>";
@@ -110,7 +110,7 @@
         });
 
         $('#cod_municipio').change(function () {
-            $.getJSON('/Afiliado/ParroquiaList/' + $('#cod_municipio').val(), function (data) {
+            $.getJSON('@Url.Action("/ParroquiaList/")' + $('#cod_municipio').val(), function (data) {
                 var items = '<option value=" ">Seleccione una Parroquia</option>';
                 $.each(data, function (i, record) {
                     items += "<option value='" + record.Value + "'>" + record.Text + "</option>";
@@ -120,7 +120,7 @@
         });
 
         $('#cod_parroquia').change(function () {
-            $.getJSON('/Afiliado/UrbanizacionList/' + $('#cod_parroquia').val(), function (data) {
+            $.getJSON('@Url.Action("/UrbanizacionList/")' + $('#cod_parroquia').val(), function (data) {
                 var items = '<option value=" ">Seleccione una Urbanización</option>';
                 $.each(data, function (i, record) {
                     items += "<option value='" + record.Value + "'>" + record.Text + "</option>";
