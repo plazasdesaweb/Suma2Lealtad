@@ -10,15 +10,21 @@
             <div class="panel-heading clearfix">
 
                 <div class="editor-label" align="center">
-                    <img src="@Url.Content("~/Images/conectado.jpg")" />
+                     @if(Session["login"].ToString() == "ddepablos")
+                       {
+                        <img src="@Url.Content("~/Images/conectadoPrepago.jpg")" />
+                       }
+                       else
+                       {
+                        <img src="@Url.Content("~/Images/conectadoSuma.jpg")" />
+                       }
                 </div>
 
             </div>
 
         </div>
 
-    </form>
+    </form>    
+    @*<a href="@Url.Action("FilterCompany", "CompanyPrepago")" class="btn btn-success btn-sm">Pruebas Prepago</a>*@
     
-    <a href="@Url.Action("FilterCompany", "CompanyPrepago")" class="btn btn-success btn-sm"> Pruebas Prepago</a>  
-                
 }

@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Administrador SUMA</title>
+    <title>@Session["titulo"].ToString()</title>
 
     <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet">
     <link href="@Url.Content("~/Content/style.css")" rel="stylesheet">
@@ -30,7 +30,7 @@
             </div>
 
             <div class="col-md-6 col-plz col-left">
-                <div class="font-plz">Administrador SUMA</div>
+                <div class="font-plz">@Session["titulo"].ToString()</div>
                 <small>V.0.0.4</small>
             </div>
 

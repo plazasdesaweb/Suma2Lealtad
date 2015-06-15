@@ -8,56 +8,47 @@ namespace Suma2Lealtad.Filters
 {
     public class AuditingFilter : ActionFilterAttribute, IActionFilter
     {
-
-
-        void IActionFilter.OnActionExecuting(ActionExecutingContext filterContext){
-
-        if (HttpContext.Current.Session["login"] == null)
+        void IActionFilter.OnActionExecuting(ActionExecutingContext filterContext)
         {
-
-            filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
+            if (HttpContext.Current.Session["login"] == null)
             {
-                action = "SessionExpired",
-                controller = "Error",
-                area = ""
-            }));
-
-        }
-        else
-        {
-            using (LealtadEntities db = new LealtadEntities())
-            {
-                int idlog;
-                if (db.Auditings.Count() > 0)
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                 {
-                    idlog = db.Auditings.Max(x => x.id) + 1;
-                }
-                else
-                {
-                    idlog = 1;
-                }
-                Auditing log = new Auditing()
-                {                
-                    id = idlog,
-                    objectid = 1,
-                    operationsid = 1,
-                    userid = (int) HttpContext.Current.Session["userid"],     
-                    creationdate = filterContext.HttpContext.Timestamp,
-                    originaldata = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName,
-                    changedata = filterContext.ActionDescriptor.ActionName,
-                    ipaddress = filterContext.HttpContext.Request.UserHostAddress
-                };
-
-                db.Auditings.Add(log);
-                db.SaveChanges();
+                    action = "SessionExpired",
+                    controller = "Error",
+                    area = ""
+                }));
             }
+            else
+            {
+                using (LealtadEntities db = new LealtadEntities())
+                {
+                    int idlog;
+                    if (db.Auditings.Count() > 0)
+                    {
+                        idlog = db.Auditings.Max(x => x.id) + 1;
+                    }
+                    else
+                    {
+                        idlog = 1;
+                    }
+                    Auditing log = new Auditing()
+                    {
+                        id = idlog,
+                        objectid = 1,
+                        operationsid = 1,
+                        userid = (int)HttpContext.Current.Session["userid"],
+                        creationdate = filterContext.HttpContext.Timestamp,
+                        originaldata = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName,
+                        changedata = filterContext.ActionDescriptor.ActionName,
+                        ipaddress = filterContext.HttpContext.Request.UserHostAddress
+                    };
+                    db.Auditings.Add(log);
+                    db.SaveChanges();
+                }
+            }
+            this.OnActionExecuting(filterContext);
         }
 
-        this.OnActionExecuting(filterContext);
-
     }
-
-
-    }
-
 }

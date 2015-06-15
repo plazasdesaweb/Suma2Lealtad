@@ -438,10 +438,10 @@
     <Content Include="Global.asax" />
     <Content Include="Icon.png" />
     <Content Include="Images\conectado.jpg" />
+    <Content Include="Images\conectadoPrepago.jpg" />
+    <Content Include="Images\conectadoSuma.jpg" />
     <Content Include="Images\plzlogo.jpg" />
     <Content Include="Images\principal.jpg" />
-    <Content Include="Picture\V-12919906.jpg" />
-    <Content Include="Picture\V-16006920.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\html5shiv.min.js" />
@@ -650,6 +650,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Picture\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

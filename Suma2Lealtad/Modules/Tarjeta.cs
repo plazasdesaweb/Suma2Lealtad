@@ -5,7 +5,7 @@ namespace Suma2Lealtad.Modules
     {
         public static string ConstruirTrackI(string NroTarjeta) 
         {
-            return "B" + NroTarjeta + "^AUTOMERCADOS_PLAZAS^99120000"; //"B99999999999999999^AUTOMERC_PLAZAS^99120000";
+            return "B" + NroTarjeta + "^AUTOMERCADOS_PLAZAS^99120000"; //"B99999999999999999^AUTOMERCADOS_PLAZAS^99120000";
         }
 
         public static string ConstruirTrackII(string NroTarjeta) 

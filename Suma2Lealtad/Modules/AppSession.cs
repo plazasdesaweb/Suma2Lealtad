@@ -8,7 +8,6 @@ namespace Suma2Lealtad.Modules
 {
     public class AppSession
     {
-
         public class AppUser
         {
             public int id { get; set; }
@@ -29,7 +28,6 @@ namespace Suma2Lealtad.Modules
         private string _username = "";
         private string _userlogin = "";
         private int _userID;
-
         public IList<CMenu> MenuList { get { return _menu; } }
         public string UserName { get { return _username; } }
         public string UserLogin { get { return _userlogin; } }
@@ -38,41 +36,42 @@ namespace Suma2Lealtad.Modules
 
         public bool Login(string login, string password)
         {
-
             using (LealtadEntities db = new LealtadEntities())
             {
-
                 var user = db.Users.SingleOrDefault(u => u.login == login && u.passw == password);
-
                 if (user != null)
                 {
-
-                    _username = "Usuario : " + user.lastname + ", " + user.firstname;
+                    _username = "Usuario: " + user.lastname + ", " + user.firstname;
                     _userlogin = user.login;
                     _userID = user.id;
-
                     int[] roles = (from item in db.UserRols where item.userid == user.id select item.roleid).ToArray();
-
-                    _menu = (from mainMenu in db.Menus 
-                            join securityMenu in db.SecurityMenus 
-                            on mainMenu.id equals securityMenu.menuid 
-                            where roles.Contains( securityMenu.roleid )
-                            select new CMenu
-                            {
-                                id = mainMenu.id,
-                                name = mainMenu.name,
-                                controller = mainMenu.controller,
-                                actions = mainMenu.actions,
-                                parentid = mainMenu.parentid,
-                                order_no = mainMenu.order_no
-                            }).Distinct().OrderBy(m => m.id).ThenBy(m => m.parentid).ThenBy(m => m.order_no).ToList();
-
+                    if (_userlogin == "ddepablos")
+                    {
+                        _menu.Add(new CMenu { id = 2000, name = "Compañia", controller = "", actions = "", parentid = 0, order_no = 1 });
+                        _menu.Add(new CMenu { id = 2001, name = "Revisar Compañias", controller = "CompanyPrepago", actions = "FilterCompany", parentid = 2000, order_no = 1 });
+                    }
+                    else 
+                    {
+                        _menu = (from mainMenu in db.Menus
+                                 join securityMenu in db.SecurityMenus
+                                 on mainMenu.id equals securityMenu.menuid
+                                 where roles.Contains(securityMenu.roleid)
+                                 select new CMenu
+                                 {
+                                     id = mainMenu.id,
+                                     name = mainMenu.name,
+                                     controller = mainMenu.controller,
+                                     actions = mainMenu.actions,
+                                     parentid = mainMenu.parentid,
+                                     order_no = mainMenu.order_no
+                                 }).Distinct().OrderBy(m => m.id).ThenBy(m => m.parentid).ThenBy(m => m.order_no).ToList();
+                    }
                     _menu.Add(new CMenu { id = 1000, name = "Salir", controller = "", actions = "", parentid = 0, order_no = 1 });
                     _menu.Add(new CMenu { id = 1001, name = "Cerrar Sesión", controller = "Home", actions = "Logout", parentid = 1000, order_no = 1 });
-
                 }
                 return (user != null);
             }
         }
+
     }
 }

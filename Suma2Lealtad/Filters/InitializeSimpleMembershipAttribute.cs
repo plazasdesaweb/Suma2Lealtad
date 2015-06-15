@@ -26,7 +26,6 @@ namespace Suma2Lealtad.Filters
             public SimpleMembershipInitializer()
             {
                 Database.SetInitializer<UsersContext>(null);
-
                 try
                 {
                     using (var context = new UsersContext())
@@ -46,5 +45,6 @@ namespace Suma2Lealtad.Filters
                 }
             }
         }
+
     }
 }
