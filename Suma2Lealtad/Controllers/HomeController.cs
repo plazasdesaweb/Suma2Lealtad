@@ -23,7 +23,7 @@ namespace Suma2Lealtad.Controllers
             AppSession app = new AppSession();
             if (app.Login(Model.UserName, Model.Password))
             {
-                if (app.UserLogin == "prepago")
+                if (app.UserLogin == "prepago" || app.UserLogin == "jmartinezprepago")
                 {
                     Session["titulo"] = "Administrador PREPAGO";
                 }
