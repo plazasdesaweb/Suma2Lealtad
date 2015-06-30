@@ -45,7 +45,7 @@ namespace Suma2Lealtad.Modules
                     _userlogin = user.login;
                     _userID = user.id;
                     int[] roles = (from item in db.UserRols where item.userid == user.id select item.roleid).ToArray();
-                    if (_userlogin == "prepago")
+                    if (_userlogin == "prepago" || _userlogin == "jmartinezprepago")
                     {
                         _menu.Add(new CMenu { id = 2000, name = "Compañia", controller = "", actions = "", parentid = 0, order_no = 1 });
                         _menu.Add(new CMenu { id = 2001, name = "Revisar Compañias", controller = "CompanyPrepago", actions = "FilterCompany", parentid = 2000, order_no = 1 });

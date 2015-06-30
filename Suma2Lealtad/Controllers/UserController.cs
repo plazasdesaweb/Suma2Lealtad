@@ -78,6 +78,8 @@ namespace Suma2Lealtad.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Agregue esto pq esta dando errores la inserción del valor que viene en null desde la vista
+                user.status = "1";
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
