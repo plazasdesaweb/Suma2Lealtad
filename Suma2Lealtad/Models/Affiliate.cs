@@ -35,7 +35,9 @@ namespace Suma2Lealtad.Models
         public string facebook_account { get; set; }
         public string instagram_account { get; set; }
         public string comments { get; set; }
+        public Nullable<int> sumastatusid { get; set; }
     
         public virtual Channel Channel { get; set; }
+        public virtual SumaStatus SumaStatus { get; set; }
     }
 }

@@ -20,6 +20,9 @@ namespace Suma2Lealtad.Models
         public string firstname { get; set; }
         public string lastname { get; set; }
         public string email { get; set; }
-        public string status { get; set; }
+        public Nullable<int> sumastatusid { get; set; }
+        public int typeid { get; set; }
+    
+        public virtual SumaStatus SumaStatus { get; set; }
     }
 }

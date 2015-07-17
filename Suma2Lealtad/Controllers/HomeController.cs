@@ -23,7 +23,7 @@ namespace Suma2Lealtad.Controllers
             AppSession app = new AppSession();
             if (app.Login(Model.UserName, Model.Password))
             {
-                if (app.UserLogin == "prepago" || app.UserLogin == "jmartinezprepago")
+                if (app.UserType == "Prepago")
                 {
                     Session["titulo"] = "Administrador PREPAGO";
                 }
@@ -34,6 +34,7 @@ namespace Suma2Lealtad.Controllers
                 Session["login"] = app.UserLogin;
                 Session["username"] = app.UserName;
                 Session["userid"] = app.UserID;
+                Session["type"] = app.UserType;
                 Session["menu"] = app.MenuList;
                 Session["appdate"] = app.AppDate;
                 ViewBag.AppDate = app.AppDate;

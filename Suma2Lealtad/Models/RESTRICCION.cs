@@ -12,7 +12,7 @@ namespace Suma2Lealtad.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class RESTRICCIONES
+    public partial class RESTRICCION
     {
         public int COD_RESTRICCION { get; set; }
         public Nullable<System.DateTime> FECHA_ACT_REST { get; set; }

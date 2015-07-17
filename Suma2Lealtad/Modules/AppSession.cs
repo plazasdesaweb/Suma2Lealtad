@@ -16,6 +16,7 @@ namespace Suma2Lealtad.Modules
             public string email { get; set; }
             public string status { get; set; }
             public int role { get; set; }
+            public string type { get; set; }
             public List<AppRols> Roles { get; set; }
         }
 
@@ -27,10 +28,12 @@ namespace Suma2Lealtad.Modules
         private IList<CMenu> _menu = new List<CMenu>();
         private string _username = "";
         private string _userlogin = "";
+        private string _usertype = "";
         private int _userID;
         public IList<CMenu> MenuList { get { return _menu; } }
         public string UserName { get { return _username; } }
         public string UserLogin { get { return _userlogin; } }
+        public string UserType { get { return _usertype; } }
         public int UserID { get { return _userID; } }
         public string AppDate { get { var dt = DateTime.Now; return dt.ToString("D", new CultureInfo("es-ES")); } }
 
@@ -43,16 +46,14 @@ namespace Suma2Lealtad.Modules
                 {
                     _username = "Usuario: " + user.lastname + ", " + user.firstname;
                     _userlogin = user.login;
+                    _usertype = db.Types.SingleOrDefault(t => t.id == user.typeid).name;
                     _userID = user.id;
-                    int[] roles = (from item in db.UserRols where item.userid == user.id select item.roleid).ToArray();
-                    if (_userlogin == "prepago" || _userlogin == "jmartinezprepago")
-                    {
-                        _menu.Add(new CMenu { id = 2000, name = "Compañia", controller = "", actions = "", parentid = 0, order_no = 1 });
-                        _menu.Add(new CMenu { id = 2001, name = "Revisar Compañias", controller = "CompanyPrepago", actions = "FilterCompany", parentid = 2000, order_no = 1 });
-                    }
-                    else 
-                    {
-                        _menu = (from mainMenu in db.Menus
+                    int[] roles = (from item in db.UserRols 
+                                   where item.userid == user.id 
+                                   select item.roleid
+                                   ).ToArray();
+                    //Ojo: No se fltra el Menú por Tipo de Usuario, sino por Rol del Usuario. Hay que tener esto en cuenta al definir los roles que sean excluyentes.
+                    _menu = (from mainMenu in db.Menus
                                  join securityMenu in db.SecurityMenus
                                  on mainMenu.id equals securityMenu.menuid
                                  where roles.Contains(securityMenu.roleid)
@@ -65,9 +66,8 @@ namespace Suma2Lealtad.Modules
                                      parentid = mainMenu.parentid,
                                      order_no = mainMenu.order_no
                                  }).Distinct().OrderBy(m => m.id).ThenBy(m => m.parentid).ThenBy(m => m.order_no).ToList();
-                    }
-                    _menu.Add(new CMenu { id = 1000, name = "Salir", controller = "", actions = "", parentid = 0, order_no = 1 });
-                    _menu.Add(new CMenu { id = 1001, name = "Cerrar Sesión", controller = "Home", actions = "Logout", parentid = 1000, order_no = 1 });
+                    _menu.Add(new CMenu { id = 10000, name = "Salir", controller = "", actions = "", parentid = 0, order_no = 10000 });
+                    _menu.Add(new CMenu { id = 10001, name = "Cerrar Sesión", controller = "Home", actions = "Logout", parentid = 1000, order_no = 1 });
                 }
                 return (user != null);
             }

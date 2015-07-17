@@ -12,6 +12,6 @@ namespace Suma2Lealtad.Models
         public int customerid { get; set; }
         public decimal amount { get; set; }
         public string comments { get; set; }
-        public string status { get; set; }
+        public int statusid { get; set; }
     }
 }

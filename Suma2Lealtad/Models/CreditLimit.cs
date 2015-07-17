@@ -23,7 +23,5 @@ namespace Suma2Lealtad.Models
         public System.DateTime modifieddate { get; set; }
         public int modifieduserid { get; set; }
         public bool activecredit { get; set; }
-    
-        public virtual Company Company { get; set; }
     }
 }

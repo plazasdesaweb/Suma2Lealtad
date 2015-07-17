@@ -10,6 +10,6 @@ namespace Suma2Lealtad.Models
         public string lastname { get; set; }
         public string email { get; set; }
         public string status { get; set; }
-
+        public string type { get; set; }
     }
 }

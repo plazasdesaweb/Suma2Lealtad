@@ -20,7 +20,5 @@ namespace Suma2Lealtad.Models
         public Nullable<System.DateTime> enddate { get; set; }
         public string comments { get; set; }
         public Nullable<bool> active { get; set; }
-    
-        public virtual Company Company { get; set; }
     }
 }

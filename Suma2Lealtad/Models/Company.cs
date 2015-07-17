@@ -14,13 +14,6 @@ namespace Suma2Lealtad.Models
     
     public partial class Company
     {
-        public Company()
-        {
-            this.CompanyAffiliates = new HashSet<CompanyAffiliate>();
-            this.CreditLimits = new HashSet<CreditLimit>();
-            this.Orders = new HashSet<Order>();
-        }
-    
         public int id { get; set; }
         public string name { get; set; }
         public string ALIAS { get; set; }
@@ -30,9 +23,5 @@ namespace Suma2Lealtad.Models
         public string email { get; set; }
         public System.DateTime creationdate { get; set; }
         public int userid { get; set; }
-    
-        public virtual ICollection<CompanyAffiliate> CompanyAffiliates { get; set; }
-        public virtual ICollection<CreditLimit> CreditLimits { get; set; }
-        public virtual ICollection<Order> Orders { get; set; }
     }
 }
