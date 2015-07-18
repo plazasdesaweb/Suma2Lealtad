@@ -34,7 +34,6 @@ namespace Suma2Lealtad.Controllers
             List<PrepagoCompanyAffiliattes> compañias = rep.Find(rif, name);
             if (compañias.Count == 0)
             {
-                //NOCLIENTE/NOAFILIADO
                 ViewModel viewmodel = new ViewModel();
                 viewmodel.Title = "Prepago / Compañia / Buscar Compañia";
                 viewmodel.Message = "No se ha(n) encontrado la(las) Compañia(s) con los datos suministrados";
