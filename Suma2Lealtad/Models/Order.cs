@@ -20,16 +20,17 @@ namespace Suma2Lealtad.Models
         }
     
         public int id { get; set; }
-        public int companyid { get; set; }
+        public int prepaidcustomerid { get; set; }
         public decimal totalamount { get; set; }
         public string paymenttype { get; set; }
         public System.DateTime creationdate { get; set; }
         public int creationuserid { get; set; }
         public System.DateTime processdate { get; set; }
         public string comments { get; set; }
-        public string status { get; set; }
+        public int sumastatusid { get; set; }
     
-        public virtual Company Company { get; set; }
+        public virtual PrepaidCustomer PrepaidCustomer { get; set; }
+        public virtual SumaStatus SumaStatu { get; set; }
         public virtual ICollection<OrdersDetail> OrdersDetails { get; set; }
     }
 }

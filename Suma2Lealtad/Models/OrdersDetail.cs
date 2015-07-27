@@ -19,8 +19,10 @@ namespace Suma2Lealtad.Models
         public int customerid { get; set; }
         public decimal amount { get; set; }
         public string comments { get; set; }
-        public string status { get; set; }
+        public string cardsresponse { get; set; }
+        public Nullable<int> sumastatusid { get; set; }
     
+        public virtual SumaStatus SumaStatus { get; set; }
         public virtual Order Order { get; set; }
     }
 }

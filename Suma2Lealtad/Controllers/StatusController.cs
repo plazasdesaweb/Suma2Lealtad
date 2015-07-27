@@ -16,7 +16,7 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Status.ToList());
+            return View(db.Statuses.ToList());
         }
 
         //
@@ -24,7 +24,7 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            Status status = db.Status.Find(id);
+            Status status = db.Statuses.Find(id);
             if (status == null)
             {
                 return HttpNotFound();
@@ -45,19 +45,19 @@ namespace Suma2Lealtad.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Status status)
+        public ActionResult Create(SumaStatus status)
         {
             if (ModelState.IsValid)
             {
-                if (db.Status.Count() > 0)
+                if (db.SumaStatuses.Count() > 0)
                 {
-                    status.id = db.Status.Max(c => c.id) + 1;
+                    status.id = db.SumaStatuses.Max(c => c.id) + 1;
                 }
                 else
                 {
                     status.id = 1;
                 }
-                db.Status.Add(status);
+                db.SumaStatuses.Add(status);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -70,7 +70,7 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Status status = db.Status.Find(id);
+            SumaStatus status = db.SumaStatuses.Find(id);
             if (status == null)
             {
                 return HttpNotFound();
@@ -83,7 +83,7 @@ namespace Suma2Lealtad.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Status status)
+        public ActionResult Edit(SumaStatus status)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +99,7 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Status status = db.Status.Find(id);
+            SumaStatus status = db.SumaStatuses.Find(id);
             if (status == null)
             {
                 return HttpNotFound();
@@ -114,8 +114,8 @@ namespace Suma2Lealtad.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Status status = db.Status.Find(id);
-            db.Status.Remove(status);
+            SumaStatus status = db.SumaStatuses.Find(id);
+            db.SumaStatuses.Remove(status);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

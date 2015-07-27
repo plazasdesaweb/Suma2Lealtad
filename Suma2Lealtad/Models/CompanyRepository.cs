@@ -10,8 +10,14 @@ namespace Suma2Lealtad.Models
     public class CompanyRepository
     {
         private const int ID_TYPE_PREPAGO = 2;
-        private const string ESTATUS_ORDEN_RECARGA_NUEVA = "N";
-        private const string ESTATUS_ORDEN_RECARGA_EFECTIVA = "E";
+        private const int ESTATUS_ORDEN_RECARGA_NUEVA = 1;
+        private const int ESTATUS_ORDEN_RECARGA_APROBADA = 2;
+        private const int ESTATUS_ORDEN_RECARGA_RECHAZADA = 3;
+        private const int ESTATUS_ORDEN_RECARGA_EFECTIVA = 4;
+        private const int ESTATUS_DETALLEORDEN_RECARGA_NUEVA = 1;
+        private const int ESTATUS_DETALLEORDEN_RECARGA_APROBADA = 2;
+        private const int ESTATUS_DETALLEORDEN_RECARGA_EFECTIVA = 3;
+        private const int ESTATUS_DETALLEORDEN_RECARGA_FALLIDA = 4;
         private const string TRANS_CODE_RECARGA = "200";
 
         //determina si hubo excepción en llamada a servicio Cards
@@ -121,7 +127,7 @@ namespace Suma2Lealtad.Models
                                                                    }).Single();
                 compañiaBeneficiarios.Beneficiarios = (from a in db.Affiliates
                                                        join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                                       join s in db.Status on a.statusid equals s.id
+                                                       join s in db.SumaStatuses on a.statusid equals s.id
                                                        join t in db.Types on a.typeid equals t.id
                                                        join b in db.CompanyAffiliates on a.id equals b.affiliateid
                                                        where b.companyid.Equals(companyid) && a.typeid.Equals(ID_TYPE_PREPAGO)
@@ -202,7 +208,7 @@ namespace Suma2Lealtad.Models
                 {
                     compañiaBeneficiarios.Beneficiarios = (from a in db.Affiliates
                                                            join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                                           join s in db.Status on a.statusid equals s.id
+                                                           join s in db.SumaStatuses on a.statusid equals s.id
                                                            join t in db.Types on a.typeid equals t.id
                                                            join b in db.CompanyAffiliates on a.id equals b.affiliateid
                                                            where b.companyid.Equals(companyid) && a.typeid.Equals(ID_TYPE_PREPAGO) && a.docnumber.Equals(numdoc)
@@ -226,7 +232,7 @@ namespace Suma2Lealtad.Models
                 {
                     compañiaBeneficiarios.Beneficiarios = (from a in db.Affiliates
                                                            join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                                           join s in db.Status on a.statusid equals s.id
+                                                           join s in db.SumaStatuses on a.statusid equals s.id
                                                            join t in db.Types on a.typeid equals t.id
                                                            join b in db.CompanyAffiliates on a.id equals b.affiliateid
                                                            where b.companyid.Equals(companyid) && a.typeid.Equals(ID_TYPE_PREPAGO) && (c.E_MAIL == email || c.NOMBRE_CLIENTE1.Contains(name) || c.APELLIDO_CLIENTE1.Contains(name))
@@ -421,7 +427,7 @@ namespace Suma2Lealtad.Models
                         temp.statusid = afiliado.statusid;
                         temp.estatus = afiliado.estatus;
                         temp.Orderid = id;
-                        temp.Orderstatus = db.Orders.Find(id).status;
+                        //temp.Orderstatus = db.Orders.Find(id).status;
                         temp.MontoRecarga = Math.Truncate(montorecarga);
                         compañiaafiliados.Add(temp);
                         temp = null;
@@ -486,13 +492,13 @@ namespace Suma2Lealtad.Models
                 var Order = new Order()
                 {
                     id = OrderID(),
-                    companyid = companyid,
+                    prepaidcustomerid = companyid,
                     totalamount = MontoTotalRecargas,
                     paymenttype = "",
                     creationdate = DateTime.Now,
                     creationuserid = (int)HttpContext.Current.Session["userid"],
                     processdate = DateTime.Now,
-                    status = ESTATUS_ORDEN_RECARGA_NUEVA
+                    sumastatusid = ESTATUS_ORDEN_RECARGA_NUEVA 
                 };
                 db.Orders.Add(Order);
                 var OrderDetail = new OrdersDetail();
@@ -507,7 +513,7 @@ namespace Suma2Lealtad.Models
                         orderid = Order.id,
                         customerid = b.Afiliadoid,
                         amount = b.MontoRecarga,
-                        status = ESTATUS_ORDEN_RECARGA_NUEVA
+                        sumastatusid = ESTATUS_ORDEN_RECARGA_NUEVA
                     };
                     db.OrdersDetails.Add(OrderDetail);
                     OrderDetail = null;
@@ -523,12 +529,12 @@ namespace Suma2Lealtad.Models
             using (LealtadEntities db = new LealtadEntities())
             {
                 ordenes = (from o in db.Orders
-                           where o.companyid.Equals(companyid)
+                           where o.prepaidcustomerid.Equals(companyid)
                            select new Orden()
                            {
                                id = o.id,
-                               companyid = companyid,
-                               status = o.status,
+                               prepaidcustomerid = companyid,
+                               statusid = o.sumastatusid,
                                totalamount = o.totalamount,
                                creationdate = o.creationdate
                            }).ToList();
@@ -559,7 +565,7 @@ namespace Suma2Lealtad.Models
             using (LealtadEntities db = new LealtadEntities())
             {             
                 Order orden = db.Orders.FirstOrDefault(o => o.id.Equals(orderid));
-                orden.status = "A"; // A = Orden Aprobada
+                orden.sumastatusid = ESTATUS_ORDEN_RECARGA_APROBADA; 
                 orden.processdate = DateTime.Now;
                 db.SaveChanges();
                 return true;
@@ -571,7 +577,7 @@ namespace Suma2Lealtad.Models
             using (LealtadEntities db = new LealtadEntities())
             {
                 Order orden = db.Orders.FirstOrDefault(o => o.id.Equals(orderid));
-                orden.status = "R"; // A = Orden Rechazada
+                orden.sumastatusid = ESTATUS_ORDEN_RECARGA_RECHAZADA;
                 orden.processdate = DateTime.Now;
                 db.SaveChanges();
                 return true;
@@ -612,21 +618,21 @@ namespace Suma2Lealtad.Models
                     amount = o.amount;
                     if (Recargar(o, docnumber, amount))
                     {
-                        o.status = "E";
+                        o.statusid = ESTATUS_DETALLEORDEN_RECARGA_EFECTIVA;
                         o.comments = "Recarga efectiva";
                     }
                     else
                     {
-                        o.status = "F";
+                        o.statusid = ESTATUS_DETALLEORDEN_RECARGA_FALLIDA;
                         //resultado = false;
                     }
                     OrdersDetail d = db.OrdersDetails.FirstOrDefault(x => x.id.Equals(o.id));
-                    d.status = o.status;
+                    d.sumastatusid = o.statusid;
                     d.comments = o.comments;
                     db.SaveChanges();
                 }
                 Order orden = db.Orders.FirstOrDefault(o => o.id.Equals(orderid));
-                orden.status = "E"; // E = Orden Efectiva - Procesada
+                orden.sumastatusid = ESTATUS_ORDEN_RECARGA_EFECTIVA;
                 orden.processdate = DateTime.Now;
                 db.SaveChanges();
                 //return resultado;

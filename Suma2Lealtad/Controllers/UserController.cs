@@ -25,7 +25,7 @@ namespace Suma2Lealtad.Controllers
                          firstname = u.firstname,
                          lastname = u.lastname,
                          email = u.email,
-                         status = (u.status.Equals("1") ? "Activo" : "Inactivo")
+                         status = (u.sumastatusid.Equals("1") ? "Activo" : "Inactivo")
                      });
 
             return View(q.ToList());
@@ -79,7 +79,7 @@ namespace Suma2Lealtad.Controllers
             if (ModelState.IsValid)
             {
                 //Agregue esto pq esta dando errores la inserción del valor que viene en null desde la vista
-                user.status = "1";
+                user.sumastatusid = 1;
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");

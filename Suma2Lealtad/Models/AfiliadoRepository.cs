@@ -318,7 +318,7 @@ namespace Suma2Lealtad.Models
                         //                    where s.id.Equals(afiliado.statusid)
                         //                    select s.name
                         //                    ).SingleOrDefault();
-                        afiliado.estatus = db.Status.FirstOrDefault(s => s.id == afiliado.statusid).name;
+                        afiliado.estatus = db.SumaStatuses.FirstOrDefault(s => s.id == afiliado.statusid).name;
                     }
                 }
             }
@@ -348,7 +348,7 @@ namespace Suma2Lealtad.Models
                     //ENTIDAD CompanyAffiliates
                     afiliados = (from a in db.Affiliates
                                  join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                 join s in db.Status on a.statusid equals s.id
+                                 join s in db.SumaStatuses on a.statusid equals s.id
                                  join t in db.Types on a.typeid equals t.id
                                  join co in db.CompanyAffiliates on a.id equals co.affiliateid
                                  where a.docnumber.Equals(numdoc) && co.companyid.Equals(companyid) && a.typeid.Equals(typeid)
@@ -375,7 +375,7 @@ namespace Suma2Lealtad.Models
                     //ENTIDAD Status
                     afiliados = (from a in db.Affiliates
                                  join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                 join s in db.Status on a.statusid equals s.id
+                                 join s in db.SumaStatuses on a.statusid equals s.id
                                  join t in db.Types on a.typeid equals t.id
                                  join co in db.CompanyAffiliates on a.id equals co.affiliateid
                                  where (a.docnumber.Equals(numdoc) || c.E_MAIL == email || c.NOMBRE_CLIENTE1.Contains(name) || c.APELLIDO_CLIENTE1.Contains(name)) && co.companyid.Equals(companyid) && a.typeid.Equals(typeid)
@@ -444,7 +444,7 @@ namespace Suma2Lealtad.Models
                 //ENTIDAD CustomerInterest
                 Afiliado afiliado = (from a in db.Affiliates
                                      join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                     join s in db.Status on a.statusid equals s.id
+                                     join s in db.SumaStatuses on a.statusid equals s.id
                                      join t in db.Types on a.typeid equals t.id
                                      join co in db.CompanyAffiliates on a.id equals co.affiliateid
                                      where a.id.Equals(id)

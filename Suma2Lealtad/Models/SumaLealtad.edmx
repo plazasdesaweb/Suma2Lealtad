@@ -4,22 +4,22 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SumaLealtadModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="SumaLealtadModelStoreContainer">
-          <EntitySet Name="Affiliate" EntityType="SumaLealtadModel.Store.Affiliate" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="AffiliateAud" EntityType="SumaLealtadModel.Store.AffiliateAud" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Auditing" EntityType="SumaLealtadModel.Store.Auditing" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Channel" EntityType="SumaLealtadModel.Store.Channel" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="CIUDAD" EntityType="SumaLealtadModel.Store.CIUDAD" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="CIUDAD_MUNICIPIO" EntityType="SumaLealtadModel.Store.CIUDAD_MUNICIPIO" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="CLIENTE" EntityType="SumaLealtadModel.Store.CLIENTE" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Company" EntityType="SumaLealtadModel.Store.Company" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="CompanyAffiliate" EntityType="SumaLealtadModel.Store.CompanyAffiliate" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="CreditLimit" EntityType="SumaLealtadModel.Store.CreditLimit" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="CustomerInterest" EntityType="SumaLealtadModel.Store.CustomerInterest" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ESTADO" EntityType="SumaLealtadModel.Store.ESTADO" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ESTADO_CIUDAD" EntityType="SumaLealtadModel.Store.ESTADO_CIUDAD" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="FACTURA" EntityType="SumaLealtadModel.Store.FACTURA" store:Type="Tables" store:Schema="dbo" store:Name="FACTURA">
+    <Schema Namespace="SumaLealtad.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="SumaLealtadStoreContainer">
+          <EntitySet Name="Affiliate" EntityType="SumaLealtad.Store.Affiliate" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="AffiliateAud" EntityType="SumaLealtad.Store.AffiliateAud" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Auditing" EntityType="SumaLealtad.Store.Auditing" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Channel" EntityType="SumaLealtad.Store.Channel" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CIUDAD" EntityType="SumaLealtad.Store.CIUDAD" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CIUDAD_MUNICIPIO" EntityType="SumaLealtad.Store.CIUDAD_MUNICIPIO" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CLIENTE" EntityType="SumaLealtad.Store.CLIENTE" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Company" EntityType="SumaLealtad.Store.Company" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CompanyAffiliate" EntityType="SumaLealtad.Store.CompanyAffiliate" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CreditLimit" EntityType="SumaLealtad.Store.CreditLimit" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CustomerInterest" EntityType="SumaLealtad.Store.CustomerInterest" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ESTADO" EntityType="SumaLealtad.Store.ESTADO" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ESTADO_CIUDAD" EntityType="SumaLealtad.Store.ESTADO_CIUDAD" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FACTURA" EntityType="SumaLealtad.Store.FACTURA" store:Type="Tables" store:Schema="dbo" store:Name="FACTURA">
             <DefiningQuery>SELECT 
       [FACTURA].[NRO_TARJETA] AS [NRO_TARJETA], 
       [FACTURA].[SUCURSAL] AS [SUCURSAL], 
@@ -35,16 +35,19 @@
       [FACTURA].[NRO_DOCUMENTO] AS [NRO_DOCUMENTO]
       FROM [dbo].[FACTURA] AS [FACTURA]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="Interest" EntityType="SumaLealtadModel.Store.Interest" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Menu" EntityType="SumaLealtadModel.Store.Menu" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="MUNICIPIO" EntityType="SumaLealtadModel.Store.MUNICIPIO" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="MUNICIPIO_PARROQUIA" EntityType="SumaLealtadModel.Store.MUNICIPIO_PARROQUIA" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Object" EntityType="SumaLealtadModel.Store.Object" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Operations" EntityType="SumaLealtadModel.Store.Operations" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Orders" EntityType="SumaLealtadModel.Store.Orders" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="OrdersDetail" EntityType="SumaLealtadModel.Store.OrdersDetail" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="PAIS" EntityType="SumaLealtadModel.Store.PAIS" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="PARAMETROS" EntityType="SumaLealtadModel.Store.PARAMETROS" store:Type="Tables" store:Schema="dbo" store:Name="PARAMETROS">
+          <EntitySet Name="Interest" EntityType="SumaLealtad.Store.Interest" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Menu" EntityType="SumaLealtad.Store.Menu" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MUNICIPIO" EntityType="SumaLealtad.Store.MUNICIPIO" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MUNICIPIO_PARROQUIA" EntityType="SumaLealtad.Store.MUNICIPIO_PARROQUIA" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Object" EntityType="SumaLealtad.Store.Object" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Operations" EntityType="SumaLealtad.Store.Operations" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Orders" EntityType="SumaLealtad.Store.Orders" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="OrdersDetail" EntityType="SumaLealtad.Store.OrdersDetail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="OrdersHistory" EntityType="SumaLealtad.Store.OrdersHistory" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PAIS" EntityType="SumaLealtad.Store.PAIS" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PAIS_ESTADO" EntityType="SumaLealtad.Store.PAIS_ESTADO" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Parameters" EntityType="SumaLealtad.Store.Parameters" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PARAMETROS" EntityType="SumaLealtad.Store.PARAMETROS" store:Type="Tables" store:Schema="dbo" store:Name="PARAMETROS">
             <DefiningQuery>SELECT 
       [PARAMETROS].[ID_PARAM] AS [ID_PARAM], 
       [PARAMETROS].[NOMBRE_PARAM] AS [NOMBRE_PARAM], 
@@ -60,75 +63,91 @@
       [PARAMETROS].[FECHA] AS [FECHA]
       FROM [dbo].[PARAMETROS] AS [PARAMETROS]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="PARROQUIA" EntityType="SumaLealtadModel.Store.PARROQUIA" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="PARROQUIA_URBANIZACION" EntityType="SumaLealtadModel.Store.PARROQUIA_URBANIZACION" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Photos_Affiliate" EntityType="SumaLealtadModel.Store.Photos_Affiliate" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Reasons" EntityType="SumaLealtadModel.Store.Reasons" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="RESTRICCIONES" EntityType="SumaLealtadModel.Store.RESTRICCIONES" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Role" EntityType="SumaLealtadModel.Store.Role" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="SecurityLevel" EntityType="SumaLealtadModel.Store.SecurityLevel" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="SecurityMenu" EntityType="SumaLealtadModel.Store.SecurityMenu" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Status" EntityType="SumaLealtadModel.Store.Status" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="TARJETA" EntityType="SumaLealtadModel.Store.TARJETA" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Type" EntityType="SumaLealtadModel.Store.Type" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="URBANIZACION" EntityType="SumaLealtadModel.Store.URBANIZACION" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="User" EntityType="SumaLealtadModel.Store.User" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="UserRol" EntityType="SumaLealtadModel.Store.UserRol" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_Affiliate_Channel" Association="SumaLealtadModel.Store.FK_Affiliate_Channel">
+          <EntitySet Name="PARROQUIA" EntityType="SumaLealtad.Store.PARROQUIA" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PARROQUIA_URBANIZACION" EntityType="SumaLealtad.Store.PARROQUIA_URBANIZACION" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Photos_Affiliate" EntityType="SumaLealtad.Store.Photos_Affiliate" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PrepaidBeneficiary" EntityType="SumaLealtad.Store.PrepaidBeneficiary" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PrepaidCustomer" EntityType="SumaLealtad.Store.PrepaidCustomer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Reasons" EntityType="SumaLealtad.Store.Reasons" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="RESTRICCIONES" EntityType="SumaLealtad.Store.RESTRICCIONES" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Role" EntityType="SumaLealtad.Store.Role" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SecurityLevel" EntityType="SumaLealtad.Store.SecurityLevel" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SecurityMenu" EntityType="SumaLealtad.Store.SecurityMenu" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Status" EntityType="SumaLealtad.Store.Status" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SumaStatus" EntityType="SumaLealtad.Store.SumaStatus" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="sysdiagrams" EntityType="SumaLealtad.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TARJETA" EntityType="SumaLealtad.Store.TARJETA" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Type" EntityType="SumaLealtad.Store.Type" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="URBANIZACION" EntityType="SumaLealtad.Store.URBANIZACION" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="User" EntityType="SumaLealtad.Store.User" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserRol" EntityType="SumaLealtad.Store.UserRol" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Affiliate_Channel" Association="SumaLealtad.Store.FK_Affiliate_Channel">
             <End Role="Channel" EntitySet="Channel" />
             <End Role="Affiliate" EntitySet="Affiliate" />
           </AssociationSet>
-          <AssociationSet Name="FK_CIUDAD_MUNICIPIO_CIUDAD" Association="SumaLealtadModel.Store.FK_CIUDAD_MUNICIPIO_CIUDAD">
+          <AssociationSet Name="FK_Affiliate_SumaStatus" Association="SumaLealtad.Store.FK_Affiliate_SumaStatus">
+            <End Role="SumaStatus" EntitySet="SumaStatus" />
+            <End Role="Affiliate" EntitySet="Affiliate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CIUDAD_MUNICIPIO_CIUDAD" Association="SumaLealtad.Store.FK_CIUDAD_MUNICIPIO_CIUDAD">
             <End Role="CIUDAD" EntitySet="CIUDAD" />
             <End Role="CIUDAD_MUNICIPIO" EntitySet="CIUDAD_MUNICIPIO" />
           </AssociationSet>
-          <AssociationSet Name="FK_CIUDAD_MUNICIPIO_MUNICIPIO" Association="SumaLealtadModel.Store.FK_CIUDAD_MUNICIPIO_MUNICIPIO">
+          <AssociationSet Name="FK_CIUDAD_MUNICIPIO_MUNICIPIO" Association="SumaLealtad.Store.FK_CIUDAD_MUNICIPIO_MUNICIPIO">
             <End Role="MUNICIPIO" EntitySet="MUNICIPIO" />
             <End Role="CIUDAD_MUNICIPIO" EntitySet="CIUDAD_MUNICIPIO" />
           </AssociationSet>
-          <AssociationSet Name="FK_CompanyAffiliate_Company" Association="SumaLealtadModel.Store.FK_CompanyAffiliate_Company">
-            <End Role="Company" EntitySet="Company" />
-            <End Role="CompanyAffiliate" EntitySet="CompanyAffiliate" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CreditLimit_Company" Association="SumaLealtadModel.Store.FK_CreditLimit_Company">
-            <End Role="Company" EntitySet="Company" />
-            <End Role="CreditLimit" EntitySet="CreditLimit" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomerInterest_Interest" Association="SumaLealtadModel.Store.FK_CustomerInterest_Interest">
+          <AssociationSet Name="FK_CustomerInterest_Interest" Association="SumaLealtad.Store.FK_CustomerInterest_Interest">
             <End Role="Interest" EntitySet="Interest" />
             <End Role="CustomerInterest" EntitySet="CustomerInterest" />
           </AssociationSet>
-          <AssociationSet Name="FK_ESTADO_CIUDAD_CIUDAD" Association="SumaLealtadModel.Store.FK_ESTADO_CIUDAD_CIUDAD">
+          <AssociationSet Name="FK_ESTADO_CIUDAD_CIUDAD" Association="SumaLealtad.Store.FK_ESTADO_CIUDAD_CIUDAD">
             <End Role="CIUDAD" EntitySet="CIUDAD" />
             <End Role="ESTADO_CIUDAD" EntitySet="ESTADO_CIUDAD" />
           </AssociationSet>
-          <AssociationSet Name="FK_ESTADO_CIUDAD_ESTADO" Association="SumaLealtadModel.Store.FK_ESTADO_CIUDAD_ESTADO">
+          <AssociationSet Name="FK_ESTADO_CIUDAD_ESTADO" Association="SumaLealtad.Store.FK_ESTADO_CIUDAD_ESTADO">
             <End Role="ESTADO" EntitySet="ESTADO" />
             <End Role="ESTADO_CIUDAD" EntitySet="ESTADO_CIUDAD" />
           </AssociationSet>
-          <AssociationSet Name="FK_MUNICIPIO_PARROQUIA_MUNICIPIO" Association="SumaLealtadModel.Store.FK_MUNICIPIO_PARROQUIA_MUNICIPIO">
+          <AssociationSet Name="FK_MUNICIPIO_PARROQUIA_MUNICIPIO" Association="SumaLealtad.Store.FK_MUNICIPIO_PARROQUIA_MUNICIPIO">
             <End Role="MUNICIPIO" EntitySet="MUNICIPIO" />
             <End Role="MUNICIPIO_PARROQUIA" EntitySet="MUNICIPIO_PARROQUIA" />
           </AssociationSet>
-          <AssociationSet Name="FK_MUNICIPIO_PARROQUIA_PARROQUIA" Association="SumaLealtadModel.Store.FK_MUNICIPIO_PARROQUIA_PARROQUIA">
+          <AssociationSet Name="FK_MUNICIPIO_PARROQUIA_PARROQUIA" Association="SumaLealtad.Store.FK_MUNICIPIO_PARROQUIA_PARROQUIA">
             <End Role="PARROQUIA" EntitySet="PARROQUIA" />
             <End Role="MUNICIPIO_PARROQUIA" EntitySet="MUNICIPIO_PARROQUIA" />
           </AssociationSet>
-          <AssociationSet Name="FK_Orders_Company" Association="SumaLealtadModel.Store.FK_Orders_Company">
-            <End Role="Company" EntitySet="Company" />
+          <AssociationSet Name="FK_Orders_PrepaidCustomer" Association="SumaLealtad.Store.FK_Orders_PrepaidCustomer">
+            <End Role="PrepaidCustomer" EntitySet="PrepaidCustomer" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrdersDetail_Order" Association="SumaLealtadModel.Store.FK_OrdersDetail_Order">
+          <AssociationSet Name="FK_Orders_SumaStatus" Association="SumaLealtad.Store.FK_Orders_SumaStatus">
+            <End Role="SumaStatus" EntitySet="SumaStatus" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdersDetail_Order" Association="SumaLealtad.Store.FK_OrdersDetail_Order">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrdersDetail" EntitySet="OrdersDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_PARROQUIA_URBANIZACION_PARROQUIA" Association="SumaLealtadModel.Store.FK_PARROQUIA_URBANIZACION_PARROQUIA">
+          <AssociationSet Name="FK_OrdersDetail_SumaStatus" Association="SumaLealtad.Store.FK_OrdersDetail_SumaStatus">
+            <End Role="SumaStatus" EntitySet="SumaStatus" />
+            <End Role="OrdersDetail" EntitySet="OrdersDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PARROQUIA_URBANIZACION_PARROQUIA" Association="SumaLealtad.Store.FK_PARROQUIA_URBANIZACION_PARROQUIA">
             <End Role="PARROQUIA" EntitySet="PARROQUIA" />
             <End Role="PARROQUIA_URBANIZACION" EntitySet="PARROQUIA_URBANIZACION" />
           </AssociationSet>
-          <AssociationSet Name="FK_PARROQUIA_URBANIZACION_URBANIZACION" Association="SumaLealtadModel.Store.FK_PARROQUIA_URBANIZACION_URBANIZACION">
+          <AssociationSet Name="FK_PARROQUIA_URBANIZACION_URBANIZACION" Association="SumaLealtad.Store.FK_PARROQUIA_URBANIZACION_URBANIZACION">
             <End Role="URBANIZACION" EntitySet="URBANIZACION" />
             <End Role="PARROQUIA_URBANIZACION" EntitySet="PARROQUIA_URBANIZACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PBeneficiary_PCustomer" Association="SumaLealtad.Store.FK_PBeneficiary_PCustomer">
+            <End Role="PrepaidCustomer" EntitySet="PrepaidCustomer" />
+            <End Role="PrepaidBeneficiary" EntitySet="PrepaidBeneficiary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_SumaStatus" Association="SumaLealtad.Store.FK_User_SumaStatus">
+            <End Role="SumaStatus" EntitySet="SumaStatus" />
+            <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Affiliate">
@@ -156,6 +175,7 @@
           <Property Name="facebook_account" Type="varchar" MaxLength="120" />
           <Property Name="instagram_account" Type="varchar" MaxLength="120" />
           <Property Name="comments" Type="varchar" MaxLength="120" />
+          <Property Name="sumastatusid" Type="int" />
         </EntityType>
         <EntityType Name="AffiliateAud">
           <Key>
@@ -297,7 +317,7 @@
           <Property Name="COD_CIUDAD" Type="varchar" Nullable="false" MaxLength="12" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'SumaLealtad_QA.dbo.FACTURA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'SumaLealtad.dbo.FACTURA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="FACTURA">
           <Key>
@@ -378,14 +398,14 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="companyid" Type="int" Nullable="false" />
+          <Property Name="prepaidcustomerid" Type="int" Nullable="false" />
           <Property Name="totalamount" Type="money" Nullable="false" />
           <Property Name="paymenttype" Type="char" Nullable="false" MaxLength="1" />
           <Property Name="creationdate" Type="datetime" Nullable="false" />
           <Property Name="creationuserid" Type="int" Nullable="false" />
           <Property Name="processdate" Type="datetime" Nullable="false" />
           <Property Name="comments" Type="varchar" MaxLength="120" />
-          <Property Name="status" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="sumastatusid" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="OrdersDetail">
           <Key>
@@ -397,7 +417,18 @@
           <Property Name="customerid" Type="int" Nullable="false" />
           <Property Name="amount" Type="money" Nullable="false" />
           <Property Name="comments" Type="varchar" MaxLength="120" />
-          <Property Name="status" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="cardsresponse" Type="varchar" MaxLength="100" />
+          <Property Name="sumastatusid" Type="int" />
+        </EntityType>
+        <EntityType Name="OrdersHistory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="userid" Type="int" Nullable="false" />
+          <Property Name="estatusid" Type="int" Nullable="false" />
+          <Property Name="creationdate" Type="datetime" Nullable="false" />
+          <Property Name="comments" Type="varchar" MaxLength="120" />
         </EntityType>
         <EntityType Name="PAIS">
           <Key>
@@ -406,8 +437,25 @@
           <Property Name="COD_PAIS" Type="varchar" Nullable="false" MaxLength="12" />
           <Property Name="DESCRIPC_PAIS" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="PAIS_ESTADO">
+          <Key>
+            <PropertyRef Name="COD_PAIS" />
+            <PropertyRef Name="COD_ESTADO" />
+          </Key>
+          <Property Name="COD_PAIS" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="COD_ESTADO" Type="varchar" Nullable="false" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="Parameters">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="value" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="active" Type="bit" Nullable="false" />
+        </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'SumaLealtad_QA.dbo.PARAMETROS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'SumaLealtad.dbo.PARAMETROS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PARAMETROS">
           <Key>
@@ -450,6 +498,32 @@
           <Property Name="photo" Type="image" Nullable="false" />
           <Property Name="photo_type" Type="varchar" Nullable="false" MaxLength="15" />
           <Property Name="Affiliate_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PrepaidBeneficiary">
+          <Key>
+            <PropertyRef Name="affiliateid" />
+            <PropertyRef Name="beneficiaryid" />
+          </Key>
+          <Property Name="affiliateid" Type="int" Nullable="false" />
+          <Property Name="beneficiaryid" Type="int" Nullable="false" />
+          <Property Name="begindate" Type="datetime" />
+          <Property Name="enddate" Type="datetime" />
+          <Property Name="comments" Type="varchar" MaxLength="120" />
+          <Property Name="active" Type="bit" />
+        </EntityType>
+        <EntityType Name="PrepaidCustomer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="120" />
+          <Property Name="alias" Type="varchar" MaxLength="50" />
+          <Property Name="rif" Type="varchar" MaxLength="20" />
+          <Property Name="address" Type="varchar" MaxLength="120" />
+          <Property Name="phone" Type="varchar" MaxLength="25" />
+          <Property Name="email" Type="varchar" MaxLength="25" />
+          <Property Name="creationdate" Type="datetime" Nullable="false" />
+          <Property Name="userid" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Reasons">
           <Key>
@@ -508,6 +582,26 @@
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
         </EntityType>
+        <EntityType Name="SumaStatus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="tablename" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="value" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="active" Type="bit" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="TARJETA">
           <Key>
             <PropertyRef Name="NRO_TARJETA" />
@@ -549,7 +643,8 @@
           <Property Name="firstname" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="lastname" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="email" Type="varchar" Nullable="false" MaxLength="80" />
-          <Property Name="status" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="typeid" Type="int" Nullable="false" />
+          <Property Name="sumastatusid" Type="int" />
         </EntityType>
         <EntityType Name="UserRol">
           <Key>
@@ -560,8 +655,8 @@
           <Property Name="roleid" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Affiliate_Channel">
-          <End Role="Channel" Type="SumaLealtadModel.Store.Channel" Multiplicity="1" />
-          <End Role="Affiliate" Type="SumaLealtadModel.Store.Affiliate" Multiplicity="*" />
+          <End Role="Channel" Type="SumaLealtad.Store.Channel" Multiplicity="1" />
+          <End Role="Affiliate" Type="SumaLealtad.Store.Affiliate" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Channel">
               <PropertyRef Name="id" />
@@ -571,9 +666,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Affiliate_SumaStatus">
+          <End Role="SumaStatus" Type="SumaLealtad.Store.SumaStatus" Multiplicity="0..1" />
+          <End Role="Affiliate" Type="SumaLealtad.Store.Affiliate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SumaStatus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Affiliate">
+              <PropertyRef Name="sumastatusid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CIUDAD_MUNICIPIO_CIUDAD">
-          <End Role="CIUDAD" Type="SumaLealtadModel.Store.CIUDAD" Multiplicity="1" />
-          <End Role="CIUDAD_MUNICIPIO" Type="SumaLealtadModel.Store.CIUDAD_MUNICIPIO" Multiplicity="*" />
+          <End Role="CIUDAD" Type="SumaLealtad.Store.CIUDAD" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CIUDAD_MUNICIPIO" Type="SumaLealtad.Store.CIUDAD_MUNICIPIO" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CIUDAD">
               <PropertyRef Name="COD_CIUDAD" />
@@ -584,8 +693,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CIUDAD_MUNICIPIO_MUNICIPIO">
-          <End Role="MUNICIPIO" Type="SumaLealtadModel.Store.MUNICIPIO" Multiplicity="1" />
-          <End Role="CIUDAD_MUNICIPIO" Type="SumaLealtadModel.Store.CIUDAD_MUNICIPIO" Multiplicity="*" />
+          <End Role="MUNICIPIO" Type="SumaLealtad.Store.MUNICIPIO" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CIUDAD_MUNICIPIO" Type="SumaLealtad.Store.CIUDAD_MUNICIPIO" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MUNICIPIO">
               <PropertyRef Name="COD_MUNICIPIO" />
@@ -595,33 +706,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CompanyAffiliate_Company">
-          <End Role="Company" Type="SumaLealtadModel.Store.Company" Multiplicity="1" />
-          <End Role="CompanyAffiliate" Type="SumaLealtadModel.Store.CompanyAffiliate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Company">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="CompanyAffiliate">
-              <PropertyRef Name="companyid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CreditLimit_Company">
-          <End Role="Company" Type="SumaLealtadModel.Store.Company" Multiplicity="1" />
-          <End Role="CreditLimit" Type="SumaLealtadModel.Store.CreditLimit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Company">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="CreditLimit">
-              <PropertyRef Name="companyid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CustomerInterest_Interest">
-          <End Role="Interest" Type="SumaLealtadModel.Store.Interest" Multiplicity="1" />
-          <End Role="CustomerInterest" Type="SumaLealtadModel.Store.CustomerInterest" Multiplicity="*" />
+          <End Role="Interest" Type="SumaLealtad.Store.Interest" Multiplicity="1" />
+          <End Role="CustomerInterest" Type="SumaLealtad.Store.CustomerInterest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Interest">
               <PropertyRef Name="id" />
@@ -632,8 +719,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ESTADO_CIUDAD_CIUDAD">
-          <End Role="CIUDAD" Type="SumaLealtadModel.Store.CIUDAD" Multiplicity="1" />
-          <End Role="ESTADO_CIUDAD" Type="SumaLealtadModel.Store.ESTADO_CIUDAD" Multiplicity="*" />
+          <End Role="CIUDAD" Type="SumaLealtad.Store.CIUDAD" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ESTADO_CIUDAD" Type="SumaLealtad.Store.ESTADO_CIUDAD" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CIUDAD">
               <PropertyRef Name="COD_CIUDAD" />
@@ -644,8 +733,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ESTADO_CIUDAD_ESTADO">
-          <End Role="ESTADO" Type="SumaLealtadModel.Store.ESTADO" Multiplicity="1" />
-          <End Role="ESTADO_CIUDAD" Type="SumaLealtadModel.Store.ESTADO_CIUDAD" Multiplicity="*" />
+          <End Role="ESTADO" Type="SumaLealtad.Store.ESTADO" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ESTADO_CIUDAD" Type="SumaLealtad.Store.ESTADO_CIUDAD" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ESTADO">
               <PropertyRef Name="COD_ESTADO" />
@@ -656,8 +747,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MUNICIPIO_PARROQUIA_MUNICIPIO">
-          <End Role="MUNICIPIO" Type="SumaLealtadModel.Store.MUNICIPIO" Multiplicity="1" />
-          <End Role="MUNICIPIO_PARROQUIA" Type="SumaLealtadModel.Store.MUNICIPIO_PARROQUIA" Multiplicity="*" />
+          <End Role="MUNICIPIO" Type="SumaLealtad.Store.MUNICIPIO" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MUNICIPIO_PARROQUIA" Type="SumaLealtad.Store.MUNICIPIO_PARROQUIA" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MUNICIPIO">
               <PropertyRef Name="COD_MUNICIPIO" />
@@ -668,8 +761,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MUNICIPIO_PARROQUIA_PARROQUIA">
-          <End Role="PARROQUIA" Type="SumaLealtadModel.Store.PARROQUIA" Multiplicity="1" />
-          <End Role="MUNICIPIO_PARROQUIA" Type="SumaLealtadModel.Store.MUNICIPIO_PARROQUIA" Multiplicity="*" />
+          <End Role="PARROQUIA" Type="SumaLealtad.Store.PARROQUIA" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MUNICIPIO_PARROQUIA" Type="SumaLealtad.Store.MUNICIPIO_PARROQUIA" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PARROQUIA">
               <PropertyRef Name="COD_PARROQUIA" />
@@ -679,21 +774,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Orders_Company">
-          <End Role="Company" Type="SumaLealtadModel.Store.Company" Multiplicity="1" />
-          <End Role="Orders" Type="SumaLealtadModel.Store.Orders" Multiplicity="*" />
+        <Association Name="FK_Orders_PrepaidCustomer">
+          <End Role="PrepaidCustomer" Type="SumaLealtad.Store.PrepaidCustomer" Multiplicity="1" />
+          <End Role="Orders" Type="SumaLealtad.Store.Orders" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Company">
+            <Principal Role="PrepaidCustomer">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Orders">
-              <PropertyRef Name="companyid" />
+              <PropertyRef Name="prepaidcustomerid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_SumaStatus">
+          <End Role="SumaStatus" Type="SumaLealtad.Store.SumaStatus" Multiplicity="1" />
+          <End Role="Orders" Type="SumaLealtad.Store.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SumaStatus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="sumastatusid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OrdersDetail_Order">
-          <End Role="Orders" Type="SumaLealtadModel.Store.Orders" Multiplicity="1" />
-          <End Role="OrdersDetail" Type="SumaLealtadModel.Store.OrdersDetail" Multiplicity="*" />
+          <End Role="Orders" Type="SumaLealtad.Store.Orders" Multiplicity="1" />
+          <End Role="OrdersDetail" Type="SumaLealtad.Store.OrdersDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">
               <PropertyRef Name="id" />
@@ -703,9 +810,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OrdersDetail_SumaStatus">
+          <End Role="SumaStatus" Type="SumaLealtad.Store.SumaStatus" Multiplicity="0..1" />
+          <End Role="OrdersDetail" Type="SumaLealtad.Store.OrdersDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SumaStatus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OrdersDetail">
+              <PropertyRef Name="sumastatusid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PARROQUIA_URBANIZACION_PARROQUIA">
-          <End Role="PARROQUIA" Type="SumaLealtadModel.Store.PARROQUIA" Multiplicity="1" />
-          <End Role="PARROQUIA_URBANIZACION" Type="SumaLealtadModel.Store.PARROQUIA_URBANIZACION" Multiplicity="*" />
+          <End Role="PARROQUIA" Type="SumaLealtad.Store.PARROQUIA" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PARROQUIA_URBANIZACION" Type="SumaLealtad.Store.PARROQUIA_URBANIZACION" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PARROQUIA">
               <PropertyRef Name="COD_PARROQUIA" />
@@ -716,8 +837,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PARROQUIA_URBANIZACION_URBANIZACION">
-          <End Role="URBANIZACION" Type="SumaLealtadModel.Store.URBANIZACION" Multiplicity="1" />
-          <End Role="PARROQUIA_URBANIZACION" Type="SumaLealtadModel.Store.PARROQUIA_URBANIZACION" Multiplicity="*" />
+          <End Role="URBANIZACION" Type="SumaLealtad.Store.URBANIZACION" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PARROQUIA_URBANIZACION" Type="SumaLealtad.Store.PARROQUIA_URBANIZACION" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="URBANIZACION">
               <PropertyRef Name="COD_URBANIZACION" />
@@ -727,85 +850,128 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PBeneficiary_PCustomer">
+          <End Role="PrepaidCustomer" Type="SumaLealtad.Store.PrepaidCustomer" Multiplicity="1" />
+          <End Role="PrepaidBeneficiary" Type="SumaLealtad.Store.PrepaidBeneficiary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrepaidCustomer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PrepaidBeneficiary">
+              <PropertyRef Name="beneficiaryid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_SumaStatus">
+          <End Role="SumaStatus" Type="SumaLealtad.Store.SumaStatus" Multiplicity="0..1" />
+          <End Role="User" Type="SumaLealtad.Store.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SumaStatus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="sumastatusid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="SumaLealtadModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="SumaLealtad" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="LealtadEntities" p1:LazyLoadingEnabled="true">
-          <EntitySet Name="Affiliates" EntityType="SumaLealtadModel.Affiliate" />
-          <EntitySet Name="AffiliateAuds" EntityType="SumaLealtadModel.AffiliateAud" />
-          <EntitySet Name="Channels" EntityType="SumaLealtadModel.Channel" />
-          <EntitySet Name="CIUDADES" EntityType="SumaLealtadModel.CIUDAD" />
-          <EntitySet Name="CLIENTES" EntityType="SumaLealtadModel.CLIENTE" />
-          <EntitySet Name="Companies" EntityType="SumaLealtadModel.Company" />
-          <EntitySet Name="CompanyAffiliates" EntityType="SumaLealtadModel.CompanyAffiliate" />
-          <EntitySet Name="CreditLimits" EntityType="SumaLealtadModel.CreditLimit" />
-          <EntitySet Name="CustomerInterests" EntityType="SumaLealtadModel.CustomerInterest" />
-          <EntitySet Name="ESTADOS" EntityType="SumaLealtadModel.ESTADO" />
-          <EntitySet Name="FACTURAS" EntityType="SumaLealtadModel.FACTURA" />
-          <EntitySet Name="Interests" EntityType="SumaLealtadModel.Interest" />
-          <EntitySet Name="Menus" EntityType="SumaLealtadModel.Menu" />
-          <EntitySet Name="MUNICIPIOS" EntityType="SumaLealtadModel.MUNICIPIO" />
-          <EntitySet Name="Objects" EntityType="SumaLealtadModel.Object" />
-          <EntitySet Name="Operations" EntityType="SumaLealtadModel.Operation" />
-          <EntitySet Name="Orders" EntityType="SumaLealtadModel.Order" />
-          <EntitySet Name="OrdersDetails" EntityType="SumaLealtadModel.OrdersDetail" />
-          <EntitySet Name="PAISES" EntityType="SumaLealtadModel.PAIS" />
-          <EntitySet Name="PARAMETROS" EntityType="SumaLealtadModel.PARAMETRO" />
-          <EntitySet Name="PARROQUIAS" EntityType="SumaLealtadModel.PARROQUIA" />
-          <EntitySet Name="Photos_Affiliates" EntityType="SumaLealtadModel.Photos_Affiliate" />
-          <EntitySet Name="Reasons" EntityType="SumaLealtadModel.Reason" />
-          <EntitySet Name="RESTRICCIONES" EntityType="SumaLealtadModel.RESTRICCIONES" />
-          <EntitySet Name="Roles" EntityType="SumaLealtadModel.Role" />
-          <EntitySet Name="SecurityLevels" EntityType="SumaLealtadModel.SecurityLevel" />
-          <EntitySet Name="SecurityMenus" EntityType="SumaLealtadModel.SecurityMenu" />
-          <EntitySet Name="Status" EntityType="SumaLealtadModel.Status" />
-          <EntitySet Name="TARJETAS" EntityType="SumaLealtadModel.TARJETA" />
-          <EntitySet Name="Types" EntityType="SumaLealtadModel.Type" />
-          <EntitySet Name="URBANIZACIONES" EntityType="SumaLealtadModel.URBANIZACION" />
-          <EntitySet Name="Users" EntityType="SumaLealtadModel.User" />
-          <EntitySet Name="UserRols" EntityType="SumaLealtadModel.UserRol" />
-          <AssociationSet Name="FK_Affiliate_Channel" Association="SumaLealtadModel.FK_Affiliate_Channel">
+          <EntitySet Name="Affiliates" EntityType="SumaLealtad.Affiliate" />
+          <EntitySet Name="AffiliateAuds" EntityType="SumaLealtad.AffiliateAud" />
+          <EntitySet Name="Auditings" EntityType="SumaLealtad.Auditing" />
+          <EntitySet Name="Channels" EntityType="SumaLealtad.Channel" />
+          <EntitySet Name="CIUDADES" EntityType="SumaLealtad.CIUDAD" />
+          <EntitySet Name="CLIENTES" EntityType="SumaLealtad.CLIENTE" />
+          <EntitySet Name="Companies" EntityType="SumaLealtad.Company" />
+          <EntitySet Name="CompanyAffiliates" EntityType="SumaLealtad.CompanyAffiliate" />
+          <EntitySet Name="CreditLimits" EntityType="SumaLealtad.CreditLimit" />
+          <EntitySet Name="CustomerInterests" EntityType="SumaLealtad.CustomerInterest" />
+          <EntitySet Name="ESTADOS" EntityType="SumaLealtad.ESTADO" />
+          <EntitySet Name="FACTURAS" EntityType="SumaLealtad.FACTURA" />
+          <EntitySet Name="Interests" EntityType="SumaLealtad.Interest" />
+          <EntitySet Name="Menus" EntityType="SumaLealtad.Menu" />
+          <EntitySet Name="MUNICIPIOS" EntityType="SumaLealtad.MUNICIPIO" />
+          <EntitySet Name="Objects" EntityType="SumaLealtad.Object" />
+          <EntitySet Name="Operations" EntityType="SumaLealtad.Operation" />
+          <EntitySet Name="OrdersDetails" EntityType="SumaLealtad.OrdersDetail" />
+          <EntitySet Name="OrdersHistories" EntityType="SumaLealtad.OrdersHistory" />
+          <EntitySet Name="PAISES" EntityType="SumaLealtad.PAIS" />
+          <EntitySet Name="PAIS_ESTADOS" EntityType="SumaLealtad.PAIS_ESTADO" />
+          <EntitySet Name="Parameters" EntityType="SumaLealtad.Parameter" />
+          <EntitySet Name="PARAMETROS" EntityType="SumaLealtad.PARAMETRO" />
+          <EntitySet Name="PARROQUIAS" EntityType="SumaLealtad.PARROQUIA" />
+          <EntitySet Name="Photos_Affiliates" EntityType="SumaLealtad.Photos_Affiliate" />
+          <EntitySet Name="PrepaidBeneficiaries" EntityType="SumaLealtad.PrepaidBeneficiary" />
+          <EntitySet Name="PrepaidCustomers" EntityType="SumaLealtad.PrepaidCustomer" />
+          <EntitySet Name="Reasons" EntityType="SumaLealtad.Reason" />
+          <EntitySet Name="RESTRICCIONES" EntityType="SumaLealtad.RESTRICCION" />
+          <EntitySet Name="Roles" EntityType="SumaLealtad.Role" />
+          <EntitySet Name="SecurityLevels" EntityType="SumaLealtad.SecurityLevel" />
+          <EntitySet Name="SecurityMenus" EntityType="SumaLealtad.SecurityMenu" />
+          <EntitySet Name="Statuses" EntityType="SumaLealtad.Status" />
+          <EntitySet Name="SumaStatuses" EntityType="SumaLealtad.SumaStatus" />
+          <EntitySet Name="sysdiagrams" EntityType="SumaLealtad.sysdiagram" />
+          <EntitySet Name="TARJETAS" EntityType="SumaLealtad.TARJETA" />
+          <EntitySet Name="Types" EntityType="SumaLealtad.Type" />
+          <EntitySet Name="URBANIZACIONES" EntityType="SumaLealtad.URBANIZACION" />
+          <EntitySet Name="Users" EntityType="SumaLealtad.User" />
+          <EntitySet Name="UserRols" EntityType="SumaLealtad.UserRol" />
+          <AssociationSet Name="FK_Affiliate_Channel" Association="SumaLealtad.FK_Affiliate_Channel">
             <End Role="Channel" EntitySet="Channels" />
             <End Role="Affiliate" EntitySet="Affiliates" />
           </AssociationSet>
-          <AssociationSet Name="FK_CompanyAffiliate_Company" Association="SumaLealtadModel.FK_CompanyAffiliate_Company">
-            <End Role="Company" EntitySet="Companies" />
-            <End Role="CompanyAffiliate" EntitySet="CompanyAffiliates" />
+          <AssociationSet Name="FK_Affiliate_SumaStatus" Association="SumaLealtad.FK_Affiliate_SumaStatus">
+            <End Role="SumaStatus" EntitySet="SumaStatuses" />
+            <End Role="Affiliate" EntitySet="Affiliates" />
           </AssociationSet>
-          <AssociationSet Name="FK_CreditLimit_Company" Association="SumaLealtadModel.FK_CreditLimit_Company">
-            <End Role="Company" EntitySet="Companies" />
-            <End Role="CreditLimit" EntitySet="CreditLimits" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_Company" Association="SumaLealtadModel.FK_Orders_Company">
-            <End Role="Company" EntitySet="Companies" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomerInterest_Interest" Association="SumaLealtadModel.FK_CustomerInterest_Interest">
+          <AssociationSet Name="FK_CustomerInterest_Interest" Association="SumaLealtad.FK_CustomerInterest_Interest">
             <End Role="Interest" EntitySet="Interests" />
             <End Role="CustomerInterest" EntitySet="CustomerInterests" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrdersDetail_Order" Association="SumaLealtadModel.FK_OrdersDetail_Order">
-            <End Role="Orders" EntitySet="Orders" />
+          <AssociationSet Name="FK_OrdersDetail_SumaStatus" Association="SumaLealtad.FK_OrdersDetail_SumaStatus">
+            <End Role="SumaStatus" EntitySet="SumaStatuses" />
             <End Role="OrdersDetail" EntitySet="OrdersDetails" />
           </AssociationSet>
-          <AssociationSet Name="CIUDAD_MUNICIPIO" Association="SumaLealtadModel.CIUDAD_MUNICIPIO">
+          <AssociationSet Name="FK_PBeneficiary_PCustomer" Association="SumaLealtad.FK_PBeneficiary_PCustomer">
+            <End Role="PrepaidCustomer" EntitySet="PrepaidCustomers" />
+            <End Role="PrepaidBeneficiary" EntitySet="PrepaidBeneficiaries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_SumaStatus" Association="SumaLealtad.FK_User_SumaStatus">
+            <End Role="SumaStatus" EntitySet="SumaStatuses" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="CIUDAD_MUNICIPIO" Association="SumaLealtad.CIUDAD_MUNICIPIO">
             <End Role="CIUDAD" EntitySet="CIUDADES" />
             <End Role="MUNICIPIO" EntitySet="MUNICIPIOS" />
           </AssociationSet>
-          <AssociationSet Name="ESTADO_CIUDAD" Association="SumaLealtadModel.ESTADO_CIUDAD">
+          <AssociationSet Name="ESTADO_CIUDAD" Association="SumaLealtad.ESTADO_CIUDAD">
             <End Role="CIUDAD" EntitySet="CIUDADES" />
             <End Role="ESTADO" EntitySet="ESTADOS" />
           </AssociationSet>
-          <AssociationSet Name="MUNICIPIO_PARROQUIA" Association="SumaLealtadModel.MUNICIPIO_PARROQUIA">
+          <AssociationSet Name="MUNICIPIO_PARROQUIA" Association="SumaLealtad.MUNICIPIO_PARROQUIA">
             <End Role="MUNICIPIO" EntitySet="MUNICIPIOS" />
             <End Role="PARROQUIA" EntitySet="PARROQUIAS" />
           </AssociationSet>
-          <AssociationSet Name="PARROQUIA_URBANIZACION" Association="SumaLealtadModel.PARROQUIA_URBANIZACION">
+          <AssociationSet Name="PARROQUIA_URBANIZACION" Association="SumaLealtad.PARROQUIA_URBANIZACION">
             <End Role="PARROQUIA" EntitySet="PARROQUIAS" />
             <End Role="URBANIZACION" EntitySet="URBANIZACIONES" />
           </AssociationSet>
-          <EntitySet Name="Auditings" EntityType="SumaLealtadModel.Auditing" />
+          <EntitySet Name="Orders" EntityType="SumaLealtad.Order" />
+          <AssociationSet Name="FK_Orders_PrepaidCustomer" Association="SumaLealtad.FK_Orders_PrepaidCustomer">
+            <End Role="PrepaidCustomer" EntitySet="PrepaidCustomers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_SumaStatus" Association="SumaLealtad.FK_Orders_SumaStatus">
+            <End Role="SumaStatus" EntitySet="SumaStatuses" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdersDetail_Order" Association="SumaLealtad.FK_OrdersDetail_Order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrdersDetail" EntitySet="OrdersDetails" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Affiliate">
           <Key>
@@ -832,7 +998,9 @@
           <Property Name="facebook_account" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
           <Property Name="instagram_account" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
           <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="Channel" Relationship="SumaLealtadModel.FK_Affiliate_Channel" FromRole="Affiliate" ToRole="Channel" />
+          <Property Name="sumastatusid" Type="Int32" />
+          <NavigationProperty Name="Channel" Relationship="SumaLealtad.FK_Affiliate_Channel" FromRole="Affiliate" ToRole="Channel" />
+          <NavigationProperty Name="SumaStatus" Relationship="SumaLealtad.FK_Affiliate_SumaStatus" FromRole="Affiliate" ToRole="SumaStatus" />
         </EntityType>
         <EntityType Name="AffiliateAud">
           <Key>
@@ -846,13 +1014,26 @@
           <Property Name="reasonsid" Type="Int32" Nullable="false" />
           <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
         </EntityType>
+        <EntityType Name="Auditing">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="objectid" Type="Int32" Nullable="false" />
+          <Property Name="operationsid" Type="Int32" Nullable="false" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="creationdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="originaldata" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="changedata" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ipaddress" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+        </EntityType>
         <EntityType Name="Channel">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="25" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="Affiliates" Relationship="SumaLealtadModel.FK_Affiliate_Channel" FromRole="Channel" ToRole="Affiliate" />
+          <NavigationProperty Name="Affiliates" Relationship="SumaLealtad.FK_Affiliate_Channel" FromRole="Channel" ToRole="Affiliate" />
         </EntityType>
         <EntityType Name="CIUDAD">
           <Key>
@@ -860,8 +1041,8 @@
           </Key>
           <Property Name="COD_CIUDAD" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
           <Property Name="DESCRIPC_CIUDAD" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="MUNICIPIOS" Relationship="SumaLealtadModel.CIUDAD_MUNICIPIO" FromRole="CIUDAD" ToRole="MUNICIPIO" />
-          <NavigationProperty Name="ESTADOS" Relationship="SumaLealtadModel.ESTADO_CIUDAD" FromRole="CIUDAD" ToRole="ESTADO" />
+          <NavigationProperty Name="MUNICIPIOS" Relationship="SumaLealtad.CIUDAD_MUNICIPIO" FromRole="CIUDAD" ToRole="MUNICIPIO" />
+          <NavigationProperty Name="ESTADOS" Relationship="SumaLealtad.ESTADO_CIUDAD" FromRole="CIUDAD" ToRole="ESTADO" />
         </EntityType>
         <EntityType Name="CLIENTE">
           <Key>
@@ -904,9 +1085,6 @@
           <Property Name="email" Type="String" Nullable="false" MaxLength="25" Unicode="false" FixedLength="false" />
           <Property Name="creationdate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="userid" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CompanyAffiliates" Relationship="SumaLealtadModel.FK_CompanyAffiliate_Company" FromRole="Company" ToRole="CompanyAffiliate" />
-          <NavigationProperty Name="CreditLimits" Relationship="SumaLealtadModel.FK_CreditLimit_Company" FromRole="Company" ToRole="CreditLimit" />
-          <NavigationProperty Name="Orders" Relationship="SumaLealtadModel.FK_Orders_Company" FromRole="Company" ToRole="Orders" />
         </EntityType>
         <EntityType Name="CompanyAffiliate">
           <Key>
@@ -919,7 +1097,6 @@
           <Property Name="enddate" Type="DateTime" Precision="0" />
           <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
           <Property Name="active" Type="Boolean" />
-          <NavigationProperty Name="Company" Relationship="SumaLealtadModel.FK_CompanyAffiliate_Company" FromRole="CompanyAffiliate" ToRole="Company" />
         </EntityType>
         <EntityType Name="CreditLimit">
           <Key>
@@ -934,7 +1111,6 @@
           <Property Name="modifieddate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="modifieduserid" Type="Int32" Nullable="false" />
           <Property Name="activecredit" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Company" Relationship="SumaLealtadModel.FK_CreditLimit_Company" FromRole="CreditLimit" ToRole="Company" />
         </EntityType>
         <EntityType Name="CustomerInterest">
           <Key>
@@ -944,7 +1120,7 @@
           <Property Name="customerid" Type="Int32" Nullable="false" />
           <Property Name="interestid" Type="Int32" Nullable="false" />
           <Property Name="comments" Type="String" Nullable="false" MaxLength="120" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="Interest" Relationship="SumaLealtadModel.FK_CustomerInterest_Interest" FromRole="CustomerInterest" ToRole="Interest" />
+          <NavigationProperty Name="Interest" Relationship="SumaLealtad.FK_CustomerInterest_Interest" FromRole="CustomerInterest" ToRole="Interest" />
         </EntityType>
         <EntityType Name="ESTADO">
           <Key>
@@ -952,7 +1128,7 @@
           </Key>
           <Property Name="COD_ESTADO" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
           <Property Name="DESCRIPC_ESTADO" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="CIUDADES" Relationship="SumaLealtadModel.ESTADO_CIUDAD" FromRole="ESTADO" ToRole="CIUDAD" />
+          <NavigationProperty Name="CIUDADES" Relationship="SumaLealtad.ESTADO_CIUDAD" FromRole="ESTADO" ToRole="CIUDAD" />
         </EntityType>
         <EntityType Name="FACTURA">
           <Key>
@@ -985,7 +1161,7 @@
           <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="120" Unicode="false" FixedLength="false" />
           <Property Name="active" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="CustomerInterests" Relationship="SumaLealtadModel.FK_CustomerInterest_Interest" FromRole="Interest" ToRole="CustomerInterest" />
+          <NavigationProperty Name="CustomerInterests" Relationship="SumaLealtad.FK_CustomerInterest_Interest" FromRole="Interest" ToRole="CustomerInterest" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -1005,8 +1181,8 @@
           </Key>
           <Property Name="COD_MUNICIPIO" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
           <Property Name="DESCRIPC_MUNICIPIO" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="CIUDADES" Relationship="SumaLealtadModel.CIUDAD_MUNICIPIO" FromRole="MUNICIPIO" ToRole="CIUDAD" />
-          <NavigationProperty Name="PARROQUIAS" Relationship="SumaLealtadModel.MUNICIPIO_PARROQUIA" FromRole="MUNICIPIO" ToRole="PARROQUIA" />
+          <NavigationProperty Name="CIUDADES" Relationship="SumaLealtad.CIUDAD_MUNICIPIO" FromRole="MUNICIPIO" ToRole="CIUDAD" />
+          <NavigationProperty Name="PARROQUIAS" Relationship="SumaLealtad.MUNICIPIO_PARROQUIA" FromRole="MUNICIPIO" ToRole="PARROQUIA" />
         </EntityType>
         <EntityType Name="Object">
           <Key>
@@ -1023,22 +1199,6 @@
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
         </EntityType>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="companyid" Type="Int32" Nullable="false" />
-          <Property Name="totalamount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="paymenttype" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
-          <Property Name="creationdate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="creationuserid" Type="Int32" Nullable="false" />
-          <Property Name="processdate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
-          <Property Name="status" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
-          <NavigationProperty Name="Company" Relationship="SumaLealtadModel.FK_Orders_Company" FromRole="Orders" ToRole="Company" />
-          <NavigationProperty Name="OrdersDetails" Relationship="SumaLealtadModel.FK_OrdersDetail_Order" FromRole="Orders" ToRole="OrdersDetail" />
-        </EntityType>
         <EntityType Name="OrdersDetail">
           <Key>
             <PropertyRef Name="id" />
@@ -1049,8 +1209,20 @@
           <Property Name="customerid" Type="Int32" Nullable="false" />
           <Property Name="amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
-          <Property Name="status" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
-          <NavigationProperty Name="Order" Relationship="SumaLealtadModel.FK_OrdersDetail_Order" FromRole="OrdersDetail" ToRole="Orders" />
+          <Property Name="cardsresponse" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="sumastatusid" Type="Int32" />
+          <NavigationProperty Name="SumaStatus" Relationship="SumaLealtad.FK_OrdersDetail_SumaStatus" FromRole="OrdersDetail" ToRole="SumaStatus" />
+          <NavigationProperty Name="Order" Relationship="SumaLealtad.FK_OrdersDetail_Order" FromRole="OrdersDetail" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="OrdersHistory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="estatusid" Type="Int32" Nullable="false" />
+          <Property Name="creationdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
         </EntityType>
         <EntityType Name="PAIS">
           <Key>
@@ -1058,6 +1230,23 @@
           </Key>
           <Property Name="COD_PAIS" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
           <Property Name="DESCRIPC_PAIS" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="PAIS_ESTADO">
+          <Key>
+            <PropertyRef Name="COD_PAIS" />
+            <PropertyRef Name="COD_ESTADO" />
+          </Key>
+          <Property Name="COD_PAIS" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="COD_ESTADO" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Parameter">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="value" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="PARAMETRO">
           <Key>
@@ -1083,8 +1272,8 @@
           </Key>
           <Property Name="COD_PARROQUIA" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
           <Property Name="DESCRIPC_PARROQUIA" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="MUNICIPIOS" Relationship="SumaLealtadModel.MUNICIPIO_PARROQUIA" FromRole="PARROQUIA" ToRole="MUNICIPIO" />
-          <NavigationProperty Name="URBANIZACIONES" Relationship="SumaLealtadModel.PARROQUIA_URBANIZACION" FromRole="PARROQUIA" ToRole="URBANIZACION" />
+          <NavigationProperty Name="MUNICIPIOS" Relationship="SumaLealtad.MUNICIPIO_PARROQUIA" FromRole="PARROQUIA" ToRole="MUNICIPIO" />
+          <NavigationProperty Name="URBANIZACIONES" Relationship="SumaLealtad.PARROQUIA_URBANIZACION" FromRole="PARROQUIA" ToRole="URBANIZACION" />
         </EntityType>
         <EntityType Name="Photos_Affiliate">
           <Key>
@@ -1095,6 +1284,35 @@
           <Property Name="photo_type" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
           <Property Name="Affiliate_id" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="PrepaidBeneficiary">
+          <Key>
+            <PropertyRef Name="affiliateid" />
+            <PropertyRef Name="beneficiaryid" />
+          </Key>
+          <Property Name="affiliateid" Type="Int32" Nullable="false" />
+          <Property Name="beneficiaryid" Type="Int32" Nullable="false" />
+          <Property Name="begindate" Type="DateTime" Precision="3" />
+          <Property Name="enddate" Type="DateTime" Precision="3" />
+          <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="PrepaidCustomer" Relationship="SumaLealtad.FK_PBeneficiary_PCustomer" FromRole="PrepaidBeneficiary" ToRole="PrepaidCustomer" />
+        </EntityType>
+        <EntityType Name="PrepaidCustomer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="120" Unicode="false" FixedLength="false" />
+          <Property Name="alias" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="rif" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="address" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
+          <Property Name="phone" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
+          <Property Name="email" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
+          <Property Name="creationdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PrepaidBeneficiaries" Relationship="SumaLealtad.FK_PBeneficiary_PCustomer" FromRole="PrepaidCustomer" ToRole="PrepaidBeneficiary" />
+          <NavigationProperty Name="Orders" Relationship="SumaLealtad.FK_Orders_PrepaidCustomer" FromRole="PrepaidCustomer" ToRole="Order" />
+        </EntityType>
         <EntityType Name="Reason">
           <Key>
             <PropertyRef Name="id" />
@@ -1103,7 +1321,7 @@
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="type" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
         </EntityType>
-        <EntityType Name="RESTRICCIONES">
+        <EntityType Name="RESTRICCION">
           <Key>
             <PropertyRef Name="COD_RESTRICCION" />
           </Key>
@@ -1152,6 +1370,30 @@
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
         </EntityType>
+        <EntityType Name="SumaStatus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="tablename" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="value" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="Affiliates" Relationship="SumaLealtad.FK_Affiliate_SumaStatus" FromRole="SumaStatus" ToRole="Affiliate" />
+          <NavigationProperty Name="OrdersDetails" Relationship="SumaLealtad.FK_OrdersDetail_SumaStatus" FromRole="SumaStatus" ToRole="OrdersDetail" />
+          <NavigationProperty Name="Users" Relationship="SumaLealtad.FK_User_SumaStatus" FromRole="SumaStatus" ToRole="User" />
+          <NavigationProperty Name="Orders" Relationship="SumaLealtad.FK_Orders_SumaStatus" FromRole="SumaStatus" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="TARJETA">
           <Key>
             <PropertyRef Name="NRO_TARJETA" />
@@ -1182,7 +1424,7 @@
           </Key>
           <Property Name="COD_URBANIZACION" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
           <Property Name="DESCRIPC_URBANIZACION" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="PARROQUIAS" Relationship="SumaLealtadModel.PARROQUIA_URBANIZACION" FromRole="URBANIZACION" ToRole="PARROQUIA" />
+          <NavigationProperty Name="PARROQUIAS" Relationship="SumaLealtad.PARROQUIA_URBANIZACION" FromRole="URBANIZACION" ToRole="PARROQUIA" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1194,7 +1436,9 @@
           <Property Name="firstname" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="lastname" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="email" Type="String" Nullable="false" MaxLength="80" Unicode="false" FixedLength="false" />
-          <Property Name="status" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="sumastatusid" Type="Int32" />
+          <NavigationProperty Name="SumaStatus" Relationship="SumaLealtad.FK_User_SumaStatus" FromRole="User" ToRole="SumaStatus" />
+          <Property Type="Int32" Name="typeid" Nullable="false" />
         </EntityType>
         <EntityType Name="UserRol">
           <Key>
@@ -1205,8 +1449,8 @@
           <Property Name="roleid" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_Affiliate_Channel">
-          <End Role="Channel" Type="SumaLealtadModel.Channel" Multiplicity="1" />
-          <End Role="Affiliate" Type="SumaLealtadModel.Affiliate" Multiplicity="*" />
+          <End Role="Channel" Type="SumaLealtad.Channel" Multiplicity="1" />
+          <End Role="Affiliate" Type="SumaLealtad.Affiliate" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Channel">
               <PropertyRef Name="id" />
@@ -1216,45 +1460,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CompanyAffiliate_Company">
-          <End Role="Company" Type="SumaLealtadModel.Company" Multiplicity="1" />
-          <End Role="CompanyAffiliate" Type="SumaLealtadModel.CompanyAffiliate" Multiplicity="*" />
+        <Association Name="FK_Affiliate_SumaStatus">
+          <End Role="SumaStatus" Type="SumaLealtad.SumaStatus" Multiplicity="0..1" />
+          <End Role="Affiliate" Type="SumaLealtad.Affiliate" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Company">
+            <Principal Role="SumaStatus">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="CompanyAffiliate">
-              <PropertyRef Name="companyid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CreditLimit_Company">
-          <End Role="Company" Type="SumaLealtadModel.Company" Multiplicity="1" />
-          <End Role="CreditLimit" Type="SumaLealtadModel.CreditLimit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Company">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="CreditLimit">
-              <PropertyRef Name="companyid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Orders_Company">
-          <End Role="Company" Type="SumaLealtadModel.Company" Multiplicity="1" />
-          <End Role="Orders" Type="SumaLealtadModel.Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Company">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Orders">
-              <PropertyRef Name="companyid" />
+            <Dependent Role="Affiliate">
+              <PropertyRef Name="sumastatusid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CustomerInterest_Interest">
-          <End Role="Interest" Type="SumaLealtadModel.Interest" Multiplicity="1" />
-          <End Role="CustomerInterest" Type="SumaLealtadModel.CustomerInterest" Multiplicity="*" />
+          <End Role="Interest" Type="SumaLealtad.Interest" Multiplicity="1" />
+          <End Role="CustomerInterest" Type="SumaLealtad.CustomerInterest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Interest">
               <PropertyRef Name="id" />
@@ -1264,11 +1484,104 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrdersDetail_Order">
-          <End Role="Orders" Type="SumaLealtadModel.Order" Multiplicity="1" />
-          <End Role="OrdersDetail" Type="SumaLealtadModel.OrdersDetail" Multiplicity="*" />
+        <Association Name="FK_OrdersDetail_SumaStatus">
+          <End Role="SumaStatus" Type="SumaLealtad.SumaStatus" Multiplicity="0..1" />
+          <End Role="OrdersDetail" Type="SumaLealtad.OrdersDetail" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Orders">
+            <Principal Role="SumaStatus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OrdersDetail">
+              <PropertyRef Name="sumastatusid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PBeneficiary_PCustomer">
+          <End Role="PrepaidCustomer" Type="SumaLealtad.PrepaidCustomer" Multiplicity="1" />
+          <End Role="PrepaidBeneficiary" Type="SumaLealtad.PrepaidBeneficiary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrepaidCustomer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PrepaidBeneficiary">
+              <PropertyRef Name="beneficiaryid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_SumaStatus">
+          <End Role="SumaStatus" Type="SumaLealtad.SumaStatus" Multiplicity="0..1" />
+          <End Role="User" Type="SumaLealtad.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SumaStatus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="sumastatusid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CIUDAD_MUNICIPIO">
+          <End Role="CIUDAD" Type="SumaLealtad.CIUDAD" Multiplicity="*" />
+          <End Role="MUNICIPIO" Type="SumaLealtad.MUNICIPIO" Multiplicity="*" />
+        </Association>
+        <Association Name="ESTADO_CIUDAD">
+          <End Role="CIUDAD" Type="SumaLealtad.CIUDAD" Multiplicity="*" />
+          <End Role="ESTADO" Type="SumaLealtad.ESTADO" Multiplicity="*" />
+        </Association>
+        <Association Name="MUNICIPIO_PARROQUIA">
+          <End Role="MUNICIPIO" Type="SumaLealtad.MUNICIPIO" Multiplicity="*" />
+          <End Role="PARROQUIA" Type="SumaLealtad.PARROQUIA" Multiplicity="*" />
+        </Association>
+        <Association Name="PARROQUIA_URBANIZACION">
+          <End Role="PARROQUIA" Type="SumaLealtad.PARROQUIA" Multiplicity="*" />
+          <End Role="URBANIZACION" Type="SumaLealtad.URBANIZACION" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="Int32" Name="prepaidcustomerid" Nullable="false" />
+          <Property Type="Decimal" Name="totalamount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="String" Name="paymenttype" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="DateTime" Name="creationdate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="creationuserid" Nullable="false" />
+          <Property Type="DateTime" Name="processdate" Nullable="false" Precision="3" />
+          <Property Type="String" Name="comments" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="sumastatusid" Nullable="false" />
+          <NavigationProperty Name="PrepaidCustomer" Relationship="SumaLealtad.FK_Orders_PrepaidCustomer" FromRole="Order" ToRole="PrepaidCustomer" />
+          <NavigationProperty Name="SumaStatu" Relationship="SumaLealtad.FK_Orders_SumaStatus" FromRole="Order" ToRole="SumaStatus" />
+          <NavigationProperty Name="OrdersDetails" Relationship="SumaLealtad.FK_OrdersDetail_Order" FromRole="Order" ToRole="OrdersDetail" />
+        </EntityType>
+        <Association Name="FK_Orders_PrepaidCustomer">
+          <End Type="SumaLealtad.PrepaidCustomer" Role="PrepaidCustomer" Multiplicity="1" />
+          <End Type="SumaLealtad.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrepaidCustomer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="prepaidcustomerid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_SumaStatus">
+          <End Type="SumaLealtad.SumaStatus" Role="SumaStatus" Multiplicity="1" />
+          <End Type="SumaLealtad.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SumaStatus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="sumastatusid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdersDetail_Order">
+          <End Type="SumaLealtad.Order" Role="Order" Multiplicity="1" />
+          <End Type="SumaLealtad.OrdersDetail" Role="OrdersDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="OrdersDetail">
@@ -1276,43 +1589,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="CIUDAD_MUNICIPIO">
-          <End Role="CIUDAD" Type="SumaLealtadModel.CIUDAD" Multiplicity="*" />
-          <End Role="MUNICIPIO" Type="SumaLealtadModel.MUNICIPIO" Multiplicity="*" />
-        </Association>
-        <Association Name="ESTADO_CIUDAD">
-          <End Role="CIUDAD" Type="SumaLealtadModel.CIUDAD" Multiplicity="*" />
-          <End Role="ESTADO" Type="SumaLealtadModel.ESTADO" Multiplicity="*" />
-        </Association>
-        <Association Name="MUNICIPIO_PARROQUIA">
-          <End Role="MUNICIPIO" Type="SumaLealtadModel.MUNICIPIO" Multiplicity="*" />
-          <End Role="PARROQUIA" Type="SumaLealtadModel.PARROQUIA" Multiplicity="*" />
-        </Association>
-        <Association Name="PARROQUIA_URBANIZACION">
-          <End Role="PARROQUIA" Type="SumaLealtadModel.PARROQUIA" Multiplicity="*" />
-          <End Role="URBANIZACION" Type="SumaLealtadModel.URBANIZACION" Multiplicity="*" />
-        </Association>
-        <EntityType Name="Auditing">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Type="Int32" Name="id" Nullable="false" />
-          <Property Type="Int32" Name="objectid" Nullable="false" />
-          <Property Type="Int32" Name="operationsid" Nullable="false" />
-          <Property Type="Int32" Name="userid" Nullable="false" />
-          <Property Type="DateTime" Name="creationdate" Nullable="false" Precision="3" />
-          <Property Type="String" Name="originaldata" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="changedata" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ipaddress" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SumaLealtadModelStoreContainer" CdmEntityContainer="LealtadEntities">
+        <EntityContainerMapping StorageEntityContainer="SumaLealtadStoreContainer" CdmEntityContainer="LealtadEntities">
           <EntitySetMapping Name="Affiliates">
-            <EntityTypeMapping TypeName="SumaLealtadModel.Affiliate">
+            <EntityTypeMapping TypeName="SumaLealtad.Affiliate">
               <MappingFragment StoreEntitySet="Affiliate">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="customerid" ColumnName="customerid" />
@@ -1335,11 +1619,12 @@
                 <ScalarProperty Name="facebook_account" ColumnName="facebook_account" />
                 <ScalarProperty Name="instagram_account" ColumnName="instagram_account" />
                 <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="sumastatusid" ColumnName="sumastatusid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AffiliateAuds">
-            <EntityTypeMapping TypeName="SumaLealtadModel.AffiliateAud">
+            <EntityTypeMapping TypeName="SumaLealtad.AffiliateAud">
               <MappingFragment StoreEntitySet="AffiliateAud">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="affiliateid" ColumnName="affiliateid" />
@@ -1351,8 +1636,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Auditings">
+            <EntityTypeMapping TypeName="SumaLealtad.Auditing">
+              <MappingFragment StoreEntitySet="Auditing">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="objectid" ColumnName="objectid" />
+                <ScalarProperty Name="operationsid" ColumnName="operationsid" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="creationdate" ColumnName="creationdate" />
+                <ScalarProperty Name="originaldata" ColumnName="originaldata" />
+                <ScalarProperty Name="changedata" ColumnName="changedata" />
+                <ScalarProperty Name="ipaddress" ColumnName="ipaddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Channels">
-            <EntityTypeMapping TypeName="SumaLealtadModel.Channel">
+            <EntityTypeMapping TypeName="SumaLealtad.Channel">
               <MappingFragment StoreEntitySet="Channel">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1360,7 +1659,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CIUDADES">
-            <EntityTypeMapping TypeName="SumaLealtadModel.CIUDAD">
+            <EntityTypeMapping TypeName="SumaLealtad.CIUDAD">
               <MappingFragment StoreEntitySet="CIUDAD">
                 <ScalarProperty Name="COD_CIUDAD" ColumnName="COD_CIUDAD" />
                 <ScalarProperty Name="DESCRIPC_CIUDAD" ColumnName="DESCRIPC_CIUDAD" />
@@ -1368,7 +1667,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CLIENTES">
-            <EntityTypeMapping TypeName="SumaLealtadModel.CLIENTE">
+            <EntityTypeMapping TypeName="SumaLealtad.CLIENTE">
               <MappingFragment StoreEntitySet="CLIENTE">
                 <ScalarProperty Name="TIPO_DOCUMENTO" ColumnName="TIPO_DOCUMENTO" />
                 <ScalarProperty Name="NRO_DOCUMENTO" ColumnName="NRO_DOCUMENTO" />
@@ -1396,7 +1695,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Companies">
-            <EntityTypeMapping TypeName="SumaLealtadModel.Company">
+            <EntityTypeMapping TypeName="SumaLealtad.Company">
               <MappingFragment StoreEntitySet="Company">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1411,7 +1710,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CompanyAffiliates">
-            <EntityTypeMapping TypeName="SumaLealtadModel.CompanyAffiliate">
+            <EntityTypeMapping TypeName="SumaLealtad.CompanyAffiliate">
               <MappingFragment StoreEntitySet="CompanyAffiliate">
                 <ScalarProperty Name="affiliateid" ColumnName="affiliateid" />
                 <ScalarProperty Name="companyid" ColumnName="companyid" />
@@ -1423,7 +1722,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CreditLimits">
-            <EntityTypeMapping TypeName="SumaLealtadModel.CreditLimit">
+            <EntityTypeMapping TypeName="SumaLealtad.CreditLimit">
               <MappingFragment StoreEntitySet="CreditLimit">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="companyid" ColumnName="companyid" />
@@ -1438,7 +1737,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CustomerInterests">
-            <EntityTypeMapping TypeName="SumaLealtadModel.CustomerInterest">
+            <EntityTypeMapping TypeName="SumaLealtad.CustomerInterest">
               <MappingFragment StoreEntitySet="CustomerInterest">
                 <ScalarProperty Name="customerid" ColumnName="customerid" />
                 <ScalarProperty Name="interestid" ColumnName="interestid" />
@@ -1447,7 +1746,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ESTADOS">
-            <EntityTypeMapping TypeName="SumaLealtadModel.ESTADO">
+            <EntityTypeMapping TypeName="SumaLealtad.ESTADO">
               <MappingFragment StoreEntitySet="ESTADO">
                 <ScalarProperty Name="COD_ESTADO" ColumnName="COD_ESTADO" />
                 <ScalarProperty Name="DESCRIPC_ESTADO" ColumnName="DESCRIPC_ESTADO" />
@@ -1455,7 +1754,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FACTURAS">
-            <EntityTypeMapping TypeName="SumaLealtadModel.FACTURA">
+            <EntityTypeMapping TypeName="SumaLealtad.FACTURA">
               <MappingFragment StoreEntitySet="FACTURA">
                 <ScalarProperty Name="NRO_TARJETA" ColumnName="NRO_TARJETA" />
                 <ScalarProperty Name="SUCURSAL" ColumnName="SUCURSAL" />
@@ -1473,7 +1772,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Interests">
-            <EntityTypeMapping TypeName="SumaLealtadModel.Interest">
+            <EntityTypeMapping TypeName="SumaLealtad.Interest">
               <MappingFragment StoreEntitySet="Interest">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1482,7 +1781,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Menus">
-            <EntityTypeMapping TypeName="SumaLealtadModel.Menu">
+            <EntityTypeMapping TypeName="SumaLealtad.Menu">
               <MappingFragment StoreEntitySet="Menu">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1495,7 +1794,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MUNICIPIOS">
-            <EntityTypeMapping TypeName="SumaLealtadModel.MUNICIPIO">
+            <EntityTypeMapping TypeName="SumaLealtad.MUNICIPIO">
               <MappingFragment StoreEntitySet="MUNICIPIO">
                 <ScalarProperty Name="COD_MUNICIPIO" ColumnName="COD_MUNICIPIO" />
                 <ScalarProperty Name="DESCRIPC_MUNICIPIO" ColumnName="DESCRIPC_MUNICIPIO" />
@@ -1503,7 +1802,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Objects">
-            <EntityTypeMapping TypeName="SumaLealtadModel.Object">
+            <EntityTypeMapping TypeName="SumaLealtad.Object">
               <MappingFragment StoreEntitySet="Object">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1512,50 +1811,65 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Operations">
-            <EntityTypeMapping TypeName="SumaLealtadModel.Operation">
+            <EntityTypeMapping TypeName="SumaLealtad.Operation">
               <MappingFragment StoreEntitySet="Operations">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="SumaLealtadModel.Order">
-              <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="companyid" ColumnName="companyid" />
-                <ScalarProperty Name="totalamount" ColumnName="totalamount" />
-                <ScalarProperty Name="paymenttype" ColumnName="paymenttype" />
-                <ScalarProperty Name="creationdate" ColumnName="creationdate" />
-                <ScalarProperty Name="creationuserid" ColumnName="creationuserid" />
-                <ScalarProperty Name="processdate" ColumnName="processdate" />
-                <ScalarProperty Name="comments" ColumnName="comments" />
-                <ScalarProperty Name="status" ColumnName="status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="OrdersDetails">
-            <EntityTypeMapping TypeName="SumaLealtadModel.OrdersDetail">
+            <EntityTypeMapping TypeName="SumaLealtad.OrdersDetail">
               <MappingFragment StoreEntitySet="OrdersDetail">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="orderid" ColumnName="orderid" />
                 <ScalarProperty Name="customerid" ColumnName="customerid" />
                 <ScalarProperty Name="amount" ColumnName="amount" />
                 <ScalarProperty Name="comments" ColumnName="comments" />
-                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="cardsresponse" ColumnName="cardsresponse" />
+                <ScalarProperty Name="sumastatusid" ColumnName="sumastatusid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrdersHistories">
+            <EntityTypeMapping TypeName="SumaLealtad.OrdersHistory">
+              <MappingFragment StoreEntitySet="OrdersHistory">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="estatusid" ColumnName="estatusid" />
+                <ScalarProperty Name="creationdate" ColumnName="creationdate" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PAISES">
-            <EntityTypeMapping TypeName="SumaLealtadModel.PAIS">
+            <EntityTypeMapping TypeName="SumaLealtad.PAIS">
               <MappingFragment StoreEntitySet="PAIS">
                 <ScalarProperty Name="COD_PAIS" ColumnName="COD_PAIS" />
                 <ScalarProperty Name="DESCRIPC_PAIS" ColumnName="DESCRIPC_PAIS" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PAIS_ESTADOS">
+            <EntityTypeMapping TypeName="SumaLealtad.PAIS_ESTADO">
+              <MappingFragment StoreEntitySet="PAIS_ESTADO">
+                <ScalarProperty Name="COD_PAIS" ColumnName="COD_PAIS" />
+                <ScalarProperty Name="COD_ESTADO" ColumnName="COD_ESTADO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parameters">
+            <EntityTypeMapping TypeName="SumaLealtad.Parameter">
+              <MappingFragment StoreEntitySet="Parameters">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PARAMETROS">
-            <EntityTypeMapping TypeName="SumaLealtadModel.PARAMETRO">
+            <EntityTypeMapping TypeName="SumaLealtad.PARAMETRO">
               <MappingFragment StoreEntitySet="PARAMETROS">
                 <ScalarProperty Name="ID_PARAM" ColumnName="ID_PARAM" />
                 <ScalarProperty Name="NOMBRE_PARAM" ColumnName="NOMBRE_PARAM" />
@@ -1573,7 +1887,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PARROQUIAS">
-            <EntityTypeMapping TypeName="SumaLealtadModel.PARROQUIA">
+            <EntityTypeMapping TypeName="SumaLealtad.PARROQUIA">
               <MappingFragment StoreEntitySet="PARROQUIA">
                 <ScalarProperty Name="COD_PARROQUIA" ColumnName="COD_PARROQUIA" />
                 <ScalarProperty Name="DESCRIPC_PARROQUIA" ColumnName="DESCRIPC_PARROQUIA" />
@@ -1581,7 +1895,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Photos_Affiliates">
-            <EntityTypeMapping TypeName="SumaLealtadModel.Photos_Affiliate">
+            <EntityTypeMapping TypeName="SumaLealtad.Photos_Affiliate">
               <MappingFragment StoreEntitySet="Photos_Affiliate">
                 <ScalarProperty Name="photo_id" ColumnName="photo_id" />
                 <ScalarProperty Name="photo" ColumnName="photo" />
@@ -1590,8 +1904,35 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PrepaidBeneficiaries">
+            <EntityTypeMapping TypeName="SumaLealtad.PrepaidBeneficiary">
+              <MappingFragment StoreEntitySet="PrepaidBeneficiary">
+                <ScalarProperty Name="affiliateid" ColumnName="affiliateid" />
+                <ScalarProperty Name="beneficiaryid" ColumnName="beneficiaryid" />
+                <ScalarProperty Name="begindate" ColumnName="begindate" />
+                <ScalarProperty Name="enddate" ColumnName="enddate" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrepaidCustomers">
+            <EntityTypeMapping TypeName="SumaLealtad.PrepaidCustomer">
+              <MappingFragment StoreEntitySet="PrepaidCustomer">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="rif" ColumnName="rif" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="creationdate" ColumnName="creationdate" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Reasons">
-            <EntityTypeMapping TypeName="SumaLealtadModel.Reason">
+            <EntityTypeMapping TypeName="SumaLealtad.Reason">
               <MappingFragment StoreEntitySet="Reasons">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1600,7 +1941,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RESTRICCIONES">
-            <EntityTypeMapping TypeName="SumaLealtadModel.RESTRICCIONES">
+            <EntityTypeMapping TypeName="SumaLealtad.RESTRICCION">
               <MappingFragment StoreEntitySet="RESTRICCIONES">
                 <ScalarProperty Name="COD_RESTRICCION" ColumnName="COD_RESTRICCION" />
                 <ScalarProperty Name="FECHA_ACT_REST" ColumnName="FECHA_ACT_REST" />
@@ -1617,7 +1958,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="SumaLealtadModel.Role">
+            <EntityTypeMapping TypeName="SumaLealtad.Role">
               <MappingFragment StoreEntitySet="Role">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1626,7 +1967,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SecurityLevels">
-            <EntityTypeMapping TypeName="SumaLealtadModel.SecurityLevel">
+            <EntityTypeMapping TypeName="SumaLealtad.SecurityLevel">
               <MappingFragment StoreEntitySet="SecurityLevel">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1635,7 +1976,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SecurityMenus">
-            <EntityTypeMapping TypeName="SumaLealtadModel.SecurityMenu">
+            <EntityTypeMapping TypeName="SumaLealtad.SecurityMenu">
               <MappingFragment StoreEntitySet="SecurityMenu">
                 <ScalarProperty Name="roleid" ColumnName="roleid" />
                 <ScalarProperty Name="menuid" ColumnName="menuid" />
@@ -1643,16 +1984,38 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Status">
-            <EntityTypeMapping TypeName="SumaLealtadModel.Status">
+          <EntitySetMapping Name="Statuses">
+            <EntityTypeMapping TypeName="SumaLealtad.Status">
               <MappingFragment StoreEntitySet="Status">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SumaStatuses">
+            <EntityTypeMapping TypeName="SumaLealtad.SumaStatus">
+              <MappingFragment StoreEntitySet="SumaStatus">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="tablename" ColumnName="tablename" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SumaLealtad.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TARJETAS">
-            <EntityTypeMapping TypeName="SumaLealtadModel.TARJETA">
+            <EntityTypeMapping TypeName="SumaLealtad.TARJETA">
               <MappingFragment StoreEntitySet="TARJETA">
                 <ScalarProperty Name="NRO_TARJETA" ColumnName="NRO_TARJETA" />
                 <ScalarProperty Name="NRO_AFILIACION" ColumnName="NRO_AFILIACION" />
@@ -1670,7 +2033,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Types">
-            <EntityTypeMapping TypeName="SumaLealtadModel.Type">
+            <EntityTypeMapping TypeName="SumaLealtad.Type">
               <MappingFragment StoreEntitySet="Type">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -1678,7 +2041,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="URBANIZACIONES">
-            <EntityTypeMapping TypeName="SumaLealtadModel.URBANIZACION">
+            <EntityTypeMapping TypeName="SumaLealtad.URBANIZACION">
               <MappingFragment StoreEntitySet="URBANIZACION">
                 <ScalarProperty Name="COD_URBANIZACION" ColumnName="COD_URBANIZACION" />
                 <ScalarProperty Name="DESCRIPC_URBANIZACION" ColumnName="DESCRIPC_URBANIZACION" />
@@ -1686,27 +2049,28 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="SumaLealtadModel.User">
+            <EntityTypeMapping TypeName="SumaLealtad.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="typeid" ColumnName="typeid" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="login" ColumnName="login" />
                 <ScalarProperty Name="passw" ColumnName="passw" />
                 <ScalarProperty Name="firstname" ColumnName="firstname" />
                 <ScalarProperty Name="lastname" ColumnName="lastname" />
                 <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="sumastatusid" ColumnName="sumastatusid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserRols">
-            <EntityTypeMapping TypeName="SumaLealtadModel.UserRol">
+            <EntityTypeMapping TypeName="SumaLealtad.UserRol">
               <MappingFragment StoreEntitySet="UserRol">
                 <ScalarProperty Name="userid" ColumnName="userid" />
                 <ScalarProperty Name="roleid" ColumnName="roleid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="CIUDAD_MUNICIPIO" TypeName="SumaLealtadModel.CIUDAD_MUNICIPIO" StoreEntitySet="CIUDAD_MUNICIPIO">
+          <AssociationSetMapping Name="CIUDAD_MUNICIPIO" TypeName="SumaLealtad.CIUDAD_MUNICIPIO" StoreEntitySet="CIUDAD_MUNICIPIO">
             <EndProperty Name="CIUDAD">
               <ScalarProperty Name="COD_CIUDAD" ColumnName="COD_CIUDAD" />
             </EndProperty>
@@ -1714,7 +2078,7 @@
               <ScalarProperty Name="COD_MUNICIPIO" ColumnName="COD_MUNICIPIO" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="ESTADO_CIUDAD" TypeName="SumaLealtadModel.ESTADO_CIUDAD" StoreEntitySet="ESTADO_CIUDAD">
+          <AssociationSetMapping Name="ESTADO_CIUDAD" TypeName="SumaLealtad.ESTADO_CIUDAD" StoreEntitySet="ESTADO_CIUDAD">
             <EndProperty Name="CIUDAD">
               <ScalarProperty Name="COD_CIUDAD" ColumnName="COD_CIUDAD" />
             </EndProperty>
@@ -1722,7 +2086,7 @@
               <ScalarProperty Name="COD_ESTADO" ColumnName="COD_ESTADO" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="MUNICIPIO_PARROQUIA" TypeName="SumaLealtadModel.MUNICIPIO_PARROQUIA" StoreEntitySet="MUNICIPIO_PARROQUIA">
+          <AssociationSetMapping Name="MUNICIPIO_PARROQUIA" TypeName="SumaLealtad.MUNICIPIO_PARROQUIA" StoreEntitySet="MUNICIPIO_PARROQUIA">
             <EndProperty Name="MUNICIPIO">
               <ScalarProperty Name="COD_MUNICIPIO" ColumnName="COD_MUNICIPIO" />
             </EndProperty>
@@ -1730,7 +2094,7 @@
               <ScalarProperty Name="COD_PARROQUIA" ColumnName="COD_PARROQUIA" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="PARROQUIA_URBANIZACION" TypeName="SumaLealtadModel.PARROQUIA_URBANIZACION" StoreEntitySet="PARROQUIA_URBANIZACION">
+          <AssociationSetMapping Name="PARROQUIA_URBANIZACION" TypeName="SumaLealtad.PARROQUIA_URBANIZACION" StoreEntitySet="PARROQUIA_URBANIZACION">
             <EndProperty Name="PARROQUIA">
               <ScalarProperty Name="COD_PARROQUIA" ColumnName="COD_PARROQUIA" />
             </EndProperty>
@@ -1738,16 +2102,17 @@
               <ScalarProperty Name="COD_URBANIZACION" ColumnName="COD_URBANIZACION" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Auditings">
-            <EntityTypeMapping TypeName="SumaLealtadModel.Auditing">
-              <MappingFragment StoreEntitySet="Auditing">
-                <ScalarProperty Name="ipaddress" ColumnName="ipaddress" />
-                <ScalarProperty Name="changedata" ColumnName="changedata" />
-                <ScalarProperty Name="originaldata" ColumnName="originaldata" />
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="SumaLealtad.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="sumastatusid" ColumnName="sumastatusid" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="processdate" ColumnName="processdate" />
+                <ScalarProperty Name="creationuserid" ColumnName="creationuserid" />
                 <ScalarProperty Name="creationdate" ColumnName="creationdate" />
-                <ScalarProperty Name="userid" ColumnName="userid" />
-                <ScalarProperty Name="operationsid" ColumnName="operationsid" />
-                <ScalarProperty Name="objectid" ColumnName="objectid" />
+                <ScalarProperty Name="paymenttype" ColumnName="paymenttype" />
+                <ScalarProperty Name="totalamount" ColumnName="totalamount" />
+                <ScalarProperty Name="prepaidcustomerid" ColumnName="prepaidcustomerid" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

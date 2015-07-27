@@ -229,8 +229,11 @@
     <Compile Include="Controllers\MunicipioController.cs" />
     <Compile Include="Controllers\MyDatabaseEntities.cs" />
     <Compile Include="Controllers\ParroquiaController.cs" />
-    <Compile Include="Controllers\Prepago\AfiliadoPrepagoController.cs" />
+    <Compile Include="Controllers\Prepago\AfiliadoSumaController.cs" />
+    <Compile Include="Controllers\Prepago\BeneficiarioPrepagoController.cs" />
+    <Compile Include="Controllers\Prepago\ClientePrepagoController.cs" />
     <Compile Include="Controllers\Prepago\CompanyPrepagoController.cs" />
+    <Compile Include="Controllers\Prepago\OrdenRecargaPrepagoController.cs" />
     <Compile Include="Controllers\ReasonsBlockController.cs" />
     <Compile Include="Controllers\ReasonsController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -254,6 +257,7 @@
     <Compile Include="Models\AfiliadoRepository.cs" />
     <Compile Include="Models\Afiliado.cs" />
     <Compile Include="Models\AfiliadoSaldosMovimientos.cs" />
+    <Compile Include="Models\AfiliadoSuma.cs" />
     <Compile Include="Models\Auditing.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -266,39 +270,31 @@
     <Compile Include="Models\CLIENTE.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ClienteCards.cs" />
-    <Compile Include="Models\ClienteWebPlazas.cs" />
-    <Compile Include="Models\CMenu.cs" />
     <Compile Include="Models\Company.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CompanyAffiliate.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CompanyAfiliadoRecarga.cs" />
-    <Compile Include="Models\CompanyRepository.cs" />
     <Compile Include="Models\CreditLimit.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CustomerInterest.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DetalleOrden.cs" />
+    <Compile Include="Models\DetalleOrdenRecargaPrepago.cs" />
     <Compile Include="Models\ESTADO.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ExceptionJSON.cs" />
     <Compile Include="Models\FACTURA.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Interest.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Menu.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Movimiento.cs" />
     <Compile Include="Models\MUNICIPIO.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -308,14 +304,23 @@
     <Compile Include="Models\Operation.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Orden.cs" />
+    <Compile Include="Models\OrdenRecargaPrepago.cs" />
     <Compile Include="Models\Order.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OrdersDetail.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrdersHistory.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PAIS.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PAIS_ESTADO.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Parameter.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PARAMETRO.cs">
@@ -327,13 +332,36 @@
     <Compile Include="Models\Photos_Affiliate.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PrepagoCompanyAffiliattes.cs" />
+    <Compile Include="Models\PrepaidBeneficiary.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrepaidCustomer.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Reason.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Repositorios\AfiliadoSumaRepository.cs" />
+    <Compile Include="Models\AfiliadoSumaSaldosMovimientos.cs" />
+    <Compile Include="Models\BeneficiarioPrepago.cs" />
+    <Compile Include="Models\Repositorios\BeneficiarioPrepagoRepository.cs" />
+    <Compile Include="Models\BeneficiarioPrepagoSaldosMovimientos.cs" />
+    <Compile Include="Models\ClienteCards.cs" />
+    <Compile Include="Models\ClientePrepago.cs" />
+    <Compile Include="Models\Repositorios\ClientePrepagoRepository.cs" />
+    <Compile Include="Models\ClienteWebPlazas.cs" />
+    <Compile Include="Models\CMenu.cs" />
+    <Compile Include="Models\CompanyAfiliadoRecarga.cs" />
+    <Compile Include="Models\CompanyRepository.cs" />
+    <Compile Include="Models\DetalleOrden.cs" />
+    <Compile Include="Models\ExceptionJSON.cs" />
+    <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\Movimiento.cs" />
+    <Compile Include="Models\Orden.cs" />
+    <Compile Include="Models\PrepagoCompanyAffiliattes.cs" />
     <Compile Include="Models\RespuestaCards.cs" />
     <Compile Include="Models\RespuestaWebPlazas.cs" />
-    <Compile Include="Models\RESTRICCIONES.cs">
+    <Compile Include="Models\RESTRICCION.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Role.cs">
@@ -365,6 +393,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SumaLealtad.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SumaStatus.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TARJETA.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
@@ -647,10 +681,10 @@
     <Content Include="Views\CompanyPrepago\DetalleOrden.cshtml" />
     <Content Include="Views\CompanyPrepago\ResultadoOrden.cshtml" />
     <Content Include="Views\CompanyPrepago\ConfirmacionRecargas.cshtml" />
-    <Content Include="Views\CompanyPrepago\R_ConsumosClientes.cshtml" />
-    <Content Include="Views\CompanyPrepago\R_ConsumoGeneral.cshtml" />
-    <Content Include="Views\CompanyPrepago\R_RecargasClientes.cshtml" />
-    <Content Include="Views\CompanyPrepago\R_RecargasGeneral.cshtml" />
+    <Content Include="Views\OrdenRecargaPrepago\Index.cshtml" />
+    <Content Include="Views\AfiliadoSuma\Index.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\Index.cshtml" />
+    <Content Include="Views\ClientePrepago\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
