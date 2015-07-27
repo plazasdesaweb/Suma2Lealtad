@@ -685,6 +685,11 @@
     <Content Include="Views\AfiliadoSuma\Index.cshtml" />
     <Content Include="Views\BeneficiarioPrepago\Index.cshtml" />
     <Content Include="Views\ClientePrepago\Index.cshtml" />
+    <Content Include="Views\ClientePrepago\FilterReview.cshtml" />
+    <Content Include="Views\ClientePrepago\Create.cshtml" />
+    <Content Include="Views\ClientePrepago\Delete.cshtml" />
+    <Content Include="Views\ClientePrepago\Edit.cshtml" />
+    <Content Include="Views\ClientePrepago\Filter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

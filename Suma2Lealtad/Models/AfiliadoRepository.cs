@@ -227,6 +227,7 @@ namespace Suma2Lealtad.Models
         //}
 
         //busca un cliente en la WebPlazas a partir del documento de identificación
+
         public Afiliado Find(string numdoc, int typeid = ID_TYPE_SUMA, int companyid = ID_COMPANY_PLAZAS)
         {
             //Primero se buscan los datos de CLIENTE en WebPlazas
