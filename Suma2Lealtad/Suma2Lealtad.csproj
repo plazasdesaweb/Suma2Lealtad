@@ -343,7 +343,6 @@
     </Compile>
     <Compile Include="Models\Repositorios\AfiliadoSumaRepository.cs" />
     <Compile Include="Models\AfiliadoSumaSaldosMovimientos.cs" />
-    <Compile Include="Models\BeneficiarioPrepago.cs" />
     <Compile Include="Models\Repositorios\BeneficiarioPrepagoRepository.cs" />
     <Compile Include="Models\BeneficiarioPrepagoSaldosMovimientos.cs" />
     <Compile Include="Models\ClienteCards.cs" />
