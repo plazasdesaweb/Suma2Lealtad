@@ -15,7 +15,60 @@ namespace Suma2Lealtad.Models
         public string phoneCliente { get; set; }
         public string emailCliente { get; set; }
 
-        public List<AfiliadoSuma> beneficiarios;
-        public List<OrdenRecargaPrepago> ordenes;
+        #region Lista_EstadoDeAfiliacion
+        public class EstadoDeAfiliacion
+        {
+            public string id { get; set; }
+            public string estado { get; set; }
+        }
+
+        public IEnumerable<EstadoDeAfiliacion> EstadoDeAfiliacionOptions =
+            new List<EstadoDeAfiliacion>
+        {
+              new EstadoDeAfiliacion { id = "", estado = "Seleccione..." },
+              new EstadoDeAfiliacion { id = "Nueva", estado = "Nueva" },
+              new EstadoDeAfiliacion { id = "Inactiva", estado = "Inactiva"  },
+              new EstadoDeAfiliacion { id = "Activa", estado = "Activa"  },
+              new EstadoDeAfiliacion { id = "Eliminada", estado = "Eliminada"  }
+        };
+        #endregion
+
+        #region Lista_EstadoDeTarjeta
+        public class EstadoDeTarjeta
+        {
+            public string id { get; set; }
+            public string estado { get; set; }
+        }
+
+        public IEnumerable<EstadoDeTarjeta> EstadoDeTarjetaOptions =
+            new List<EstadoDeTarjeta>
+        {
+              new EstadoDeTarjeta { id = "", estado = "Seleccione..."          },
+              new EstadoDeTarjeta { id = "Nueva", estado = "Nueva" },
+              new EstadoDeTarjeta { id = "Inactiva", estado = "Inactiva"  },
+              new EstadoDeTarjeta { id = "Activa", estado = "Activa"  },
+              new EstadoDeTarjeta { id = "Eliminada", estado = "Eliminada"  },
+              new EstadoDeTarjeta { id = "Suspendida", estado = "Suspendida"  }
+        };
+        #endregion
+
+        #region Lista_EstadoDeOrden
+        public class EstadoDeOrden
+        {
+            public string id { get; set; }
+            public string estado { get; set; }
+        }
+
+        public IEnumerable<EstadoDeOrden> EstadoDeOrdenOptions =
+            new List<EstadoDeOrden>
+        {
+              new EstadoDeOrden { id = "", estado = "Seleccione..."          },
+              new EstadoDeOrden { id = "Nueva", estado = "Nueva" },
+              new EstadoDeOrden { id = "Aprobada", estado = "Aprobada"  },
+              new EstadoDeOrden { id = "Rechazada", estado = "Rechazada"  },
+              new EstadoDeOrden { id = "Procesada", estado = "Procesada"  },
+        };
+        #endregion
     }
+
 }

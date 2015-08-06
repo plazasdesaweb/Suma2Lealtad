@@ -502,10 +502,10 @@
         <EntityType Name="PrepaidBeneficiary">
           <Key>
             <PropertyRef Name="affiliateid" />
-            <PropertyRef Name="beneficiaryid" />
+            <PropertyRef Name="prepaidcustomerid" />
           </Key>
           <Property Name="affiliateid" Type="int" Nullable="false" />
-          <Property Name="beneficiaryid" Type="int" Nullable="false" />
+          <Property Name="prepaidcustomerid" Type="int" Nullable="false" />
           <Property Name="begindate" Type="datetime" />
           <Property Name="enddate" Type="datetime" />
           <Property Name="comments" Type="varchar" MaxLength="120" />
@@ -586,9 +586,9 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="tablename" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="value" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="value" Type="int" Nullable="false" />
           <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="active" Type="bit" />
         </EntityType>
@@ -858,7 +858,7 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="PrepaidBeneficiary">
-              <PropertyRef Name="beneficiaryid" />
+              <PropertyRef Name="prepaidcustomerid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -904,15 +904,12 @@
           <EntitySet Name="PARAMETROS" EntityType="SumaLealtad.PARAMETRO" />
           <EntitySet Name="PARROQUIAS" EntityType="SumaLealtad.PARROQUIA" />
           <EntitySet Name="Photos_Affiliates" EntityType="SumaLealtad.Photos_Affiliate" />
-          <EntitySet Name="PrepaidBeneficiaries" EntityType="SumaLealtad.PrepaidBeneficiary" />
-          <EntitySet Name="PrepaidCustomers" EntityType="SumaLealtad.PrepaidCustomer" />
           <EntitySet Name="Reasons" EntityType="SumaLealtad.Reason" />
           <EntitySet Name="RESTRICCIONES" EntityType="SumaLealtad.RESTRICCION" />
           <EntitySet Name="Roles" EntityType="SumaLealtad.Role" />
           <EntitySet Name="SecurityLevels" EntityType="SumaLealtad.SecurityLevel" />
           <EntitySet Name="SecurityMenus" EntityType="SumaLealtad.SecurityMenu" />
           <EntitySet Name="Statuses" EntityType="SumaLealtad.Status" />
-          <EntitySet Name="SumaStatuses" EntityType="SumaLealtad.SumaStatus" />
           <EntitySet Name="sysdiagrams" EntityType="SumaLealtad.sysdiagram" />
           <EntitySet Name="TARJETAS" EntityType="SumaLealtad.TARJETA" />
           <EntitySet Name="Types" EntityType="SumaLealtad.Type" />
@@ -923,25 +920,9 @@
             <End Role="Channel" EntitySet="Channels" />
             <End Role="Affiliate" EntitySet="Affiliates" />
           </AssociationSet>
-          <AssociationSet Name="FK_Affiliate_SumaStatus" Association="SumaLealtad.FK_Affiliate_SumaStatus">
-            <End Role="SumaStatus" EntitySet="SumaStatuses" />
-            <End Role="Affiliate" EntitySet="Affiliates" />
-          </AssociationSet>
           <AssociationSet Name="FK_CustomerInterest_Interest" Association="SumaLealtad.FK_CustomerInterest_Interest">
             <End Role="Interest" EntitySet="Interests" />
             <End Role="CustomerInterest" EntitySet="CustomerInterests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrdersDetail_SumaStatus" Association="SumaLealtad.FK_OrdersDetail_SumaStatus">
-            <End Role="SumaStatus" EntitySet="SumaStatuses" />
-            <End Role="OrdersDetail" EntitySet="OrdersDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PBeneficiary_PCustomer" Association="SumaLealtad.FK_PBeneficiary_PCustomer">
-            <End Role="PrepaidCustomer" EntitySet="PrepaidCustomers" />
-            <End Role="PrepaidBeneficiary" EntitySet="PrepaidBeneficiaries" />
-          </AssociationSet>
-          <AssociationSet Name="FK_User_SumaStatus" Association="SumaLealtad.FK_User_SumaStatus">
-            <End Role="SumaStatus" EntitySet="SumaStatuses" />
-            <End Role="User" EntitySet="Users" />
           </AssociationSet>
           <AssociationSet Name="CIUDAD_MUNICIPIO" Association="SumaLealtad.CIUDAD_MUNICIPIO">
             <End Role="CIUDAD" EntitySet="CIUDADES" />
@@ -960,17 +941,36 @@
             <End Role="URBANIZACION" EntitySet="URBANIZACIONES" />
           </AssociationSet>
           <EntitySet Name="Orders" EntityType="SumaLealtad.Order" />
+          <AssociationSet Name="FK_OrdersDetail_Order" Association="SumaLealtad.FK_OrdersDetail_Order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrdersDetail" EntitySet="OrdersDetails" />
+          </AssociationSet>
+          <EntitySet Name="PrepaidBeneficiaries" EntityType="SumaLealtad.PrepaidBeneficiary" />
+          <EntitySet Name="PrepaidCustomers" EntityType="SumaLealtad.PrepaidCustomer" />
+          <EntitySet Name="SumaStatuses" EntityType="SumaLealtad.SumaStatus" />
+          <AssociationSet Name="FK_Affiliate_SumaStatus" Association="SumaLealtad.FK_Affiliate_SumaStatus">
+            <End Role="SumaStatu" EntitySet="SumaStatuses" />
+            <End Role="Affiliate" EntitySet="Affiliates" />
+          </AssociationSet>
           <AssociationSet Name="FK_Orders_PrepaidCustomer" Association="SumaLealtad.FK_Orders_PrepaidCustomer">
             <End Role="PrepaidCustomer" EntitySet="PrepaidCustomers" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_Orders_SumaStatus" Association="SumaLealtad.FK_Orders_SumaStatus">
-            <End Role="SumaStatus" EntitySet="SumaStatuses" />
+            <End Role="SumaStatu" EntitySet="SumaStatuses" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrdersDetail_Order" Association="SumaLealtad.FK_OrdersDetail_Order">
-            <End Role="Order" EntitySet="Orders" />
+          <AssociationSet Name="FK_OrdersDetail_SumaStatus" Association="SumaLealtad.FK_OrdersDetail_SumaStatus">
+            <End Role="SumaStatu" EntitySet="SumaStatuses" />
             <End Role="OrdersDetail" EntitySet="OrdersDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PBeneficiary_PCustomer" Association="SumaLealtad.FK_PBeneficiary_PCustomer">
+            <End Role="PrepaidCustomer" EntitySet="PrepaidCustomers" />
+            <End Role="PrepaidBeneficiary" EntitySet="PrepaidBeneficiaries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_SumaStatus" Association="SumaLealtad.FK_User_SumaStatus">
+            <End Role="SumaStatu" EntitySet="SumaStatuses" />
+            <End Role="User" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Affiliate">
@@ -1000,7 +1000,7 @@
           <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
           <Property Name="sumastatusid" Type="Int32" />
           <NavigationProperty Name="Channel" Relationship="SumaLealtad.FK_Affiliate_Channel" FromRole="Affiliate" ToRole="Channel" />
-          <NavigationProperty Name="SumaStatus" Relationship="SumaLealtad.FK_Affiliate_SumaStatus" FromRole="Affiliate" ToRole="SumaStatus" />
+          <NavigationProperty Name="SumaStatu" Relationship="SumaLealtad.FK_Affiliate_SumaStatus" FromRole="Affiliate" ToRole="SumaStatu" />
         </EntityType>
         <EntityType Name="AffiliateAud">
           <Key>
@@ -1211,8 +1211,8 @@
           <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
           <Property Name="cardsresponse" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
           <Property Name="sumastatusid" Type="Int32" />
-          <NavigationProperty Name="SumaStatus" Relationship="SumaLealtad.FK_OrdersDetail_SumaStatus" FromRole="OrdersDetail" ToRole="SumaStatus" />
           <NavigationProperty Name="Order" Relationship="SumaLealtad.FK_OrdersDetail_Order" FromRole="OrdersDetail" ToRole="Order" />
+          <NavigationProperty Name="SumaStatu" Relationship="SumaLealtad.FK_OrdersDetail_SumaStatus" FromRole="OrdersDetail" ToRole="SumaStatu" />
         </EntityType>
         <EntityType Name="OrdersHistory">
           <Key>
@@ -1284,35 +1284,6 @@
           <Property Name="photo_type" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
           <Property Name="Affiliate_id" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="PrepaidBeneficiary">
-          <Key>
-            <PropertyRef Name="affiliateid" />
-            <PropertyRef Name="beneficiaryid" />
-          </Key>
-          <Property Name="affiliateid" Type="Int32" Nullable="false" />
-          <Property Name="beneficiaryid" Type="Int32" Nullable="false" />
-          <Property Name="begindate" Type="DateTime" Precision="3" />
-          <Property Name="enddate" Type="DateTime" Precision="3" />
-          <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
-          <Property Name="active" Type="Boolean" />
-          <NavigationProperty Name="PrepaidCustomer" Relationship="SumaLealtad.FK_PBeneficiary_PCustomer" FromRole="PrepaidBeneficiary" ToRole="PrepaidCustomer" />
-        </EntityType>
-        <EntityType Name="PrepaidCustomer">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="120" Unicode="false" FixedLength="false" />
-          <Property Name="alias" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="rif" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="address" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
-          <Property Name="phone" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-          <Property Name="email" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-          <Property Name="creationdate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="userid" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="PrepaidBeneficiaries" Relationship="SumaLealtad.FK_PBeneficiary_PCustomer" FromRole="PrepaidCustomer" ToRole="PrepaidBeneficiary" />
-          <NavigationProperty Name="Orders" Relationship="SumaLealtad.FK_Orders_PrepaidCustomer" FromRole="PrepaidCustomer" ToRole="Order" />
-        </EntityType>
         <EntityType Name="Reason">
           <Key>
             <PropertyRef Name="id" />
@@ -1370,20 +1341,6 @@
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
         </EntityType>
-        <EntityType Name="SumaStatus">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="tablename" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="value" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="active" Type="Boolean" />
-          <NavigationProperty Name="Affiliates" Relationship="SumaLealtad.FK_Affiliate_SumaStatus" FromRole="SumaStatus" ToRole="Affiliate" />
-          <NavigationProperty Name="OrdersDetails" Relationship="SumaLealtad.FK_OrdersDetail_SumaStatus" FromRole="SumaStatus" ToRole="OrdersDetail" />
-          <NavigationProperty Name="Users" Relationship="SumaLealtad.FK_User_SumaStatus" FromRole="SumaStatus" ToRole="User" />
-          <NavigationProperty Name="Orders" Relationship="SumaLealtad.FK_Orders_SumaStatus" FromRole="SumaStatus" ToRole="Order" />
-        </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -1437,8 +1394,8 @@
           <Property Name="lastname" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="email" Type="String" Nullable="false" MaxLength="80" Unicode="false" FixedLength="false" />
           <Property Name="sumastatusid" Type="Int32" />
-          <NavigationProperty Name="SumaStatus" Relationship="SumaLealtad.FK_User_SumaStatus" FromRole="User" ToRole="SumaStatus" />
           <Property Type="Int32" Name="typeid" Nullable="false" />
+          <NavigationProperty Name="SumaStatu" Relationship="SumaLealtad.FK_User_SumaStatus" FromRole="User" ToRole="SumaStatu" />
         </EntityType>
         <EntityType Name="UserRol">
           <Key>
@@ -1460,18 +1417,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Affiliate_SumaStatus">
-          <End Role="SumaStatus" Type="SumaLealtad.SumaStatus" Multiplicity="0..1" />
-          <End Role="Affiliate" Type="SumaLealtad.Affiliate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SumaStatus">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Affiliate">
-              <PropertyRef Name="sumastatusid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CustomerInterest_Interest">
           <End Role="Interest" Type="SumaLealtad.Interest" Multiplicity="1" />
           <End Role="CustomerInterest" Type="SumaLealtad.CustomerInterest" Multiplicity="*" />
@@ -1481,42 +1426,6 @@
             </Principal>
             <Dependent Role="CustomerInterest">
               <PropertyRef Name="interestid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrdersDetail_SumaStatus">
-          <End Role="SumaStatus" Type="SumaLealtad.SumaStatus" Multiplicity="0..1" />
-          <End Role="OrdersDetail" Type="SumaLealtad.OrdersDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SumaStatus">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="OrdersDetail">
-              <PropertyRef Name="sumastatusid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PBeneficiary_PCustomer">
-          <End Role="PrepaidCustomer" Type="SumaLealtad.PrepaidCustomer" Multiplicity="1" />
-          <End Role="PrepaidBeneficiary" Type="SumaLealtad.PrepaidBeneficiary" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PrepaidCustomer">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="PrepaidBeneficiary">
-              <PropertyRef Name="beneficiaryid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_User_SumaStatus">
-          <End Role="SumaStatus" Type="SumaLealtad.SumaStatus" Multiplicity="0..1" />
-          <End Role="User" Type="SumaLealtad.User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SumaStatus">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="sumastatusid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1549,10 +1458,77 @@
           <Property Type="DateTime" Name="processdate" Nullable="false" Precision="3" />
           <Property Type="String" Name="comments" MaxLength="120" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="sumastatusid" Nullable="false" />
-          <NavigationProperty Name="PrepaidCustomer" Relationship="SumaLealtad.FK_Orders_PrepaidCustomer" FromRole="Order" ToRole="PrepaidCustomer" />
-          <NavigationProperty Name="SumaStatu" Relationship="SumaLealtad.FK_Orders_SumaStatus" FromRole="Order" ToRole="SumaStatus" />
           <NavigationProperty Name="OrdersDetails" Relationship="SumaLealtad.FK_OrdersDetail_Order" FromRole="Order" ToRole="OrdersDetail" />
+          <NavigationProperty Name="PrepaidCustomer" Relationship="SumaLealtad.FK_Orders_PrepaidCustomer" FromRole="Order" ToRole="PrepaidCustomer" />
+          <NavigationProperty Name="SumaStatu" Relationship="SumaLealtad.FK_Orders_SumaStatus" FromRole="Order" ToRole="SumaStatu" />
         </EntityType>
+        <Association Name="FK_OrdersDetail_Order">
+          <End Type="SumaLealtad.Order" Role="Order" Multiplicity="1" />
+          <End Type="SumaLealtad.OrdersDetail" Role="OrdersDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OrdersDetail">
+              <PropertyRef Name="orderid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PrepaidBeneficiary">
+          <Key>
+            <PropertyRef Name="affiliateid" />
+            <PropertyRef Name="prepaidcustomerid" />
+          </Key>
+          <Property Type="Int32" Name="affiliateid" Nullable="false" />
+          <Property Type="Int32" Name="prepaidcustomerid" Nullable="false" />
+          <Property Type="DateTime" Name="begindate" Precision="3" />
+          <Property Type="DateTime" Name="enddate" Precision="3" />
+          <Property Type="String" Name="comments" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="active" />
+          <NavigationProperty Name="PrepaidCustomer" Relationship="SumaLealtad.FK_PBeneficiary_PCustomer" FromRole="PrepaidBeneficiary" ToRole="PrepaidCustomer" />
+        </EntityType>
+        <EntityType Name="PrepaidCustomer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="alias" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="rif" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="address" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="phone" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="email" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="creationdate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="userid" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="SumaLealtad.FK_Orders_PrepaidCustomer" FromRole="PrepaidCustomer" ToRole="Order" />
+          <NavigationProperty Name="PrepaidBeneficiaries" Relationship="SumaLealtad.FK_PBeneficiary_PCustomer" FromRole="PrepaidCustomer" ToRole="PrepaidBeneficiary" />
+        </EntityType>
+        <EntityType Name="SumaStatus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="tablename" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="value" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="active" />
+          <NavigationProperty Name="Affiliates" Relationship="SumaLealtad.FK_Affiliate_SumaStatus" FromRole="SumaStatu" ToRole="Affiliate" />
+          <NavigationProperty Name="Orders" Relationship="SumaLealtad.FK_Orders_SumaStatus" FromRole="SumaStatu" ToRole="Order" />
+          <NavigationProperty Name="OrdersDetails" Relationship="SumaLealtad.FK_OrdersDetail_SumaStatus" FromRole="SumaStatu" ToRole="OrdersDetail" />
+          <NavigationProperty Name="Users" Relationship="SumaLealtad.FK_User_SumaStatus" FromRole="SumaStatu" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Affiliate_SumaStatus">
+          <End Type="SumaLealtad.SumaStatus" Role="SumaStatu" Multiplicity="0..1" />
+          <End Type="SumaLealtad.Affiliate" Role="Affiliate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SumaStatu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Affiliate">
+              <PropertyRef Name="sumastatusid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Orders_PrepaidCustomer">
           <End Type="SumaLealtad.PrepaidCustomer" Role="PrepaidCustomer" Multiplicity="1" />
           <End Type="SumaLealtad.Order" Role="Order" Multiplicity="*" />
@@ -1566,10 +1542,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orders_SumaStatus">
-          <End Type="SumaLealtad.SumaStatus" Role="SumaStatus" Multiplicity="1" />
+          <End Type="SumaLealtad.SumaStatus" Role="SumaStatu" Multiplicity="1" />
           <End Type="SumaLealtad.Order" Role="Order" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SumaStatus">
+            <Principal Role="SumaStatu">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Order">
@@ -1577,15 +1553,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrdersDetail_Order">
-          <End Type="SumaLealtad.Order" Role="Order" Multiplicity="1" />
+        <Association Name="FK_OrdersDetail_SumaStatus">
+          <End Type="SumaLealtad.SumaStatus" Role="SumaStatu" Multiplicity="0..1" />
           <End Type="SumaLealtad.OrdersDetail" Role="OrdersDetail" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Order">
+            <Principal Role="SumaStatu">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="OrdersDetail">
-              <PropertyRef Name="orderid" />
+              <PropertyRef Name="sumastatusid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PBeneficiary_PCustomer">
+          <End Type="SumaLealtad.PrepaidCustomer" Role="PrepaidCustomer" Multiplicity="1" />
+          <End Type="SumaLealtad.PrepaidBeneficiary" Role="PrepaidBeneficiary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrepaidCustomer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PrepaidBeneficiary">
+              <PropertyRef Name="prepaidcustomerid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_SumaStatus">
+          <End Type="SumaLealtad.SumaStatus" Role="SumaStatu" Multiplicity="0..1" />
+          <End Type="SumaLealtad.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SumaStatu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="sumastatusid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1904,33 +1904,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PrepaidBeneficiaries">
-            <EntityTypeMapping TypeName="SumaLealtad.PrepaidBeneficiary">
-              <MappingFragment StoreEntitySet="PrepaidBeneficiary">
-                <ScalarProperty Name="affiliateid" ColumnName="affiliateid" />
-                <ScalarProperty Name="beneficiaryid" ColumnName="beneficiaryid" />
-                <ScalarProperty Name="begindate" ColumnName="begindate" />
-                <ScalarProperty Name="enddate" ColumnName="enddate" />
-                <ScalarProperty Name="comments" ColumnName="comments" />
-                <ScalarProperty Name="active" ColumnName="active" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PrepaidCustomers">
-            <EntityTypeMapping TypeName="SumaLealtad.PrepaidCustomer">
-              <MappingFragment StoreEntitySet="PrepaidCustomer">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="alias" ColumnName="alias" />
-                <ScalarProperty Name="rif" ColumnName="rif" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="phone" ColumnName="phone" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="creationdate" ColumnName="creationdate" />
-                <ScalarProperty Name="userid" ColumnName="userid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Reasons">
             <EntityTypeMapping TypeName="SumaLealtad.Reason">
               <MappingFragment StoreEntitySet="Reasons">
@@ -1989,17 +1962,6 @@
               <MappingFragment StoreEntitySet="Status">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SumaStatuses">
-            <EntityTypeMapping TypeName="SumaLealtad.SumaStatus">
-              <MappingFragment StoreEntitySet="SumaStatus">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="tablename" ColumnName="tablename" />
-                <ScalarProperty Name="value" ColumnName="value" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="active" ColumnName="active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2113,6 +2075,44 @@
                 <ScalarProperty Name="paymenttype" ColumnName="paymenttype" />
                 <ScalarProperty Name="totalamount" ColumnName="totalamount" />
                 <ScalarProperty Name="prepaidcustomerid" ColumnName="prepaidcustomerid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrepaidBeneficiaries">
+            <EntityTypeMapping TypeName="SumaLealtad.PrepaidBeneficiary">
+              <MappingFragment StoreEntitySet="PrepaidBeneficiary">
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="enddate" ColumnName="enddate" />
+                <ScalarProperty Name="begindate" ColumnName="begindate" />
+                <ScalarProperty Name="prepaidcustomerid" ColumnName="prepaidcustomerid" />
+                <ScalarProperty Name="affiliateid" ColumnName="affiliateid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrepaidCustomers">
+            <EntityTypeMapping TypeName="SumaLealtad.PrepaidCustomer">
+              <MappingFragment StoreEntitySet="PrepaidCustomer">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="creationdate" ColumnName="creationdate" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="rif" ColumnName="rif" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SumaStatuses">
+            <EntityTypeMapping TypeName="SumaLealtad.SumaStatus">
+              <MappingFragment StoreEntitySet="SumaStatus">
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="tablename" ColumnName="tablename" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

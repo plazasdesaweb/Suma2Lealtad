@@ -9,7 +9,7 @@ namespace Suma2Lealtad.Models
     {
         public string denominacionSuma { get; set; }
         public string denominacionPrepago { get; set; }
-        //public BeneficiarioPrepago Beneficiario { get; set; }
+        public BeneficiarioPrepago Beneficiario { get; set; }
         public SaldosMovimientos SaldosMovimientos { get; set; }
     }
 }

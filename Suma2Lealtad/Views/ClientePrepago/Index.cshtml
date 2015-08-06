@@ -19,11 +19,12 @@
     }
 </style>
 
-<div class="container">
+<div class="form-group">
+@*<div class="container">
 
     <div class="row">
 
-        <div class="col-md-push-1 col-md-10">
+        <div class="col-md-push-1 col-md-12">*@
 
             <div class="panel panel-default">
 
@@ -71,7 +72,7 @@
                                         @Html.DisplayFor(modelItem => item.emailCliente)
                                     </td>
                                     <td>
-                                        <a href="@Url.Action("Find", "BeneficiarioPrepago", new { companyid = item.idCliente })" class="btn btn-success btn-sm">
+                                        <a href="@Url.Action("FilterBeneficiarios", "ClientePrepago", new { id = item.idCliente })" class="btn btn-success btn-sm">
                                             <span class="glyphicon glyphicon-user"></span>
                                         </a>
                                     </td>
@@ -100,7 +101,7 @@
                             <a id="RecargaMasiva" class="btn btn-success btn-md" role="button">Crear Recarga Masiva</a>
                         </div>
                         <div class="pull-right">
-                            <a href="@Url.Action("Create", "ClientePrepago")" class="btn btn-success btn-md">Agregar Nuevo Cliente</a>
+                            <a href="@Url.Action("Filter", "ClientePrepago")" class="btn btn-success btn-md">Agregar Nuevo Cliente</a>
                             <a href="@Url.Action("FilterReview", "ClientePrepago")" class="btn btn-danger btn-md">Regresar</a>
                         </div>
                     </div>
@@ -115,11 +116,11 @@
         </div>
         <!-- columns -->
 
-    </div>
+@*    </div>
     <!-- row -->
 
 </div>
-<!-- container -->
+<!-- container -->*@
 
 <script src="~/Scripts/jquery-2.1.3.min.js"></script>
 <script>
@@ -144,8 +145,8 @@
 
     $("#Ordenes").click(function () {
         var href = '@Url.Content("~/{controller}/{action}/{params}")';
-        href = href.replace("{controller}", "");
-        href = href.replace("{action}", "");
+        href = href.replace("{controller}", "ClientePrepago");
+        href = href.replace("{action}", "FilterOrdenes");
         href = href.replace("{params}", rowId);
         window.location.href = href;
     });

@@ -17,20 +17,20 @@ namespace Suma2Lealtad.Models
         public SumaStatus()
         {
             this.Affiliates = new HashSet<Affiliate>();
+            this.Orders = new HashSet<Order>();
             this.OrdersDetails = new HashSet<OrdersDetail>();
             this.Users = new HashSet<User>();
-            this.Orders = new HashSet<Order>();
         }
     
         public int id { get; set; }
         public string tablename { get; set; }
-        public string value { get; set; }
+        public int value { get; set; }
         public string name { get; set; }
         public Nullable<bool> active { get; set; }
     
         public virtual ICollection<Affiliate> Affiliates { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<OrdersDetail> OrdersDetails { get; set; }
         public virtual ICollection<User> Users { get; set; }
-        public virtual ICollection<Order> Orders { get; set; }
     }
 }

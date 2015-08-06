@@ -15,7 +15,7 @@ namespace Suma2Lealtad.Models
     public partial class PrepaidBeneficiary
     {
         public int affiliateid { get; set; }
-        public int beneficiaryid { get; set; }
+        public int prepaidcustomerid { get; set; }
         public Nullable<System.DateTime> begindate { get; set; }
         public Nullable<System.DateTime> enddate { get; set; }
         public string comments { get; set; }

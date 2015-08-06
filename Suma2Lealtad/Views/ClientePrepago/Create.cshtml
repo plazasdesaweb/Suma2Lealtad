@@ -19,79 +19,74 @@
 
                 <div class="panel-body">
 
-                    @using (Html.BeginForm())
-                    {
+                    <form action="@Url.Action("Create", "ClientePrepago")" method="post" class="form-horizontal" role="form" >
+
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true)
 
-                        <form class="form-horizontal" role="form">
-
-                            <div class="form-group">
-
-                                <div class="editor-label col-md-4 control-label">
-                                    Nombre :
-                                </div>
-                                <div class="editor-field col-md-8">
-                                    @Html.TextBoxFor(model => model.nameCliente, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.nameCliente)
-                                </div>
-
-                                <div class="editor-label col-md-4 control-label">
-                                    Alias :
-                                </div>
-                                <div class="editor-field col-md-8">
-                                    @Html.TextBoxFor(model => model.aliasCliente, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.aliasCliente)
-                                </div>
-
-                                <div class="editor-label col-md-4 control-label">
-                                    @*@Html.LabelFor(model => model.name)*@ Rif :
-                                </div>
-                                <div class="editor-field col-md-8">
-                                    @Html.TextBoxFor(model => model.rifCliente, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.rifCliente)
-                                </div>
-
-                                <div class="editor-label col-md-4 control-label">
-                                   Dirección :
-                                </div>
-                                <div class="editor-field col-md-8">
-                                    @Html.TextBoxFor(model => model.addressCliente, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.addressCliente)
-                                </div>
-
-                                <div class="editor-label col-md-4 control-label">
-                                    Teléfono :
-                                </div>
-                                <div class="editor-field col-md-8">
-                                    @Html.TextBoxFor(model => model.phoneCliente, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.phoneCliente)
-                                </div>
-
-                                <div class="editor-label col-md-4 control-label">
-                                    Email :
-                                </div>
-                                <div class="editor-field col-md-8">
-                                    @Html.TextBoxFor(model => model.emailCliente, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.emailCliente)
-                                </div>
-
+                        <div class="form-group">
+                            <div class="editor-label col-md-4 control-label">
+                                Rif :
+                            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.rifCliente, new { @class = "form-control", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.rifCliente)
                             </div>
 
-                            <!-- btn btn-success -->
-                            <div class="form-group">
-                                <div class="col-md-12 col-btn">
-                                    <div class="pull-right">
-                                        <input type="submit" class="btn btn-success btn-md" value="Guardar" />
-                                        <a href="@Url.Action("Filter", "ClientePrepago")" class="btn btn-danger btn-md" role="button">Cancelar</a>
-                                    </div>
+                            <div class="editor-label col-md-4 control-label">
+                                Nombre :
+                            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.nameCliente, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.nameCliente)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Alias :
+                            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.aliasCliente, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.aliasCliente)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Dirección :
+                            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.addressCliente, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.addressCliente)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Teléfono :
+                            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.phoneCliente, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.phoneCliente)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Email :
+                            </div>
+                            <div class="editor-field col-md-8">
+                                @Html.TextBoxFor(model => model.emailCliente, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.emailCliente)
+                            </div>
+
+                        </div>
+
+                        <!-- btn btn-success -->
+                        <div class="form-group">
+                            <div class="col-md-12 col-btn">
+                                <div class="pull-right">
+                                    <input type="submit" class="btn btn-success btn-md" value="Guardar" />
+                                    <a href="@Url.Action("Filter", "ClientePrepago")" class="btn btn-danger btn-md" role="button">Cancelar</a>
                                 </div>
                             </div>
-                            <!--// btn btn-success -->
+                        </div>
+                        <!--// btn btn-success -->
 
-                        </form>
-                
-                    }
+                    </form>
 
                 </div>
                 <!--// panel-body -->

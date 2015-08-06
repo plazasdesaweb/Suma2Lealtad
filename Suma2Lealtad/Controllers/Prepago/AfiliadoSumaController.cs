@@ -8,13 +8,6 @@ namespace Suma2Lealtad.Controllers.Prepago
 {
     public class AfiliadoSumaController : Controller
     {
-        //
-        // GET: /AfiliadoSuma/
-
-        public ActionResult Index()
-        {
-            return View();
-        }
-
+      
     }
 }

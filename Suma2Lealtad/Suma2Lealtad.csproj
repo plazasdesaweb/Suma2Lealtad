@@ -261,6 +261,7 @@
     <Compile Include="Models\Auditing.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BeneficiarioPrepago.cs" />
     <Compile Include="Models\Channel.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -358,6 +359,7 @@
     <Compile Include="Models\Movimiento.cs" />
     <Compile Include="Models\Orden.cs" />
     <Compile Include="Models\PrepagoCompanyAffiliattes.cs" />
+    <Compile Include="Models\Repositorios\OrdenRecargaRepository.cs" />
     <Compile Include="Models\RespuestaCards.cs" />
     <Compile Include="Models\RespuestaWebPlazas.cs" />
     <Compile Include="Models\RESTRICCION.cs">
@@ -625,8 +627,8 @@
     <Content Include="Views\Afiliado\SilverlightImpresora.cshtml" />
     <Content Include="Scripts\jquery-2.1.3.min.map" />
     <Content Include="Views\Afiliado\PinPadCrearPin.cshtml" />
-    <Content Include="Views\Afiliado\PinPadReiniciarPin.cshtml" />
-    <Content Include="Views\Afiliado\PinPadCambiarPin.cshtml" />
+    <Content Include="Views\ClientePrepago\PinPadReiniciarPin.cshtml" />
+    <Content Include="Views\ClientePrepago\PinPadCambiarPin.cshtml" />
     <Content Include="Views\Afiliado\ImpresoraImprimirTarjeta.cshtml" />
     <Content Include="Views\Afiliado\SaldosMovimientos.cshtml" />
     <Content Include="Views\Afiliado\Acreditar.cshtml" />
@@ -689,6 +691,24 @@
     <Content Include="Views\ClientePrepago\Delete.cshtml" />
     <Content Include="Views\ClientePrepago\Edit.cshtml" />
     <Content Include="Views\ClientePrepago\Filter.cshtml" />
+    <Content Include="Views\ClientePrepago\FilterBeneficiarios.cshtml" />
+    <Content Include="Views\ClientePrepago\FilterOrdenes.cshtml" />
+    <Content Include="Views\ClientePrepago\IndexBeneficiarios.cshtml" />
+    <Content Include="Views\ClientePrepago\GenericView.cshtml" />
+    <Content Include="Views\ClientePrepago\FindBeneficiario.cshtml" />
+    <Content Include="Views\ClientePrepago\IndexOrdenes.cshtml" />
+    <Content Include="Views\ClientePrepago\CreateBeneficiario.cshtml" />
+    <Content Include="Views\ClientePrepago\EditBeneficiario.cshtml" />
+    <Content Include="Views\ClientePrepago\SilverlightEscaner.cshtml" />
+    <Content Include="Views\ClientePrepago\SaldosMovimientos.cshtml" />
+    <Content Include="Views\ClientePrepago\Acreditar.cshtml" />
+    <Content Include="Views\Afiliado\PinPadCambiarPin.cshtml" />
+    <Content Include="Views\ClientePrepago\PinPadCrearPin.cshtml" />
+    <Content Include="Views\Afiliado\PinPadReiniciarPin.cshtml" />
+    <Content Include="Views\ClientePrepago\SilverlightPinPad.cshtml" />
+    <Content Include="Views\ClientePrepago\SuspenderTarjeta.cshtml" />
+    <Content Include="Views\ClientePrepago\ReactivarTarjeta.cshtml" />
+    <Content Include="Views\ClientePrepago\BloquearTarjeta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

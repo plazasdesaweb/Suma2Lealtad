@@ -50,15 +50,12 @@ namespace Suma2Lealtad.Models
         public DbSet<PARAMETRO> PARAMETROS { get; set; }
         public DbSet<PARROQUIA> PARROQUIAS { get; set; }
         public DbSet<Photos_Affiliate> Photos_Affiliates { get; set; }
-        public DbSet<PrepaidBeneficiary> PrepaidBeneficiaries { get; set; }
-        public DbSet<PrepaidCustomer> PrepaidCustomers { get; set; }
         public DbSet<Reason> Reasons { get; set; }
         public DbSet<RESTRICCION> RESTRICCIONES { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<SecurityLevel> SecurityLevels { get; set; }
         public DbSet<SecurityMenu> SecurityMenus { get; set; }
         public DbSet<Status> Statuses { get; set; }
-        public DbSet<SumaStatus> SumaStatuses { get; set; }
         public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<TARJETA> TARJETAS { get; set; }
         public DbSet<Type> Types { get; set; }
@@ -66,5 +63,8 @@ namespace Suma2Lealtad.Models
         public DbSet<User> Users { get; set; }
         public DbSet<UserRol> UserRols { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<PrepaidBeneficiary> PrepaidBeneficiaries { get; set; }
+        public DbSet<PrepaidCustomer> PrepaidCustomers { get; set; }
+        public DbSet<SumaStatus> SumaStatuses { get; set; }
     }
 }

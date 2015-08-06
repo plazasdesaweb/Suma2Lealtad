@@ -16,8 +16,8 @@ namespace Suma2Lealtad.Models
     {
         public PrepaidCustomer()
         {
-            this.PrepaidBeneficiaries = new HashSet<PrepaidBeneficiary>();
             this.Orders = new HashSet<Order>();
+            this.PrepaidBeneficiaries = new HashSet<PrepaidBeneficiary>();
         }
     
         public int id { get; set; }
@@ -30,7 +30,7 @@ namespace Suma2Lealtad.Models
         public System.DateTime creationdate { get; set; }
         public int userid { get; set; }
     
-        public virtual ICollection<PrepaidBeneficiary> PrepaidBeneficiaries { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<PrepaidBeneficiary> PrepaidBeneficiaries { get; set; }
     }
 }
