@@ -236,6 +236,7 @@
     <Compile Include="Controllers\Prepago\OrdenRecargaPrepagoController.cs" />
     <Compile Include="Controllers\ReasonsBlockController.cs" />
     <Compile Include="Controllers\ReasonsController.cs" />
+    <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SecurityLevelController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
@@ -689,6 +690,10 @@
     <Content Include="Views\ClientePrepago\Delete.cshtml" />
     <Content Include="Views\ClientePrepago\Edit.cshtml" />
     <Content Include="Views\ClientePrepago\Filter.cshtml" />
+    <Content Include="Views\Reporte\R_RecargaGeneral.cshtml" />
+    <Content Include="Views\Reporte\R_RecargaCliente.cshtml" />
+    <Content Include="Views\Reporte\R_ConsumoGeneral.cshtml" />
+    <Content Include="Views\Reporte\R_ConsumoCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
