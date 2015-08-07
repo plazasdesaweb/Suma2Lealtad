@@ -30,6 +30,14 @@
 
                             <div class="form-group">
 
+                                <div class="editor-label  col-md-4 control-label">
+                                    RIF :
+                                </div>
+                                <div class="editor-field col-md-8">
+                                    @Html.TextBoxFor(model => model.rifCliente, new { @class = "form-control", @readonly = "true" })
+                                    @Html.ValidationMessageFor(model => model.rifCliente)
+                                </div>
+
                                 <div class="editor-label col-md-4 control-label">
                                     Nombre:
                                 </div>
@@ -44,14 +52,6 @@
                                 <div class="editor-field col-md-8">
                                     @Html.TextBoxFor(model => model.aliasCliente, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.aliasCliente)
-                                </div>
-
-                                <div class="editor-label  col-md-4 control-label">
-                                    RIF :
-                                </div>
-                                <div class="editor-field col-md-8">
-                                    @Html.TextBoxFor(model => model.rifCliente, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.rifCliente)
                                 </div>
 
                                 <div class="editor-label  col-md-4 control-label">

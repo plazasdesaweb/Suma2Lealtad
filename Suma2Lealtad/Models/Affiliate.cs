@@ -38,6 +38,6 @@ namespace Suma2Lealtad.Models
         public Nullable<int> sumastatusid { get; set; }
     
         public virtual Channel Channel { get; set; }
-        public virtual SumaStatus SumaStatus { get; set; }
+        public virtual SumaStatus SumaStatu { get; set; }
     }
 }

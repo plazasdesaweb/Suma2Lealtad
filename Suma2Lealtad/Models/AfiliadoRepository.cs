@@ -220,14 +220,7 @@ namespace Suma2Lealtad.Models
             }
         }
 
-        //private int TipoAfiliacionUsuario(int userId)
-        //{ 
-        //    //Aqui se debe determinar el tipo de afiliación que puede crear el usuario
-        //    return ID_TYPE_SUMA;
-        //}
-
         //busca un cliente en la WebPlazas a partir del documento de identificación
-
         public Afiliado Find(string numdoc, int typeid = ID_TYPE_SUMA, int companyid = ID_COMPANY_PLAZAS)
         {
             //Primero se buscan los datos de CLIENTE en WebPlazas
@@ -319,7 +312,7 @@ namespace Suma2Lealtad.Models
                         //                    where s.id.Equals(afiliado.statusid)
                         //                    select s.name
                         //                    ).SingleOrDefault();
-                        afiliado.estatus = db.SumaStatuses.FirstOrDefault(s => s.id == afiliado.statusid).name;
+                        afiliado.estatus = db.Statuses.FirstOrDefault(s => s.id == afiliado.statusid).name;
                     }
                 }
             }
@@ -349,7 +342,7 @@ namespace Suma2Lealtad.Models
                     //ENTIDAD CompanyAffiliates
                     afiliados = (from a in db.Affiliates
                                  join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                 join s in db.SumaStatuses on a.statusid equals s.id
+                                 join s in db.Statuses on a.statusid equals s.id
                                  join t in db.Types on a.typeid equals t.id
                                  join co in db.CompanyAffiliates on a.id equals co.affiliateid
                                  where a.docnumber.Equals(numdoc) && co.companyid.Equals(companyid) && a.typeid.Equals(typeid)
@@ -376,7 +369,7 @@ namespace Suma2Lealtad.Models
                     //ENTIDAD Status
                     afiliados = (from a in db.Affiliates
                                  join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                 join s in db.SumaStatuses on a.statusid equals s.id
+                                 join s in db.Statuses on a.statusid equals s.id
                                  join t in db.Types on a.typeid equals t.id
                                  join co in db.CompanyAffiliates on a.id equals co.affiliateid
                                  where (a.docnumber.Equals(numdoc) || c.E_MAIL == email || c.NOMBRE_CLIENTE1.Contains(name) || c.APELLIDO_CLIENTE1.Contains(name)) && co.companyid.Equals(companyid) && a.typeid.Equals(typeid)
@@ -445,7 +438,7 @@ namespace Suma2Lealtad.Models
                 //ENTIDAD CustomerInterest
                 Afiliado afiliado = (from a in db.Affiliates
                                      join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                     join s in db.SumaStatuses on a.statusid equals s.id
+                                     join s in db.Statuses on a.statusid equals s.id
                                      join t in db.Types on a.typeid equals t.id
                                      join co in db.CompanyAffiliates on a.id equals co.affiliateid
                                      where a.id.Equals(id)
@@ -578,7 +571,7 @@ namespace Suma2Lealtad.Models
                     creationuserid = (int)HttpContext.Current.Session["userid"],
                     modifieddate = DateTime.Now,
                     modifieduserid = (int)HttpContext.Current.Session["userid"],
-                    statusid = ID_ESTATUS_AFILIACION_INICIAL,
+                    statusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_AFILIACION_INICIAL) && (s.tablename=="Affiliatte")).id,//ID_ESTATUS_AFILIACION_INICIAL,
                     reasonsid = null,
                     twitter_account = afiliado.twitter_account,
                     facebook_account = afiliado.facebook_account,
@@ -684,7 +677,7 @@ namespace Suma2Lealtad.Models
             }
         }
 
-        //actualiza los datos en SumaPlazas
+        //actualiza los datos en SumaPlazasStatuses
         public bool SaveChanges(Afiliado afiliado)
         {
             using (LealtadEntities db = new LealtadEntities())
@@ -813,25 +806,28 @@ namespace Suma2Lealtad.Models
                 return false;
             }
             RespuestaCards RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
-            if (RespuestaCards.excode == "0" || RespuestaCards.excode == "7")
+            using (LealtadEntities db = new LealtadEntities())
             {
-                //Se buscan los datos de Tarjeta del AFILIADO en Cards
-                //SERVICIO WSL.Cards.getClient !
-                string clienteCardsJson = WSL.Cards.getClient(afiliado.docnumber.Substring(2));
-                if (ExceptionServicioCards(clienteCardsJson))
+                if (RespuestaCards.excode == "0" || RespuestaCards.excode == "7")
+                {
+                    //Se buscan los datos de Tarjeta del AFILIADO en Cards
+                    //SERVICIO WSL.Cards.getClient !
+                    string clienteCardsJson = WSL.Cards.getClient(afiliado.docnumber.Substring(2));
+                    if (ExceptionServicioCards(clienteCardsJson))
+                    {
+                        return false;
+                    }
+                    ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<ClienteCards>(clienteCardsJson);
+                    afiliado.pan = clienteCards.pan;
+                    afiliado.printed = clienteCards.printed;
+                    afiliado.estatustarjeta = clienteCards.tarjeta;
+                    afiliado.statusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_AFILIACION_ACTIVA) && (s.tablename == "Affiliatte")).id;//ID_ESTATUS_AFILIACION_ACTIVA;
+                    return SaveChanges(afiliado);
+                }
+                else
                 {
                     return false;
                 }
-                ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<ClienteCards>(clienteCardsJson);
-                afiliado.pan = clienteCards.pan;
-                afiliado.printed = clienteCards.printed;
-                afiliado.estatustarjeta = clienteCards.tarjeta;
-                afiliado.statusid = ID_ESTATUS_AFILIACION_ACTIVA;
-                return SaveChanges(afiliado);
-            }
-            else
-            {
-                return false;
             }
         }
 
@@ -866,15 +862,15 @@ namespace Suma2Lealtad.Models
             {
                 return null;
             }
-            SaldosMovimientos.Saldos = (IEnumerable<Saldo>)JsonConvert.DeserializeObject<IEnumerable<Saldo>>(saldosJson);
+            SaldosMovimientos.Saldos = (List<Saldo>)JsonConvert.DeserializeObject<List<Saldo>>(saldosJson);
             string movimientosPrepagoJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.First().accounttype, SaldosMovimientos.DocId.Substring(2));
             if (ExceptionServicioCards(movimientosPrepagoJson))
             {
                 return null;
             }
-            SaldosMovimientos.MovimientosPrepago = (IEnumerable<Movimiento>)JsonConvert.DeserializeObject<IEnumerable<Movimiento>>(movimientosPrepagoJson);
-            IEnumerable<Movimiento> MovimientosPrepagoOrdenados = SaldosMovimientos.MovimientosPrepago.OrderByDescending(x => x.batchid);
-            SaldosMovimientos.MovimientosPrepago = MovimientosPrepagoOrdenados.Take(3);
+            SaldosMovimientos.MovimientosPrepago = (List<Movimiento>)JsonConvert.DeserializeObject<List<Movimiento>>(movimientosPrepagoJson);
+            List<Movimiento> MovimientosPrepagoOrdenados = SaldosMovimientos.MovimientosPrepago.OrderByDescending(x => x.batchid).ToList();
+            SaldosMovimientos.MovimientosPrepago = MovimientosPrepagoOrdenados.Take(3).ToList();
             foreach (Movimiento mov in SaldosMovimientos.MovimientosPrepago)
             {
                 mov.fecha = mov.fecha.Substring(6, 2) + "-" + mov.fecha.Substring(4, 2) + "-" + mov.fecha.Substring(0, 4);
@@ -884,9 +880,9 @@ namespace Suma2Lealtad.Models
             {
                 return null;
             }
-            SaldosMovimientos.MovimientosSuma = (IEnumerable<Movimiento>)JsonConvert.DeserializeObject<IEnumerable<Movimiento>>(movimientosLealtadJson);
-            IEnumerable<Movimiento> MovimientosSumaOrdenados = SaldosMovimientos.MovimientosSuma.OrderByDescending(x => x.batchid);
-            SaldosMovimientos.MovimientosSuma = MovimientosSumaOrdenados.Take(3);
+            SaldosMovimientos.MovimientosSuma = (List<Movimiento>)JsonConvert.DeserializeObject<List<Movimiento>>(movimientosLealtadJson);
+            List<Movimiento> MovimientosSumaOrdenados = SaldosMovimientos.MovimientosSuma.OrderByDescending(x => x.batchid).ToList();
+            SaldosMovimientos.MovimientosSuma = MovimientosSumaOrdenados.Take(3).ToList();
             foreach (Movimiento mov in SaldosMovimientos.MovimientosSuma)
             {
                 mov.fecha = mov.fecha.Substring(6, 2) + "-" + mov.fecha.Substring(4, 2) + "-" + mov.fecha.Substring(0, 4);

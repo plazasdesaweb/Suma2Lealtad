@@ -8,7 +8,7 @@ namespace Suma2Lealtad.Models
     public class BeneficiarioPrepago
     {
         public AfiliadoSuma Afiliado;
-        public ClientePrepago Cliente;
-        
+        public ClientePrepago Cliente;        
+    
     }
 }

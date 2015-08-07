@@ -8,8 +8,27 @@ namespace Suma2Lealtad.Controllers.Prepago
 {
     public class BeneficiarioPrepagoController : Controller
     {
-        //
-        // GET: /BeneficiarioPrepago/
+        public ActionResult Filter()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Filter(int id)
+        {
+            return View();
+        }
+
+        public ActionResult FilterReview()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult FilterReview(int id)
+        {
+            return View();
+        }
 
         public ActionResult Index()
         {

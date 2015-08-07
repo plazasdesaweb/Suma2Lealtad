@@ -9,6 +9,6 @@ namespace Suma2Lealtad.Models
         public string cardstatus { get; set; }
         public string numdoc { get; set; }
         public string pan { get; set; }
-        public string saldo { get; set; }
+        public decimal saldo { get; set; }
     }
 }

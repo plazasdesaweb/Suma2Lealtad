@@ -29,8 +29,8 @@ namespace Suma2Lealtad.Models
         public string comments { get; set; }
         public int sumastatusid { get; set; }
     
+        public virtual ICollection<OrdersDetail> OrdersDetails { get; set; }
         public virtual PrepaidCustomer PrepaidCustomer { get; set; }
         public virtual SumaStatus SumaStatu { get; set; }
-        public virtual ICollection<OrdersDetail> OrdersDetails { get; set; }
     }
 }
