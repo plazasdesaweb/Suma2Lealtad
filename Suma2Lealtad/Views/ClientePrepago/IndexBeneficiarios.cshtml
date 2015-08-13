@@ -259,7 +259,7 @@
         var idcliente = @Model.First().Cliente.idCliente
         href = href.replace("{controller}", "ClientePrepago");
         href = href.replace("{action}", "ImprimirTarjeta");
-        href = href.replace("{params}", rowId);
+        href = href.replace("{params}", idcliente + "?idBeneficiario=" + rowId);
         window.location.href = href;
     });
 
