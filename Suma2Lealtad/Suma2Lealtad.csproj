@@ -716,6 +716,10 @@
     <Content Include="Views\ClientePrepago\CreateOrdenRecarga.cshtml" />
     <Content Include="Views\ClientePrepago\CargarArchivoRecarga.cshtml" />
     <Content Include="Views\ClientePrepago\CreateOrdenRecargaArchivo.cshtml" />
+    <Content Include="Views\Reporte\R_ConsumoCliente.cshtml" />
+    <Content Include="Views\Reporte\R_ConsumoGeneral.cshtml" />
+    <Content Include="Views\Reporte\R_RecargaCliente.cshtml" />
+    <Content Include="Views\Reporte\R_RecargaGeneral.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
