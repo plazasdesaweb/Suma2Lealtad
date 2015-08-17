@@ -53,6 +53,15 @@
                 </div>
 
                 <div class="editor-label col-md-4 control-label">
+                    Número de Orden :
+                </div>
+
+                <div class="editor-field col-md-6">
+                    <input type="text" id="numero" name="numero" maxlength="10" placeholder="Ingrese un número" class="form-control">
+                    <span id="field0"></span>
+                </div>
+
+                <div class="editor-label col-md-4 control-label">
                     Fecha de Creación :
                 </div>
 
@@ -106,6 +115,22 @@
 
 <script>
 
+    function validateNumero() {
+        var numero = document.getElementById('numero').value;
+        if (numero.length == 0) {
+            return true;
+        }
+        var RegExPattern = /^([0-9])*$/;
+        if (RegExPattern.test(numero) == false) {
+            spanMessage('field0', '* Formato Incorrecto. Debe ingresar un número.');
+            document.getElementById('numero').value = "";
+            document.getElementById('numero').focus();
+            return false;
+        }
+        document.getElementById('field0').value = "";
+        return true;
+    }
+
     function validateFecha() {
         var fecha = document.getElementById('fecha').value;
         if (fecha.length == 0) {
@@ -131,7 +156,7 @@
     }
 
     function validateForm() {
-        if (validateFecha()) {
+        if (validateNumero() && validateFecha()) {
             return true;
         }
         else {

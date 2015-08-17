@@ -48,24 +48,24 @@ namespace Suma2Lealtad.Modules
                     _userlogin = user.login;
                     _usertype = db.Types.SingleOrDefault(t => t.id == user.typeid).name;
                     _userID = user.id;
-                    int[] roles = (from item in db.UserRols 
-                                   where item.userid == user.id 
+                    int[] roles = (from item in db.UserRols
+                                   where item.userid == user.id
                                    select item.roleid
                                    ).ToArray();
                     //Ojo: No se fltra el Menú por Tipo de Usuario, sino por Rol del Usuario. Hay que tener esto en cuenta al definir los roles que sean excluyentes.
                     _menu = (from mainMenu in db.Menus
-                                 join securityMenu in db.SecurityMenus
-                                 on mainMenu.id equals securityMenu.menuid
-                                 where roles.Contains(securityMenu.roleid)
-                                 select new CMenu
-                                 {
-                                     id = mainMenu.id,
-                                     name = mainMenu.name,
-                                     controller = mainMenu.controller,
-                                     actions = mainMenu.actions,
-                                     parentid = mainMenu.parentid,
-                                     order_no = mainMenu.order_no
-                                 }).Distinct().OrderBy(m => m.id).ThenBy(m => m.parentid).ThenBy(m => m.order_no).ToList();
+                             join securityMenu in db.SecurityMenus
+                             on mainMenu.id equals securityMenu.menuid
+                             where roles.Contains(securityMenu.roleid)
+                             select new CMenu
+                             {
+                                 id = mainMenu.id,
+                                 name = mainMenu.name,
+                                 controller = mainMenu.controller,
+                                 actions = mainMenu.actions,
+                                 parentid = mainMenu.parentid,
+                                 order_no = mainMenu.order_no
+                             }).Distinct().OrderBy(m => m.id).ThenBy(m => m.parentid).ThenBy(m => m.order_no).ToList();
                     _menu.Add(new CMenu { id = 10000, name = "Salir", controller = "", actions = "", parentid = 0, order_no = 10000 });
                     _menu.Add(new CMenu { id = 10001, name = "Cerrar Sesión", controller = "Home", actions = "Logout", parentid = 1000, order_no = 1 });
                 }

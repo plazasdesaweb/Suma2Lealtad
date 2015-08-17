@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e4651b8165f842c6ad365bba15983f5e" Name="Diagram1" ZoomLevel="25">
+      <Diagram DiagramId="e4651b8165f842c6ad365bba15983f5e" Name="Diagram1" ZoomLevel="54">
         <EntityTypeShape EntityType="SumaLealtad.Affiliate" Width="1.5" PointX="5.75" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtad.AffiliateAud" Width="1.5" PointX="3.375" PointY="13.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtad.Auditing" Width="1.5" PointX="14.25" PointY="2.875" IsExpanded="true" />

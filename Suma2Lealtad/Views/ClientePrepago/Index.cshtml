@@ -97,8 +97,8 @@
                     <div class="col-md-12 col-tabla-btn">
                         <div class="pull-left">
                             <a id="Ordenes" class="btn btn-success btn-md" role="button">Ver Órdenes de Recarga</a>
-                            <a id="RecargaIndividual" class="btn btn-success btn-md" role="button">Crear Recarga Individual</a>
-                            <a id="RecargaMasiva" class="btn btn-success btn-md" role="button">Crear Recarga Masiva</a>
+                            <a id="Recarga" class="btn btn-success btn-md" role="button">Crear Orden de Recarga</a>
+                            <a id="RecargaArchivo" class="btn btn-success btn-md" role="button">Crear Orden de Recarga desde Archivo</a>
                         </div>
                         <div class="pull-right">
                             <a href="@Url.Action("Filter", "ClientePrepago")" class="btn btn-success btn-md">Agregar Nuevo Cliente</a>
@@ -129,8 +129,8 @@
         var colId;
 
         $("#Ordenes").hide();
-        $("#RecargaIndividual").hide();
-        $("#RecargaMasiva").hide();
+        $("#Recarga").hide();
+        $("#RecargaArchivo").hide();
     });
 
     $('.table tbody tr td:not(:nth-last-child(-n+3))').click(function () {
@@ -139,8 +139,8 @@
         $('.table tbody tr').removeClass("active");
         $(filatabla).addClass("active");
         $("#Ordenes").show();
-        $("#RecargaIndividual").show();
-        $("#RecargaMasiva").show();
+        $("#RecargaArchivo").show();
+        $("#Recarga").show();
     });
 
     $("#Ordenes").click(function () {
@@ -151,18 +151,18 @@
         window.location.href = href;
     });
 
-    $("#RecargaIndividual").click(function () {
+    $("#Recarga").click(function () {
         var href = '@Url.Content("~/{controller}/{action}/{params}")';
-        href = href.replace("{controller}", "");
-        href = href.replace("{action}", "");
+        href = href.replace("{controller}", "ClientePrepago");
+        href = href.replace("{action}", "CreateOrdenRecarga");
         href = href.replace("{params}", rowId);
         window.location.href = href;
     });
 
-    $("#RecargaMasiva").click(function () {
+    $("#RecargaArchivo").click(function () {
         var href = '@Url.Content("~/{controller}/{action}/{params}")';
-        href = href.replace("{controller}", "");
-        href = href.replace("{action}", "");
+        href = href.replace("{controller}", "ClientePrepago");
+        href = href.replace("{action}", "CargarArchivoRecarga");
         href = href.replace("{params}", rowId);
         window.location.href = href;
     });
