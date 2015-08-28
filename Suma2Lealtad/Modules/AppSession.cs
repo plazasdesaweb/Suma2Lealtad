@@ -8,6 +8,11 @@ namespace Suma2Lealtad.Modules
 {
     public class AppSession
     {
+        public class AppRols
+        {
+            public int roleid { get; set; }
+        }
+
         public class AppUser
         {
             public int id { get; set; }
@@ -20,21 +25,20 @@ namespace Suma2Lealtad.Modules
             public List<AppRols> Roles { get; set; }
         }
 
-        public class AppRols
-        {
-            public int roleid { get; set; }
-        }
-
         private IList<CMenu> _menu = new List<CMenu>();
         private string _username = "";
         private string _userlogin = "";
         private string _usertype = "";
         private int _userID;
+        //se usa para determinar el nivel de usuario en el rol en prepago, para saber si hace operaciones de (creación,lectura) = 0, (aprobación, rechazo, acreditación) = 1
+        private int _rolelevel;
+        public int RoleLevel { get { return _rolelevel; } }
+
         public IList<CMenu> MenuList { get { return _menu; } }
         public string UserName { get { return _username; } }
         public string UserLogin { get { return _userlogin; } }
         public string UserType { get { return _usertype; } }
-        public int UserID { get { return _userID; } }
+        public int UserID { get { return _userID; } }        
         public string AppDate { get { var dt = DateTime.Now; return dt.ToString("D", new CultureInfo("es-ES")); } }
 
         public bool Login(string login, string password)
@@ -47,11 +51,15 @@ namespace Suma2Lealtad.Modules
                     _username = "Usuario: " + user.lastname + ", " + user.firstname;
                     _userlogin = user.login;
                     _usertype = db.Types.SingleOrDefault(t => t.id == user.typeid).name;
-                    _userID = user.id;
+                    _userID = user.id;                   
                     int[] roles = (from item in db.UserRols
                                    where item.userid == user.id
                                    select item.roleid
                                    ).ToArray();
+                    //se busca el nivel maximo definido en los roles del usuario
+                    _rolelevel = (from r in db.Roles
+                                  where roles.Contains(r.id)
+                                  select r.level).ToList().Max();
                     //Ojo: No se fltra el Menú por Tipo de Usuario, sino por Rol del Usuario. Hay que tener esto en cuenta al definir los roles que sean excluyentes.
                     _menu = (from mainMenu in db.Menus
                              join securityMenu in db.SecurityMenus

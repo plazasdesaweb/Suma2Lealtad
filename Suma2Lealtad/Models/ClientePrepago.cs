@@ -15,6 +15,8 @@ namespace Suma2Lealtad.Models
         public string phoneCliente { get; set; }
         public string emailCliente { get; set; }
 
+        public List<PrepaidCustomer> ListaClientes { get; set; }
+
         #region Lista_EstadoDeAfiliacion
         public class EstadoDeAfiliacion
         {

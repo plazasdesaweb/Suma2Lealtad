@@ -24,6 +24,7 @@ namespace Suma2Lealtad.Models
             using (LealtadEntities db = new LealtadEntities())
             {
                 cliente = (from c in db.PrepaidCustomers
+                           where c.rif.Equals(rif)
                            select new ClientePrepago()
                            {
                                idCliente = c.id,

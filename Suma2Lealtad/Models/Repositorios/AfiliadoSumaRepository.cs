@@ -902,7 +902,7 @@ namespace Suma2Lealtad.Models
         }
 
         #region Lista_Intereses_Cliente
-        private List<Interest> chargeInterestList()
+        public List<Interest> chargeInterestList()
         {
             using (LealtadEntities db = new LealtadEntities())
             {
@@ -910,7 +910,7 @@ namespace Suma2Lealtad.Models
             }
         }
 
-        private List<Interest> chargeInterestList(int customerID)
+        public List<Interest> chargeInterestList(int customerID)
         {
             using (LealtadEntities db = new LealtadEntities())
             {
@@ -970,9 +970,10 @@ namespace Suma2Lealtad.Models
 
         // Métodos DDL para Datos Geográficos.
         // Abstenerse a las consecuencias físicas, la persona que modifique éste código.
+
         #region Lista_de_Datos_Geograficos
         // retornar la lista de Estados.
-        private List<ESTADO> GetEstados()
+        public List<ESTADO> GetEstados()
         {
             using (LealtadEntities db = new LealtadEntities())
             {

@@ -27,11 +27,14 @@ namespace Suma2Lealtad.Controllers.Prepago
             ClientePrepago cliente = repCliente.Find(rif);
             if (cliente != null)
             {
-                return View("Index", cliente);
+                return View("Edit", cliente);
             }
             else
             {
-                cliente.rifCliente = rif;
+                cliente = new ClientePrepago()
+                {
+                    rifCliente = rif
+                };
                 return View("Create", cliente);
             }
         }
@@ -150,31 +153,6 @@ namespace Suma2Lealtad.Controllers.Prepago
             return RedirectToAction("GenericView", viewmodel);
         }
 
-        public ActionResult FilterBeneficiarios(int id)
-        {
-            ClientePrepago cliente = repCliente.Find(id);
-            return View(cliente);
-        }
-
-        [HttpPost]
-        public ActionResult FilterBeneficiarios(int id, string numdoc, string name, string email, string estadoAfiliacion, string estadoTarjeta)
-        {
-            List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find(numdoc, name, email, estadoAfiliacion, estadoTarjeta).Where(b => b.Cliente.idCliente == id).ToList();
-            if (beneficiarios.Count > 0)
-            {
-                return View("IndexBeneficiarios", beneficiarios);
-            }
-            else
-            {
-                BeneficiarioPrepago beneficiario = new BeneficiarioPrepago()
-                {
-                    Cliente = repCliente.Find(id)
-                };
-                beneficiarios.Add(beneficiario);
-                return View("IndexBeneficiarios", beneficiarios);
-            }
-        }
-
         public ActionResult FindBeneficiario(int id)
         {
             ClientePrepago cliente = repCliente.Find(id);
@@ -217,6 +195,31 @@ namespace Suma2Lealtad.Controllers.Prepago
                     viewmodel.RouteValues = id.ToString();
                     return RedirectToAction("GenericView", viewmodel);
                 }
+            }
+        }        
+
+        public ActionResult FilterBeneficiarios(int id)
+        {
+            ClientePrepago cliente = repCliente.Find(id);
+            return View(cliente);
+        }
+
+        [HttpPost]
+        public ActionResult FilterBeneficiarios(int id, string numdoc, string name, string email, string estadoAfiliacion, string estadoTarjeta)
+        {
+            List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find(numdoc, name, email, estadoAfiliacion, estadoTarjeta).Where(b => b.Cliente.idCliente == id).ToList();
+            if (beneficiarios.Count > 0)
+            {
+                return View("IndexBeneficiarios", beneficiarios);
+            }
+            else
+            {
+                BeneficiarioPrepago beneficiario = new BeneficiarioPrepago()
+                {
+                    Cliente = repCliente.Find(id)
+                };
+                beneficiarios.Add(beneficiario);
+                return View("IndexBeneficiarios", beneficiarios);
             }
         }
 
@@ -330,7 +333,7 @@ namespace Suma2Lealtad.Controllers.Prepago
             afiliado.trackII = Tarjeta.ConstruirTrackII(afiliado.pan);
             if (repAfiliado.ImprimirTarjeta(afiliado))
             {
-                viewmodel.Title = "Prepago / Cliente / Beneficiario / Operacio.nes con la Impresora / Imprimir Tarjeta";
+                viewmodel.Title = "Prepago / Cliente / Beneficiario / Operaciones con la Impresora / Imprimir Tarjeta";
                 viewmodel.Message = "Tarjeta impresa y activada correctamente";
                 viewmodel.ControllerName = "ClientePrepago";
                 viewmodel.ActionName = "FilterBeneficiarios";
@@ -569,8 +572,8 @@ namespace Suma2Lealtad.Controllers.Prepago
             else
             {
                 ViewModel viewmodel = new ViewModel();
-                viewmodel.Title = "Prepago / Cliente / Ordenes de Recarga / Detalle de la Orden";
-                viewmodel.Message = "Falló el proceso de aprobación de la Orden.";
+                viewmodel.Title = "Prepago / Cliente / Ordenes de Recarga / Crear Orden";
+                viewmodel.Message = "Falló el proceso de creación de la Orden.";
                 viewmodel.ControllerName = "ClientePrepago";
                 viewmodel.ActionName = "FilterOrdenes";
                 viewmodel.RouteValues = id.ToString();
@@ -609,7 +612,7 @@ namespace Suma2Lealtad.Controllers.Prepago
                 }
                 catch (Exception ex)
                 {
-                    viewmodel.Title = "Hay que poner titulo";
+                    viewmodel.Title = "Prepago / Cliente / Ordenes de Recarga / Crear Orden desde Archivo";
                     viewmodel.Message = "Error de aplicacion: No se pudo cargar archivo (" + ex.Message + ")";
                     viewmodel.ControllerName = "ClientePrepago";
                     viewmodel.ActionName = "FilterOrdenes";
@@ -618,23 +621,27 @@ namespace Suma2Lealtad.Controllers.Prepago
                 }
                 ClientePrepago cliente = repCliente.Find(id);
                 List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find("", "", "", "", "").Where(b => b.Cliente.idCliente == id).ToList();
+                //leer el archivo
                 List<DetalleOrdenRecargaPrepago> detalleOrdenArchivo = repOrden.GetBeneficiariosArchivo(path);
+                //borrar el archivo
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }                
                 if (detalleOrdenArchivo == null)
                 {
-                    viewmodel.Title = "Hay que poner titulo";
-                    viewmodel.Message = "Ocurrio un error al leer el archivo";
+                    viewmodel.Title = "Prepago / Cliente / Ordenes de Recarga / Crear Orden desde Archivo";
+                    viewmodel.Message = "Error de aplicacion: No se pudo leer el archivo.";
                     viewmodel.ControllerName = "ClientePrepago";
                     viewmodel.ActionName = "FilterOrdenes";
                     viewmodel.RouteValues = id.ToString();
                     return RedirectToAction("GenericView", viewmodel);
                 }
+                else
+                {                
                 List<DetalleOrdenRecargaPrepago> detalleOrden = repOrden.DetalleParaOrdenArchivo(cliente, beneficiarios.FindAll(b => b.Afiliado.estatus == "Activa"), detalleOrdenArchivo);
-                //borrar el archivo
-                if (System.IO.File.Exists(path))
-                {
-                    System.IO.File.Delete(path);
-                }
                 return View("CreateOrdenRecarga", detalleOrden);
+                }
             }
             else
             {
@@ -643,8 +650,8 @@ namespace Suma2Lealtad.Controllers.Prepago
                 {
                     System.IO.File.Delete(path);
                 }
-                viewmodel.Title = "Hay que poner titulo";
-                viewmodel.Message = "El archivo está vacío";
+                viewmodel.Title = "Prepago / Cliente / Ordenes de Recarga / Crear Orden desde Archivo";
+                viewmodel.Message = "Error de aplicacion: El archivo está vacío";
                 viewmodel.ControllerName = "ClientePrepago";
                 viewmodel.ActionName = "FilterOrdenes";
                 viewmodel.RouteValues = id.ToString();
@@ -697,26 +704,52 @@ namespace Suma2Lealtad.Controllers.Prepago
         }
 
         [HttpPost]
-        public ActionResult AprobarOrden(int id, int idOrden, IList<DetalleOrdenRecargaPrepago> detalleOrden, decimal MontoTotalRecargas)
+        public ActionResult AprobarOrden(int id, int idOrden, IList<DetalleOrdenRecargaPrepago> detalleOrden, decimal MontoTotalRecargas, string indicadorGuardar)
         {
-            if (repOrden.AprobarOrden(detalleOrden.ToList(), MontoTotalRecargas))
+            ViewModel viewmodel = new ViewModel();
+            if (indicadorGuardar == "Aprobar")
             {
-                //viewmodel.Title = "Prepago / Cliente / Ordenes de Recarga / Detalle de la Orden";
-                //viewmodel.Message = "Orden Aprobada.";
-                //viewmodel.ControllerName = "ClientePrepago";
-                //viewmodel.ActionName = "FilterOrdenes";
-                //viewmodel.RouteValues = id.ToString();
-                return RedirectToAction("DetalleOrden", new { id = id, idOrden = idOrden });
+                if (repOrden.AprobarOrden(detalleOrden.ToList(), MontoTotalRecargas))
+                {
+                    viewmodel.Title = "Prepago / Cliente / Ordenes de Recarga / Detalle de la Orden";
+                    viewmodel.Message = "Orden Aprobada.";
+                    viewmodel.ControllerName = "ClientePrepago";
+                    viewmodel.ActionName = "FilterOrdenes";
+                    viewmodel.RouteValues = id.ToString();
+                    return RedirectToAction("GenericView", viewmodel);
+                    //return RedirectToAction("DetalleOrden", new { id = id, idOrden = idOrden });
+                }
+                else
+                {
+                    viewmodel.Title = "Prepago / Cliente / Ordenes de Recarga / Detalle de la Orden";
+                    viewmodel.Message = "Falló el proceso de aprobación de la Orden.";
+                    viewmodel.ControllerName = "ClientePrepago";
+                    viewmodel.ActionName = "FilterOrdenes";
+                    viewmodel.RouteValues = id.ToString();
+                    return RedirectToAction("GenericView", viewmodel);
+                }
             }
             else
             {
-                ViewModel viewmodel = new ViewModel();
-                viewmodel.Title = "Prepago / Cliente / Ordenes de Recarga / Detalle de la Orden";
-                viewmodel.Message = "Falló el proceso de aprobación de la Orden.";
-                viewmodel.ControllerName = "ClientePrepago";
-                viewmodel.ActionName = "FilterOrdenes";
-                viewmodel.RouteValues = id.ToString();
-                return RedirectToAction("GenericView", viewmodel);
+                if (repOrden.GuardarOrden(detalleOrden.ToList(), MontoTotalRecargas))
+                {
+                    viewmodel.Title = "Prepago / Cliente / Ordenes de Recarga / Detalle de la Orden";
+                    viewmodel.Message = "Datos de la Orden actualizados.";
+                    viewmodel.ControllerName = "ClientePrepago";
+                    viewmodel.ActionName = "FilterOrdenes";
+                    viewmodel.RouteValues = id.ToString();
+                    return RedirectToAction("GenericView", viewmodel);
+                    //return RedirectToAction("DetalleOrden", new { id = id, idOrden = idOrden });
+                }
+                else
+                {
+                    viewmodel.Title = "Prepago / Cliente / Ordenes de Recarga / Detalle de la Orden";
+                    viewmodel.Message = "Falló el proceso de guardado de la Orden.";
+                    viewmodel.ControllerName = "ClientePrepago";
+                    viewmodel.ActionName = "FilterOrdenes";
+                    viewmodel.RouteValues = id.ToString();
+                    return RedirectToAction("GenericView", viewmodel);
+                }
             }
         }
 

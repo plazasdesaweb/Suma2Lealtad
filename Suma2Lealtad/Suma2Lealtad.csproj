@@ -360,7 +360,7 @@
     <Compile Include="Models\Movimiento.cs" />
     <Compile Include="Models\Orden.cs" />
     <Compile Include="Models\PrepagoCompanyAffiliattes.cs" />
-    <Compile Include="Models\Repositorios\OrdenRecargaRepository.cs" />
+    <Compile Include="Models\Repositorios\OrdenRecargaPrepagoRepository.cs" />
     <Compile Include="Models\RespuestaCards.cs" />
     <Compile Include="Models\RespuestaWebPlazas.cs" />
     <Compile Include="Models\RESTRICCION.cs">
@@ -683,9 +683,7 @@
     <Content Include="Views\CompanyPrepago\DetalleOrden.cshtml" />
     <Content Include="Views\CompanyPrepago\ResultadoOrden.cshtml" />
     <Content Include="Views\CompanyPrepago\ConfirmacionRecargas.cshtml" />
-    <Content Include="Views\OrdenRecargaPrepago\Index.cshtml" />
     <Content Include="Views\AfiliadoSuma\Index.cshtml" />
-    <Content Include="Views\BeneficiarioPrepago\Index.cshtml" />
     <Content Include="Views\ClientePrepago\Index.cshtml" />
     <Content Include="Views\ClientePrepago\FilterReview.cshtml" />
     <Content Include="Views\ClientePrepago\Create.cshtml" />
@@ -715,11 +713,34 @@
     <Content Include="Views\ClientePrepago\DetalleOrden.cshtml" />
     <Content Include="Views\ClientePrepago\CreateOrdenRecarga.cshtml" />
     <Content Include="Views\ClientePrepago\CargarArchivoRecarga.cshtml" />
-    <Content Include="Views\ClientePrepago\CreateOrdenRecargaArchivo.cshtml" />
     <Content Include="Views\Reporte\R_ConsumoCliente.cshtml" />
     <Content Include="Views\Reporte\R_ConsumoGeneral.cshtml" />
     <Content Include="Views\Reporte\R_RecargaCliente.cshtml" />
     <Content Include="Views\Reporte\R_RecargaGeneral.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\FilterReview.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\Index.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\Filter.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\CreateBeneficiario.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\EditBeneficiario.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\SilverlightEscaner.cshtml" />
+    <Content Include="Views\OrdenRecargaPrepago\FilterReview.cshtml" />
+    <Content Include="Views\OrdenRecargaPrepago\Index.cshtml" />
+    <Content Include="Views\OrdenRecargaPrepago\Create.cshtml" />
+    <Content Include="Views\OrdenRecargaPrepago\Filter.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\GenericView.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\PinPadCambiarPin.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\PinPadCrearPin.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\PinPadReiniciarPin.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\ReactivarTarjeta.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\SaldosMovimientos.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\SilverlightImpresora.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\SilverlightPinPad.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\SuspenderTarjeta.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\ImpresoraImprimirTarjeta.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\Acreditar.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\BloquearTarjeta.cshtml" />
+    <Content Include="Views\OrdenRecargaPrepago\DetalleOrden.cshtml" />
+    <Content Include="Views\OrdenRecargaPrepago\CargarArchivoRecarga.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

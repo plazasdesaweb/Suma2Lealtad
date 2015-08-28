@@ -31,6 +31,8 @@ namespace Suma2Lealtad.Controllers
                 {
                     Session["titulo"] = "Administrador SUMA";
                 }
+                //para guardar el RoleLevel
+                Session["RoleLevel"] = app.RoleLevel;
                 Session["login"] = app.UserLogin;
                 Session["username"] = app.UserName;
                 Session["userid"] = app.UserID;

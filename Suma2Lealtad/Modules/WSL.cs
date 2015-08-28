@@ -74,11 +74,11 @@ namespace Suma2Lealtad.Modules
                 return ConsumirServicioCards(req);
             }
 
-            public static string addBatch(string numdoc, string monto, string transcodeacred = "318", string factoracred = "1", string factorcanje = "100")
+            public static string addBatch(string numdoc, string monto, string transcode = "318", string factoracred = "1", string factorcanje = "100")
             {
                 string req = WSL_CARDS_ADDBATCH;
                 req = req.Replace("{numdoc}", numdoc);
-                req = req.Replace("{transcode}", transcodeacred);
+                req = req.Replace("{transcode}", transcode);
                 req = req.Replace("{monto}", monto);
                 req = req.Replace("{factoracred}", factoracred);
                 req = req.Replace("{factorcanje}", factorcanje);

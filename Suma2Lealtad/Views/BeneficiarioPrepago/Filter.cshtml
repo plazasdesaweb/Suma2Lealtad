@@ -1,6 +1,4 @@
-﻿@model Suma2Lealtad.Models.ClientePrepago
-
-@{
+﻿@{
     ViewBag.Title = "FindBeneficiario";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -10,7 +8,7 @@
     <div class="panel panel-default">
 
         <div class="panel-heading clearfix panel-gradient">
-            <h3 class="panel-title">Prepago / Cliente / Crear Beneficiario / Filtro de Búsqueda</h3>
+            <h3 class="panel-title">Prepago / Beneficiario / Crear Beneficiario / Filtro de Búsqueda</h3>
         </div>
 
         <div class="panel-body">
@@ -22,7 +20,8 @@
                 <br />
             </div>
 
-            <form action="@Url.Action("FindBeneficiario", "ClientePrepago")" name="form" method="post" onsubmit="return validarDocumento();">
+            <form action="@Url.Action("Filter", "BeneficiarioPrepago")" name="form" method="post" onsubmit="return validarDocumento();">
+
 
                 <div class="editor-label col-md-4 control-label"></div>
                 <div class="editor-field col-md-8">
@@ -49,7 +48,6 @@
                     <div class="col-md-12 col-btn">
                         <div class="pull-right">
                             <input type="submit" class="btn btn-success btn-lg" value="Buscar" />
-                            <a href="@Url.Action("FilterBeneficiarios", "ClientePrepago", new { id = Model.idCliente })" class="btn btn-danger btn-md">Regresar</a>
                         </div>
                     </div>
                 </div>

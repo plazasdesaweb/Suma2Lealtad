@@ -1,0 +1,458 @@
+﻿@model Suma2Lealtad.Models.BeneficiarioPrepago
+
+@{
+    ViewBag.Title = "EditBeneficiario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="panel-body col-md-offset-1 col-md-10">
+
+            <form id="commentForm" method="post" action="@Url.Action("EditBeneficiario", "BeneficiarioPrepago")" class="form-horizontal">
+
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+                <div id="rootwizard">
+
+                    <div class="nav-gradient navbar navbar-default">
+                        <div class="nav navbar-nav">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#tab1" data-toggle="tab" class="disabled">Datos Básicos</a></li>
+                                <li><a href="#tab2" data-toggle="tab" class="disabled">Documentos</a></li>
+                                <li><a href="#tab3" data-toggle="tab" class="disabled">Temas de Interés</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tab-content">
+
+                        <!-- DATOS BÁSICOS -->
+                        <div class="tab-pane" id="tab1">
+
+                            <div class="editor-label col-md-4 control-label"></div>
+                            <div class="editor-field col-md-6">
+                                <br />
+                            </div>
+
+                            @Html.HiddenFor(model => model.Afiliado.id)
+                            @Html.HiddenFor(model => model.Afiliado.reasonsid)
+                            @Html.HiddenFor(model => model.Afiliado.statusid)
+                            @Html.HiddenFor(model => model.Afiliado.clientid)
+                            @Html.HiddenFor(model => model.Afiliado.typeid)
+                            @Html.HiddenFor(model => model.Afiliado.WebType)
+                            @Html.HiddenFor(model => model.Afiliado.estatustarjeta)
+
+                            @Html.HiddenFor(model => model.Cliente.idCliente)
+
+                            <div class="editor-label col-md-4 control-label">
+                                Cliente Prepago :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.Cliente.nameCliente, new { @class = "form-control", @readonly = "true" })
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Tipo de Afiliado :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.Afiliado.type, new { @class = "form-control", @readonly = "true" })
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Número de Documento/Cédula :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.Afiliado.docnumber, new { @class = "form-control", @readonly = "true" })
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Correo Electrónico :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.Afiliado.email, new { @class = "form-control" })
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Primer Nombre :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.Afiliado.name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Afiliado.name)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Segundo Nombre :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.Afiliado.name2, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Afiliado.name2)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Primer Apellido :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.Afiliado.lastname1, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Afiliado.lastname1)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Segundo Apellido :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.Afiliado.lastname2, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Afiliado.lastname2)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Fecha de Nacimiento :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.Afiliado.birthdate, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Afiliado.birthdate)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Sexo :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.DropDownListFor(m => m.Afiliado.gender,
+                                                      new SelectList(Model.Afiliado.SexoOptions,
+                                                      "id", 
+                                                      "sexo",
+                                                      Model.Afiliado.gender), 
+                                                      new { @class = "form-control" }
+                                                      )
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Estado Civil :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.DropDownListFor(m => m.Afiliado.maritalstatus,
+                                                      new SelectList(Model.Afiliado.MaritalStatusOptions,
+                                                      "id", 
+                                                      "maritalstatus",
+                                                      Model.Afiliado.maritalstatus), 
+                                                      new { @class = "form-control" }
+                                                      )
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Teléfono de Casa :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.Afiliado.phone1, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Afiliado.phone1)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Teléfono de Oficina :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.Afiliado.phone2, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Afiliado.phone2)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Teléfono de Celular :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.Afiliado.phone3, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Afiliado.phone3)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Ocupación :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.Afiliado.occupation, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Afiliado.occupation)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Nacionalidad :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.Afiliado.nationality, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Afiliado.nationality)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Twitter :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.Afiliado.twitter_account, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Afiliado.twitter_account)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Facebook :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.Afiliado.facebook_account, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Afiliado.facebook_account)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Instagram :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextBoxFor(model => model.Afiliado.instagram_account, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Afiliado.instagram_account)
+                            </div>
+
+                        </div>
+                        <!--// DATOS BÁSICOS -->
+
+                        <!-- FOTO DEL DOCUMENTO DE IDENTIFICACION -->
+                        <div class="tab-pane" id="tab2">
+                            <div class="editor-label col-md-2 control-label">
+                            </div>
+
+                            <div class="editor-field col-md-10">
+                                @*<img src="@Url.Content(@Model.picture)" />*@
+                                <img src="@Url.Action("GetImageBeneficiario", "ClientePrepago", new { id = Model.Afiliado.id })" />
+                            </div>
+                        </div>
+                        <!-- //FOTO DEL DOCUMENTO DE IDENTIFICACION -->
+
+
+                        <!-- DIRECCIÓN -->
+                        <div class="tab-pane" id="tab3">
+
+                            <div class="editor-label col-md-4 control-label"></div>
+                            <div class="editor-field col-md-6">
+                                <br />
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Estado :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.DropDownListFor(m => m.Afiliado.cod_estado,
+                                                      new SelectList(Model.Afiliado.ListaEstados,
+                                                      "COD_ESTADO",
+                                                      "DESCRIPC_ESTADO",
+                                                      Model.Afiliado.cod_estado),
+                                                      new { @class = "form-control" }
+                                                      )
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Ciudad :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.DropDownListFor(m => m.Afiliado.cod_ciudad,
+                                                      new SelectList(Model.Afiliado.ListaCiudades,
+                                                      "cod_ciudad",
+                                                      "descripc_ciudad",
+                                                      Model.Afiliado.cod_ciudad),
+                                                      new { @class = "form-control" }
+                                                      )
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Municipio :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.DropDownListFor(m => m.Afiliado.cod_municipio,
+                                                      new SelectList(Model.Afiliado.ListaMunicipios,
+                                                      "cod_municipio",
+                                                      "descripc_municipio",
+                                                      Model.Afiliado.cod_municipio),
+                                                      new { @class = "form-control" }
+                                                      )
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Parroquia :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.DropDownListFor(m => m.Afiliado.cod_parroquia,
+                                                      new SelectList(Model.Afiliado.ListaParroquias,
+                                                      "cod_parroquia",
+                                                      "descripc_parroquia",
+                                                      Model.Afiliado.cod_parroquia),
+                                                      new { @class = "form-control" }
+                                                      )
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Urbanización :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.DropDownListFor(m => m.Afiliado.cod_urbanizacion,
+                                                      new SelectList(Model.Afiliado.ListaUrbanizaciones,
+                                                      "cod_urbanizacion",
+                                                      "descripc_urbanizacion",
+                                                      Model.Afiliado.cod_urbanizacion),
+                                                      new { @class = "form-control" }
+                                                      )
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label"></div>
+                            <div class="editor-field col-md-6">
+                                <br />
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Canal :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.DropDownListFor(m => m.Afiliado.channelid,
+                                                      new SelectList(Model.Afiliado.ChannelOptions,
+                                                      "id", "channel",
+                                                      Model.Afiliado.channelid),
+                                                      new { @class = "form-control" }
+                                                      )
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Tipo de Despacho/Entrega :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.DropDownListFor(m => m.Afiliado.typedelivery,
+                                                      new SelectList(Model.Afiliado.TypeDeliveryOptions,
+                                                      "id",
+                                                      "delivery",
+                                                      Model.Afiliado.typedelivery),
+                                                      new { @class = "form-control" }
+                                                      )
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Sucursal :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.DropDownListFor(m => m.Afiliado.storeiddelivery,
+                                                      new SelectList(Model.Afiliado.StoreOptions,
+                                                      "id",
+                                                      "sucursal",
+                                                      Model.Afiliado.storeiddelivery),
+                                                      new { @class = "form-control" }
+                                                      )
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label"></div>
+                            <div class="editor-field col-md-6">
+                                <br />
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Temas de Interés :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @for (int i = 0; i < Model.Afiliado.Intereses.Count; i++)
+                                {
+                                    @Html.CheckBoxFor(m => m.Afiliado.Intereses[i].Checked, new { id = i })
+                                    @Html.HiddenFor(m => m.Afiliado.Intereses[i].id)
+                                    @Html.DisplayFor(m => m.Afiliado.Intereses[i].name)
+                                    <br />
+                                }
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label"></div>
+                            <div class="editor-field col-md-6">
+                                <br />
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                Comentarios/Observaciones :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.TextAreaFor(model => model.Afiliado.comments, new { @class = "form-control", style = "width: 520px; height: 100px;" })
+                                @Html.ValidationMessageFor(model => model.Afiliado.comments)
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label"></div>
+                            <div class="editor-field col-md-6">
+                                <br />
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label"></div>
+                            <div class="editor-field col-md-6">
+                                <input type="submit" class="btn btn-success btn-md" value="Guardar" style="padding-right: 15px; padding-left: 15px; margin-left: 0px;" />
+                            </div>
+
+
+                        </div>
+                        <!-- DIRECCIÓN -->
+
+                        <div class="editor-label col-md-4 control-label"></div>
+                        <div class="editor-field col-md-6">
+                            <br />
+                        </div>
+
+                        <div class="editor-label col-md-4 control-label"></div>
+                        <div class="editor-field col-md-6">
+                            <!-- BOTONES -->
+                            <ul class="pager wizard">
+
+                                <li class="previous"><a href="#">Anterior</a></li>
+                                <li class="next pull-left"><a href="#">Siguiente</a></li>
+                            </ul>
+                            <!--// BOTONES -->
+                        </div>
+
+
+
+                        <div class="editor-label col-md-4 control-label"></div>
+                        <div class="editor-field col-md-6">
+                            <br />
+                        </div>
+
+                        <div class="editor-label col-md-4 control-label"></div>
+                        <div class="editor-field col-md-6">
+                            <br />
+                        </div>
+
+                    </div>
+                    <!--// tab-content -->
+
+                </div>
+                <!--// rootwizard -->
+
+            </form>
+
+        </div>
+        <!--// panel-body -->
+
+    </div>
+    <!--// row -->
+
+</div>
+<!--// container -->
+

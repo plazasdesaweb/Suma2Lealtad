@@ -148,7 +148,7 @@
                     <a id="SuspenderTarjeta" class="btn btn-success btn-md" role="button">Suspender Tarjeta</a>
                     <a id="ReactivarTarjeta" class="btn btn-success btn-md" role="button">Reactivar Tarjeta</a>
                     <a id="SaldosMovimientos" class="btn btn-success btn-md" role="button">Saldos y Movimientos</a>
-                    <a id="Acreditar" class="btn btn-success btn-md" role="button">Acreditar</a>
+                    @*<a id="Acreditar" class="btn btn-success btn-md" role="button">Acreditar</a>*@
                 </div>
                 <div class="pull-right">
                     <a href="@Url.Action("FindBeneficiario", "ClientePrepago", new { id = Model.First().Cliente.idCliente })" class="btn btn-success btn-md">Agregar Nuevo Beneficiario</a>
@@ -181,7 +181,7 @@
         $("#SuspenderTarjeta").hide();
         $("#ReactivarTarjeta").hide();
         $("#SaldosMovimientos").hide();
-        $("#Acreditar").hide();
+        //$("#Acreditar").hide();
     });
 
     $('.table tbody tr td:not(:last-child)').click(function () {
@@ -200,7 +200,7 @@
         $("#SuspenderTarjeta").hide();
         $("#ReactivarTarjeta").hide();
         $("#SaldosMovimientos").hide();
-        $("#Acreditar").hide();
+        //$("#Acreditar").hide();
 
         if (statusAfiliacion == "Nueva") {
         }
@@ -215,7 +215,7 @@
             $("#BloquearTarjeta").show();
             $("#SuspenderTarjeta").show();
             $("#SaldosMovimientos").show();
-            $("#Acreditar").show();
+            //$("#Acreditar").show();
         }
         else if (statusAfiliacion == "Activa" && statusTarjeta == "Suspendida") {
             $("#CrearPin").show();
@@ -299,14 +299,14 @@
         window.location.href = href;
     });
 
-    $("#Acreditar").click(function () {
+    @*$("#Acreditar").click(function () {
         var href = '@Url.Content("~/{controller}/{action}/{params}")';
         var idcliente = @Model.First().Cliente.idCliente
         href = href.replace("{controller}", "ClientePrepago");
         href = href.replace("{action}", "Acreditar");
         href = href.replace("{params}", idcliente + "?idBeneficiario=" + rowId);
         window.location.href = href;
-    });
+    });*@
 
 </script>
 <!-- SECCION PARA botones de operaciones -->

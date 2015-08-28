@@ -26,7 +26,7 @@
     <div class="panel panel-default">
 
         <div class="panel-heading clearfix panel-gradient">
-            <h3 class="panel-title">Prepago / Compañia / Beneficiarios / Confirmación Recarga Masiva </h3>
+            <h3 class="panel-title">Prepago / Cliente / Órdenes de Recarga / Crear Orden de Recarga desde Archivo</h3>
         </div>
 
         <div class="panel-body">
@@ -170,12 +170,12 @@
 <script>
     $(document).ready(function () {
         var TotalRecargas = 0;
-        var MontoTotalRecargas = 0;
-
+        var MontoTotalRecargas = parseFloat("0");
         $("#beneficiarios tbody tr").each(function (index) {
-            var RegExPattern = /^(\d){2,10}$/;
+            var RegExPattern = /^\d+(\.\d{1,2})?$/;
             var idrow = $(this).data("row-key");
             var campo1, campo2, campo3;
+            var temp;
             var campo4 = 0;
             $(this).children("td").each(function (index2) {
                 switch (index2) {
@@ -189,16 +189,18 @@
                         campo3 = $(this).text();
                         break;
                     case 3:
-                        campo4 = $(this).text();
+                        temp = $(this).text();
+                        temp = temp.replace(",", ".");
+                        campo4 = parseFloat(temp);
                         break;
                 }
             });
-            if (parseInt(campo4) != 0) {
+            if (campo4 != parseFloat("0")) {
                 TotalRecargas = TotalRecargas + 1;
-                MontoTotalRecargas = MontoTotalRecargas + parseInt(campo4);
+                MontoTotalRecargas = MontoTotalRecargas + campo4;
                 document.getElementById('TotalRecargas').value = TotalRecargas;
-                document.getElementById('MontoTotalRecargas').value = MontoTotalRecargas;
-            }
+                document.getElementById('MontoTotalRecargas').value = MontoTotalRecargas.toFixed(2).toString().replace(".", ",");
+            }            
         });
     });
 </script>

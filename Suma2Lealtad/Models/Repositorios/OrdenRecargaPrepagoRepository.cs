@@ -225,6 +225,32 @@ namespace Suma2Lealtad.Models
             return detalleorden;
         }
 
+        public bool GuardarOrden(List<DetalleOrdenRecargaPrepago> detalleOrden, decimal MontoTotalRecargas)
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                //Actualizar estatus detalleOrden
+                foreach (var item in detalleOrden)
+                {
+                    OrdersDetail ordersdetail = db.OrdersDetails.FirstOrDefault(x => x.orderid == item.idOrden && x.customerid == item.idAfiliado);
+                    if (item.statusDetalleOrden == "Excluido")
+                    {
+                        ordersdetail.sumastatusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_DETALLEORDEN_EXCLUIDO) && (s.tablename == "OrdersDetail")).id;
+                    }
+                    else if (item.statusDetalleOrden == "Incluido")
+                    {
+                        ordersdetail.sumastatusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_DETALLEORDEN_INCLUIDO) && (s.tablename == "OrdersDetail")).id;
+                    }
+                    ordersdetail.comments = item.observacionesExclusion;
+                }
+                //Actualizar estatus y monto de la Orden
+                Order orden = db.Orders.Find(detalleOrden.First().idOrden);
+                orden.totalamount = MontoTotalRecargas;
+                db.SaveChanges();
+                return true;
+            }
+        }
+
         public bool AprobarOrden(List<DetalleOrdenRecargaPrepago> detalleOrden, decimal MontoTotalRecargas)
         {
             using (LealtadEntities db = new LealtadEntities())
@@ -266,8 +292,8 @@ namespace Suma2Lealtad.Models
 
         private bool Recargar(DetalleOrdenRecargaPrepago detalleorden)
         {
-            //POR AHORA SE DEBEN TRUNCAR LOS MONTOS P Q EL SERVICIO ADDBATCH DA ERROR AL RECIBIR DECIMALES CON PUNTO O CON COMA
-            string RespuestaCardsJson = WSL.Cards.addBatch(detalleorden.docnumberAfiliado.Substring(2), Math.Truncate(detalleorden.montoRecarga).ToString(), TRANS_CODE_RECARGA);
+            string montoSinSeparador = Math.Truncate(detalleorden.montoRecarga * 100).ToString();
+            string RespuestaCardsJson = WSL.Cards.addBatch(detalleorden.docnumberAfiliado.Substring(2), montoSinSeparador, TRANS_CODE_RECARGA);
             if (ExceptionServicioCards(RespuestaCardsJson))
             {
                 return false;
@@ -471,7 +497,7 @@ namespace Suma2Lealtad.Models
                                  let item = new DetalleOrdenRecargaPrepago()
                                  {
                                      docnumberAfiliado = row["Cedula"].Cast<string>(),
-                                     montoRecarga = int.Parse(row["Monto"].Cast<string>())
+                                     montoRecarga = decimal.Parse(row["Monto"].Cast<string>())
                                  }
                                  select item).ToList();
                 book.Dispose();
@@ -488,6 +514,14 @@ namespace Suma2Lealtad.Models
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+
+        public List<PrepaidCustomer> GetClientes()
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                return db.PrepaidCustomers.OrderBy(u => u.name).ToList();
             }
         }
 
