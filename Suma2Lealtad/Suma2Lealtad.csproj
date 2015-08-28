@@ -741,6 +741,7 @@
     <Content Include="Views\BeneficiarioPrepago\BloquearTarjeta.cshtml" />
     <Content Include="Views\OrdenRecargaPrepago\DetalleOrden.cshtml" />
     <Content Include="Views\OrdenRecargaPrepago\CargarArchivoRecarga.cshtml" />
+    <Content Include="Views\ClientePrepago\CreateOrdenRecargaArchivo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
