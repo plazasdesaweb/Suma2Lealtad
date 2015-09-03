@@ -36,13 +36,13 @@ namespace Suma2Lealtad.Controllers.Prepago
                 beneficiario.Cliente.ListaClientes.Insert(0, new PrepaidCustomer { id = 0, name = "" });
                 beneficiario.Afiliado.typeid = ID_TYPE_PREPAGO;
                 beneficiario.Afiliado.type = "Prepago";
-                return View("CreateBeneficiario", beneficiario);
+                return View("Create", beneficiario);
             }
             //ES Beneficiario PrepagoPlazas
             else
             {
                 beneficiario.Afiliado = repAfiliado.Find(beneficiario.Afiliado.id);
-                return View("EditBeneficiario", beneficiario);                
+                return View("Edit", beneficiario);                
             }
         }
 
@@ -66,10 +66,10 @@ namespace Suma2Lealtad.Controllers.Prepago
         }
 
         [HttpPost]
-        public ActionResult EditBeneficiario(AfiliadoSuma Afiliado, ClientePrepago Cliente)
+        public ActionResult EditBeneficiario(AfiliadoSuma afiliado, ClientePrepago Cliente)
         {
             ViewModel viewmodel = new ViewModel();
-            if (!repAfiliado.SaveChanges(Afiliado))
+            if (!repAfiliado.SaveChanges(afiliado))
             {
                 viewmodel.Title = "Prepago / Beneficiario / Revisar Afiliación";
                 viewmodel.Message = "Error de aplicacion: No se pudo actualizar afiliación.";
@@ -111,6 +111,41 @@ namespace Suma2Lealtad.Controllers.Prepago
         {
             BeneficiarioPrepago beneficiario = repBeneficiario.Find(id);
             return View("ImpresoraImprimirTarjeta", beneficiario);
+        }
+
+        public ActionResult ReImprimirTarjeta(int id, int idCliente)
+        {
+            ViewModel viewmodel = new ViewModel();
+            BeneficiarioPrepago beneficiario = new BeneficiarioPrepago()
+            {
+                Afiliado = repAfiliado.Find(id),
+                Cliente = repCliente.Find(idCliente)
+            };
+            if (repAfiliado.ImprimirTarjeta(beneficiario.Afiliado))
+            {
+                if (repAfiliado.BloquearTarjeta(beneficiario.Afiliado))
+                {
+                    return View("ImpresoraImprimirTarjeta", beneficiario);
+                }
+                else
+                {
+                    viewmodel.Title = "Prepago / Beneficiario / ReImprimir Tarjeta";
+                    viewmodel.Message = "Falló el proceso de reimpresión de la Tarjeta";
+                    viewmodel.ControllerName = "ClientePrepago";
+                    viewmodel.ActionName = "FilterBeneficiarios";
+                    viewmodel.RouteValues = idCliente.ToString();
+                    return RedirectToAction("GenericView", viewmodel);
+                }
+            }
+            else
+            {
+                viewmodel.Title = "Prepago / Beneficiario / ReImprimir Tarjeta";
+                viewmodel.Message = "Falló el proceso de reimpresión de la Tarjeta";
+                viewmodel.ControllerName = "ClientePrepago";
+                viewmodel.ActionName = "FilterBeneficiarios";
+                viewmodel.RouteValues = idCliente.ToString();
+                return RedirectToAction("GenericView", viewmodel);
+            }
         }
 
         [HttpPost]
@@ -204,7 +239,7 @@ namespace Suma2Lealtad.Controllers.Prepago
             else
             {
                 viewmodel.Title = "Prepago / Beneficiario / Suspender Tarjeta";
-                viewmodel.Message = "Falló el proceso de suspención de la Tarjeta";
+                viewmodel.Message = "Falló el proceso de suspensión de la Tarjeta";
                 viewmodel.ControllerName = "BeneficiarioPrepago";
                 viewmodel.ActionName = "FilterReview";
             }

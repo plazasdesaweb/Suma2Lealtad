@@ -99,9 +99,11 @@
                             <a id="Ordenes" class="btn btn-success btn-md" role="button">Ver Órdenes de Recarga</a>
                             <a id="Recarga" class="btn btn-success btn-md" role="button">Crear Orden de Recarga</a>
                             <a id="RecargaArchivo" class="btn btn-success btn-md" role="button">Crear Orden de Recarga desde Archivo</a>
+                            <a id="SuspenderCliente" class="btn btn-success btn-md" role="button">Suspender Cliente</a>
+                            <a id="ReactivarCliente" class="btn btn-success btn-md" role="button">Reactivar Cliente</a>
                         </div>
                         <div class="pull-right">
-                            <a href="@Url.Action("Filter", "ClientePrepago")" class="btn btn-success btn-md">Agregar Nuevo Cliente</a>
+                            <a href="@Url.Action("Filter", "ClientePrepago")" class="btn btn-success btn-md">Agregar Cliente</a>
                             <a href="@Url.Action("FilterReview", "ClientePrepago")" class="btn btn-danger btn-md">Regresar</a>
                         </div>
                     </div>
@@ -131,6 +133,8 @@
         $("#Ordenes").hide();
         $("#Recarga").hide();
         $("#RecargaArchivo").hide();
+        $("#SuspenderCliente").hide();
+        $("#ReactivarCliente").hide();
     });
 
     $('.table tbody tr td:not(:nth-last-child(-n+3))').click(function () {
@@ -141,6 +145,8 @@
         $("#Ordenes").show();
         $("#RecargaArchivo").show();
         $("#Recarga").show();
+        $("#SuspenderCliente").show();
+        $("#ReactivarCliente").show();
     });
 
     $("#Ordenes").click(function () {
@@ -163,6 +169,22 @@
         var href = '@Url.Content("~/{controller}/{action}/{params}")';
         href = href.replace("{controller}", "ClientePrepago");
         href = href.replace("{action}", "CargarArchivoRecarga");
+        href = href.replace("{params}", rowId);
+        window.location.href = href;
+    });
+
+    $("#SuspenderCliente").click(function () {
+        var href = '@Url.Content("~/{controller}/{action}/{params}")';
+        href = href.replace("{controller}", "ClientePrepago");
+        href = href.replace("{action}", "SuspenderCliente");
+        href = href.replace("{params}", rowId);
+        window.location.href = href;
+    });
+
+    $("#ReactivarCliente").click(function () {
+        var href = '@Url.Content("~/{controller}/{action}/{params}")';
+        href = href.replace("{controller}", "ClientePrepago");
+        href = href.replace("{action}", "ReactivarCliente");
         href = href.replace("{params}", rowId);
         window.location.href = href;
     });

@@ -10,6 +10,8 @@ namespace Suma2Lealtad.Models
 {
     public class AfiliadoSumaRepository
     {
+        private const int ID_TYPE_SUMA = 1;
+        private const int ID_TYPE_PREPAGO = 2;
         private const string WEB_TYPE = "1";
         private const int ID_ESTATUS_AFILIACION_INICIAL = 0;
         private const int ID_ESTATUS_AFILIACION_ACTIVA = 2;
@@ -892,6 +894,33 @@ namespace Suma2Lealtad.Models
             else
             {
                 return false;
+            }
+        }
+
+        public AfiliadoSuma CambiarASuma(AfiliadoSuma afiliado)
+        {
+            afiliado.type = "Suma";
+            afiliado.typeid = ID_TYPE_SUMA;
+            return afiliado;
+        }
+
+        public AfiliadoSuma CambiarAPrepago(AfiliadoSuma afiliado)
+        {
+            afiliado.type = "Prepago";
+            afiliado.typeid = ID_TYPE_PREPAGO;
+            return afiliado;
+        }
+
+        public AfiliadoSuma ReiniciarAfiliacionSumaAPrepago(AfiliadoSuma afiliado)
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                Affiliate afiliate = db.Affiliates.FirstOrDefault(a => a.docnumber == afiliado.docnumber);
+                afiliate.sumastatusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_AFILIACION_INICIAL) && (s.tablename == "Affiliatte")).id;
+                db.SaveChanges();
+                afiliado.estatus = "Nueva";
+                afiliado.statusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_AFILIACION_INICIAL) && (s.tablename == "Affiliatte")).id;
+                return afiliado;
             }
         }
 

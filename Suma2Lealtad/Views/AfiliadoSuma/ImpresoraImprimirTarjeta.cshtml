@@ -1,4 +1,4 @@
-﻿@model Suma2Lealtad.Models.BeneficiarioPrepago
+﻿@model Suma2Lealtad.Models.AfiliadoSuma
 
 @{
     ViewBag.Title = "Imprimir Tarjeta";
@@ -9,74 +9,47 @@
     <div class="panel panel-default">
 
         <div class="panel-heading clearfix panel-gradient">
-            <h3 class="panel-title">Prepago / Cliente / Beneficiario / Operaciones con la Impresora / Imprimir Tarjeta</h3>
+            <h3 class="panel-title">Afiliado / Operaciones con la Impresora / Imprimir Tarjeta</h3>
         </div>
 
         <div class="panel-body">
 
-            <form id="form" action="@Url.Action("ImprimirTarjeta", "ClientePrepago", new { id = @Model.Cliente.idCliente, idBeneficiario = @Model.Afiliado.id })" name="form" method="post">
-
-                @Html.HiddenFor(model => model.Cliente.idCliente)
-
-                <div class="editor-label col-md-4 control-label">
-                    Cliente :
-                </div>
-                <div class="editor-field col-md-6">
-                    @Html.TextBoxFor(model => model.Cliente.nameCliente, new { @class = "form-control", @readonly = "true" })
-                </div>
-
-                <div class="editor-label col-md-4 control-label">
-                    RIF :
-                </div>
-                <div class="editor-form col-md-6">
-                    @Html.TextBoxFor(model => model.Cliente.rifCliente, new { @class = "form-control", @readonly = "true" })
-                </div>
-                <div class="editor-label col-md-4 control-label">
-                    Teléfono :
-                </div>
-                <div class="editor-form col-md-6">
-                    @Html.TextBoxFor(model => model.Cliente.phoneCliente, new { @class = "form-control", @readonly = "true" })
-                </div>
-
-                <div class="editor-label col-md-4 control-label"></div>
-                <div class="editor-field col-md-8">
-                    <br />
-                </div>
-
+            <form id="form" action="@Url.Action("ImprimirTarjeta", "AfiliadoSuma", new { id = @Model.id })" name="form" method="post">
+                
                 <div class="editor-label col-md-4 control-label">
                     Tipo de Afiliado :
                 </div>
 
                 <div class="editor-field col-md-6">
-                    @Html.TextBoxFor(model => model.Afiliado.type, new { @class = "form-control", @readonly = "true" })
+                    @Html.TextBoxFor(model => model.type, new { @class = "form-control", @readonly = "true" })
                 </div>
 
                 <div class="editor-label col-md-4 control-label">
                     Nombre del Afiliado :
                 </div>
                 <div class="editor-form col-md-6">
-                    @Html.TextBox("name", @Model.Afiliado.name + " " + @Model.Afiliado.lastname1, new { @class = "form-control", @readonly = "true" })
+                    @Html.TextBox("name", @Model.name + " " + @Model.lastname1, new { @class = "form-control", @readonly = "true" })
                 </div>
 
                 <div class="editor-label col-md-4 control-label">
                     Número de Documento/Cédula :
                 </div>
                 <div class="editor-form col-md-6">
-                    @Html.TextBox("docnumber", @Model.Afiliado.docnumber, new { @class = "form-control", @readonly = "true" })
+                    @Html.TextBox("docnumber", @Model.docnumber, new { @class = "form-control", @readonly = "true" })
                 </div>
 
                 <div class="editor-label col-md-4 control-label">
                     Número de Tarjeta :
                 </div>
                 <div class="editor-form col-md-6">
-                    @Html.TextBox("pan", @Model.Afiliado.pan, new { @class = "form-control", @readonly = "true" })
+                    @Html.TextBox("pan", @Model.pan, new { @class = "form-control", @readonly = "true" })
                 </div>
 
                 <div class="editor-label col-md-4 control-label">
                     Estatus de Tarjeta :
                 </div>
                 <div class="editor-form col-md-6">
-                    @Html.TextBox("estatustarjeta", @Model.Afiliado.estatustarjeta, new { @class = "form-control", @readonly = "true" })
+                    @Html.TextBox("estatustarjeta", @Model.estatustarjeta, new { @class = "form-control", @readonly = "true" })
                 </div>
 
                 <!-- btn btn-success -->
@@ -114,20 +87,19 @@
                                     dialogRef.close();
                                     //$("#sl").show();
                                     var href = '@Url.Content("~/{controller}/{action}/{params}")';
-                                    var idcliente = @Model.Cliente.idCliente
-                                    var idBeneficiario = @Model.Afiliado.id
-                                    href = href.replace("{controller}", "ClientePrepago");
+                                    var idBeneficiario = @Model.id
+                                    href = href.replace("{controller}", "AfiliadoSuma");
                                     href = href.replace("{action}", "ReImprimirTarjeta");
-                                    href = href.replace("{params}", idcliente + "?idBeneficiario=" + idBeneficiario);
-                                    window.location.href = href;  
+                                    href = href.replace("{params}", idBeneficiario );
+                                    window.location.href = href; 
                                 }
                             }, {
                                 label: 'Si',
                                 action: function(dialogRef) {
                                     dialogRef.close();
                                     //$("#botonguardar").submit(); 
-                                    //$("#submit").show(); 
-                                    $("#form").submit();                             
+                                    //$("#submit").show();                             
+                                    $("#form").submit();
                                     //$("#sl").show();
                                 }
                             }]
@@ -138,8 +110,8 @@
 
                 <div class="col-md-12 col-btn">
                     <div class="pull-right">
-                        @*<input id="submit" name="submit" type="submit" class="btn btn-success btn-md" value="Activar Tarjeta" style="display: none" />*@
-                        <a href="@Url.Action("FilterBeneficiarios", "ClientePrepago", new { id = Model.Cliente.idCliente })" class="btn btn-danger btn-md">Regresar</a>
+                        @*<input id="submit" name="submit" type="submit" class="btn btn-success btn-md" value="Guardar" style="display: none" />*@
+                        <a href="@Url.Action("FilterReview", "AfiliadoSuma")" class="btn btn-danger btn-md">Regresar</a>
                     </div>
                 </div>
 

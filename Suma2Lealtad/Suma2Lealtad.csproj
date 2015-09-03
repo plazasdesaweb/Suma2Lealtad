@@ -505,6 +505,7 @@
       <DependentUpon>SumaLealtad.edmx</DependentUpon>
       <LastGenOutput>SumaLealtad.cs</LastGenOutput>
     </Content>
+    <Content Include="App_Data\Plantilla.xls" />
     <None Include="Properties\PublishProfiles\SumaLealtad.pubxml" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
@@ -683,7 +684,6 @@
     <Content Include="Views\CompanyPrepago\DetalleOrden.cshtml" />
     <Content Include="Views\CompanyPrepago\ResultadoOrden.cshtml" />
     <Content Include="Views\CompanyPrepago\ConfirmacionRecargas.cshtml" />
-    <Content Include="Views\AfiliadoSuma\Index.cshtml" />
     <Content Include="Views\ClientePrepago\Index.cshtml" />
     <Content Include="Views\ClientePrepago\FilterReview.cshtml" />
     <Content Include="Views\ClientePrepago\Create.cshtml" />
@@ -720,8 +720,8 @@
     <Content Include="Views\BeneficiarioPrepago\FilterReview.cshtml" />
     <Content Include="Views\BeneficiarioPrepago\Index.cshtml" />
     <Content Include="Views\BeneficiarioPrepago\Filter.cshtml" />
-    <Content Include="Views\BeneficiarioPrepago\CreateBeneficiario.cshtml" />
-    <Content Include="Views\BeneficiarioPrepago\EditBeneficiario.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\Create.cshtml" />
+    <Content Include="Views\BeneficiarioPrepago\Edit.cshtml" />
     <Content Include="Views\BeneficiarioPrepago\SilverlightEscaner.cshtml" />
     <Content Include="Views\OrdenRecargaPrepago\FilterReview.cshtml" />
     <Content Include="Views\OrdenRecargaPrepago\Index.cshtml" />
@@ -742,9 +742,28 @@
     <Content Include="Views\OrdenRecargaPrepago\DetalleOrden.cshtml" />
     <Content Include="Views\OrdenRecargaPrepago\CargarArchivoRecarga.cshtml" />
     <Content Include="Views\ClientePrepago\CreateOrdenRecargaArchivo.cshtml" />
+    <Content Include="Views\AfiliadoSuma\Filter.cshtml" />
+    <Content Include="Views\AfiliadoSuma\FilterReview.cshtml" />
+    <Content Include="Views\AfiliadoSuma\Create.cshtml" />
+    <Content Include="Views\AfiliadoSuma\Edit.cshtml" />
+    <Content Include="Views\AfiliadoSuma\GenericView.cshtml" />
+    <Content Include="Views\AfiliadoSuma\Index.cshtml" />
+    <Content Include="Views\AfiliadoSuma\ImpresoraImprimirTarjeta.cshtml" />
+    <Content Include="Views\AfiliadoSuma\SilverlightImpresora.cshtml" />
+    <Content Include="Views\AfiliadoSuma\SilverlightPinPad.cshtml" />
+    <Content Include="Views\AfiliadoSuma\SilverlightEscaner.cshtml" />
+    <Content Include="Views\AfiliadoSuma\PinPadCambiarPin.cshtml" />
+    <Content Include="Views\AfiliadoSuma\PinPadCrearPin.cshtml" />
+    <Content Include="Views\AfiliadoSuma\PinPadReiniciarPin.cshtml" />
+    <Content Include="Views\AfiliadoSuma\BloquearTarjeta.cshtml" />
+    <Content Include="Views\AfiliadoSuma\SuspenderTarjeta.cshtml" />
+    <Content Include="Views\AfiliadoSuma\ReactivarTarjeta.cshtml" />
+    <Content Include="Views\AfiliadoSuma\SaldosMovimientos.cshtml" />
+    <Content Include="Views\AfiliadoSuma\Acreditar.cshtml" />
+    <Content Include="Views\ClientePrepago\SuspenderCliente.cshtml" />
+    <Content Include="Views\ClientePrepago\ReactivarCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Picture\" />
   </ItemGroup>
   <ItemGroup>

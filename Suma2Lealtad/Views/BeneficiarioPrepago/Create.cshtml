@@ -11,7 +11,7 @@
 
         <div class="panel-body col-md-offset-1 col-md-10">
 
-            <form id="commentForm" method="post" action="@Url.Action("CreateBeneficiario", "ClientePrepago")" class="form-horizontal" enctype = "multipart/form-data">
+            <form id="commentForm" method="post" action="@Url.Action("CreateBeneficiario", "BeneficiarioPrepago")" class="form-horizontal" enctype = "multipart/form-data">
 
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
@@ -45,11 +45,19 @@
                             @Html.HiddenFor(model => model.Cliente.idCliente)
 
                             <div class="editor-label col-md-4 control-label">
-                                Cliente Prepago :
+                                * Cliente Prepago :
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.Cliente.nameCliente, new { @class = "form-control", @readonly = "true" })
+                                @*@Html.TextBoxFor(model => model.Cliente.nameCliente, new { @class = "form-control", @readonly = "true" })*@
+
+                                @Html.DropDownListFor(m => m.Cliente.nameCliente,
+                                                      new SelectList(Model.Cliente.ListaClientes,
+                                                      "id",
+                                                      "name",
+                                                      Model.Cliente.ListaClientes),
+                                                      new { @class = "form-control" }
+                                                      )
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -74,8 +82,8 @@
 
                             <div class="editor-field col-md-6">
                                 @Html.TextBoxFor(model => model.Afiliado.email, new { @class = "form-control"})
-                            </div>
-                            
+                            </div>                            
+
                             <div class="editor-label col-md-4 control-label">
                                 * Primer Nombre :
                             </div>

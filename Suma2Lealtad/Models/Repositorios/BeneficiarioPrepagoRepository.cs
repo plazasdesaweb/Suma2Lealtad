@@ -8,6 +8,8 @@ namespace Suma2Lealtad.Models
 {
     public class BeneficiarioPrepagoRepository
     {
+        private const int ID_ESTATUS_AFILIACION_INICIAL = 0;
+
         public List<BeneficiarioPrepago> Find(string numdoc, string name, string email, string estadoAfiliacion, string estadoTarjeta)
         {
             List<BeneficiarioPrepago> beneficiarios;
@@ -353,6 +355,18 @@ namespace Suma2Lealtad.Models
                 return true;
             }
         }
+
+        public bool Delete(BeneficiarioPrepago beneficiario)
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                //ENTIDAD PrepaidBeneficiary
+                PrepaidBeneficiary prepaidbeneficiary = db.PrepaidBeneficiaries.FirstOrDefault(b => b.affiliateid == beneficiario.Afiliado.id && b.prepaidcustomerid == beneficiario.Cliente.idCliente);
+                db.PrepaidBeneficiaries.Remove(prepaidbeneficiary);                
+                db.SaveChanges();
+                return true;
+            }
+        }       
 
         public List<PrepaidCustomer> GetClientes()
         {

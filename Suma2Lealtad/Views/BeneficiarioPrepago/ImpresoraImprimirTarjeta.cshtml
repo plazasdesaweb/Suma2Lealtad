@@ -14,7 +14,7 @@
 
         <div class="panel-body">
 
-            <form action="@Url.Action("ImprimirTarjeta", "ClientePrepago", new { id = @Model.Cliente.idCliente, idBeneficiario = @Model.Afiliado.id })" name="form" method="post">
+            <form id="form" action="@Url.Action("ImprimirTarjeta", "BeneficiarioPrepago", new { id = @Model.Afiliado.id })" name="form" method="post">
 
                 @Html.HiddenFor(model => model.Cliente.idCliente)
 
@@ -112,15 +112,23 @@
                                 label: 'No',
                                 action: function(dialogRef) {
                                     dialogRef.close();
-                                    $("#sl").show();  
+                                    //$("#sl").show();
+                                    var href = '@Url.Content("~/{controller}/{action}/{params}")';
+                                    var idcliente = @Model.Cliente.idCliente
+                                    var idBeneficiario = @Model.Afiliado.id
+                                    href = href.replace("{controller}", "BeneficiarioPrepago");
+                                    href = href.replace("{action}", "ReImprimirTarjeta");
+                                    href = href.replace("{params}", idBeneficiario + "?idCliente=" + idcliente);
+                                    window.location.href = href; 
                                 }
                             }, {
                                 label: 'Si',
                                 action: function(dialogRef) {
                                     dialogRef.close();
                                     //$("#botonguardar").submit(); 
-                                    $("#submit").show();                             
-                                    $("#sl").show();
+                                    //$("#submit").show();                             
+                                    $("#form").submit();
+                                    //$("#sl").show();
                                 }
                             }]
                         });-->
@@ -130,7 +138,7 @@
 
                 <div class="col-md-12 col-btn">
                     <div class="pull-right">
-                        <input id="submit" name="submit" type="submit" class="btn btn-success btn-md" value="Guardar" style="display: none" />
+                        @*<input id="submit" name="submit" type="submit" class="btn btn-success btn-md" value="Guardar" style="display: none" />*@
                         <a href="@Url.Action("FilterReview", "BeneficiarioPrepago")" class="btn btn-danger btn-md">Regresar</a>
                     </div>
                 </div>

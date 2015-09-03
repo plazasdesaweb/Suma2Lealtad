@@ -1,8 +1,7 @@
-﻿@model Suma2Lealtad.Models.BeneficiarioPrepago
+﻿@model Suma2Lealtad.Models.AfiliadoSuma
 
 @{
-    ViewBag.Title = "CreateBeneficiario";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Create";
 }
 
 <div class="container">
@@ -11,7 +10,7 @@
 
         <div class="panel-body col-md-offset-1 col-md-10">
 
-            <form id="commentForm" method="post" action="@Url.Action("CreateBeneficiario", "BeneficiarioPrepago")" class="form-horizontal" enctype = "multipart/form-data">
+            <form id="commentForm" method="post" action="@Url.Action("Create", "AfiliadoSuma")" class="form-horizontal" enctype = "multipart/form-data">
 
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
@@ -36,36 +35,19 @@
                                 <br />
                             </div>
 
-                            @Html.HiddenFor(model => model.Afiliado.id)
-                            @Html.HiddenFor(model => model.Afiliado.reasonsid)
-                            @Html.HiddenFor(model => model.Afiliado.clientid)
-                            @Html.HiddenFor(model => model.Afiliado.typeid)
-                            @Html.HiddenFor(model => model.Afiliado.WebType)
+                            @Html.HiddenFor(model => model.id)
+                            @Html.HiddenFor(model => model.reasonsid)
+                            @Html.HiddenFor(model => model.clientid)
+                            @Html.HiddenFor(model => model.typeid)
+                            @Html.HiddenFor(model => model.WebType)
 
-                            @Html.HiddenFor(model => model.Cliente.idCliente)
-
-                            <div class="editor-label col-md-4 control-label">
-                                * Cliente Prepago :
-                            </div>
-
-                            <div class="editor-field col-md-6">
-                                @*@Html.TextBoxFor(model => model.Cliente.nameCliente, new { @class = "form-control", @readonly = "true" })*@
-
-                                @Html.DropDownListFor(m => m.Cliente.nameCliente,
-                                                      new SelectList(Model.Cliente.ListaClientes,
-                                                      "id",
-                                                      "name",
-                                                      Model.Cliente.ListaClientes),
-                                                      new { @class = "form-control" }
-                                                      )
-                            </div>
 
                             <div class="editor-label col-md-4 control-label">
                                 * Tipo de Afiliado :
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.Afiliado.type, new { @class = "form-control", @readonly = "true" })
+                                @Html.TextBoxFor(model => model.type, new { @class = "form-control", @readonly = "true" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -73,30 +55,32 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.Afiliado.docnumber, new { @class = "form-control", @readonly = "true" })
+                                @Html.TextBoxFor(model => model.docnumber, new { @class = "form-control", @readonly = "true" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
                                 * Correo Electrónico :
                             </div>
 
-                            @{if (Model.Afiliado.email != null)
-                              {
-                                @:<div class="editor-field col-md-6">@Html.TextBoxFor(model => model.Afiliado.email, new { @class = "form-control", @readonly = "true" })</div>                              
-                              }
-                              else
-                              {
-                                @:<div class="editor-field col-md-6">@Html.TextBoxFor(model => model.Afiliado.email, new { @class = "form-control"})</div>
-                              }
-                            }
+                            <div class="editor-field col-md-6">
+                                @{if (@Model.email != null)
+                                  {
+                                    @Html.TextBoxFor(model => model.email, new { @class = "form-control", @readonly = "true" })
+                                  }
+                                  else
+                                  {
+                                    @Html.TextBoxFor(model => model.email, new { @class = "form-control" })
+                                  }
+                                }
+                            </div>
 
                             <div class="editor-label col-md-4 control-label">
                                 * Primer Nombre :
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.Afiliado.name, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Afiliado.name)
+                                @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.name)
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -104,8 +88,8 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.Afiliado.name2, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Afiliado.name2)
+                                @Html.TextBoxFor(model => model.name2, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.name2)
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -113,8 +97,8 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.Afiliado.lastname1, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Afiliado.lastname1)
+                                @Html.TextBoxFor(model => model.lastname1, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.lastname1)
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -122,8 +106,8 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.Afiliado.lastname2, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Afiliado.lastname2)
+                                @Html.TextBoxFor(model => model.lastname2, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.lastname2)
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -131,8 +115,8 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.Afiliado.birthdate, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Afiliado.birthdate)
+                                @Html.TextBoxFor(model => model.birthdate, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.birthdate)
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -140,13 +124,10 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.DropDownListFor(m => m.Afiliado.gender,
-                                                      new SelectList(Model.Afiliado.SexoOptions,
-                                                      "id", 
-                                                      "sexo",
-                                                      Model.Afiliado.gender), 
-                                                      new { @class = "form-control" }
-                                                      )
+                                @Html.DropDownListFor(m => m.gender,
+                                new SelectList(Model.SexoOptions,
+                                "id", "sexo",
+                                Model.SexoOptions), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -154,13 +135,10 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.DropDownListFor(m => m.Afiliado.maritalstatus,
-                                                      new SelectList(Model.Afiliado.MaritalStatusOptions,
-                                                      "id", 
-                                                      "maritalstatus",
-                                                      Model.Afiliado.maritalstatus), 
-                                                      new { @class = "form-control" }
-                                                      )
+                                @Html.DropDownListFor(m => m.maritalstatus,
+                                new SelectList(Model.MaritalStatusOptions,
+                                "id", "maritalstatus",
+                                Model.MaritalStatusOptions), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -168,8 +146,8 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.Afiliado.phone1, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Afiliado.phone1)
+                                @Html.TextBoxFor(model => model.phone1, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.phone1)
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -177,8 +155,8 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.Afiliado.phone2, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Afiliado.phone2)
+                                @Html.TextBoxFor(model => model.phone2, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.phone2)
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -186,8 +164,8 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.Afiliado.phone3, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Afiliado.phone3)
+                                @Html.TextBoxFor(model => model.phone3, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.phone3)
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -195,8 +173,8 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.Afiliado.occupation, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Afiliado.occupation)
+                                @Html.TextBoxFor(model => model.occupation, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.occupation)
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -204,8 +182,8 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.Afiliado.nationality, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Afiliado.nationality)
+                                @Html.TextBoxFor(model => model.nationality, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.nationality)
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -213,8 +191,8 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.Afiliado.twitter_account, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Afiliado.twitter_account)
+                                @Html.TextBoxFor(model => model.twitter_account, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.twitter_account)
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -222,8 +200,8 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.Afiliado.facebook_account, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Afiliado.facebook_account)
+                                @Html.TextBoxFor(model => model.facebook_account, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.facebook_account)
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -231,8 +209,8 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.Afiliado.instagram_account, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Afiliado.instagram_account)
+                                @Html.TextBoxFor(model => model.instagram_account, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.instagram_account)
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -271,7 +249,7 @@
                                 <div id="capaarchivo" class="text-left">
                                     @*<p class="text-left">Seleccione archivo: </p>*@
                                     @*<input type="file" name="file" id="file" onchange="ActualizaElementoControl('ElementoControl','Seleccionada', this, '@Model.docnumber')"/>*@
-                                    <input id="file" type=file name="file" style="visibility:hidden;position:absolute;top:0;left:0" onchange="ActualizaElementoControl('ElementoControl','Seleccionada', this, '@Model.Afiliado.docnumber')">
+                                    <input id="file" type=file name="file" style="visibility:hidden;position:absolute;top:0;left:0" onchange="ActualizaElementoControl('ElementoControl','Seleccionada', this, '@Model.docnumber')">
                                     <input type="button" value="Seleccione Archivo" class="btn btn-success btn-md" onclick="this.form.file.click()">
                                     <span id="info" style="border: 0px solid black"></span>
                                 </div>
@@ -299,7 +277,7 @@
                                 }
 
                                 function Borracampofile() {
-                                    var textofuncion = "ActualizaElementoControl('ElementoControl', 'Seleccionada', this, '@Model.Afiliado.docnumber')"
+                                    var textofuncion = "ActualizaElementoControl('ElementoControl', 'Seleccionada', this, '@Model.docnumber')"
                                     capa = window.capaarchivo;
                                     varHTML = '';
                                     capa.innerHTML = varHTML;
@@ -327,20 +305,10 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.DropDownListFor(m => m.Afiliado.cod_estado,
-                                                      new SelectList(Model.Afiliado.ListaEstados,
-                                                      "COD_ESTADO",
-                                                      "DESCRIPC_ESTADO",
-                                                      Model.Afiliado.ListaEstados),
-                                                      new { @class = "form-control" }
-                                                      )
-                                @*@Html.DropDownList("cod_estado",
-                                                   new SelectList(Model.Afiliado.ListaEstados,
-                                                   "COD_ESTADO", 
-                                                   "DESCRIPC_ESTADO",
-                                                   Model.Afiliado.ListaEstados), 
-                                                   new { @class = "form-control" }
-                                                   )*@
+                                @Html.DropDownListFor(m => m.cod_estado,
+                                new SelectList(Model.ListaEstados,
+                                "COD_ESTADO", "DESCRIPC_ESTADO",
+                                Model.ListaEstados), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -348,7 +316,7 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                <select id="Afiliado_cod_ciudad" name="Afiliado.cod_ciudad" class="form-control"></select>
+                                <select id="cod_ciudad" name="cod_ciudad" class="form-control"></select>
                                 @Html.ValidationMessage("Ciudad")
                             </div>
 
@@ -357,7 +325,7 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                <select id="Afiliado_cod_municipio" name="Afiliado.cod_municipio" class="form-control"></select>
+                                <select id="cod_municipio" name="cod_municipio" class="form-control"></select>
                                 @Html.ValidationMessage("Municipio")
                             </div>
 
@@ -366,7 +334,7 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                <select id="Afiliado_cod_parroquia" name="Afiliado.cod_parroquia" class="form-control"></select>
+                                <select id="cod_parroquia" name="cod_parroquia" class="form-control"></select>
                                 @Html.ValidationMessage("Parroquia")
                             </div>
 
@@ -375,7 +343,7 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                <select id="Afiliado_cod_urbanizacion" name="Afiliado.cod_urbanizacion" class="form-control"></select>
+                                <select id="cod_urbanizacion" name="cod_urbanizacion" class="form-control"></select>
                                 @Html.ValidationMessage("Urbanización")
                             </div>
 
@@ -389,13 +357,10 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.DropDownListFor(m => m.Afiliado.channelid,
-                                                      new SelectList(Model.Afiliado.ChannelOptions,
-                                                      "id",
-                                                      "channel",
-                                                      Model.Afiliado.ChannelOptions),
-                                                      new { @class = "form-control" }
-                                                      )
+                                @Html.DropDownListFor(m => m.channelid,
+                                new SelectList(Model.ChannelOptions,
+                                "id", "channel",
+                                Model.ChannelOptions), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -403,13 +368,10 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.DropDownListFor(m => m.Afiliado.typedelivery,
-                                                      new SelectList(Model.Afiliado.TypeDeliveryOptions,
-                                                      "id",
-                                                      "delivery",
-                                                      Model.Afiliado.TypeDeliveryOptions),
-                                                      new { @class = "form-control" }
-                                                      )
+                                @Html.DropDownListFor(m => m.typedelivery,
+                                new SelectList(Model.TypeDeliveryOptions,
+                                "id", "delivery",
+                                Model.TypeDeliveryOptions), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -417,13 +379,10 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.DropDownListFor(m => m.Afiliado.storeiddelivery,
-                                                      new SelectList(Model.Afiliado.StoreOptions,
-                                                      "id",
-                                                      "sucursal",
-                                                      Model.Afiliado.StoreOptions),
-                                                      new { @class = "form-control" }
-                                                      )
+                                @Html.DropDownListFor(m => m.storeiddelivery,
+                                new SelectList(Model.StoreOptions,
+                                "id", "sucursal",
+                                Model.StoreOptions), new { @class = "form-control" })
                             </div>
 
                             <div class="editor-label col-md-4 control-label"></div>
@@ -436,11 +395,11 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @for (int i = 0; i < Model.Afiliado.Intereses.Count; i++)
+                                @for (int i = 0; i < Model.Intereses.Count; i++)
                                 {
-                                    @Html.CheckBoxFor(m => m.Afiliado.Intereses[i].Checked, new { id = i })
-                                    @Html.HiddenFor(m => m.Afiliado.Intereses[i].id)
-                                    @Html.DisplayFor(m => m.Afiliado.Intereses[i].name)
+                                    @Html.CheckBoxFor(m => m.Intereses[i].Checked, new { id = i })
+                                    @Html.HiddenFor(m => m.Intereses[i].id)
+                                    @Html.DisplayFor(m => m.Intereses[i].name)
                                     <br />
                                 }
                             </div>
@@ -455,8 +414,8 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextAreaFor(model => model.Afiliado.comments, new { @class = "form-control", style = "width: 520px; height: 100px;" })
-                                @Html.ValidationMessageFor(model => model.Afiliado.comments)
+                                @Html.TextAreaFor(model => model.comments, new { @class = "form-control", style = "width: 520px; height: 100px;" })
+                                @Html.ValidationMessageFor(model => model.comments)
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -520,4 +479,3 @@
 
 </div>
 <!--// container -->
-

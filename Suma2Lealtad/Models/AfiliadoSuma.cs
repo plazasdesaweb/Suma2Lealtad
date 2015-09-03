@@ -169,5 +169,42 @@ namespace Suma2Lealtad.Models
         };
         #endregion
 
+        #region Lista_EstadoDeAfiliacion
+        public class EstadoDeAfiliacion
+        {
+            public string id { get; set; }
+            public string estado { get; set; }
+        }
+
+        public IEnumerable<EstadoDeAfiliacion> EstadoDeAfiliacionOptions =
+            new List<EstadoDeAfiliacion>
+        {
+              new EstadoDeAfiliacion { id = "", estado = "Seleccione..." },
+              new EstadoDeAfiliacion { id = "Nueva", estado = "Nueva" },
+              new EstadoDeAfiliacion { id = "Inactiva", estado = "Inactiva"  },
+              new EstadoDeAfiliacion { id = "Activa", estado = "Activa"  },
+              new EstadoDeAfiliacion { id = "Eliminada", estado = "Eliminada"  }
+        };
+        #endregion
+
+        #region Lista_EstadoDeTarjeta
+        public class EstadoDeTarjeta
+        {
+            public string id { get; set; }
+            public string estado { get; set; }
+        }
+
+        public IEnumerable<EstadoDeTarjeta> EstadoDeTarjetaOptions =
+            new List<EstadoDeTarjeta>
+        {
+              new EstadoDeTarjeta { id = "", estado = "Seleccione..."          },
+              new EstadoDeTarjeta { id = "Nueva", estado = "Nueva" },
+              new EstadoDeTarjeta { id = "Inactiva", estado = "Inactiva"  },
+              new EstadoDeTarjeta { id = "Activa", estado = "Activa"  },
+              new EstadoDeTarjeta { id = "Eliminada", estado = "Eliminada"  },
+              new EstadoDeTarjeta { id = "Suspendida", estado = "Suspendida"  }
+        };
+        #endregion
+
     }
 }

@@ -10,7 +10,7 @@ namespace Suma2Lealtad.Controllers
     [AuditingFilter]
     public class AfiliadoController : Controller
     {
-        private AfiliadoRepository rep = new AfiliadoRepository();
+        private AfiliadoRepository repAfiliado = new AfiliadoRepository();
 
         public ActionResult Filter()
         {
@@ -35,7 +35,7 @@ namespace Suma2Lealtad.Controllers
             //        //CLIENTE/AFILIADO SUMA           -> acción: editar registro de CLIENTE y editar afiliación de AFILIADO => REVISAR AFILIACION (Redirecciónar a acción Index ó Edit)
             //        //CLIENTE/BENEFCIARIO PREPAGO     -> acción: error cliente prepago => Redireccionar a GenericView con mensaje descriptivo
             
-            Afiliado afiliado = rep.Find(numdoc);
+            Afiliado afiliado = repAfiliado.Find(numdoc);
             if (afiliado == null)
             {
                 //ERROR EN METODO FIND
@@ -85,14 +85,14 @@ namespace Suma2Lealtad.Controllers
             else
             {
                 //CLIENTE/AFILIADO
-                List<Afiliado> afiliados = rep.Find(numdoc, "", "");
+                List<Afiliado> afiliados = repAfiliado.Find(numdoc, "", "");
                 return View("Index", afiliados);
             }
         }
 
         public ActionResult Create(string numdoc, int typeid, int companyid)
         {
-            Afiliado afiliado = rep.Find(numdoc, typeid, companyid);
+            Afiliado afiliado = repAfiliado.Find(numdoc, typeid, companyid);
             return View("Create", afiliado);
         }
 
@@ -100,7 +100,7 @@ namespace Suma2Lealtad.Controllers
         public ActionResult Create(Afiliado afiliado, HttpPostedFileBase file)
         {
             ViewModel viewmodel = new ViewModel();
-            if (rep.Save(afiliado, file))
+            if (repAfiliado.Save(afiliado, file))
             {
                 #region validacion de carga de archivo 
                 //if (file != null && file.ContentLength > 0)
@@ -149,14 +149,14 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult Index(string numdoc)
         {
-            List<Afiliado> afiliados = rep.Find(numdoc, "", "");
+            List<Afiliado> afiliados = repAfiliado.Find(numdoc, "", "");
             return View(afiliados);
         }
 
         [HttpPost]
         public ActionResult Index(string numdoc, string name, string email)
         {
-            List<Afiliado> afiliados = rep.Find(numdoc, name, email);
+            List<Afiliado> afiliados = repAfiliado.Find(numdoc, name, email);
             if (afiliados.Count == 0)
             {
                 //NOCLIENTE/NOAFILIADO
@@ -172,7 +172,7 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult Edit(int id)
         {
-            Afiliado afiliado = rep.Find(id);
+            Afiliado afiliado = repAfiliado.Find(id);
             return View(afiliado);
         }
 
@@ -180,7 +180,7 @@ namespace Suma2Lealtad.Controllers
         public ActionResult Edit(Afiliado afiliado)
         {
             ViewModel viewmodel = new ViewModel();
-            if (!rep.SaveChanges(afiliado))
+            if (!repAfiliado.SaveChanges(afiliado))
             {
                 viewmodel.Title = "Afiliado / Revisar Afiliación";
                 viewmodel.Message = "Existen campos que son requeridos para procesar el formulario.";
@@ -201,7 +201,7 @@ namespace Suma2Lealtad.Controllers
 
         public FileContentResult GetImage(int id)
         {
-            Photos_Affiliate Photo = rep.Find(id).picture;
+            Photos_Affiliate Photo = repAfiliado.Find(id).picture;
             if (Photo.photo != null)
             {
                 return File(Photo.photo, Photo.photo_type);
@@ -215,8 +215,8 @@ namespace Suma2Lealtad.Controllers
         public ActionResult Aprobar(int id)
         {
             ViewModel viewmodel = new ViewModel();
-            Afiliado afiliado = rep.Find(id);
-            if (rep.Aprobar(afiliado))
+            Afiliado afiliado = repAfiliado.Find(id);
+            if (repAfiliado.Aprobar(afiliado))
             {
                 viewmodel.Title = "Afiliado / Aprobar Afiliación:";
                 viewmodel.Message = "Afiliación Aprobada.";
@@ -237,25 +237,25 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult CrearPin(int id)
         {
-            Afiliado afiliado = rep.Find(id);
+            Afiliado afiliado = repAfiliado.Find(id);
             return View("PinPadCrearPin", afiliado);
         }
 
         public ActionResult CambiarPin(int id)
         {
-            Afiliado afiliado = rep.Find(id);
+            Afiliado afiliado = repAfiliado.Find(id);
             return View("PinPadCambiarPin", afiliado);
         }
 
         public ActionResult ReiniciarPin(int id)
         {
-            Afiliado afiliado = rep.Find(id);
+            Afiliado afiliado = repAfiliado.Find(id);
             return View("PinPadReiniciarPin", afiliado);
         }
 
         public ActionResult ImprimirTarjeta(int id)
         {
-            Afiliado afiliado = rep.Find(id);
+            Afiliado afiliado = repAfiliado.Find(id);
             return View("ImpresoraImprimirTarjeta", afiliado);
         }
 
@@ -263,10 +263,10 @@ namespace Suma2Lealtad.Controllers
         public ActionResult ImprimirTarjeta(int id, string mode = "post")
         {
             ViewModel viewmodel = new ViewModel();
-            Afiliado afiliado = rep.Find(id);
+            Afiliado afiliado = repAfiliado.Find(id);
             afiliado.trackI = Tarjeta.ConstruirTrackI(afiliado.pan);
             afiliado.trackII = Tarjeta.ConstruirTrackII(afiliado.pan);
-            if (rep.ImprimirTarjeta(afiliado))
+            if (repAfiliado.ImprimirTarjeta(afiliado))
             {
                 viewmodel.Title = "Afiliado / Operaciones con la Impresora / Imprimir Tarjeta";
                 viewmodel.Message = "Tarjeta impresa y activada correctamente";
@@ -287,7 +287,7 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult BloquearTarjeta(int id)
         {
-            Afiliado afiliado = rep.Find(id);
+            Afiliado afiliado = repAfiliado.Find(id);
             return View(afiliado);
         }
 
@@ -295,8 +295,8 @@ namespace Suma2Lealtad.Controllers
         public ActionResult BloquearTarjeta(int id, string mode = "post")
         {
             ViewModel viewmodel = new ViewModel();
-            Afiliado afiliado = rep.Find(id);
-            if (rep.BloquearTarjeta(afiliado))
+            Afiliado afiliado = repAfiliado.Find(id);
+            if (repAfiliado.BloquearTarjeta(afiliado))
             {
                 viewmodel.Title = "Afiliado / Bloquear Tarjeta";
                 viewmodel.Message = "Tarjeta bloqueada correctamente";
@@ -317,7 +317,7 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult SuspenderTarjeta(int id)
         {
-            Afiliado afiliado = rep.Find(id);
+            Afiliado afiliado = repAfiliado.Find(id);
             return View(afiliado);
         }
 
@@ -325,8 +325,8 @@ namespace Suma2Lealtad.Controllers
         public ActionResult SuspenderTarjeta(int id, string mode = "post")
         {
             ViewModel viewmodel = new ViewModel();
-            Afiliado afiliado = rep.Find(id);
-            if (rep.SuspenderTarjeta(afiliado))
+            Afiliado afiliado = repAfiliado.Find(id);
+            if (repAfiliado.SuspenderTarjeta(afiliado))
             {
                 viewmodel.Title = "Afiliado / Suspender Tarjeta";
                 viewmodel.Message = "Tarjeta suspendida correctamente";
@@ -347,7 +347,7 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult ReactivarTarjeta(int id)
         {
-            Afiliado afiliado = rep.Find(id);
+            Afiliado afiliado = repAfiliado.Find(id);
             return View(afiliado);
         }
 
@@ -355,8 +355,8 @@ namespace Suma2Lealtad.Controllers
         public ActionResult ReactivarTarjeta(int id, string mode = "post")
         {
             ViewModel viewmodel = new ViewModel();
-            Afiliado afiliado = rep.Find(id);
-            if (rep.ReactivarTarjeta(afiliado))
+            Afiliado afiliado = repAfiliado.Find(id);
+            if (repAfiliado.ReactivarTarjeta(afiliado))
             {
                 viewmodel.Title = "Afiliado / Reactivar Tarjeta";
                 viewmodel.Message = "Tarjeta reactivada correctamente";
@@ -377,8 +377,8 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult SaldosMovimientos(int id)
         {
-            Afiliado afiliado = rep.Find(id);
-            SaldosMovimientos SaldosMovimientos = rep.FindSaldosMovimientos(afiliado);
+            Afiliado afiliado = repAfiliado.Find(id);
+            SaldosMovimientos SaldosMovimientos = repAfiliado.FindSaldosMovimientos(afiliado);
             if (SaldosMovimientos == null)
             {
                 //ERROR EN METODO FIND
@@ -401,7 +401,7 @@ namespace Suma2Lealtad.Controllers
 
         public ActionResult Acreditar(int id)
         {
-            Afiliado afiliado = rep.Find(id);
+            Afiliado afiliado = repAfiliado.Find(id);
             return View(afiliado);
         }
 
@@ -409,8 +409,8 @@ namespace Suma2Lealtad.Controllers
         public ActionResult Acreditar(int id, string monto)
         {
             ViewModel viewmodel = new ViewModel();
-            Afiliado afiliado = rep.Find(id);
-            if (rep.Acreditar(afiliado, monto))
+            Afiliado afiliado = repAfiliado.Find(id);
+            if (repAfiliado.Acreditar(afiliado, monto))
             {
                 viewmodel.Title = "Afiliado / Acreditar";
                 viewmodel.Message = "Acreditación exitosa";
@@ -436,28 +436,28 @@ namespace Suma2Lealtad.Controllers
 
         public JsonResult CiudadList(string id)
         {
-            List<CIUDAD> ciudades = rep.GetCiudades(id);
+            List<CIUDAD> ciudades = repAfiliado.GetCiudades(id);
 
             return Json(new SelectList(ciudades, "COD_CIUDAD", "DESCRIPC_CIUDAD"), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult MunicipioList(string id)
         {
-            List<MUNICIPIO> municipios = rep.GetMunicipios(id);
+            List<MUNICIPIO> municipios = repAfiliado.GetMunicipios(id);
 
             return Json(new SelectList(municipios, "COD_MUNICIPIO", "DESCRIPC_MUNICIPIO"), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult ParroquiaList(string id)
         {
-            List<PARROQUIA> parroquias = rep.GetParroquias(id);
+            List<PARROQUIA> parroquias = repAfiliado.GetParroquias(id);
 
             return Json(new SelectList(parroquias, "COD_PARROQUIA", "DESCRIPC_PARROQUIA"), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult UrbanizacionList(string id)
         {
-            List<URBANIZACION> urb = rep.GetUrbanizaciones(id);
+            List<URBANIZACION> urb = repAfiliado.GetUrbanizaciones(id);
 
             return Json(new SelectList(urb, "COD_URBANIZACION", "DESCRIPC_URBANIZACION"), JsonRequestBehavior.AllowGet);
         }
