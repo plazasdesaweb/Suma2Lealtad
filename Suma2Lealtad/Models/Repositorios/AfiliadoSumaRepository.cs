@@ -895,6 +895,30 @@ namespace Suma2Lealtad.Models
             }
         }
 
+        /**
+         * 
+         * Prepago : Transacciones de Compra Fuera de Línea.
+         * Función : public bool CompraFueraLinea(string numdoc, string monto)
+         * 
+         **/
+        public bool CompraFueraLinea(string numdoc, string monto)
+        {
+            string RespuestaCardsJson = WSL.Cards.addBatch(numdoc, monto, "145");
+            if (ExceptionServicioCards(RespuestaCardsJson))
+            {
+                return false;
+            }
+            RespuestaCards RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
+            if (RespuestaCards.excode == "0")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public class customerInterest
         {
             public int customerID { get; set; }

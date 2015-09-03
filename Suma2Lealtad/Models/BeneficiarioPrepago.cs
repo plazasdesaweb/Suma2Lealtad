@@ -47,5 +47,11 @@ namespace Suma2Lealtad.Models
         };
         #endregion
 
+        // fuera de línea/monto de recarga para compras fuera de línea
+        public string monto { get; set; }
+
+        // retornar el valor concatenado de los campos : name + lastname1
+        public string beneficiario { get { return Afiliado.name + " " + Afiliado.lastname1; } }
+
     }
 }
