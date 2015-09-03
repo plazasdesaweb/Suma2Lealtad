@@ -467,5 +467,11 @@ namespace Suma2Lealtad.Controllers
             base.Dispose(disposing);
         }
 
+        public class Galaxy
+        {
+            public string Name { get; set; }
+            public int MegaLightYears { get; set; }
+        }
+
     }
 }

@@ -233,6 +233,7 @@
     <Compile Include="Controllers\Prepago\BeneficiarioPrepagoController.cs" />
     <Compile Include="Controllers\Prepago\ClientePrepagoController.cs" />
     <Compile Include="Controllers\Prepago\CompanyPrepagoController.cs" />
+    <Compile Include="Controllers\Prepago\FueraLineaPrepagoController.cs" />
     <Compile Include="Controllers\Prepago\OrdenRecargaPrepagoController.cs" />
     <Compile Include="Controllers\ReasonsBlockController.cs" />
     <Compile Include="Controllers\ReasonsController.cs" />
@@ -263,6 +264,7 @@
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BeneficiarioPrepago.cs" />
+    <Compile Include="Models\BeneficiarioPrepagoViewModel.cs" />
     <Compile Include="Models\Channel.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -762,6 +764,10 @@
     <Content Include="Views\AfiliadoSuma\Acreditar.cshtml" />
     <Content Include="Views\ClientePrepago\SuspenderCliente.cshtml" />
     <Content Include="Views\ClientePrepago\ReactivarCliente.cshtml" />
+    <Content Include="Views\FueraLineaPrepago\Filter.cshtml" />
+    <Content Include="Views\FueraLineaPrepago\Table.cshtml" />
+    <Content Include="Views\FueraLineaPrepago\AddNew.cshtml" />
+    <Content Include="Views\FueraLineaPrepago\GenericView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Picture\" />
