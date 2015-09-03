@@ -11,7 +11,7 @@ namespace Suma2Lealtad.Controllers.Prepago
     public class FueraLineaPrepagoController : Controller
     {
 
-        private const int ID_TYPE_PREPAGO = 2;
+        //private const int ID_TYPE_PREPAGO = 2;
         AfiliadoSumaRepository repAfiliado = new AfiliadoSumaRepository();
         BeneficiarioPrepagoRepository repBeneficiario = new BeneficiarioPrepagoRepository();
 
@@ -75,19 +75,18 @@ namespace Suma2Lealtad.Controllers.Prepago
                 {
                     ModelState.AddModelError("Monto", "El Monto de Transacción debe contener coma (,) como símbolo separador decimal.");
                 }
-                else { 
+                else {
 
-                    if (repAfiliado.CompraFueraLinea(model.documento, model.montotrx))
-                    {
+                    ViewModel viewmodel = new ViewModel();
+                    viewmodel.Title = "Prepago / Fuera de Línea / Crear Transacción de Compra";
+                    viewmodel.Message = "La Transacción ha sido efectuada satisfactoriamente.";
+                    viewmodel.ControllerName = "FueraLineaPrepago";
+                    viewmodel.ActionName = "Filter";
 
-                        ViewModel viewmodel = new ViewModel();
-                        viewmodel.Title = "Prepago / Fuera de Línea / Crear Transacción de Compra";
-                        viewmodel.Message = "La Transacción ha sido efectuada satisfactoriamente.";
-                        viewmodel.ControllerName = "FueraLineaPrepago";
-                        viewmodel.ActionName = "Filter";
-                        return RedirectToAction("GenericView", viewmodel);
+                    if (! repAfiliado.CompraFueraLinea(model.documento, model.montotrx))
+                        viewmodel.Message = "La Transacción no pudo ser efectuada. Revise los estatus de la Tarjeta o Cuenta e intente de nuevo.";
 
-                    }
+                    return RedirectToAction("GenericView", viewmodel);
 
                 }
 
