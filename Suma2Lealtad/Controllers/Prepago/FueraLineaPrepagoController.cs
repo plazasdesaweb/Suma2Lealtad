@@ -10,9 +10,6 @@ namespace Suma2Lealtad.Controllers.Prepago
 {
     public class FueraLineaPrepagoController : Controller
     {
-
-        //private const int ID_TYPE_PREPAGO = 2;
-        AfiliadoSumaRepository repAfiliado = new AfiliadoSumaRepository();
         BeneficiarioPrepagoRepository repBeneficiario = new BeneficiarioPrepagoRepository();
 
         //
@@ -83,7 +80,7 @@ namespace Suma2Lealtad.Controllers.Prepago
                     viewmodel.ControllerName = "FueraLineaPrepago";
                     viewmodel.ActionName = "Filter";
 
-                    if (! repAfiliado.CompraFueraLinea(model.documento, model.montotrx))
+                    if (! repBeneficiario.CompraFueraLinea(model.documento, model.montotrx))
                         viewmodel.Message = "La Transacción no pudo ser efectuada. Revise los estatus de la Tarjeta o Cuenta e intente de nuevo.";
 
                     return RedirectToAction("GenericView", viewmodel);

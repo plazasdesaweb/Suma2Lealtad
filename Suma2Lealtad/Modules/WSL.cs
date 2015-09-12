@@ -1,4 +1,5 @@
-﻿using Suma2Lealtad.Models;
+﻿using Newtonsoft.Json;
+using Suma2Lealtad.Models;
 using System;
 using System.IO;
 using System.Net;
@@ -61,6 +62,27 @@ namespace Suma2Lealtad.Modules
                 catch (Exception ex)
                 {
                     return GetExcepcionJSON(ex.Message, str);
+                }
+            }
+
+            //determina si hubo excepción en llamada a servicio Cards
+            public static bool ExceptionServicioCards(string RespuestaServicioCards)
+            {
+                try
+                {
+                    ExceptionJSON exceptionJson = (ExceptionJSON)JsonConvert.DeserializeObject<ExceptionJSON>(RespuestaServicioCards);
+                    if (exceptionJson.code == "100")
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch
+                {
+                    return false;
                 }
             }
 
@@ -159,6 +181,27 @@ namespace Suma2Lealtad.Modules
                 catch (Exception ex)
                 {
                     return GetExcepcionJSON(ex.Message, str);
+                }
+            }
+
+            //determina si hubo excepción en llamada a servicio WebPlazas
+            public static bool ExceptionServicioWebPlazas(string RespuestaServicioWebPlazas)
+            {
+                try
+                {
+                    ExceptionJSON exceptionJson = (ExceptionJSON)JsonConvert.DeserializeObject<ExceptionJSON>(RespuestaServicioWebPlazas);
+                    if (exceptionJson.code == "100")
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch
+                {
+                    return false;
                 }
             }
 

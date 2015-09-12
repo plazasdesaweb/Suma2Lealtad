@@ -406,6 +406,7 @@
           <Property Name="processdate" Type="datetime" Nullable="false" />
           <Property Name="comments" Type="varchar" MaxLength="120" />
           <Property Name="sumastatusid" Type="int" Nullable="false" />
+          <Property Name="documento" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="OrdersDetail">
           <Key>
@@ -429,6 +430,7 @@
           <Property Name="estatusid" Type="int" Nullable="false" />
           <Property Name="creationdate" Type="datetime" Nullable="false" />
           <Property Name="comments" Type="varchar" MaxLength="120" />
+          <Property Name="orderid" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PAIS">
           <Key>
@@ -1223,6 +1225,7 @@
           <Property Name="estatusid" Type="Int32" Nullable="false" />
           <Property Name="creationdate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
+          <Property Type="Int32" Name="orderid" Nullable="false" />
         </EntityType>
         <EntityType Name="PAIS">
           <Key>
@@ -1461,6 +1464,7 @@
           <NavigationProperty Name="OrdersDetails" Relationship="SumaLealtad.FK_OrdersDetail_Order" FromRole="Order" ToRole="OrdersDetail" />
           <NavigationProperty Name="PrepaidCustomer" Relationship="SumaLealtad.FK_Orders_PrepaidCustomer" FromRole="Order" ToRole="PrepaidCustomer" />
           <NavigationProperty Name="SumaStatu" Relationship="SumaLealtad.FK_Orders_SumaStatus" FromRole="Order" ToRole="SumaStatu" />
+          <Property Type="String" Name="documento" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_OrdersDetail_Order">
           <End Type="SumaLealtad.Order" Role="Order" Multiplicity="1" />
@@ -1834,6 +1838,7 @@
           <EntitySetMapping Name="OrdersHistories">
             <EntityTypeMapping TypeName="SumaLealtad.OrdersHistory">
               <MappingFragment StoreEntitySet="OrdersHistory">
+                <ScalarProperty Name="orderid" ColumnName="orderid" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="userid" ColumnName="userid" />
                 <ScalarProperty Name="estatusid" ColumnName="estatusid" />
@@ -2067,6 +2072,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="SumaLealtad.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="documento" ColumnName="documento" />
                 <ScalarProperty Name="sumastatusid" ColumnName="sumastatusid" />
                 <ScalarProperty Name="comments" ColumnName="comments" />
                 <ScalarProperty Name="processdate" ColumnName="processdate" />

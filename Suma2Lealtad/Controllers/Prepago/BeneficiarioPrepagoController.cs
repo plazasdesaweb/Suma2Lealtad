@@ -131,9 +131,8 @@ namespace Suma2Lealtad.Controllers.Prepago
                 {
                     viewmodel.Title = "Prepago / Beneficiario / ReImprimir Tarjeta";
                     viewmodel.Message = "Falló el proceso de reimpresión de la Tarjeta";
-                    viewmodel.ControllerName = "ClientePrepago";
-                    viewmodel.ActionName = "FilterBeneficiarios";
-                    viewmodel.RouteValues = idCliente.ToString();
+                    viewmodel.ControllerName = "BeneficiarioPrepago";
+                    viewmodel.ActionName = "FilterReview";
                     return RedirectToAction("GenericView", viewmodel);
                 }
             }
@@ -141,9 +140,8 @@ namespace Suma2Lealtad.Controllers.Prepago
             {
                 viewmodel.Title = "Prepago / Beneficiario / ReImprimir Tarjeta";
                 viewmodel.Message = "Falló el proceso de reimpresión de la Tarjeta";
-                viewmodel.ControllerName = "ClientePrepago";
-                viewmodel.ActionName = "FilterBeneficiarios";
-                viewmodel.RouteValues = idCliente.ToString();
+                viewmodel.ControllerName = "BeneficiarioPrepago";
+                viewmodel.ActionName = "FilterReview";
                 return RedirectToAction("GenericView", viewmodel);
             }
         }

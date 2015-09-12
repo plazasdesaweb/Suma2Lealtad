@@ -18,48 +18,6 @@ namespace Suma2Lealtad.Models
         private const string ID_ESTATUS_TARJETA_SUSPENDIDA = "6";
         private const int ID_REASONS_INICIAL = 1;
 
-        //determina si hubo excepción en llamada a servicio Cards
-        private bool ExceptionServicioCards(string RespuestaServicioCards)
-        {
-            try
-            {
-                ExceptionJSON exceptionJson = (ExceptionJSON)JsonConvert.DeserializeObject<ExceptionJSON>(RespuestaServicioCards);
-                if (exceptionJson.code == "100")
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        //determina si hubo excepción en llamada a servicio WebPlazas
-        private bool ExceptionServicioWebPlazas(string RespuestaServicioWebPlazas)
-        {
-            try
-            {
-                ExceptionJSON exceptionJson = (ExceptionJSON)JsonConvert.DeserializeObject<ExceptionJSON>(RespuestaServicioWebPlazas);
-                if (exceptionJson.code == "100")
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
         //retorna el ojeto Photos_Affiliate a partr del id del afiliado
         private Photos_Affiliate GetPhoto(int id)
         {
@@ -86,7 +44,7 @@ namespace Suma2Lealtad.Models
             //Primero se buscan los datos de CLIENTE en WebPlazas
             //SERVICIO WSL.WebPlazas.getClientByNumDoc 
             string clienteWebPlazasJson = WSL.WebPlazas.getClientByNumDoc(afiliado.docnumber);
-            if (ExceptionServicioWebPlazas(clienteWebPlazasJson))
+            if (WSL.WebPlazas.ExceptionServicioWebPlazas(clienteWebPlazasJson))
             {
                 return null;
             }
@@ -655,7 +613,7 @@ namespace Suma2Lealtad.Models
         public bool Aprobar(AfiliadoSuma afiliado)
         {
             string RespuestaCardsJson = WSL.Cards.addClient(afiliado.docnumber.Substring(2), (afiliado.name + " " + afiliado.lastname1).ToUpper(), afiliado.phone1, "Plazas Baruta");
-            if (ExceptionServicioCards(RespuestaCardsJson))
+            if (WSL.Cards.ExceptionServicioCards(RespuestaCardsJson))
             {
                 return false;
             }
@@ -667,7 +625,7 @@ namespace Suma2Lealtad.Models
                     //Se buscan los datos de Tarjeta del AFILIADO en Cards
                     //SERVICIO WSL.Cards.getClient !
                     string clienteCardsJson = WSL.Cards.getClient(afiliado.docnumber.Substring(2));
-                    if (ExceptionServicioCards(clienteCardsJson))
+                    if (WSL.Cards.ExceptionServicioCards(clienteCardsJson))
                     {
                         return false;
                     }
@@ -688,7 +646,7 @@ namespace Suma2Lealtad.Models
         public bool ImprimirTarjeta(AfiliadoSuma afiliado)
         {
             string RespuestaCardsJson = WSL.Cards.cardActive(afiliado.docnumber.Substring(2));
-            if (ExceptionServicioCards(RespuestaCardsJson))
+            if (WSL.Cards.ExceptionServicioCards(RespuestaCardsJson))
             {
                 return false;
             }
@@ -696,7 +654,7 @@ namespace Suma2Lealtad.Models
             if (RespuestaCards.excode == "0")
             {
                 RespuestaCardsJson = WSL.Cards.cardPrint(afiliado.docnumber.Substring(2));
-                if (ExceptionServicioCards(RespuestaCardsJson))
+                if (WSL.Cards.ExceptionServicioCards(RespuestaCardsJson))
                 {
                     return false;
                 }
@@ -711,7 +669,7 @@ namespace Suma2Lealtad.Models
                 //Se buscan los datos de Tarjeta del AFILIADO en Cards
                 //SERVICIO WSL.Cards.getClient !
                 string clienteCardsJson = WSL.Cards.getClient(afiliado.docnumber.Substring(2));
-                if (ExceptionServicioCards(clienteCardsJson))
+                if (WSL.Cards.ExceptionServicioCards(clienteCardsJson))
                 {
                     return false;
                 }
@@ -750,7 +708,7 @@ namespace Suma2Lealtad.Models
         public bool BloquearTarjeta(AfiliadoSuma afiliado)
         {
             string RespuestaCardsJson = WSL.Cards.addCard(afiliado.docnumber.Substring(2));
-            if (ExceptionServicioCards(RespuestaCardsJson))
+            if (WSL.Cards.ExceptionServicioCards(RespuestaCardsJson))
             {
                 return false;
             }
@@ -762,7 +720,7 @@ namespace Suma2Lealtad.Models
                     //Se buscan los datos de la nueva Tarjeta del AFILIADO en Cards
                     //SERVICIO WSL.Cards.getClient !
                     string clienteCardsJson = WSL.Cards.getClient(afiliado.docnumber.Substring(2));
-                    if (ExceptionServicioCards(clienteCardsJson))
+                    if (WSL.Cards.ExceptionServicioCards(clienteCardsJson))
                     {
                         return false;
                     }
@@ -787,7 +745,7 @@ namespace Suma2Lealtad.Models
         public bool SuspenderTarjeta(AfiliadoSuma afiliado)
         {
             string RespuestaCardsJson = WSL.Cards.cardStatus(afiliado.docnumber.Substring(2), ID_ESTATUS_TARJETA_SUSPENDIDA);
-            if (ExceptionServicioCards(RespuestaCardsJson))
+            if (WSL.Cards.ExceptionServicioCards(RespuestaCardsJson))
             {
                 return false;
             }
@@ -797,7 +755,7 @@ namespace Suma2Lealtad.Models
                 //Se buscan los datos de Tarjeta del AFILIADO en Cards
                 //SERVICIO WSL.Cards.getClient !
                 string clienteCardsJson = WSL.Cards.getClient(afiliado.docnumber.Substring(2));
-                if (ExceptionServicioCards(clienteCardsJson))
+                if (WSL.Cards.ExceptionServicioCards(clienteCardsJson))
                 {
                     return false;
                 }
@@ -816,7 +774,7 @@ namespace Suma2Lealtad.Models
         public bool ReactivarTarjeta(AfiliadoSuma afiliado)
         {
             string RespuestaCardsJson = WSL.Cards.cardActive(afiliado.docnumber.Substring(2));
-            if (ExceptionServicioCards(RespuestaCardsJson))
+            if (WSL.Cards.ExceptionServicioCards(RespuestaCardsJson))
             {
                 return false;
             }
@@ -826,7 +784,7 @@ namespace Suma2Lealtad.Models
                 //Se buscan los datos de Tarjeta del AFILIADO en Cards
                 //SERVICIO WSL.Cards.getClient !
                 string clienteCardsJson = WSL.Cards.getClient(afiliado.docnumber.Substring(2));
-                if (ExceptionServicioCards(clienteCardsJson))
+                if (WSL.Cards.ExceptionServicioCards(clienteCardsJson))
                 {
                     return false;
                 }
@@ -847,13 +805,13 @@ namespace Suma2Lealtad.Models
             SaldosMovimientos SaldosMovimientos = new SaldosMovimientos();
             SaldosMovimientos.DocId = afiliado.docnumber;
             string saldosJson = WSL.Cards.getBalance(SaldosMovimientos.DocId.Substring(2));
-            if (ExceptionServicioCards(saldosJson))
+            if (WSL.Cards.ExceptionServicioCards(saldosJson))
             {
                 return null;
             }
             SaldosMovimientos.Saldos = (List<Saldo>)JsonConvert.DeserializeObject<List<Saldo>>(saldosJson);
             string movimientosPrepagoJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.First().accounttype, SaldosMovimientos.DocId.Substring(2));
-            if (ExceptionServicioCards(movimientosPrepagoJson))
+            if (WSL.Cards.ExceptionServicioCards(movimientosPrepagoJson))
             {
                 return null;
             }
@@ -865,7 +823,7 @@ namespace Suma2Lealtad.Models
                 mov.fecha = mov.fecha.Substring(6, 2) + "-" + mov.fecha.Substring(4, 2) + "-" + mov.fecha.Substring(0, 4);
             }
             string movimientosLealtadJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.Skip(1).First().accounttype, SaldosMovimientos.DocId.Substring(2));
-            if (ExceptionServicioCards(movimientosLealtadJson))
+            if (WSL.Cards.ExceptionServicioCards(movimientosLealtadJson))
             {
                 return null;
             }
@@ -882,7 +840,7 @@ namespace Suma2Lealtad.Models
         public bool Acreditar(AfiliadoSuma afiliado, string monto)
         {
             string RespuestaCardsJson = WSL.Cards.addBatch(afiliado.docnumber.Substring(2), monto);
-            if (ExceptionServicioCards(RespuestaCardsJson))
+            if (WSL.Cards.ExceptionServicioCards(RespuestaCardsJson))
             {
                 return false;
             }
@@ -921,30 +879,6 @@ namespace Suma2Lealtad.Models
                 afiliado.estatus = "Nueva";
                 afiliado.statusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_AFILIACION_INICIAL) && (s.tablename == "Affiliatte")).id;
                 return afiliado;
-            }
-        }
-
-        /**
-         * 
-         * Prepago : Transacciones de Compra Fuera de Línea.
-         * Función : public bool CompraFueraLinea(string numdoc, string monto)
-         * 
-         **/
-        public bool CompraFueraLinea(string numdoc, string monto)
-        {
-            string RespuestaCardsJson = WSL.Cards.addBatch(numdoc, monto, "145");
-            if (ExceptionServicioCards(RespuestaCardsJson))
-            {
-                return false;
-            }
-            RespuestaCards RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
-            if (RespuestaCards.excode == "0")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
             }
         }
 

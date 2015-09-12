@@ -768,6 +768,7 @@
     <Content Include="Views\FueraLineaPrepago\Table.cshtml" />
     <Content Include="Views\FueraLineaPrepago\AddNew.cshtml" />
     <Content Include="Views\FueraLineaPrepago\GenericView.cshtml" />
+    <Content Include="Views\OrdenRecargaPrepago\GenericView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Picture\" />

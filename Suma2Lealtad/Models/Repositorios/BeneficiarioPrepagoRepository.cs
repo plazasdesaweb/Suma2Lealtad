@@ -1,4 +1,6 @@
 ﻿using LinqToExcel;
+using Newtonsoft.Json;
+using Suma2Lealtad.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -373,6 +375,30 @@ namespace Suma2Lealtad.Models
             using (LealtadEntities db = new LealtadEntities())
             {
                 return db.PrepaidCustomers.OrderBy(u => u.name).ToList();
+            }
+        }
+
+        /**
+         * 
+         * Prepago : Transacciones de Compra Fuera de Línea.
+         * Función : public bool CompraFueraLinea(string numdoc, string monto)
+         * 
+         **/
+        public bool CompraFueraLinea(string numdoc, string monto)
+        {
+            string RespuestaCardsJson = WSL.Cards.addBatch(numdoc, monto, "145");
+            if (WSL.Cards.ExceptionServicioCards(RespuestaCardsJson))
+            {
+                return false;
+            }
+            RespuestaCards RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
+            if (RespuestaCards.excode == "0")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
         

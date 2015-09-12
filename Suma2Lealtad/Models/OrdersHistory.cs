@@ -19,5 +19,6 @@ namespace Suma2Lealtad.Models
         public int estatusid { get; set; }
         public System.DateTime creationdate { get; set; }
         public string comments { get; set; }
+        public int orderid { get; set; }
     }
 }

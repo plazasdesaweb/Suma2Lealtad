@@ -48,7 +48,7 @@ namespace Suma2Lealtad.Controllers.Prepago
                 //viewmodel.ControllerName = "ClientePrepago";
                 //viewmodel.ActionName = "FilterOrdenes";
                 //viewmodel.RouteValues = id.ToString();
-                return RedirectToAction("DetalleOrden", new { id = idCliente, idOrden = idOrden });
+                return RedirectToAction("DetalleOrden", new { id = idOrden });
             }
             else
             {
@@ -132,6 +132,105 @@ namespace Suma2Lealtad.Controllers.Prepago
                 viewmodel.Message = "Error de aplicacion: El archivo está vacío";
                 viewmodel.ControllerName = "OrdenRecargaPrepago";
                 viewmodel.ActionName = "Filter";
+                return RedirectToAction("GenericView", viewmodel);
+            }
+        }
+
+        public ActionResult DetalleOrden(int id)
+        {
+            List<DetalleOrdenRecargaPrepago> detalleOrden = repOrden.FindDetalleOrden(id);
+            return View(detalleOrden);
+        }
+
+        [HttpPost]
+        public ActionResult AprobarOrden(int id, IList<DetalleOrdenRecargaPrepago> detalleOrden, decimal MontoTotalRecargas, string indicadorGuardar)
+        {
+            ViewModel viewmodel = new ViewModel();
+            if (indicadorGuardar == "Aprobar")
+            {
+                if (repOrden.AprobarOrden(detalleOrden.ToList(), MontoTotalRecargas))
+                {
+                    viewmodel.Title = "Prepago / Ordenes de Recarga / Detalle de la Orden";
+                    viewmodel.Message = "Orden Aprobada.";
+                    viewmodel.ControllerName = "OrdenRecargaPrepago";
+                    viewmodel.ActionName = "FilterReview";
+                    return RedirectToAction("GenericView", viewmodel);
+                    //return RedirectToAction("DetalleOrden", new { id = id, idOrden = idOrden });
+                }
+                else
+                {
+                    viewmodel.Title = "Prepago / Ordenes de Recarga / Detalle de la Orden";
+                    viewmodel.Message = "Falló el proceso de aprobación de la Orden.";
+                    viewmodel.ControllerName = "OrdenRecargaPrepago";
+                    viewmodel.ActionName = "FilterReview";
+                    return RedirectToAction("GenericView", viewmodel);
+                }
+            }
+            else
+            {
+                if (repOrden.GuardarOrden(detalleOrden.ToList(), MontoTotalRecargas))
+                {
+                    viewmodel.Title = "Prepago / Ordenes de Recarga / Detalle de la Orden";
+                    viewmodel.Message = "Datos de la Orden actualizados.";
+                    viewmodel.ControllerName = "OrdenRecargaPrepago";
+                    viewmodel.ActionName = "FilterReview";
+                    return RedirectToAction("GenericView", viewmodel);
+                    //return RedirectToAction("DetalleOrden", new { id = id, idOrden = idOrden });
+                }
+                else
+                {
+                    viewmodel.Title = "Prepago / Ordenes de Recarga / Detalle de la Orden";
+                    viewmodel.Message = "Falló el proceso de guardado de la Orden.";
+                    viewmodel.ControllerName = "OrdenRecargaPrepago";
+                    viewmodel.ActionName = "FilterReview";
+                    return RedirectToAction("GenericView", viewmodel);
+                }
+            }
+        }
+
+        public ActionResult RechazarOrden(int id)
+        {
+            ViewModel viewmodel = new ViewModel();
+            if (repOrden.RechazarOrden(id))
+            {
+                viewmodel.Title = "Prepago / Ordenes de Recarga / Detalle de la Orden";
+                viewmodel.Message = "Orden Rechazada.";
+                viewmodel.ControllerName = "OrdenRecargaPrepago";
+                viewmodel.ActionName = "FilterReview";
+            }
+            else
+            {
+                viewmodel.Title = "Prepago / Ordenes de Recarga / Detalle de la Orden";
+                viewmodel.Message = "Falló el proceso de rechazo de la Orden.";
+                viewmodel.ControllerName = "OrdenRecargaPrepago";
+                viewmodel.ActionName = "FilterReview";
+            }
+            return RedirectToAction("GenericView", viewmodel);
+        }
+
+        public ActionResult ProcesarOrden(int id)
+        {
+            if (repOrden.ProcesarOrden(id))
+            {
+                //ViewModel viewmodel = new ViewModel();
+                //viewmodel.Title = "Prepago / Cliente / Ordenes de Recarga / Detalle de la Orden / Procesar Orden";
+                //viewmodel.Message = "Orden Procesada.";
+                //viewmodel.ControllerName = "ClientePrepago";
+                //viewmodel.ActionName = "FilterOrdenes";
+                //viewmodel.RouteValues = id.ToString();
+                //return RedirectToAction("GenericView", viewmodel);
+                //List<DetalleOrdenRecargaPrepago> detalleOrden = repOrden.FindDetalleOrden(idOrden);
+                //return View("ResultadoOrden", detalleOrden);
+                List<DetalleOrdenRecargaPrepago> detalleOrden = repOrden.FindDetalleOrden(id);
+                return View("DetalleOrden", detalleOrden);
+            }
+            else
+            {
+                ViewModel viewmodel = new ViewModel();
+                viewmodel.Title = "Prepago / Ordenes de Recarga / Detalle de la Orden / Procesar Orden";
+                viewmodel.Message = "Falló el procesamiento de la Orden.";
+                viewmodel.ControllerName = "OrdenRecargaPrepago";
+                viewmodel.ActionName = "FilterReview";
                 return RedirectToAction("GenericView", viewmodel);
             }
         }

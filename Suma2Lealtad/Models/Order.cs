@@ -28,6 +28,7 @@ namespace Suma2Lealtad.Models
         public System.DateTime processdate { get; set; }
         public string comments { get; set; }
         public int sumastatusid { get; set; }
+        public string documento { get; set; }
     
         public virtual ICollection<OrdersDetail> OrdersDetails { get; set; }
         public virtual PrepaidCustomer PrepaidCustomer { get; set; }
