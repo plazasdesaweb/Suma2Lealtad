@@ -13,6 +13,7 @@ namespace Suma2Lealtad.Models
         public decimal montoOrden { set; get; }
         public DateTime creationdateOrden { set; get; }
         public string tipoOrden { set; get; }                                       //Individual(Indicar Recargas de forma manual) ó Masiva(Indicar Recargas desde archivo)          
+        public string documento { set; get; }                                       //Documento de referencia de la facturación de la orden
         //public List<DetalleOrdenRecargaPrepago> DetalleOrden { set; get; }        //Detalle de la orden
 
         public List<PrepaidCustomer> ListaClientes { get; set; }

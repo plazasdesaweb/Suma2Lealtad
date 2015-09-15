@@ -52,7 +52,7 @@ namespace Suma2Lealtad.Models
             }
         }
 
-        public List<OrdenRecargaPrepago> Find(string fecha, string estadoOrden)
+        public List<OrdenRecargaPrepago> Find(string fecha, string estadoOrden, string Referencia)
         {
             List<OrdenRecargaPrepago> ordenes;
             using (LealtadEntities db = new LealtadEntities())
@@ -64,6 +64,10 @@ namespace Suma2Lealtad.Models
                 if (estadoOrden == "")
                 {
                     estadoOrden = null;
+                }
+                if (Referencia == "")
+                {
+                    Referencia = null;
                 }
                 //BUSCAR POR estadoOrden
                 if (estadoOrden != null)
@@ -79,6 +83,7 @@ namespace Suma2Lealtad.Models
                                    montoOrden = o.totalamount,
                                    creationdateOrden = o.creationdate,
                                    tipoOrden = o.comments,
+                                   documento = o.documento,
                                    Cliente = new ClientePrepago()
                                    {
                                        idCliente = c.id,
@@ -105,6 +110,7 @@ namespace Suma2Lealtad.Models
                                    montoOrden = o.totalamount,
                                    creationdateOrden = o.creationdate,
                                    tipoOrden = o.comments,
+                                   documento = o.documento,
                                    Cliente = new ClientePrepago()
                                    {
                                        idCliente = c.id,
@@ -117,6 +123,35 @@ namespace Suma2Lealtad.Models
                                    }
                                }).ToList()
                                .Where(q => q.creationdateOrden.Date == f.Date)
+                               .OrderBy(x => x.id)
+                               .ToList();
+                }
+                //BUSCAR POR Referencia
+                else if (Referencia != null)
+                {
+                    ordenes = (from o in db.Orders
+                               join c in db.PrepaidCustomers on o.prepaidcustomerid equals c.id
+                               join s in db.SumaStatuses on o.sumastatusid equals s.id
+                               where o.documento ==Referencia
+                               select new OrdenRecargaPrepago()
+                               {
+                                   id = o.id,
+                                   statusOrden = s.name,
+                                   montoOrden = o.totalamount,
+                                   creationdateOrden = o.creationdate,
+                                   tipoOrden = o.comments,
+                                   documento = o.documento,
+                                   Cliente = new ClientePrepago()
+                                   {
+                                       idCliente = c.id,
+                                       nameCliente = c.name,
+                                       aliasCliente = c.alias,
+                                       rifCliente = c.rif,
+                                       addressCliente = c.address,
+                                       phoneCliente = c.phone,
+                                       emailCliente = c.email
+                                   }
+                               }).ToList()
                                .OrderBy(x => x.id)
                                .ToList();
                 }
@@ -133,6 +168,7 @@ namespace Suma2Lealtad.Models
                                    montoOrden = o.totalamount,
                                    creationdateOrden = o.creationdate,
                                    tipoOrden = o.comments,
+                                   documento = o.documento,
                                    Cliente = new ClientePrepago()
                                    {
                                        idCliente = c.id,
@@ -165,6 +201,7 @@ namespace Suma2Lealtad.Models
                              montoOrden = o.totalamount,
                              creationdateOrden = o.creationdate,
                              tipoOrden = o.comments,
+                             documento = o.documento,
                              Cliente = new ClientePrepago()
                              {
                                  idCliente = c.id,
@@ -202,6 +239,7 @@ namespace Suma2Lealtad.Models
                                     idOrden = orden.id,
                                     tipoOrden = orden.tipoOrden,
                                     statusOrden = orden.statusOrden,
+                                    documentoOrden = orden.documento,
                                     idAfiliado = a.id,
                                     docnumberAfiliado = a.docnumber,
                                     nameAfiliado = c.NOMBRE_CLIENTE1,
@@ -236,6 +274,7 @@ namespace Suma2Lealtad.Models
                 //Actualizar estatus y monto de la Orden
                 Order orden = db.Orders.Find(detalleOrden.First().idOrden);
                 orden.totalamount = MontoTotalRecargas;
+                orden.documento = detalleOrden.First().documentoOrden;
                 //Entidad OrderHistory
                 int idOrderHistory = OrdersHistoryId();
                 OrdersHistory orderhistory = new OrdersHistory()
@@ -275,6 +314,7 @@ namespace Suma2Lealtad.Models
                 Order orden = db.Orders.Find(detalleOrden.First().idOrden);
                 orden.sumastatusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_ORDEN_APROBADA) && (s.tablename == "Order")).id;
                 orden.totalamount = MontoTotalRecargas;
+                orden.documento = detalleOrden.First().documentoOrden;
                 //Entidad OrderHistory
                 int idOrderHistory = OrdersHistoryId();
                 OrdersHistory orderhistory = new OrdersHistory()
@@ -364,6 +404,7 @@ namespace Suma2Lealtad.Models
                 //Actualizar estatus de la Orden
                 Order orden = db.Orders.Find(detalleOrden.First().idOrden);
                 orden.sumastatusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_ORDEN_PROCESADA) && (s.tablename == "Order")).id;
+                orden.documento = detalleOrden.First().documentoOrden;
                 //Entidad OrderHistory
                 int idOrderHistory = OrdersHistoryId();
                 OrdersHistory orderhistory = new OrdersHistory()
@@ -392,7 +433,7 @@ namespace Suma2Lealtad.Models
                     nameCliente = cliente.nameCliente,
                     rifCliente = cliente.rifCliente,
                     phoneCliente = cliente.phoneCliente,
-                    tipoOrden = "Orden de Recarga",
+                    tipoOrden = "Orden de Recarga",                  
                     idAfiliado = item.Afiliado.id,
                     docnumberAfiliado = item.Afiliado.docnumber,
                     nameAfiliado = item.Afiliado.name,
@@ -457,6 +498,7 @@ namespace Suma2Lealtad.Models
                     creationuserid = (int)HttpContext.Current.Session["userid"],
                     processdate = DateTime.Now,
                     comments = detalleOrden.First().tipoOrden,
+                    documento = detalleOrden.First().documentoOrden,
                     sumastatusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_ORDEN_NUEVA) && (s.tablename == "Order")).id
                 };
                 db.Orders.Add(Order);

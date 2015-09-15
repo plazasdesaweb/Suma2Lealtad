@@ -17,6 +17,7 @@ namespace Suma2Lealtad.Models
         public int idOrden { get; set; }
         public string tipoOrden { get; set; }
         public string statusOrden { get; set; }
+        public string documentoOrden { get; set; }
 
         public int idAfiliado { get; set; }
         public string docnumberAfiliado { get; set; }

@@ -46,6 +46,7 @@
                         <th>Fecha de Creación</th>
                         <th>Estatus</th>
                         <th>Comentarios</th>
+                        <th>Documento de Referencia</th>
                         <th>Monto Total</th>
                         <th class="text-center"></th>
                         <th class="text-center"></th>
@@ -79,6 +80,10 @@
 
                             <td>
                                 @Html.DisplayFor(modelItem => item.tipoOrden)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.documento)
                             </td>
 
                             <td>

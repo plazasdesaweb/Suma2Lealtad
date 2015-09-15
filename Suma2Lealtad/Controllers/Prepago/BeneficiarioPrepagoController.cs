@@ -62,7 +62,7 @@ namespace Suma2Lealtad.Controllers.Prepago
         public ActionResult EditBeneficiario(int id)
         {
             BeneficiarioPrepago beneficiario = repBeneficiario.Find(id);
-            return View(beneficiario);
+            return View("Edit",beneficiario);
         }
 
         [HttpPost]

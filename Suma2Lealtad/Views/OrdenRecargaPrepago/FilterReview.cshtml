@@ -62,6 +62,15 @@
                     <span id="field4"></span>
                 </div>
 
+                <div class="editor-label col-md-4 control-label">
+                    Documento de Referencia :
+                </div>
+
+                <div class="editor-field col-md-6">
+                    <input type="text" id="Referencia" name="Referencia" maxlength="10" placeholder="Ingrese un número" class="form-control">
+                    <span id="field5"></span>
+                </div>
+
                 <br />
                 <div class="editor-label col-md-4 control-label"></div>
                 <div class="editor-field col-md-8">
@@ -123,6 +132,22 @@
         return true;
     }
 
+    function validateReferencia() {
+        var Referencia = document.getElementById('Referencia').value;
+        if (Referencia.length == 0) {
+            return true;
+        }
+        var RegExPattern = /^([0-9])*$/;
+        if (RegExPattern.test(Referencia) == false) {
+            spanMessage('field5', '* Formato Incorrecto. Debe ingresar un número.');
+            document.getElementById('Referencia').value = "";
+            document.getElementById('Referencia').focus();
+            return false;
+        }
+        document.getElementById('field5').value = "";
+        return true;
+    }
+
     function spanMessage(idelemento, mensaje) {
         var span = document.getElementById(idelemento);
         while (span.firstChild) {
@@ -132,7 +157,7 @@
     }
 
     function validateForm() {
-        if (validateNumero() && validateFecha()) {
+        if (validateNumero() && validateFecha() && validateReferencia()) {
             return true;
         }
         else {

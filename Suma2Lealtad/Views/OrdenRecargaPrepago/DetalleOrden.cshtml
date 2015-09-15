@@ -49,7 +49,7 @@
                 <br />
             </div>
 
-            <form id="commentForm" method="post" action="@Url.Action("AprobarOrden", "OrdenRecargaPrepago", new { id = Model.First().idOrden, indicadorGuardar = @indicadorGuardar })" class="form-horizontal">
+            <form id="commentForm" method="post" action="@Url.Action("AprobarOrden", "OrdenRecargaPrepago", new { id = Model.First().idOrden, indicadorGuardar = @indicadorGuardar })" class="form-horizontal" onsubmit="return actualizarRecargas();">
 
                 <div class="editor-label col-md-4 control-label">
                     Cliente :
@@ -100,6 +100,14 @@
                 <div class="editor-form col-md-6">
                     @Html.TextBoxFor(model => model.First().tipoOrden, new { @class = "form-control", @readonly = "true" })
                 </div>
+
+                <div class="editor-label col-md-4 control-label">
+                    Documento de Referencia :
+                </div>
+
+                <div class="editor-form col-md-6">
+                    @Html.TextBoxFor(model => model.First().documentoOrden, new { @class = "form-control Referencia" })
+                </div>  
 
                 <div class="editor-field col-md-6">
                     <br />
@@ -218,6 +226,10 @@
                     <input type="text" id="MontoTotalRecargas" name="MontoTotalRecargas" value="" maxlength="10" class="form-control" readonly="true">
                 </div>
 
+                <div class="editor-form col-md-6">
+                    <input type="text" id="DocumentoReferencia" name="DocumentoReferencia" value="" maxlength="10" class="form-control" style="visibility:hidden">
+                </div>
+
                 <div class="editor-label col-md-4 control-label">
                     <br />
                 </div>
@@ -243,6 +255,10 @@
                           else if (Model.First().statusOrden == "Aprobada")
                           {
                             <a href="@Url.Action("ProcesarOrden", "OrdenRecargaPrepago", new { id = Model.First().idOrden })" class="btn btn-success btn-md">Procesar Orden</a>
+                          }
+                          else if (Model.First().statusOrden == "Procesada")
+                          {
+                            <input id="Guardar" type="submit" class="btn btn-success btn-md" value="Guardar Orden" />
                           }
                         }
                         <a href="@Url.Action("FilterReview", "OrdenRecargaPrepago")" class="btn btn-danger btn-md">Regresar</a>
@@ -321,7 +337,7 @@
     };
 
     function actualizarRecargas() {
-        var TotalRecargas = 0;
+        var TotalRecargas = 0;       
         var MontoTotalRecargas = parseFloat("0");
         $("#detalleOrden tbody tr").each(function (index) {
             var campo3 = 0;
@@ -359,6 +375,8 @@
         }
         document.getElementById('TotalRecargas').value = TotalRecargas;
         document.getElementById('MontoTotalRecargas').value = MontoTotalRecargas.toFixed(2).toString().replace(".", ",");
+        document.getElementById('DocumentoReferencia').value = $(".Referencia").val();
+        return true;
     };
 
 </script>
