@@ -777,6 +777,8 @@
     <Content Include="Views\Reporte\FilterReporteRecargas.cshtml" />
     <Content Include="Views\Reporte\FilterReporteTarjetas.cshtml" />
     <Content Include="Views\Reporte\ReporteComprasPDF.cshtml" />
+    <Content Include="Views\Reporte\ReporteRecargas.cshtml" />
+    <Content Include="Views\Reporte\ReporteRecargasPDF.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Picture\" />

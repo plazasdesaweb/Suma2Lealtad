@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<Suma2Lealtad.Models.ReportePrepago>
 
 @{
-    ViewBag.Title = "Prepago / Reportes / Reporte de Compras";
-    Layout = "";
+    ViewBag.Title = "Prepago / Reportes / Reporte de Recargas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @{
@@ -113,7 +113,7 @@ else
     @(String.Format("{0} {1}", "Fecha hasta: ", Model.First().Encabezado.fechafinReporte))
 </div>
 <div class="editor-field col-md-12">
-    @(String.Format("{0} {1}", "Modalidad de Transacciones: ", Model.First().Encabezado.modotransaccionReporte))
+    @(String.Format("{0} {1}", "Documento de Referencia: ", Model.First().Encabezado.documentoreferenciaReporte))
 </div>
 
 <div class="editor-label col-md-4 control-label"></div>
@@ -164,9 +164,9 @@ else
             </th>
             <th>Monto
             </th>
-            <th>Detalle
+            <th>Nro. de Orden
             </th>
-            <th>Tipo
+            <th>Doc. Referencia
             </th>
         </tr>
     </thead>
@@ -218,10 +218,10 @@ else
                     @Html.DisplayFor(modelItem => item.monto)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.detalle)
+                    @Html.DisplayFor(modelItem => item.nroordenrecarga)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.tipo)
+                    @Html.DisplayFor(modelItem => item.referenciarecarga)
                 </td>
             </tr>                            
             }

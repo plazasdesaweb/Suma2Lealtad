@@ -13,5 +13,6 @@ namespace Suma2Lealtad.Models
         public string fechahasta { get; set; }
         public int idCliente { get; set; }
         public string numdoc { get; set; }
+        public string referencia { get; set; }
     }
 }

@@ -16,6 +16,8 @@ namespace Suma2Lealtad.Models
         public string usuario { get; set; }        
         public string detalle { get; set; }
         public string tipo { get; set; }
+        public int nroordenrecarga { get; set; }
+        public string referenciarecarga { get; set; }
         public ParametrosReporte Parametros {get;set;}
 
         public List<PrepaidCustomer> ListaClientes { get; set; }

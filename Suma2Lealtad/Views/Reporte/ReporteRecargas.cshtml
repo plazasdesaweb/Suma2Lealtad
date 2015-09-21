@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Suma2Lealtad.Models.ReportePrepago>
 
 @{
-    ViewBag.Title = "Prepago / Reportes / Reporte de Compras";
+    ViewBag.Title = "Prepago / Reportes / Reporte de Recargas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,7 +10,7 @@
     <div class="panel panel-default">
 
         <div class="panel-heading clearfix panel-gradient">
-            <h3 class="panel-title">Prepago / Reportes / Reporte de Compras</h3>
+            <h3 class="panel-title">Prepago / Reportes / Reporte de Recrgas</h3>
         </div>
 
         <div class="panel-body">
@@ -68,11 +68,11 @@
             </div>
 
             <div class="editor-label col-md-4 control-label">
-                Modalidad de Transacciones :
+                Documento de Referencia :
             </div>
 
             <div class="editor-field col-md-6">
-                @Html.TextBoxFor(model => model.First().Encabezado.modotransaccionReporte, new { @class = "form-control", @readonly = "true" })
+                @Html.TextBoxFor(model => model.First().Encabezado.documentoreferenciaReporte, new { @class = "form-control", @readonly = "true" })
             </div>
 
             @*<div class="editor-field col-md-12">
@@ -108,9 +108,9 @@
                         </th>
                         <th>Monto
                         </th>
-                        <th>Detalle
+                        <th>Nro. de Orden
                         </th>
-                        <th>Tipo
+                        <th>Doc. Referencia
                         </th>
                     </tr>
                 </thead>
@@ -135,10 +135,10 @@
                                 @Html.DisplayFor(modelItem => item.monto)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.detalle)
+                                @Html.DisplayFor(modelItem => item.nroordenrecarga)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.tipo)
+                                @Html.DisplayFor(modelItem => item.referenciarecarga)
                             </td>
                         </tr>                            
                         }
@@ -165,8 +165,8 @@
 
             <div class="col-md-12 col-btn">
                 <div class="pull-right">
-                    <a href="@Url.Action("GenerateReporteComprasPDF", "Reporte", new { TipoConsulta = Model.First().Parametros.TipoConsulta, ModoTransaccion = Model.First().Parametros.ModoTransaccion, fechadesde = Model.First().Parametros.fechadesde, fechahasta = Model.First().Parametros.fechahasta, idCliente = Model.First().Parametros.idCliente, numdoc = Model.First().Parametros.numdoc })" class="btn btn-success btn-md">Descargar PDF</a>
-                    <a href="@Url.Action("FilterReporteCompras", "Reporte")" class="btn btn-danger btn-md">Regresar</a>
+                    <a href="@Url.Action("GenerateReporteRecargasPDF", "Reporte", new { TipoConsulta = Model.First().Parametros.TipoConsulta, fechadesde = Model.First().Parametros.fechadesde, fechahasta = Model.First().Parametros.fechahasta, idCliente = Model.First().Parametros.idCliente, numdoc = Model.First().Parametros.numdoc, Referencia = Model.First().Parametros.referencia })" class="btn btn-success btn-md">Descargar PDF</a>
+                    <a href="@Url.Action("FilterReporteRecargas", "Reporte")" class="btn btn-danger btn-md">Regresar</a>
                 </div>
             </div>
 

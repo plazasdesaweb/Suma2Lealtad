@@ -384,18 +384,18 @@ namespace Suma2Lealtad.Models
         {
             string fechasdesdemod = fechadesde.Substring(6, 4) + fechadesde.Substring(3, 2) + fechadesde.Substring(0, 2);
             string fechahastamod = fechahasta.Substring(6, 4) + fechahasta.Substring(3, 2) + fechahasta.Substring(0, 2);
-            List<ReportePrepago> reporte = new List<ReportePrepago>();   
+            List<ReportePrepago> reporte = new List<ReportePrepago>();
             EncabezadoReporte encabezado = new EncabezadoReporte();
             #region Por Cliente específico
             if (tiporeporte == "uno")
             {
                 List<BeneficiarioPrepago> beneficiarios = Find("", "", "", "", "").Where(b => b.Cliente.idCliente == idCliente).ToList();
                 encabezado.nombreReporte = "Reporte de Compras";
-                encabezado.tipoconsultaReporte = "Tipo de Consulta: Por Cliente";
-                encabezado.parametrotipoconsultaReporte = "Cliente: " + beneficiarios.First().Cliente.rifCliente + " " + beneficiarios.First().Cliente.nameCliente;
-                encabezado.fechainicioReporte = "Fecha desde: " + fechadesde;
-                encabezado.fechafinReporte = " Fecha hasta: " + fechahasta;
-                encabezado.modotransaccionReporte = "Modalidad de Transacciones: " + modotrans;
+                encabezado.tipoconsultaReporte = "Por Cliente";
+                encabezado.parametrotipoconsultaReporte = beneficiarios.First().Cliente.rifCliente + " " + beneficiarios.First().Cliente.nameCliente;
+                encabezado.fechainicioReporte = fechadesde;
+                encabezado.fechafinReporte = fechahasta;
+                encabezado.modotransaccionReporte = modotrans;
                 foreach (BeneficiarioPrepago b in beneficiarios)
                 {
                     string movimientosPrepagoJson = WSL.Cards.getReport(fechasdesdemod, fechahastamod, b.Afiliado.docnumber.Substring(2), TRANSCODE_COMPRA_PREPAGO);
@@ -443,11 +443,11 @@ namespace Suma2Lealtad.Models
                 ClientePrepagoRepository repCliente = new ClientePrepagoRepository();
                 List<ClientePrepago> clientes = repCliente.Find("", "").OrderBy(x => x.idCliente).ToList();
                 encabezado.nombreReporte = "Reporte de Compras";
-                encabezado.tipoconsultaReporte = "Tipo de Consulta: Por Cliente";
-                encabezado.parametrotipoconsultaReporte = "Cliente: Todos";
-                encabezado.fechainicioReporte = "Fecha desde: " + fechadesde;
-                encabezado.fechafinReporte = " Fecha hasta: " + fechahasta;
-                encabezado.modotransaccionReporte = "Modalidad de Transacciones: " + modotrans;                
+                encabezado.tipoconsultaReporte = "Por Cliente";
+                encabezado.parametrotipoconsultaReporte = "Todos";
+                encabezado.fechainicioReporte = fechadesde;
+                encabezado.fechafinReporte = fechahasta;
+                encabezado.modotransaccionReporte = modotrans;
                 foreach (ClientePrepago c in clientes)
                 {
                     List<BeneficiarioPrepago> beneficiarios = Find("", "", "", "", "").Where(b => b.Cliente.idCliente == c.idCliente).OrderBy(x => x.Afiliado.id).ToList();
@@ -502,6 +502,592 @@ namespace Suma2Lealtad.Models
                 reporte.Add(r);
             }
             return reporte.OrderBy(x => x.fecha).ToList();
+        }
+
+        public List<ReportePrepago> ReporteComprasxBeneficiario(string tiporeporte, string fechadesde, string fechahasta, string modotrans, string numdoc = "")
+        {
+            string fechasdesdemod = fechadesde.Substring(6, 4) + fechadesde.Substring(3, 2) + fechadesde.Substring(0, 2);
+            string fechahastamod = fechahasta.Substring(6, 4) + fechahasta.Substring(3, 2) + fechahasta.Substring(0, 2);
+            List<ReportePrepago> reporte = new List<ReportePrepago>();
+            EncabezadoReporte encabezado = new EncabezadoReporte();
+            #region Por Beneficiario específico
+            if (tiporeporte == "uno")
+            {
+                List<BeneficiarioPrepago> beneficiarios = Find(numdoc, "", "", "", "");
+                encabezado.nombreReporte = "Reporte de Compras";
+                encabezado.tipoconsultaReporte = "Por Beneficiario";
+                if (beneficiarios.Count == 0)
+                {
+                    encabezado.parametrotipoconsultaReporte = numdoc;
+                }
+                else
+                {
+                    encabezado.parametrotipoconsultaReporte = beneficiarios.First().Afiliado.docnumber + " " + beneficiarios.First().Afiliado.name + " " + beneficiarios.First().Afiliado.lastname1;
+                }
+                encabezado.fechainicioReporte = fechadesde;
+                encabezado.fechafinReporte = fechahasta;
+                encabezado.modotransaccionReporte = modotrans;
+                foreach (BeneficiarioPrepago b in beneficiarios)
+                {
+                    string movimientosPrepagoJson = WSL.Cards.getReport(fechasdesdemod, fechahastamod, b.Afiliado.docnumber.Substring(2), TRANSCODE_COMPRA_PREPAGO);
+                    if (WSL.Cards.ExceptionServicioCards(movimientosPrepagoJson))
+                    {
+                        return null;
+                    }
+                    List<Movimiento> movimientosPrepago = (List<Movimiento>)JsonConvert.DeserializeObject<List<Movimiento>>(movimientosPrepagoJson).OrderBy(x => x.fecha).ToList();
+                    foreach (Movimiento m in movimientosPrepago)
+                    {
+                        ReportePrepago linea = new ReportePrepago()
+                        {
+                            Beneficiario = b,
+                            fecha = DateTime.ParseExact(m.fecha.Substring(6, 2) + "-" + m.fecha.Substring(4, 2) + "-" + m.fecha.Substring(0, 4), "dd-MM-yyyy", CultureInfo.InvariantCulture),
+                            monto = Convert.ToDecimal(m.saldo),
+                            detalle = m.isodescription,
+                            tipo = m.transcode + "-" + m.transname,
+                            Encabezado = encabezado
+                        };
+                        if (modotrans == "En Linea")
+                        {
+                            if (!linea.detalle.Contains("offline"))
+                            {
+                                reporte.Add(linea);
+                            }
+                        }
+                        else if (modotrans == "Offline")
+                        {
+                            if (linea.detalle.Contains("offline"))
+                            {
+                                reporte.Add(linea);
+                            }
+                        }
+                        else
+                        {
+                            reporte.Add(linea);
+                        }
+                    }
+                }
+            }
+            #endregion
+            #region Todos los Beneficiarios
+            else if (tiporeporte == "todos")
+            {
+                List<BeneficiarioPrepago> beneficiarios = Find("", "", "", "", "");
+                encabezado.nombreReporte = "Reporte de Compras";
+                encabezado.tipoconsultaReporte = "Por Cliente";
+                encabezado.parametrotipoconsultaReporte = "Todos";
+                encabezado.fechainicioReporte = fechadesde;
+                encabezado.fechafinReporte = fechahasta;
+                encabezado.modotransaccionReporte = modotrans;
+                foreach (BeneficiarioPrepago b in beneficiarios)
+                {
+                    string movimientosPrepagoJson = WSL.Cards.getReport(fechasdesdemod, fechahastamod, b.Afiliado.docnumber.Substring(2), TRANSCODE_COMPRA_PREPAGO);
+                    if (WSL.Cards.ExceptionServicioCards(movimientosPrepagoJson))
+                    {
+                        return null;
+                    }
+                    List<Movimiento> movimientosPrepago = (List<Movimiento>)JsonConvert.DeserializeObject<List<Movimiento>>(movimientosPrepagoJson).OrderBy(x => x.fecha).ToList();
+                    foreach (Movimiento m in movimientosPrepago)
+                    {
+                        ReportePrepago linea = new ReportePrepago()
+                        {
+                            Beneficiario = b,
+                            fecha = DateTime.ParseExact(m.fecha.Substring(6, 2) + "-" + m.fecha.Substring(4, 2) + "-" + m.fecha.Substring(0, 4), "dd-MM-yyyy", CultureInfo.InvariantCulture),
+                            monto = Convert.ToDecimal(m.saldo),
+                            detalle = m.isodescription,
+                            tipo = m.transcode + "-" + m.transname,
+                            Encabezado = encabezado
+                        };
+                        if (modotrans == "En Linea")
+                        {
+                            if (!linea.detalle.Contains("offline"))
+                            {
+                                reporte.Add(linea);
+                            }
+                        }
+                        else if (modotrans == "Offline")
+                        {
+                            if (linea.detalle.Contains("offline"))
+                            {
+                                reporte.Add(linea);
+                            }
+                        }
+                        else
+                        {
+                            reporte.Add(linea);
+                        }
+                    }
+                }
+            }
+            #endregion
+            if (reporte.Count == 0)
+            {
+                ReportePrepago r = new ReportePrepago()
+                {
+                    Encabezado = encabezado
+                };
+                reporte.Add(r);
+            }
+            return reporte.OrderBy(x => x.fecha).ToList();
+        }
+
+        public List<ReportePrepago> ReporteRecargasxCliente(string tiporeporte, string fechadesde, string fechahasta, int idCliente = 0, string referencia = "")
+        {
+            List<ReportePrepago> reporte = new List<ReportePrepago>();
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                #region Por Cliente específico
+                if (tiporeporte == "uno")
+                {
+                    if (referencia == "")
+                    {
+                        reporte = (from o in db.Orders
+                                   join od in db.OrdersDetails on o.id equals od.orderid
+                                   join a in db.Affiliates on od.customerid equals a.id
+                                   join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                   join s in db.SumaStatuses on o.sumastatusid equals s.id
+                                   join p in db.PrepaidCustomers on o.prepaidcustomerid equals p.id
+                                   where o.prepaidcustomerid == idCliente && s.name == "Procesada" && od.comments == "Recarga efectiva"
+                                   select new ReportePrepago()
+                                   {
+                                       Beneficiario = new BeneficiarioPrepago()
+                                       {
+                                           Afiliado = new AfiliadoSuma()
+                                           {
+                                               docnumber = a.docnumber,
+                                               name = c.NOMBRE_CLIENTE1,
+                                               lastname1 = c.APELLIDO_CLIENTE1
+                                           },
+                                           Cliente = new ClientePrepago()
+                                           {
+                                               idCliente = idCliente,
+                                               nameCliente = p.name
+                                           }
+                                       },
+                                       fecha = o.processdate,
+                                       monto = od.amount,
+                                       detalle = od.comments,
+                                       tipo = "200-Recarga",
+                                       nroordenrecarga = o.id,
+                                       referenciarecarga = o.documento,
+                                       Encabezado = new EncabezadoReporte()
+                                       {
+                                           nombreReporte = "Reporte de Recargas",
+                                           tipoconsultaReporte = "Por Cliente",
+                                           parametrotipoconsultaReporte = p.rif + " " + p.name,
+                                           fechainicioReporte = fechadesde,
+                                           fechafinReporte = fechahasta,
+                                           documentoreferenciaReporte = referencia
+                                       }
+                                   }).ToList();                       
+                    }
+                    else
+                    {
+                        reporte = (from o in db.Orders
+                                   join od in db.OrdersDetails on o.id equals od.orderid
+                                   join a in db.Affiliates on od.customerid equals a.id
+                                   join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                   join s in db.SumaStatuses on o.sumastatusid equals s.id
+                                   join p in db.PrepaidCustomers on o.prepaidcustomerid equals p.id
+                                   where o.prepaidcustomerid == idCliente && s.name == "Procesada" && o.documento == referencia && od.comments == "Recarga efectiva"
+                                   select new ReportePrepago()
+                                   {
+                                       Beneficiario = new BeneficiarioPrepago()
+                                       {
+                                           Afiliado = new AfiliadoSuma()
+                                           {
+                                               docnumber = a.docnumber,
+                                               name = c.NOMBRE_CLIENTE1,
+                                               lastname1 = c.APELLIDO_CLIENTE1
+                                           },
+                                           Cliente = new ClientePrepago()
+                                           {
+                                               idCliente = idCliente,
+                                               nameCliente = p.name
+                                           }
+                                       },
+                                       fecha = o.processdate,
+                                       monto = od.amount,
+                                       detalle = od.comments,
+                                       tipo = "200-Recarga",
+                                       nroordenrecarga = o.id,
+                                       referenciarecarga = o.documento,
+                                       Encabezado = new EncabezadoReporte()
+                                       {
+                                           nombreReporte = "Reporte de Recargas",
+                                           tipoconsultaReporte = "Por Cliente",
+                                           parametrotipoconsultaReporte = p.rif + " " + p.name,
+                                           fechainicioReporte = fechadesde,
+                                           fechafinReporte = fechahasta,
+                                           documentoreferenciaReporte = referencia
+                                       }
+                                   }).ToList();                        
+                    }
+                    if (reporte.Count() == 0)
+                    {
+                        ClientePrepagoRepository repCliente = new ClientePrepagoRepository();
+                        ClientePrepago Cliente = repCliente.Find(idCliente);
+                        ReportePrepago r = new ReportePrepago()
+                        {
+                            Encabezado = new EncabezadoReporte()
+                            {
+                                nombreReporte = "Reporte de Recargas",
+                                tipoconsultaReporte = "Por Cliente",
+                                parametrotipoconsultaReporte = Cliente.rifCliente + " " + Cliente.nameCliente,
+                                fechainicioReporte = fechadesde,
+                                fechafinReporte = fechahasta,
+                                documentoreferenciaReporte = referencia
+                            }
+                        };
+                        reporte.Add(r);
+                    }
+                }
+                #endregion
+                #region Todos los Clientes
+                else if (tiporeporte == "todos")
+                {
+                    if (referencia == "")
+                    {
+                        reporte = (from o in db.Orders
+                                   join od in db.OrdersDetails on o.id equals od.orderid
+                                   join a in db.Affiliates on od.customerid equals a.id
+                                   join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                   join s in db.SumaStatuses on o.sumastatusid equals s.id
+                                   join p in db.PrepaidCustomers on o.prepaidcustomerid equals p.id
+                                   where s.name == "Procesada" && od.comments == "Recarga efectiva"
+                                   select new ReportePrepago()
+                                   {
+                                       Beneficiario = new BeneficiarioPrepago()
+                                       {
+                                           Afiliado = new AfiliadoSuma()
+                                           {
+                                               docnumber = a.docnumber,
+                                               name = c.NOMBRE_CLIENTE1,
+                                               lastname1 = c.APELLIDO_CLIENTE1
+                                           },
+                                           Cliente = new ClientePrepago()
+                                           {
+                                               idCliente = idCliente,
+                                               nameCliente = p.name
+                                           }
+                                       },
+                                       fecha = o.processdate,
+                                       monto = od.amount,
+                                       detalle = od.comments,
+                                       tipo = "200-Recarga",
+                                       nroordenrecarga = o.id,
+                                       referenciarecarga = o.documento,
+                                       Encabezado = new EncabezadoReporte()
+                                       {
+                                           nombreReporte = "Reporte de Recargas",
+                                           tipoconsultaReporte = "Por Cliente",
+                                           parametrotipoconsultaReporte = "Todos",
+                                           fechainicioReporte = fechadesde,
+                                           fechafinReporte = fechahasta,
+                                           documentoreferenciaReporte = referencia
+                                       }
+                                   }).ToList();
+                    }
+                    else
+                    {
+                        reporte = (from o in db.Orders
+                                   join od in db.OrdersDetails on o.id equals od.orderid
+                                   join a in db.Affiliates on od.customerid equals a.id
+                                   join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                   join s in db.SumaStatuses on o.sumastatusid equals s.id
+                                   join p in db.PrepaidCustomers on o.prepaidcustomerid equals p.id
+                                   where s.name == "Procesada" && o.documento == referencia && od.comments == "Recarga efectiva"
+                                   select new ReportePrepago()
+                                   {
+                                       Beneficiario = new BeneficiarioPrepago()
+                                       {
+                                           Afiliado = new AfiliadoSuma()
+                                           {
+                                               docnumber = a.docnumber,
+                                               name = c.NOMBRE_CLIENTE1,
+                                               lastname1 = c.APELLIDO_CLIENTE1
+                                           },
+                                           Cliente = new ClientePrepago()
+                                           {
+                                               idCliente = idCliente,
+                                               nameCliente = p.name
+                                           }
+                                       },
+                                       fecha = o.processdate,
+                                       monto = od.amount,
+                                       detalle = od.comments,
+                                       tipo = "200-Recarga",
+                                       nroordenrecarga = o.id,
+                                       referenciarecarga = o.documento,
+                                       Encabezado = new EncabezadoReporte()
+                                       {
+                                           nombreReporte = "Reporte de Recargas",
+                                           tipoconsultaReporte = "Por Cliente",
+                                           parametrotipoconsultaReporte = "Todos",
+                                           fechainicioReporte = fechadesde,
+                                           fechafinReporte = fechahasta,
+                                           documentoreferenciaReporte = referencia
+                                       }
+                                   }).ToList();
+
+                    }
+                    if (reporte.Count() == 0)
+                    {
+                        ClientePrepagoRepository repCliente = new ClientePrepagoRepository();
+                        ClientePrepago Cliente = repCliente.Find(idCliente);
+                        ReportePrepago r = new ReportePrepago()
+                        {
+                            Encabezado = new EncabezadoReporte()
+                            {
+                                nombreReporte = "Reporte de Recargas",
+                                tipoconsultaReporte = "Por Cliente",
+                                parametrotipoconsultaReporte = "Todos",
+                                fechainicioReporte = fechadesde,
+                                fechafinReporte = fechahasta,
+                                documentoreferenciaReporte = referencia
+                            }
+                        };
+                        reporte.Add(r);
+                    }
+                }
+                #endregion
+            }
+            DateTime desde = DateTime.ParseExact(fechadesde, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            DateTime hasta = DateTime.ParseExact(fechahasta, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            return reporte.Where(x => x.fecha.Date > desde && x.fecha.Date < hasta).OrderBy(x => x.fecha).ToList();
+        }
+
+        public List<ReportePrepago> ReporteRecargasxBeneficiario(string tiporeporte, string fechadesde, string fechahasta, string numdoc = "", string referencia = "")
+        {
+            List<ReportePrepago> reporte = new List<ReportePrepago>();
+            EncabezadoReporte encabezado = new EncabezadoReporte();
+            string textoparametro;
+            using (LealtadEntities db = new LealtadEntities())            
+            {
+                #region Por Beneficiario específico
+                if (tiporeporte == "uno")
+                {
+                    List<BeneficiarioPrepago> beneficiarios = Find(numdoc, "", "", "", "");
+                    if (beneficiarios.Count == 0)
+                    {
+                        textoparametro = numdoc;
+                    }
+                    else
+                    {
+                        textoparametro = beneficiarios.First().Afiliado.docnumber + " " + beneficiarios.First().Afiliado.name + " " + beneficiarios.First().Afiliado.lastname1;
+                        if (referencia == "")
+                        {
+                            reporte = (from o in db.Orders
+                                       join od in db.OrdersDetails on o.id equals od.orderid
+                                       join a in db.Affiliates on od.customerid equals a.id
+                                       join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                       join s in db.SumaStatuses on o.sumastatusid equals s.id
+                                       join p in db.PrepaidCustomers on o.prepaidcustomerid equals p.id
+                                       where a.docnumber == numdoc && s.name == "Procesada" && od.comments == "Recarga efectiva"
+                                       select new ReportePrepago()
+                                       {
+                                           Beneficiario = new BeneficiarioPrepago()
+                                           {
+                                               Afiliado = new AfiliadoSuma()
+                                               {
+                                                   docnumber = a.docnumber,
+                                                   name = c.NOMBRE_CLIENTE1,
+                                                   lastname1 = c.APELLIDO_CLIENTE1
+                                               },
+                                               Cliente = new ClientePrepago()
+                                               {
+                                                   idCliente = p.id,
+                                                   nameCliente = p.name
+                                               }
+                                           },
+                                           fecha = o.processdate,
+                                           monto = od.amount,
+                                           detalle = od.comments,
+                                           tipo = "200-Recarga",
+                                           nroordenrecarga = o.id,
+                                           referenciarecarga = o.documento,
+                                           Encabezado = new EncabezadoReporte()
+                                           {
+                                               nombreReporte = "Reporte de Recargas",
+                                               tipoconsultaReporte = "Por Beneficiario",
+                                               parametrotipoconsultaReporte = textoparametro,
+                                               fechainicioReporte = fechadesde,
+                                               fechafinReporte = fechahasta,
+                                               documentoreferenciaReporte = referencia
+                                           }
+                                       }).ToList();
+                        }
+                        else
+                        {
+                            reporte = (from o in db.Orders
+                                       join od in db.OrdersDetails on o.id equals od.orderid
+                                       join a in db.Affiliates on od.customerid equals a.id
+                                       join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                       join s in db.SumaStatuses on o.sumastatusid equals s.id
+                                       join p in db.PrepaidCustomers on o.prepaidcustomerid equals p.id
+                                       where a.docnumber == numdoc && s.name == "Procesada" && o.documento == referencia && od.comments == "Recarga efectiva"
+                                       select new ReportePrepago()
+                                       {
+                                           Beneficiario = new BeneficiarioPrepago()
+                                           {
+                                               Afiliado = new AfiliadoSuma()
+                                               {
+                                                   docnumber = a.docnumber,
+                                                   name = c.NOMBRE_CLIENTE1,
+                                                   lastname1 = c.APELLIDO_CLIENTE1
+                                               },
+                                               Cliente = new ClientePrepago()
+                                               {
+                                                   idCliente = p.id,
+                                                   nameCliente = p.name
+                                               }
+                                           },
+                                           fecha = o.processdate,
+                                           monto = od.amount,
+                                           detalle = od.comments,
+                                           tipo = "200-Recarga",
+                                           nroordenrecarga = o.id,
+                                           referenciarecarga = o.documento,
+                                           Encabezado = new EncabezadoReporte()
+                                           {
+                                               nombreReporte = "Reporte de Recargas",
+                                               tipoconsultaReporte = "Por Beneficiario",
+                                               parametrotipoconsultaReporte = textoparametro,
+                                               fechainicioReporte = fechadesde,
+                                               fechafinReporte = fechahasta,
+                                               documentoreferenciaReporte = referencia
+                                           }
+                                       }).ToList();
+
+                        }
+                    }
+                    if (reporte.Count() == 0)
+                    {
+                        ReportePrepago r = new ReportePrepago()
+                        {
+                            Encabezado = new EncabezadoReporte()
+                            {
+                                nombreReporte = "Reporte de Recargas",
+                                tipoconsultaReporte = "Por Beneficiario",
+                                parametrotipoconsultaReporte = textoparametro,
+                                fechainicioReporte = fechadesde,
+                                fechafinReporte = fechahasta,
+                                documentoreferenciaReporte = referencia
+                            }
+                        };
+                        reporte.Add(r);
+                    }
+                }
+                #endregion
+                #region Todos los Beneficiarios
+                else if (tiporeporte == "todos")
+                {
+                    if (referencia == "")
+                    {
+                        reporte = (from o in db.Orders
+                                   join od in db.OrdersDetails on o.id equals od.orderid
+                                   join a in db.Affiliates on od.customerid equals a.id
+                                   join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                   join s in db.SumaStatuses on o.sumastatusid equals s.id
+                                   join p in db.PrepaidCustomers on o.prepaidcustomerid equals p.id
+                                   where s.name == "Procesada" && od.comments == "Recarga efectiva"
+                                   select new ReportePrepago()
+                                   {
+                                       Beneficiario = new BeneficiarioPrepago()
+                                       {
+                                           Afiliado = new AfiliadoSuma()
+                                           {
+                                               docnumber = a.docnumber,
+                                               name = c.NOMBRE_CLIENTE1,
+                                               lastname1 = c.APELLIDO_CLIENTE1
+                                           },
+                                           Cliente = new ClientePrepago()
+                                           {
+                                               idCliente = p.id,
+                                               nameCliente = p.name
+                                           }
+                                       },
+                                       fecha = o.processdate,
+                                       monto = od.amount,
+                                       detalle = od.comments,
+                                       tipo = "200-Recarga",
+                                       nroordenrecarga = o.id,
+                                       referenciarecarga = o.documento,
+                                       Encabezado = new EncabezadoReporte()
+                                       {
+                                           nombreReporte = "Reporte de Recargas",
+                                           tipoconsultaReporte = "Por Beneficiario",
+                                           parametrotipoconsultaReporte = "Todos",
+                                           fechainicioReporte = fechadesde,
+                                           fechafinReporte = fechahasta,
+                                           documentoreferenciaReporte = referencia
+                                       }
+                                   }).ToList();
+                    }
+                    else
+                    {
+                        reporte = (from o in db.Orders
+                                   join od in db.OrdersDetails on o.id equals od.orderid
+                                   join a in db.Affiliates on od.customerid equals a.id
+                                   join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                   join s in db.SumaStatuses on o.sumastatusid equals s.id
+                                   join p in db.PrepaidCustomers on o.prepaidcustomerid equals p.id
+                                   where s.name == "Procesada" && o.documento == referencia && od.comments == "Recarga efectiva"
+                                   select new ReportePrepago()
+                                   {
+                                       Beneficiario = new BeneficiarioPrepago()
+                                       {
+                                           Afiliado = new AfiliadoSuma()
+                                           {
+                                               docnumber = a.docnumber,
+                                               name = c.NOMBRE_CLIENTE1,
+                                               lastname1 = c.APELLIDO_CLIENTE1
+                                           },
+                                           Cliente = new ClientePrepago()
+                                           {
+                                               idCliente = p.id,
+                                               nameCliente = p.name
+                                           }
+                                       },
+                                       fecha = o.processdate,
+                                       monto = od.amount,
+                                       detalle = od.comments,
+                                       tipo = "200-Recarga",
+                                       nroordenrecarga = o.id,
+                                       referenciarecarga = o.documento,
+                                       Encabezado = new EncabezadoReporte()
+                                       {
+                                           nombreReporte = "Reporte de Recargas",
+                                           tipoconsultaReporte = "Por Beneficiario",
+                                           parametrotipoconsultaReporte = "Todos",
+                                           fechainicioReporte = fechadesde,
+                                           fechafinReporte = fechahasta,
+                                           documentoreferenciaReporte = referencia
+                                       }
+                                   }).ToList();
+
+                    }
+                    if (reporte.Count() == 0)
+                    {
+                        ReportePrepago r = new ReportePrepago()
+                        {
+                            Encabezado = new EncabezadoReporte()
+                            {
+                                nombreReporte = "Reporte de Recargas",
+                                tipoconsultaReporte = "Por Beneficiario",
+                                parametrotipoconsultaReporte = "Todos",
+                                fechainicioReporte = fechadesde,
+                                fechafinReporte = fechahasta,
+                                documentoreferenciaReporte = referencia
+                            }
+                        };
+                        reporte.Add(r);
+                    }
+                }               
+                #endregion
+            }
+            DateTime desde = DateTime.ParseExact(fechadesde, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            DateTime hasta = DateTime.ParseExact(fechahasta, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            return reporte.Where(x => x.fecha.Date > desde && x.fecha.Date < hasta).OrderBy(x => x.fecha).ToList();
         }
 
         /**
