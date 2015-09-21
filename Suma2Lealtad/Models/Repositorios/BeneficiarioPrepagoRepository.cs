@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Suma2Lealtad.Modules;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +12,7 @@ namespace Suma2Lealtad.Models
     public class BeneficiarioPrepagoRepository
     {
         private const int ID_ESTATUS_AFILIACION_INICIAL = 0;
+        private const string TRANSCODE_COMPRA_PREPAGO = "145";
 
         public List<BeneficiarioPrepago> Find(string numdoc, string name, string email, string estadoAfiliacion, string estadoTarjeta)
         {
@@ -229,7 +231,7 @@ namespace Suma2Lealtad.Models
 
         public BeneficiarioPrepago Find(int id)
         {
-            AfiliadoSumaRepository repAfiliado = new AfiliadoSumaRepository();        
+            AfiliadoSumaRepository repAfiliado = new AfiliadoSumaRepository();
             BeneficiarioPrepago beneficiario;
             using (LealtadEntities db = new LealtadEntities())
             {
@@ -364,11 +366,11 @@ namespace Suma2Lealtad.Models
             {
                 //ENTIDAD PrepaidBeneficiary
                 PrepaidBeneficiary prepaidbeneficiary = db.PrepaidBeneficiaries.FirstOrDefault(b => b.affiliateid == beneficiario.Afiliado.id && b.prepaidcustomerid == beneficiario.Cliente.idCliente);
-                db.PrepaidBeneficiaries.Remove(prepaidbeneficiary);                
+                db.PrepaidBeneficiaries.Remove(prepaidbeneficiary);
                 db.SaveChanges();
                 return true;
             }
-        }       
+        }
 
         public List<PrepaidCustomer> GetClientes()
         {
@@ -376,6 +378,130 @@ namespace Suma2Lealtad.Models
             {
                 return db.PrepaidCustomers.OrderBy(u => u.name).ToList();
             }
+        }
+
+        public List<ReportePrepago> ReporteComprasxCliente(string tiporeporte, string fechadesde, string fechahasta, string modotrans, int idCliente = 0)
+        {
+            string fechasdesdemod = fechadesde.Substring(6, 4) + fechadesde.Substring(3, 2) + fechadesde.Substring(0, 2);
+            string fechahastamod = fechahasta.Substring(6, 4) + fechahasta.Substring(3, 2) + fechahasta.Substring(0, 2);
+            List<ReportePrepago> reporte = new List<ReportePrepago>();   
+            EncabezadoReporte encabezado = new EncabezadoReporte();
+            #region Por Cliente específico
+            if (tiporeporte == "uno")
+            {
+                List<BeneficiarioPrepago> beneficiarios = Find("", "", "", "", "").Where(b => b.Cliente.idCliente == idCliente).ToList();
+                encabezado.nombreReporte = "Reporte de Compras";
+                encabezado.tipoconsultaReporte = "Tipo de Consulta: Por Cliente";
+                encabezado.parametrotipoconsultaReporte = "Cliente: " + beneficiarios.First().Cliente.rifCliente + " " + beneficiarios.First().Cliente.nameCliente;
+                encabezado.fechainicioReporte = "Fecha desde: " + fechadesde;
+                encabezado.fechafinReporte = " Fecha hasta: " + fechahasta;
+                encabezado.modotransaccionReporte = "Modalidad de Transacciones: " + modotrans;
+                foreach (BeneficiarioPrepago b in beneficiarios)
+                {
+                    string movimientosPrepagoJson = WSL.Cards.getReport(fechasdesdemod, fechahastamod, b.Afiliado.docnumber.Substring(2), TRANSCODE_COMPRA_PREPAGO);
+                    if (WSL.Cards.ExceptionServicioCards(movimientosPrepagoJson))
+                    {
+                        return null;
+                    }
+                    List<Movimiento> movimientosPrepago = (List<Movimiento>)JsonConvert.DeserializeObject<List<Movimiento>>(movimientosPrepagoJson).OrderBy(x => x.fecha).ToList();
+                    foreach (Movimiento m in movimientosPrepago)
+                    {
+                        ReportePrepago linea = new ReportePrepago()
+                        {
+                            Beneficiario = b,
+                            fecha = DateTime.ParseExact(m.fecha.Substring(6, 2) + "-" + m.fecha.Substring(4, 2) + "-" + m.fecha.Substring(0, 4), "dd-MM-yyyy", CultureInfo.InvariantCulture),
+                            monto = Convert.ToDecimal(m.saldo),
+                            detalle = m.isodescription,
+                            tipo = m.transcode + "-" + m.transname,
+                            Encabezado = encabezado
+                        };
+                        if (modotrans == "En Linea")
+                        {
+                            if (!linea.detalle.Contains("offline"))
+                            {
+                                reporte.Add(linea);
+                            }
+                        }
+                        else if (modotrans == "Offline")
+                        {
+                            if (linea.detalle.Contains("offline"))
+                            {
+                                reporte.Add(linea);
+                            }
+                        }
+                        else
+                        {
+                            reporte.Add(linea);
+                        }
+                    }
+                }
+            }
+            #endregion
+            #region Todos los Clientes
+            else if (tiporeporte == "todos")
+            {
+                ClientePrepagoRepository repCliente = new ClientePrepagoRepository();
+                List<ClientePrepago> clientes = repCliente.Find("", "").OrderBy(x => x.idCliente).ToList();
+                encabezado.nombreReporte = "Reporte de Compras";
+                encabezado.tipoconsultaReporte = "Tipo de Consulta: Por Cliente";
+                encabezado.parametrotipoconsultaReporte = "Cliente: Todos";
+                encabezado.fechainicioReporte = "Fecha desde: " + fechadesde;
+                encabezado.fechafinReporte = " Fecha hasta: " + fechahasta;
+                encabezado.modotransaccionReporte = "Modalidad de Transacciones: " + modotrans;                
+                foreach (ClientePrepago c in clientes)
+                {
+                    List<BeneficiarioPrepago> beneficiarios = Find("", "", "", "", "").Where(b => b.Cliente.idCliente == c.idCliente).OrderBy(x => x.Afiliado.id).ToList();
+                    foreach (BeneficiarioPrepago b in beneficiarios)
+                    {
+                        string movimientosPrepagoJson = WSL.Cards.getReport(fechasdesdemod, fechahastamod, b.Afiliado.docnumber.Substring(2), TRANSCODE_COMPRA_PREPAGO);
+                        if (WSL.Cards.ExceptionServicioCards(movimientosPrepagoJson))
+                        {
+                            return null;
+                        }
+                        List<Movimiento> movimientosPrepago = (List<Movimiento>)JsonConvert.DeserializeObject<List<Movimiento>>(movimientosPrepagoJson).OrderBy(x => x.fecha).ToList();
+                        foreach (Movimiento m in movimientosPrepago)
+                        {
+                            ReportePrepago linea = new ReportePrepago()
+                            {
+                                Beneficiario = b,
+                                fecha = DateTime.ParseExact(m.fecha.Substring(6, 2) + "-" + m.fecha.Substring(4, 2) + "-" + m.fecha.Substring(0, 4), "dd-MM-yyyy", CultureInfo.InvariantCulture),
+                                monto = Convert.ToDecimal(m.saldo),
+                                detalle = m.isodescription,
+                                tipo = m.transcode + "-" + m.transname,
+                                Encabezado = encabezado
+                            };
+                            if (modotrans == "En Linea")
+                            {
+                                if (!linea.detalle.Contains("offline"))
+                                {
+                                    reporte.Add(linea);
+                                }
+                            }
+                            else if (modotrans == "Offline")
+                            {
+                                if (linea.detalle.Contains("offline"))
+                                {
+                                    reporte.Add(linea);
+                                }
+                            }
+                            else
+                            {
+                                reporte.Add(linea);
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+            if (reporte.Count == 0)
+            {
+                ReportePrepago r = new ReportePrepago()
+                {
+                    Encabezado = encabezado
+                };
+                reporte.Add(r);
+            }
+            return reporte.OrderBy(x => x.fecha).ToList();
         }
 
         /**
@@ -401,6 +527,6 @@ namespace Suma2Lealtad.Models
                 return false;
             }
         }
-        
+
     }
 }

@@ -137,13 +137,13 @@
         if (Referencia.length == 0) {
             return true;
         }
-        var RegExPattern = /^([0-9])*$/;
-        if (RegExPattern.test(Referencia) == false) {
-            spanMessage('field5', '* Formato Incorrecto. Debe ingresar un número.');
-            document.getElementById('Referencia').value = "";
-            document.getElementById('Referencia').focus();
-            return false;
-        }
+        //var RegExPattern = /^([0-9])*$/;
+        //if (RegExPattern.test(Referencia) == false) {
+        //    spanMessage('field5', '* Formato Incorrecto. Debe ingresar un número.');
+        //    document.getElementById('Referencia').value = "";
+        //    document.getElementById('Referencia').focus();
+        //    return false;
+        //}
         document.getElementById('field5').value = "";
         return true;
     }

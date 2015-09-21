@@ -102,6 +102,9 @@
       <HintPath>..\packages\LinqToExcel.1.10.1\lib\Remotion.Interfaces.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Rotativa">
+      <HintPath>..\packages\Rotativa.1.6.4\lib\net40\Rotativa.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -287,6 +290,7 @@
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DetalleOrdenRecargaPrepago.cs" />
+    <Compile Include="Models\EncabezadoReporte.cs" />
     <Compile Include="Models\ESTADO.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -330,6 +334,7 @@
     <Compile Include="Models\PARAMETRO.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ParametrosReporte.cs" />
     <Compile Include="Models\PARROQUIA.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -345,6 +350,7 @@
     <Compile Include="Models\Reason.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReportePrepago.cs" />
     <Compile Include="Models\Repositorios\AfiliadoSumaRepository.cs" />
     <Compile Include="Models\AfiliadoSumaSaldosMovimientos.cs" />
     <Compile Include="Models\Repositorios\BeneficiarioPrepagoRepository.cs" />
@@ -480,6 +486,7 @@
     <Content Include="Images\conectadoSuma.jpg" />
     <Content Include="Images\plzlogo.jpg" />
     <Content Include="Images\principal.jpg" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\html5shiv.min.js" />
@@ -508,6 +515,7 @@
       <LastGenOutput>SumaLealtad.cs</LastGenOutput>
     </Content>
     <Content Include="App_Data\Plantilla.xls" />
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="Properties\PublishProfiles\SumaLealtad.pubxml" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
@@ -715,10 +723,7 @@
     <Content Include="Views\ClientePrepago\DetalleOrden.cshtml" />
     <Content Include="Views\ClientePrepago\CreateOrdenRecarga.cshtml" />
     <Content Include="Views\ClientePrepago\CargarArchivoRecarga.cshtml" />
-    <Content Include="Views\Reporte\R_ConsumoCliente.cshtml" />
-    <Content Include="Views\Reporte\R_ConsumoGeneral.cshtml" />
-    <Content Include="Views\Reporte\R_RecargaCliente.cshtml" />
-    <Content Include="Views\Reporte\R_RecargaGeneral.cshtml" />
+    <Content Include="Views\Reporte\ReporteCompras.cshtml" />
     <Content Include="Views\BeneficiarioPrepago\FilterReview.cshtml" />
     <Content Include="Views\BeneficiarioPrepago\Index.cshtml" />
     <Content Include="Views\BeneficiarioPrepago\Filter.cshtml" />
@@ -768,6 +773,10 @@
     <Content Include="Views\FueraLineaPrepago\AddNew.cshtml" />
     <Content Include="Views\FueraLineaPrepago\GenericView.cshtml" />
     <Content Include="Views\OrdenRecargaPrepago\GenericView.cshtml" />
+    <Content Include="Views\Reporte\FilterReporteCompras.cshtml" />
+    <Content Include="Views\Reporte\FilterReporteRecargas.cshtml" />
+    <Content Include="Views\Reporte\FilterReporteTarjetas.cshtml" />
+    <Content Include="Views\Reporte\ReporteComprasPDF.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Picture\" />

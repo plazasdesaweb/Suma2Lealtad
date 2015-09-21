@@ -17,6 +17,7 @@ namespace Suma2Lealtad.Modules
         private const string WSL_CARDS_GETCLIENT = "getclient/{numdoc}";
         private const string WSL_CARDS_GETBALANCE = "getbalance/{numdoc}";
         private const string WSL_CARDS_GETBATCH = "getbatch/{accounttype}/{numdoc}";
+        private const string WSL_CARDS_GETREPORT = "getreport/{fechadesde}/{fechahasta}/{numdoc}/{transcode}";
         private const string WSL_CARDS_ADDCARD = "addcard/{numdoc}";
         private const string WSL_CARDS_CARD_PRINT = "card/print/{numdoc}";
         private const string WSL_CARDS_CARD_ACTIVE = "card/active/{numdoc}";
@@ -126,6 +127,16 @@ namespace Suma2Lealtad.Modules
                 string req = WSL_CARDS_GETBATCH;
                 req = req.Replace("{accounttype}", accounttype);
                 req = req.Replace("{numdoc}", numdoc);
+                return ConsumirServicioCards(req);
+            }
+
+            public static string getReport(string fechadesde, string fechahasta, string numdoc, string transcode)
+            {
+                string req = WSL_CARDS_GETREPORT;
+                req = req.Replace("{fechadesde}", fechadesde);
+                req = req.Replace("{fechahasta}", fechahasta);
+                req = req.Replace("{numdoc}", numdoc);
+                req = req.Replace("{transcode}", transcode);
                 return ConsumirServicioCards(req);
             }
 

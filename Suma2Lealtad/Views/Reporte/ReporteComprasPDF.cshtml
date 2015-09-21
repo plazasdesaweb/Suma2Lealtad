@@ -1,0 +1,122 @@
+﻿@model IEnumerable<Suma2Lealtad.Models.ReportePrepago>
+
+@{
+    ViewBag.Title = "Prepago / Reportes / Reporte de Compras";
+    Layout = "";
+}
+
+@{
+    int TotalTransacciones = 0;
+    decimal MontoTotalTransacciones = 0;
+}
+
+<div class="form-group">
+
+    <div class="panel panel-default">
+
+        <div class="panel-heading clearfix panel-gradient">
+            <h3 class="panel-title">Prepago / Reportes / Reporte de Compras</h3>
+        </div>
+        <div class="panel-body">
+
+            <div class="editor-label col-md-4 control-label">
+                <br />
+            </div>
+
+            <div class="editor-field col-md-8">
+                <br />
+            </div>
+
+            <div class="editor-field col-md-12">
+                @(String.Format("{0}", Model.First().Encabezado.nombreReporte))
+            </div>
+            <div class="editor-field col-md-12">
+                @(String.Format("{0}", Model.First().Encabezado.tipoconsultaReporte))
+            </div>
+            <div class="editor-field col-md-12">
+                @(String.Format("{0}", Model.First().Encabezado.parametrotipoconsultaReporte))
+            </div>
+            <div class="editor-field col-md-12">
+                @(String.Format("{0}", Model.First().Encabezado.fechainicioReporte))
+            </div>
+            <div class="editor-field col-md-12">
+                @(String.Format("{0}", Model.First().Encabezado.fechafinReporte))
+            </div>
+            <div class="editor-field col-md-12">
+                @(String.Format("{0}", Model.First().Encabezado.modotransaccionReporte))
+            </div>
+
+            <div class="editor-label col-md-4 control-label"></div>
+            <div class="editor-field col-md-8">
+                <br />
+            </div>
+
+            @*<table class="table table-striped custab">*@
+            <table id="detalleReporte">
+                <thead>
+                    @*<tr>
+                        <th>Cliente
+                        </th>
+                        <th>Beneficiario
+                        </th>
+                        <th>Fecha
+                        </th>
+                        <th>Monto
+                        </th>
+                        <th>Detalle
+                        </th>
+                        <th>Tipo
+                        </th>
+                    </tr>*@
+                </thead>
+
+                <tbody>
+                    @if (Model.Count() != 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            TotalTransacciones = TotalTransacciones + 1;
+                            MontoTotalTransacciones = MontoTotalTransacciones + item.monto;                 
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Beneficiario.Cliente.nameCliente)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Beneficiario.Afiliado.name) @Html.DisplayFor(modelItem => item.Beneficiario.Afiliado.lastname1)
+                            </td>
+                            <td>
+                                @*@Html.DisplayFor(modelItem => item.fecha.Day)*@
+                                @(String.Format("{0}", item.fecha.ToString("dd-MM-yyyy")))
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.monto)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.detalle)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.tipo)
+                            </td>
+                        </tr>                            
+                        }
+                    }
+                </tbody>
+
+            </table>
+
+            <div class="editor-label col-md-4 control-label">
+                Total Transacciones : @TotalTransacciones
+            </div>
+
+            <div class="editor-label col-md-4 control-label">
+                Monto Total Transacciones : @MontoTotalTransacciones
+            </div>
+
+           
+        </div>
+        <!-- panel-body -->
+
+    </div>
+    <!-- panel -->
+
+</div>
