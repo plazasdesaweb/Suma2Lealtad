@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices.Automation;
+﻿using System;
+using System.Runtime.InteropServices.Automation;
 
 namespace SumaPlazas.Dispositivos.Impresora
 {
@@ -6,7 +7,7 @@ namespace SumaPlazas.Dispositivos.Impresora
     {
         public const string NombreImpresora = "XPS Card Printer";
         
-        public bool Imprimir(ref string Nombre, ref string Apellido, ref string NroTarjeta, ref string Track1, ref string Track2, ref string TipoTarjeta, ref string Corporacion, ref string FechaVencimiento)
+        public bool Imprimir(string Nombre, string Apellido, string NroTarjeta, string Track1, string Track2, string TipoTarjeta, string Corporacion, string FechaVencimiento)
         {
             try
             {
@@ -16,7 +17,9 @@ namespace SumaPlazas.Dispositivos.Impresora
                     {
                         if (SmartDriverDotNet != null)
                         {
+                            //MessageBox.Show("Aqui voy");
                             bool Resultado = SmartDriverDotNet.Imprimir(NombreImpresora, Nombre, Apellido, NroTarjeta, Track1, Track2, TipoTarjeta, Corporacion, FechaVencimiento);
+                            //MessageBox.Show("Resultado: " + Resultado );
                             return Resultado;
                         }
                         else
@@ -32,10 +35,11 @@ namespace SumaPlazas.Dispositivos.Impresora
                     return false;
                 }
             }
-            catch
-            //catch (Exception originalException)
+            //catch
+            catch (Exception originalException)
             {
                 //MessageBox.Show("Error de Aplicación: " + originalException, "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.Imprimir", MessageBoxButton.OK);
+                string error = "Error de Aplicación: " + originalException;
                 return false;
             }
         }

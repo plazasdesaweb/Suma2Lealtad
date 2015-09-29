@@ -17,6 +17,7 @@ namespace Suma2Lealtad.Models
         private const int ID_ESTATUS_AFILIACION_ACTIVA = 2;
         private const string ID_ESTATUS_TARJETA_SUSPENDIDA = "6";
         private const int ID_REASONS_INICIAL = 1;
+        private const string TRANSCODE_ACREDITACION_SUMA = "318";
 
         //retorna el ojeto Photos_Affiliate a partr del id del afiliado
         private Photos_Affiliate GetPhoto(int id)
@@ -839,7 +840,7 @@ namespace Suma2Lealtad.Models
 
         public bool Acreditar(AfiliadoSuma afiliado, string monto)
         {
-            string RespuestaCardsJson = WSL.Cards.addBatch(afiliado.docnumber.Substring(2), monto);
+            string RespuestaCardsJson = WSL.Cards.addBatch(afiliado.docnumber.Substring(2), monto, TRANSCODE_ACREDITACION_SUMA, "NULL");
             if (WSL.Cards.ExceptionServicioCards(RespuestaCardsJson))
             {
                 return false;

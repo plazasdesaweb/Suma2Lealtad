@@ -202,9 +202,86 @@ namespace Suma2Lealtad.Controllers
         }
 
         [HttpPost]
-        public ActionResult ReporteTarjetas()
+        public ActionResult ReporteTarjetas(string TipoConsulta, string fechadesde, string fechahasta, int idCliente = 0, string numdoc = "", string estadoTarjeta = "")
         {
-            return View();
+            List<ReportePrepago> reporte = new List<ReportePrepago>();
+            if (TipoConsulta == "Cliente")
+            {
+                if (idCliente == 0)
+                {
+                    reporte = repBeneficiario.ReporteTarjetasxCliente("todos", fechadesde, fechahasta, 0, estadoTarjeta);
+                }
+                else
+                {
+                    reporte = repBeneficiario.ReporteTarjetasxCliente("uno", fechadesde, fechahasta, idCliente, estadoTarjeta);
+                }
+            }
+            else if (TipoConsulta == "Beneficiario")
+            {
+                if (numdoc == "")
+                {
+                    reporte = repBeneficiario.ReporteTarjetasxBeneficiario("todos", fechadesde, fechahasta, "", estadoTarjeta);
+                }
+                else
+                {
+                    reporte = repBeneficiario.ReporteTarjetasxBeneficiario("uno", fechadesde, fechahasta, numdoc, estadoTarjeta);
+                }
+            }
+            ParametrosReporte p = new ParametrosReporte()
+            {
+                TipoConsulta = TipoConsulta,
+                fechadesde = fechadesde,
+                fechahasta = fechahasta,
+                idCliente = idCliente,
+                numdoc = numdoc,
+                estatusTarjeta = estadoTarjeta
+            };
+            if (reporte.Count == 0)
+            {
+                ReportePrepago r = new ReportePrepago()
+                {
+                    Parametros = p
+                };
+                reporte.Add(r);
+            }
+            else
+            {
+                reporte.First().Parametros = p;
+            }
+            return View(reporte);
+        }
+
+        public ActionResult GenerateReporteTarjetasPDF(string TipoConsulta, string fechadesde, string fechahasta, int idCliente = 0, string numdoc = "", string estadoTarjeta = "")
+        {
+            List<ReportePrepago> reporte = new List<ReportePrepago>();
+            if (TipoConsulta == "Cliente")
+            {
+                if (idCliente == 0)
+                {
+                    reporte = repBeneficiario.ReporteTarjetasxCliente("todos", fechadesde, fechahasta, 0, estadoTarjeta);
+                }
+                else
+                {
+                    reporte = repBeneficiario.ReporteTarjetasxCliente("uno", fechadesde, fechahasta, idCliente, estadoTarjeta);
+                }
+            }
+            else if (TipoConsulta == "Beneficiario")
+            {
+                if (numdoc == "")
+                {
+                    reporte = repBeneficiario.ReporteTarjetasxBeneficiario("todos", fechadesde, fechahasta, "", estadoTarjeta);
+                }
+                else
+                {
+                    reporte = repBeneficiario.ReporteTarjetasxBeneficiario("uno", fechadesde, fechahasta, numdoc, estadoTarjeta);
+                }
+            }
+            string footer = "--footer-right \"Date: [date] [time]\" " + "--footer-center \"Page: [page] of [toPage]\" --footer-line --footer-font-size \"9\" --footer-spacing 5 --footer-font-name \"calibri light\"";
+            return new Rotativa.ViewAsPdf("ReporteTarjetasPDF", reporte)
+            {
+                FileName = "Reporte de Tarjetas.pdf",
+                CustomSwitches = footer
+            };
         }
 
     }

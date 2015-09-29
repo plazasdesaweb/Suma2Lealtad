@@ -139,7 +139,7 @@ namespace Suma2Lealtad.Controllers.Prepago
             if (repCliente.BorrarCliente(cliente.idCliente))
             {
                 viewmodel.Title = "Prepago / Cliente / Borrar Cliente";
-                viewmodel.Message = "Cliente borradao exitosamente.";
+                viewmodel.Message = "Cliente borrado exitosamente.";
                 viewmodel.ControllerName = "ClientePrepago";
                 viewmodel.ActionName = "IndexAll";
             }

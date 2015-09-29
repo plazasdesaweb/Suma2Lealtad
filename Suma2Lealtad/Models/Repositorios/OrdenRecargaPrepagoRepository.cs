@@ -20,8 +20,8 @@ namespace Suma2Lealtad.Models
         private const int ID_ESTATUS_DETALLEORDEN_APROBADO = 1;
         private const int ID_ESTATUS_DETALLEORDEN_EXCLUIDO = 2;
         private const int ID_ESTATUS_DETALLEORDEN_PROCESADO = 3;
-        private const string TRANS_CODE_RECARGA = "200";
-
+        private const string TRANSCODE_RECARGA_PREPAGO = "200";
+        
         private int OrderId()
         {
             using (LealtadEntities db = new LealtadEntities())
@@ -359,7 +359,7 @@ namespace Suma2Lealtad.Models
         private bool Recargar(DetalleOrdenRecargaPrepago detalleorden)
         {
             string montoSinSeparador = Math.Truncate(detalleorden.montoRecarga * 100).ToString();
-            string RespuestaCardsJson = WSL.Cards.addBatch(detalleorden.docnumberAfiliado.Substring(2), montoSinSeparador, TRANS_CODE_RECARGA);
+            string RespuestaCardsJson = WSL.Cards.addBatch(detalleorden.docnumberAfiliado.Substring(2), montoSinSeparador, TRANSCODE_RECARGA_PREPAGO, "NULL");
             if (WSL.Cards.ExceptionServicioCards(RespuestaCardsJson))
             {
                 return false;

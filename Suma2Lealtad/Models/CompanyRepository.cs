@@ -587,7 +587,7 @@ namespace Suma2Lealtad.Models
         //recarga bs en la cuenta del afiliado
         private bool Recargar(DetalleOrden detalleorden, string docnumber, decimal monto)
         {
-            string RespuestaCardsJson = WSL.Cards.addBatch(docnumber, Math.Truncate(monto).ToString(), TRANS_CODE_RECARGA);
+            string RespuestaCardsJson = WSL.Cards.addBatch(docnumber, Math.Truncate(monto).ToString(), "200", (string)HttpContext.Current.Session["login"]);
             if (ExceptionServicioCards(RespuestaCardsJson))
             {
                 return false;

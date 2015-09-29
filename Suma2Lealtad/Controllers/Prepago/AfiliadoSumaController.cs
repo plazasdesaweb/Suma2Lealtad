@@ -37,12 +37,6 @@ namespace Suma2Lealtad.Controllers.Prepago
             }
         }
 
-        //public ActionResult Create(string numdoc)
-        //{
-        //    AfiliadoSuma afiliado = repAfiliado.Find(numdoc);
-        //    return View("Create", afiliado);
-        //}
-
         [HttpPost]
         public ActionResult Create(AfiliadoSuma afiliado, HttpPostedFileBase file)
         {
@@ -70,12 +64,6 @@ namespace Suma2Lealtad.Controllers.Prepago
             AfiliadoSuma afiliado = new AfiliadoSuma();
             return View(afiliado);
         }
-
-        //public ActionResult Index(string numdoc)
-        //{
-        //    List<AfiliadoSuma> afiliados = repAfiliado.Find(numdoc, "", "");
-        //    return View(afiliados);
-        //}
 
         [HttpPost]
         public ActionResult FilterReview(string numdoc, string name, string email, string estadoAfiliacion, string estadoTarjeta)
@@ -166,6 +154,8 @@ namespace Suma2Lealtad.Controllers.Prepago
         public ActionResult ImprimirTarjeta(int id)
         {
             AfiliadoSuma afiliado = repAfiliado.Find(id);
+            afiliado.trackI = Tarjeta.ConstruirTrackI(afiliado.pan);
+            afiliado.trackII = Tarjeta.ConstruirTrackII(afiliado.pan);            
             return View("ImpresoraImprimirTarjeta", afiliado);
         }
 
@@ -177,12 +167,14 @@ namespace Suma2Lealtad.Controllers.Prepago
             {
                 if (repAfiliado.BloquearTarjeta(afiliado))
                 {
+                    afiliado.trackI = Tarjeta.ConstruirTrackI(afiliado.pan);
+                    afiliado.trackII = Tarjeta.ConstruirTrackII(afiliado.pan);                        
                     return View("ImpresoraImprimirTarjeta", afiliado);
                 }
                 else
                 {
                     viewmodel.Title = "Afiliado / ReImprimir Tarjeta";
-                    viewmodel.Message = "Falló el proceso de reimpresión de la Tarjeta";
+                    viewmodel.Message = "Falló el proceso de bloqueo de la tarjeta previa";
                     viewmodel.ControllerName = "AfiliadoSuma";
                     viewmodel.ActionName = "FilterReview";
                     return RedirectToAction("GenericView", viewmodel);
@@ -191,7 +183,7 @@ namespace Suma2Lealtad.Controllers.Prepago
             else
             {
                 viewmodel.Title = "Afiliado / ReImprimir Tarjeta";
-                viewmodel.Message = "Falló el proceso de reimpresión de la Tarjeta";
+                viewmodel.Message = "Falló el proceso de generación de nueva tarjeta";
                 viewmodel.ControllerName = "AfiliadoSuma";
                 viewmodel.ActionName = "FilterReview";
                 return RedirectToAction("GenericView", viewmodel);
@@ -203,8 +195,8 @@ namespace Suma2Lealtad.Controllers.Prepago
         {
             ViewModel viewmodel = new ViewModel();
             AfiliadoSuma afiliado = repAfiliado.Find(id);
-            afiliado.trackI = Tarjeta.ConstruirTrackI(afiliado.pan);
-            afiliado.trackII = Tarjeta.ConstruirTrackII(afiliado.pan);
+            //afiliado.trackI = Tarjeta.ConstruirTrackI(afiliado.pan);
+            //afiliado.trackII = Tarjeta.ConstruirTrackII(afiliado.pan);
             if (repAfiliado.ImprimirTarjeta(afiliado))
             {
                 viewmodel.Title = "Afiliado / Operaciones con la Impresora / Imprimir Tarjeta";

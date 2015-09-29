@@ -40,9 +40,7 @@ namespace Suma2Lealtad.Models
         {
               new EstadoDeTarjeta { id = "", estado = "Seleccione..."          },
               new EstadoDeTarjeta { id = "Nueva", estado = "Nueva" },
-              new EstadoDeTarjeta { id = "Inactiva", estado = "Inactiva"  },
               new EstadoDeTarjeta { id = "Activa", estado = "Activa"  },
-              new EstadoDeTarjeta { id = "Eliminada", estado = "Eliminada"  },
               new EstadoDeTarjeta { id = "Suspendida", estado = "Suspendida"  }
         };
         #endregion

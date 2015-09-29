@@ -110,21 +110,26 @@ namespace Suma2Lealtad.Controllers.Prepago
         public ActionResult ImprimirTarjeta(int id)
         {
             BeneficiarioPrepago beneficiario = repBeneficiario.Find(id);
+            beneficiario.Afiliado.trackI = Tarjeta.ConstruirTrackI(beneficiario.Afiliado.pan);
+            beneficiario.Afiliado.trackII = Tarjeta.ConstruirTrackII(beneficiario.Afiliado.pan);            
             return View("ImpresoraImprimirTarjeta", beneficiario);
         }
 
         public ActionResult ReImprimirTarjeta(int id, int idCliente)
         {
             ViewModel viewmodel = new ViewModel();
-            BeneficiarioPrepago beneficiario = new BeneficiarioPrepago()
-            {
-                Afiliado = repAfiliado.Find(id),
-                Cliente = repCliente.Find(idCliente)
-            };
+            //BeneficiarioPrepago beneficiario = new BeneficiarioPrepago()
+            //{
+            //    Afiliado = repAfiliado.Find(id),
+            //    Cliente = repCliente.Find(idCliente)
+            //};
+            BeneficiarioPrepago beneficiario = repBeneficiario.Find(id);
             if (repAfiliado.ImprimirTarjeta(beneficiario.Afiliado))
             {
                 if (repAfiliado.BloquearTarjeta(beneficiario.Afiliado))
                 {
+                    beneficiario.Afiliado.trackI = Tarjeta.ConstruirTrackI(beneficiario.Afiliado.pan);
+                    beneficiario.Afiliado.trackII = Tarjeta.ConstruirTrackII(beneficiario.Afiliado.pan);                        
                     return View("ImpresoraImprimirTarjeta", beneficiario);
                 }
                 else
@@ -151,8 +156,8 @@ namespace Suma2Lealtad.Controllers.Prepago
         {
             ViewModel viewmodel = new ViewModel();
             BeneficiarioPrepago beneficiario = repBeneficiario.Find(id);
-            beneficiario.Afiliado.trackI = Tarjeta.ConstruirTrackI(beneficiario.Afiliado.pan);
-            beneficiario.Afiliado.trackII = Tarjeta.ConstruirTrackII(beneficiario.Afiliado.pan);
+            //beneficiario.Afiliado.trackI = Tarjeta.ConstruirTrackI(beneficiario.Afiliado.pan);
+            //beneficiario.Afiliado.trackII = Tarjeta.ConstruirTrackII(beneficiario.Afiliado.pan);
             if (repAfiliado.ImprimirTarjeta(beneficiario.Afiliado))
             {
                 viewmodel.Title = "Prepago / Beneficiario / Operaciones con la Impresora / Imprimir Tarjeta";

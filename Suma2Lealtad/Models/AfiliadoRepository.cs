@@ -893,7 +893,7 @@ namespace Suma2Lealtad.Models
         //acredita más en la cuenta del afiliado
         public bool Acreditar(Afiliado afiliado, string monto)
         {
-            string RespuestaCardsJson = WSL.Cards.addBatch(afiliado.docnumber.Substring(2), monto);
+            string RespuestaCardsJson = WSL.Cards.addBatch(afiliado.docnumber.Substring(2), monto, "318", (string)HttpContext.Current.Session["login"]);
             if (ExceptionServicioCards(RespuestaCardsJson))
             {
                 return false;

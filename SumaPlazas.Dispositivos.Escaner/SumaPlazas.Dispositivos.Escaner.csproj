@@ -64,13 +64,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>3B91844E561B3E80B6A7DE56F2685CBEE5587379</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>E0144222F924E65B8D6F090A0CF955F4F0D967A9</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>certificado narb.pfx</ManifestKeyFile>
+    <ManifestKeyFile>SumaPlazas.Dispositivos.Escaner_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -111,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
+    <None Include="SumaPlazas.Dispositivos.Escaner_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\InBrowserSettings.xml" />

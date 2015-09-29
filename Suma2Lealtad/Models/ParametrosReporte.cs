@@ -14,5 +14,7 @@ namespace Suma2Lealtad.Models
         public int idCliente { get; set; }
         public string numdoc { get; set; }
         public string referencia { get; set; }
+        public string estatusTarjeta { get; set; }
+        public decimal numeroTarjeta { get; set; }
     }
 }

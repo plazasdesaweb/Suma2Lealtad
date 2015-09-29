@@ -219,7 +219,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AfiliadoController.cs" />
     <Compile Include="Controllers\AuditingController.cs" />
     <Compile Include="Controllers\ChannelController.cs" />
     <Compile Include="Controllers\CiudadController.cs" />
@@ -230,12 +229,10 @@
     <Compile Include="Controllers\InterestController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\MunicipioController.cs" />
-    <Compile Include="Controllers\MyDatabaseEntities.cs" />
     <Compile Include="Controllers\ParroquiaController.cs" />
     <Compile Include="Controllers\Prepago\AfiliadoSumaController.cs" />
     <Compile Include="Controllers\Prepago\BeneficiarioPrepagoController.cs" />
     <Compile Include="Controllers\Prepago\ClientePrepagoController.cs" />
-    <Compile Include="Controllers\Prepago\CompanyPrepagoController.cs" />
     <Compile Include="Controllers\Prepago\FueraLineaPrepagoController.cs" />
     <Compile Include="Controllers\Prepago\OrdenRecargaPrepagoController.cs" />
     <Compile Include="Controllers\ReasonsBlockController.cs" />
@@ -259,9 +256,6 @@
     <Compile Include="Models\AffiliateAud.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\AfiliadoRepository.cs" />
-    <Compile Include="Models\Afiliado.cs" />
-    <Compile Include="Models\AfiliadoSaldosMovimientos.cs" />
     <Compile Include="Models\AfiliadoSuma.cs" />
     <Compile Include="Models\Auditing.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
@@ -360,14 +354,9 @@
     <Compile Include="Models\Repositorios\ClientePrepagoRepository.cs" />
     <Compile Include="Models\ClienteWebPlazas.cs" />
     <Compile Include="Models\CMenu.cs" />
-    <Compile Include="Models\CompanyAfiliadoRecarga.cs" />
-    <Compile Include="Models\CompanyRepository.cs" />
-    <Compile Include="Models\DetalleOrden.cs" />
     <Compile Include="Models\ExceptionJSON.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Movimiento.cs" />
-    <Compile Include="Models\Orden.cs" />
-    <Compile Include="Models\PrepagoCompanyAffiliattes.cs" />
     <Compile Include="Models\Repositorios\OrdenRecargaPrepagoRepository.cs" />
     <Compile Include="Models\RespuestaCards.cs" />
     <Compile Include="Models\RespuestaWebPlazas.cs" />
@@ -573,9 +562,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Afiliado\Filter.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Afiliado\SilverlightEscaner.cshtml" />
     <Content Include="Views\Interest\Index.cshtml" />
     <Content Include="Views\Interest\Create.cshtml" />
     <Content Include="Views\Interest\Edit.cshtml" />
@@ -630,30 +617,14 @@
     <Content Include="Views\Error\SessionExpired.cshtml" />
     <Content Include="Views\User\Roles.cshtml" />
     <Content Include="Views\Role\Menus.cshtml" />
-    <Content Include="Views\Afiliado\Create.cshtml" />
-    <Content Include="Views\Afiliado\Edit.cshtml" />
-    <Content Include="Views\Afiliado\GenericView.cshtml" />
-    <Content Include="Views\Afiliado\FilterReview.cshtml" />
-    <Content Include="Views\Afiliado\Index.cshtml" />
-    <Content Include="Views\Afiliado\SilverlightPinPad.cshtml" />
-    <Content Include="Views\Afiliado\SilverlightImpresora.cshtml" />
     <Content Include="Scripts\jquery-2.1.3.min.map" />
-    <Content Include="Views\Afiliado\PinPadCrearPin.cshtml" />
     <Content Include="Views\ClientePrepago\PinPadReiniciarPin.cshtml" />
     <Content Include="Views\ClientePrepago\PinPadCambiarPin.cshtml" />
-    <Content Include="Views\Afiliado\ImpresoraImprimirTarjeta.cshtml" />
-    <Content Include="Views\Afiliado\SaldosMovimientos.cshtml" />
-    <Content Include="Views\Afiliado\Acreditar.cshtml" />
-    <Content Include="Views\Afiliado\SuspenderTarjeta.cshtml" />
-    <Content Include="Views\Afiliado\BloquearTarjeta.cshtml" />
-    <Content Include="Views\Afiliado\ReactivarTarjeta.cshtml" />
     <Content Include="Views\Municipio\Create.cshtml" />
     <Content Include="Views\Municipio\Delete.cshtml" />
     <Content Include="Views\Municipio\Details.cshtml" />
     <Content Include="Views\Municipio\Edit.cshtml" />
     <Content Include="Views\Municipio\Index.cshtml" />
-    <Content Include="Views\OperacionesImpresora\Index.cshtml" />
-    <Content Include="Views\OperacionesImpresora\SilverlightImpresora.cshtml" />
     <Content Include="Views\Ciudad\Create.cshtml" />
     <Content Include="Views\Ciudad\Delete.cshtml" />
     <Content Include="Views\Ciudad\Details.cshtml" />
@@ -674,26 +645,10 @@
     <Content Include="Views\Urbanizacion\Details.cshtml" />
     <Content Include="Views\Urbanizacion\Edit.cshtml" />
     <Content Include="Views\Urbanizacion\Index.cshtml" />
-    <Content Include="Views\CompanyPrepago\Create.cshtml" />
-    <Content Include="Views\CompanyPrepago\Delete.cshtml" />
-    <Content Include="Views\CompanyPrepago\Edit.cshtml" />
-    <Content Include="Views\CompanyPrepago\Index.cshtml" />
-    <Content Include="Views\CompanyPrepago\Beneficiarios.cshtml" />
-    <Content Include="Views\CompanyPrepago\FilterCompany.cshtml" />
-    <Content Include="Views\CompanyPrepago\FilterBeneficiarios.cshtml" />
-    <Content Include="Views\CompanyPrepago\GenericView.cshtml" />
-    <Content Include="Views\CompanyPrepago\Filter.cshtml" />
     <Content Include="Views\Ciudad\FilterCiudad.cshtml" />
     <Content Include="Views\Municipio\FilterMunicipio.cshtml" />
     <Content Include="Views\Parroquia\FilterParroquia.cshtml" />
     <Content Include="Views\Urbanizacion\FilterUrbanizacion.cshtml" />
-    <Content Include="Views\CompanyPrepago\RecargaMasiva.cshtml" />
-    <Content Include="Views\CompanyPrepago\Recargas.cshtml" />
-    <Content Include="Views\CompanyPrepago\Ordenes.cshtml" />
-    <Content Include="Views\CompanyPrepago\FilterBeneficiariosRecargas.cshtml" />
-    <Content Include="Views\CompanyPrepago\DetalleOrden.cshtml" />
-    <Content Include="Views\CompanyPrepago\ResultadoOrden.cshtml" />
-    <Content Include="Views\CompanyPrepago\ConfirmacionRecargas.cshtml" />
     <Content Include="Views\ClientePrepago\Index.cshtml" />
     <Content Include="Views\ClientePrepago\FilterReview.cshtml" />
     <Content Include="Views\ClientePrepago\Create.cshtml" />
@@ -711,9 +666,7 @@
     <Content Include="Views\ClientePrepago\SilverlightEscaner.cshtml" />
     <Content Include="Views\ClientePrepago\SaldosMovimientos.cshtml" />
     <Content Include="Views\ClientePrepago\Acreditar.cshtml" />
-    <Content Include="Views\Afiliado\PinPadCambiarPin.cshtml" />
     <Content Include="Views\ClientePrepago\PinPadCrearPin.cshtml" />
-    <Content Include="Views\Afiliado\PinPadReiniciarPin.cshtml" />
     <Content Include="Views\ClientePrepago\SilverlightPinPad.cshtml" />
     <Content Include="Views\ClientePrepago\SuspenderTarjeta.cshtml" />
     <Content Include="Views\ClientePrepago\ReactivarTarjeta.cshtml" />
@@ -779,6 +732,8 @@
     <Content Include="Views\Reporte\ReporteComprasPDF.cshtml" />
     <Content Include="Views\Reporte\ReporteRecargas.cshtml" />
     <Content Include="Views\Reporte\ReporteRecargasPDF.cshtml" />
+    <Content Include="Views\Reporte\ReporteTarjetas.cshtml" />
+    <Content Include="Views\Reporte\ReporteTarjetasPDF.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Picture\" />

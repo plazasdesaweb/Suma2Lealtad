@@ -12,8 +12,8 @@ namespace Suma2Lealtad.Models
     public class BeneficiarioPrepagoRepository
     {
         private const int ID_ESTATUS_AFILIACION_INICIAL = 0;
-        private const string TRANSCODE_COMPRA_PREPAGO = "145";
-
+        private const String TRANSCODE_COMPRA_PREPAGO = "145";
+        
         public List<BeneficiarioPrepago> Find(string numdoc, string name, string email, string estadoAfiliacion, string estadoTarjeta)
         {
             List<BeneficiarioPrepago> beneficiarios;
@@ -678,7 +678,7 @@ namespace Suma2Lealtad.Models
                                            fechafinReporte = fechahasta,
                                            documentoreferenciaReporte = referencia
                                        }
-                                   }).ToList();                       
+                                   }).ToList();
                     }
                     else
                     {
@@ -720,7 +720,7 @@ namespace Suma2Lealtad.Models
                                            fechafinReporte = fechahasta,
                                            documentoreferenciaReporte = referencia
                                        }
-                                   }).ToList();                        
+                                   }).ToList();
                     }
                     if (reporte.Count() == 0)
                     {
@@ -861,7 +861,7 @@ namespace Suma2Lealtad.Models
             List<ReportePrepago> reporte = new List<ReportePrepago>();
             EncabezadoReporte encabezado = new EncabezadoReporte();
             string textoparametro;
-            using (LealtadEntities db = new LealtadEntities())            
+            using (LealtadEntities db = new LealtadEntities())
             {
                 #region Por Beneficiario específico
                 if (tiporeporte == "uno")
@@ -1082,7 +1082,447 @@ namespace Suma2Lealtad.Models
                         };
                         reporte.Add(r);
                     }
-                }               
+                }
+                #endregion
+            }
+            DateTime desde = DateTime.ParseExact(fechadesde, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            DateTime hasta = DateTime.ParseExact(fechahasta, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            return reporte.Where(x => x.fecha.Date > desde && x.fecha.Date < hasta).OrderBy(x => x.fecha).ToList();
+        }
+
+        public List<ReportePrepago> ReporteTarjetasxCliente(string tiporeporte, string fechadesde, string fechahasta, int idCliente = 0, string estadoTarjeta = "")
+        {
+            List<ReportePrepago> reporte = new List<ReportePrepago>();
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                #region Por Cliente específico
+                if (tiporeporte == "uno")
+                {
+                    if (estadoTarjeta == "")
+                    {
+                        reporte = (from a in db.Affiliates
+                                   join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                   join s in db.SumaStatuses on a.statusid equals s.id
+                                   join t in db.Types on a.typeid equals t.id
+                                   join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid
+                                   join p in db.PrepaidCustomers on b.prepaidcustomerid equals p.id
+                                   join tar in db.TARJETAS on a.id equals tar.NRO_AFILIACION
+                                   where p.id == idCliente
+                                   select new ReportePrepago()
+                                   {
+                                       Beneficiario = new BeneficiarioPrepago()
+                                       {
+                                           Afiliado = new AfiliadoSuma()
+                                           {
+                                               docnumber = a.docnumber,
+                                               name = c.NOMBRE_CLIENTE1,
+                                               lastname1 = c.APELLIDO_CLIENTE1
+                                           },
+                                           Cliente = new ClientePrepago()
+                                           {
+                                               idCliente = idCliente,
+                                               nameCliente = p.name
+                                           }
+                                       },
+                                       fecha = tar.FECHA_CREACION.Value,
+                                       numerotarjeta = tar.NRO_TARJETA,
+                                       estatustarjeta = tar.ESTATUS_TARJETA,
+                                       Encabezado = new EncabezadoReporte()
+                                       {
+                                           nombreReporte = "Reporte de Tarjetas",
+                                           tipoconsultaReporte = "Por Cliente",
+                                           parametrotipoconsultaReporte = p.rif + " " + p.name,
+                                           fechainicioReporte = fechadesde,
+                                           fechafinReporte = fechahasta,
+                                           estatustarjetaReporte = "Todos"
+                                       }
+                                   }).ToList();
+                    }
+                    else
+                    {
+                        reporte = (from a in db.Affiliates
+                                   join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                   join s in db.SumaStatuses on a.statusid equals s.id
+                                   join t in db.Types on a.typeid equals t.id
+                                   join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid
+                                   join p in db.PrepaidCustomers on b.prepaidcustomerid equals p.id
+                                   join tar in db.TARJETAS on a.id equals tar.NRO_AFILIACION
+                                   where p.id == idCliente && tar.ESTATUS_TARJETA == estadoTarjeta
+                                   select new ReportePrepago()
+                                   {
+                                       Beneficiario = new BeneficiarioPrepago()
+                                       {
+                                           Afiliado = new AfiliadoSuma()
+                                           {
+                                               docnumber = a.docnumber,
+                                               name = c.NOMBRE_CLIENTE1,
+                                               lastname1 = c.APELLIDO_CLIENTE1
+                                           },
+                                           Cliente = new ClientePrepago()
+                                           {
+                                               idCliente = idCliente,
+                                               nameCliente = p.name
+                                           }
+                                       },
+                                       fecha = tar.FECHA_CREACION.Value,
+                                       numerotarjeta = tar.NRO_TARJETA,
+                                       estatustarjeta = tar.ESTATUS_TARJETA,
+                                       Encabezado = new EncabezadoReporte()
+                                       {
+                                           nombreReporte = "Reporte de Tarjetas",
+                                           tipoconsultaReporte = "Por Cliente",
+                                           parametrotipoconsultaReporte = p.rif + " " + p.name,
+                                           fechainicioReporte = fechadesde,
+                                           fechafinReporte = fechahasta,
+                                           estatustarjetaReporte = estadoTarjeta
+                                       }
+                                   }).ToList();
+                    }
+                    if (reporte.Count() == 0)
+                    {
+                        ClientePrepagoRepository repCliente = new ClientePrepagoRepository();
+                        ClientePrepago Cliente = repCliente.Find(idCliente);
+                        ReportePrepago r = new ReportePrepago()
+                        {
+                            Encabezado = new EncabezadoReporte()
+                            {
+                                nombreReporte = "Reporte de Tarjetas",
+                                tipoconsultaReporte = "Por Cliente",
+                                parametrotipoconsultaReporte = Cliente.rifCliente + " " + Cliente.nameCliente,
+                                fechainicioReporte = fechadesde,
+                                fechafinReporte = fechahasta,
+                                estatustarjetaReporte = estadoTarjeta
+                            }
+                        };
+                        reporte.Add(r);
+                    }
+                }
+                #endregion
+                #region Todos los Clientes
+                else if (tiporeporte == "todos")
+                {
+                    if (estadoTarjeta == "")
+                    {
+                        reporte = (from a in db.Affiliates
+                                   join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                   join s in db.SumaStatuses on a.statusid equals s.id
+                                   join t in db.Types on a.typeid equals t.id
+                                   join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid
+                                   join p in db.PrepaidCustomers on b.prepaidcustomerid equals p.id
+                                   join tar in db.TARJETAS on a.id equals tar.NRO_AFILIACION
+                                   select new ReportePrepago()
+                                   {
+                                       Beneficiario = new BeneficiarioPrepago()
+                                       {
+                                           Afiliado = new AfiliadoSuma()
+                                           {
+                                               docnumber = a.docnumber,
+                                               name = c.NOMBRE_CLIENTE1,
+                                               lastname1 = c.APELLIDO_CLIENTE1
+                                           },
+                                           Cliente = new ClientePrepago()
+                                           {
+                                               idCliente = idCliente,
+                                               nameCliente = p.name
+                                           }
+                                       },
+                                       fecha = tar.FECHA_CREACION.Value,
+                                       numerotarjeta = tar.NRO_TARJETA,
+                                       estatustarjeta = tar.ESTATUS_TARJETA,
+                                       Encabezado = new EncabezadoReporte()
+                                       {
+                                           nombreReporte = "Reporte de Tarjetas",
+                                           tipoconsultaReporte = "Por Cliente",
+                                           parametrotipoconsultaReporte = "Todos",
+                                           fechainicioReporte = fechadesde,
+                                           fechafinReporte = fechahasta,
+                                           estatustarjetaReporte = "Todos"
+                                       }
+                                   }).ToList();
+                    }
+                    else
+                    {
+                        reporte = (from a in db.Affiliates
+                                   join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                   join s in db.SumaStatuses on a.statusid equals s.id
+                                   join t in db.Types on a.typeid equals t.id
+                                   join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid
+                                   join p in db.PrepaidCustomers on b.prepaidcustomerid equals p.id
+                                   join tar in db.TARJETAS on a.id equals tar.NRO_AFILIACION
+                                   where tar.ESTATUS_TARJETA == estadoTarjeta
+                                   select new ReportePrepago()
+                                   {
+                                       Beneficiario = new BeneficiarioPrepago()
+                                       {
+                                           Afiliado = new AfiliadoSuma()
+                                           {
+                                               docnumber = a.docnumber,
+                                               name = c.NOMBRE_CLIENTE1,
+                                               lastname1 = c.APELLIDO_CLIENTE1
+                                           },
+                                           Cliente = new ClientePrepago()
+                                           {
+                                               idCliente = idCliente,
+                                               nameCliente = p.name
+                                           }
+                                       },
+                                       fecha = tar.FECHA_CREACION.Value,
+                                       numerotarjeta = tar.NRO_TARJETA,
+                                       estatustarjeta = tar.ESTATUS_TARJETA,
+                                       Encabezado = new EncabezadoReporte()
+                                       {
+                                           nombreReporte = "Reporte de Tarjetas",
+                                           tipoconsultaReporte = "Por Cliente",
+                                           parametrotipoconsultaReporte = "Todos",
+                                           fechainicioReporte = fechadesde,
+                                           fechafinReporte = fechahasta,
+                                           estatustarjetaReporte = estadoTarjeta
+                                       }
+                                   }).ToList();
+
+                    }
+                    if (reporte.Count() == 0)
+                    {
+                        ClientePrepagoRepository repCliente = new ClientePrepagoRepository();
+                        ClientePrepago Cliente = repCliente.Find(idCliente);
+                        ReportePrepago r = new ReportePrepago()
+                        {
+                            Encabezado = new EncabezadoReporte()
+                            {
+                                nombreReporte = "Reporte de Tarjetas",
+                                tipoconsultaReporte = "Por Cliente",
+                                parametrotipoconsultaReporte = "Todos",
+                                fechainicioReporte = fechadesde,
+                                fechafinReporte = fechahasta,
+                                estatustarjetaReporte = estadoTarjeta
+                            }
+                        };
+                        reporte.Add(r);
+                    }
+                }
+                #endregion
+            }
+            DateTime desde = DateTime.ParseExact(fechadesde, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            DateTime hasta = DateTime.ParseExact(fechahasta, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            return reporte.Where(x => x.fecha.Date > desde && x.fecha.Date < hasta).OrderBy(x => x.fecha).ToList();
+        }
+
+        public List<ReportePrepago> ReporteTarjetasxBeneficiario(string tiporeporte, string fechadesde, string fechahasta, string numdoc = "", string estadoTarjeta = "")
+        {
+            List<ReportePrepago> reporte = new List<ReportePrepago>();
+            string textoparametro;
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                #region Por Beneficiario específico
+                if (tiporeporte == "uno")
+                {
+                     List<BeneficiarioPrepago> beneficiarios = Find(numdoc, "", "", "", "");
+                     if (beneficiarios.Count == 0)
+                     {
+                         textoparametro = numdoc;
+                     }
+                     else
+                     {
+                         textoparametro = beneficiarios.First().Afiliado.docnumber + " " + beneficiarios.First().Afiliado.name + " " + beneficiarios.First().Afiliado.lastname1;
+                         if (estadoTarjeta == "")
+                         {
+                             reporte = (from a in db.Affiliates
+                                        join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                        join s in db.SumaStatuses on a.statusid equals s.id
+                                        join t in db.Types on a.typeid equals t.id
+                                        join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid
+                                        join p in db.PrepaidCustomers on b.prepaidcustomerid equals p.id
+                                        join tar in db.TARJETAS on a.id equals tar.NRO_AFILIACION
+                                        where a.docnumber == numdoc
+                                        select new ReportePrepago()
+                                        {
+                                            Beneficiario = new BeneficiarioPrepago()
+                                            {
+                                                Afiliado = new AfiliadoSuma()
+                                                {
+                                                    docnumber = a.docnumber,
+                                                    name = c.NOMBRE_CLIENTE1,
+                                                    lastname1 = c.APELLIDO_CLIENTE1
+                                                },
+                                                Cliente = new ClientePrepago()
+                                                {
+                                                    idCliente = p.id,
+                                                    nameCliente = p.name
+                                                }
+                                            },
+                                            fecha = tar.FECHA_CREACION.Value,
+                                            numerotarjeta = tar.NRO_TARJETA,
+                                            estatustarjeta = tar.ESTATUS_TARJETA,
+                                            Encabezado = new EncabezadoReporte()
+                                            {
+                                                nombreReporte = "Reporte de Tarjetas",
+                                                tipoconsultaReporte = "Por Beneficiario",
+                                                parametrotipoconsultaReporte = textoparametro,
+                                                fechainicioReporte = fechadesde,
+                                                fechafinReporte = fechahasta,
+                                                estatustarjetaReporte = "Todos"
+                                            }
+                                        }).ToList();
+                         }
+                         else
+                         {
+                             reporte = (from a in db.Affiliates
+                                        join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                        join s in db.SumaStatuses on a.statusid equals s.id
+                                        join t in db.Types on a.typeid equals t.id
+                                        join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid
+                                        join p in db.PrepaidCustomers on b.prepaidcustomerid equals p.id
+                                        join tar in db.TARJETAS on a.id equals tar.NRO_AFILIACION
+                                        where a.docnumber == numdoc && tar.ESTATUS_TARJETA == estadoTarjeta
+                                        select new ReportePrepago()
+                                        {
+                                            Beneficiario = new BeneficiarioPrepago()
+                                            {
+                                                Afiliado = new AfiliadoSuma()
+                                                {
+                                                    docnumber = a.docnumber,
+                                                    name = c.NOMBRE_CLIENTE1,
+                                                    lastname1 = c.APELLIDO_CLIENTE1
+                                                },
+                                                Cliente = new ClientePrepago()
+                                                {
+                                                    idCliente = p.id,
+                                                    nameCliente = p.name
+                                                }
+                                            },
+                                            fecha = tar.FECHA_CREACION.Value,
+                                            numerotarjeta = tar.NRO_TARJETA,
+                                            estatustarjeta = tar.ESTATUS_TARJETA,
+                                            Encabezado = new EncabezadoReporte()
+                                            {
+                                                nombreReporte = "Reporte de Tarjetas",
+                                                tipoconsultaReporte = "Por Beneficiario",
+                                                parametrotipoconsultaReporte = textoparametro,
+                                                fechainicioReporte = fechadesde,
+                                                fechafinReporte = fechahasta,
+                                                estatustarjetaReporte = estadoTarjeta
+                                            }
+                                        }).ToList();
+                         }
+                    }
+                    if (reporte.Count() == 0)
+                    {
+                        ReportePrepago r = new ReportePrepago()
+                        {
+                            Encabezado = new EncabezadoReporte()
+                            {
+                                nombreReporte = "Reporte de Tarjetas",
+                                tipoconsultaReporte = "Por Beneficiario",
+                                parametrotipoconsultaReporte = textoparametro,
+                                fechainicioReporte = fechadesde,
+                                fechafinReporte = fechahasta,
+                                estatustarjetaReporte = estadoTarjeta
+                            }
+                        };
+                        reporte.Add(r);
+                    }
+                }
+                #endregion
+                #region Todos los Beneficiarios
+                else if (tiporeporte == "todos")
+                {
+                    if (estadoTarjeta == "")
+                    {
+                        reporte = (from a in db.Affiliates
+                                   join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                   join s in db.SumaStatuses on a.statusid equals s.id
+                                   join t in db.Types on a.typeid equals t.id
+                                   join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid
+                                   join p in db.PrepaidCustomers on b.prepaidcustomerid equals p.id
+                                   join tar in db.TARJETAS on a.id equals tar.NRO_AFILIACION
+                                   select new ReportePrepago()
+                                   {
+                                       Beneficiario = new BeneficiarioPrepago()
+                                       {
+                                           Afiliado = new AfiliadoSuma()
+                                           {
+                                               docnumber = a.docnumber,
+                                               name = c.NOMBRE_CLIENTE1,
+                                               lastname1 = c.APELLIDO_CLIENTE1
+                                           },
+                                           Cliente = new ClientePrepago()
+                                           {
+                                               idCliente = p.id,
+                                               nameCliente = p.name
+                                           }
+                                       },
+                                       fecha = tar.FECHA_CREACION.Value,
+                                       numerotarjeta = tar.NRO_TARJETA,
+                                       estatustarjeta = tar.ESTATUS_TARJETA,
+                                       Encabezado = new EncabezadoReporte()
+                                       {
+                                           nombreReporte = "Reporte de Tarjetas",
+                                           tipoconsultaReporte = "Por Beneficiario",
+                                           parametrotipoconsultaReporte = "Todos",
+                                           fechainicioReporte = fechadesde,
+                                           fechafinReporte = fechahasta,
+                                           estatustarjetaReporte = "Todos"
+                                       }
+                                   }).ToList();
+                    }
+                    else
+                    {
+                        reporte = (from a in db.Affiliates
+                                   join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                   join s in db.SumaStatuses on a.statusid equals s.id
+                                   join t in db.Types on a.typeid equals t.id
+                                   join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid
+                                   join p in db.PrepaidCustomers on b.prepaidcustomerid equals p.id
+                                   join tar in db.TARJETAS on a.id equals tar.NRO_AFILIACION
+                                   where tar.ESTATUS_TARJETA == estadoTarjeta
+                                   select new ReportePrepago()
+                                   {
+                                       Beneficiario = new BeneficiarioPrepago()
+                                       {
+                                           Afiliado = new AfiliadoSuma()
+                                           {
+                                               docnumber = a.docnumber,
+                                               name = c.NOMBRE_CLIENTE1,
+                                               lastname1 = c.APELLIDO_CLIENTE1
+                                           },
+                                           Cliente = new ClientePrepago()
+                                           {
+                                               idCliente = p.id,
+                                               nameCliente = p.name
+                                           }
+                                       },
+                                       fecha = tar.FECHA_CREACION.Value,
+                                       numerotarjeta = tar.NRO_TARJETA,
+                                       estatustarjeta = tar.ESTATUS_TARJETA,
+                                       Encabezado = new EncabezadoReporte()
+                                       {
+                                           nombreReporte = "Reporte de Tarjetas",
+                                           tipoconsultaReporte = "Por Beneficiario",
+                                           parametrotipoconsultaReporte = "Todos",
+                                           fechainicioReporte = fechadesde,
+                                           fechafinReporte = fechahasta,
+                                           estatustarjetaReporte = estadoTarjeta
+                                       }
+                                   }).ToList();
+
+                    }
+                    if (reporte.Count() == 0)
+                    {
+                        ReportePrepago r = new ReportePrepago()
+                        {
+                            Encabezado = new EncabezadoReporte()
+                            {
+                                nombreReporte = "Reporte de Tarjetas",
+                                tipoconsultaReporte = "Por Beneficiario",
+                                parametrotipoconsultaReporte = "Todos",
+                                fechainicioReporte = fechadesde,
+                                fechafinReporte = fechahasta,
+                                estatustarjetaReporte = estadoTarjeta
+                            }
+                        };
+                        reporte.Add(r);
+                    }
+                }
                 #endregion
             }
             DateTime desde = DateTime.ParseExact(fechadesde, "dd/MM/yyyy", CultureInfo.InvariantCulture);
@@ -1098,7 +1538,8 @@ namespace Suma2Lealtad.Models
          **/
         public bool CompraFueraLinea(string numdoc, string monto)
         {
-            string RespuestaCardsJson = WSL.Cards.addBatch(numdoc, monto, "145");
+            //string montoSinSeparador = Math.Truncate(Convert.ToDecimal(monto) * 100).ToString();
+            string RespuestaCardsJson = WSL.Cards.addBatch(numdoc, monto, TRANSCODE_COMPRA_PREPAGO, (string)HttpContext.Current.Session["login"]);
             if (WSL.Cards.ExceptionServicioCards(RespuestaCardsJson))
             {
                 return false;

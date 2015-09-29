@@ -26,7 +26,7 @@
 
                         <div class="col-md-push-2 col-md-8 text-center">
                             <br />
-                            <div class="display-field">
+                            <div class="display-field">                                
                                 @Html.DisplayFor(model => model.nameCliente)
                             </div>
                         </div>
@@ -39,6 +39,7 @@
                             {
                                 @Html.AntiForgeryToken()
                                 <p>
+                                    @Html.HiddenFor(model => model.idCliente)
                                     <input type="submit" class="btn btn-success" value="Aceptar" />
                                     <a href="@Url.Action("Index", "ClientePrepago", new { rif = Model.rifCliente})" class="btn btn-danger btn-md" role="button">Cancelar</a>
                                 </p>
