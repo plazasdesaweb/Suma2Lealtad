@@ -11,6 +11,7 @@ namespace Suma2Lealtad.Controllers.Prepago
 {
     public class ClientePrepagoController : Controller
     {
+        private const int ID_TYPE_PREPAGO = 2;
         private ClientePrepagoRepository repCliente = new ClientePrepagoRepository();
         private BeneficiarioPrepagoRepository repBeneficiario = new BeneficiarioPrepagoRepository();
         private AfiliadoSumaRepository repAfiliado = new AfiliadoSumaRepository();
@@ -193,6 +194,8 @@ namespace Suma2Lealtad.Controllers.Prepago
                 }
                 else
                 {
+                    beneficiario.Afiliado.typeid = ID_TYPE_PREPAGO;
+                    beneficiario.Afiliado.type = "Prepago";
                     return View("CreateBeneficiario", beneficiario);
                 }
             }
@@ -617,7 +620,7 @@ namespace Suma2Lealtad.Controllers.Prepago
             ViewModel viewmodel = new ViewModel();
             Boolean result = true;
             AfiliadoSuma afiliado;
-            List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find("", "", "", "", "").Where(b => b.Cliente.idCliente == id && b.Afiliado.estatustarjeta != "Activa").ToList();
+            List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find("", "", "", "", "").Where(b => b.Cliente.idCliente == id && b.Afiliado.estatustarjeta == "Activa").ToList();
             foreach (BeneficiarioPrepago b in beneficiarios)
             {
                 afiliado = repAfiliado.Find(b.Afiliado.id);

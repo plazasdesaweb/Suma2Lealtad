@@ -64,7 +64,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>E0144222F924E65B8D6F090A0CF955F4F0D967A9</ManifestCertificateThumbprint>
