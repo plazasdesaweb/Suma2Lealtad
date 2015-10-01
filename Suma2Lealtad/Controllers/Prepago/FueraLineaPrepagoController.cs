@@ -11,6 +11,7 @@ namespace Suma2Lealtad.Controllers.Prepago
     public class FueraLineaPrepagoController : Controller
     {
         BeneficiarioPrepagoRepository repBeneficiario = new BeneficiarioPrepagoRepository();
+        private AfiliadoSumaRepository repAfiliado = new AfiliadoSumaRepository();
 
         //
         // GET: /FueraLineaPrepago/Filter/
@@ -48,7 +49,10 @@ namespace Suma2Lealtad.Controllers.Prepago
 
             BeneficiarioPrepago record = repBeneficiario.Find(id);
 
-            BeneficiarioPrepagoViewModel model = new BeneficiarioPrepagoViewModel() { numdoc = record.Afiliado.docnumber, beneficiario = record.Afiliado.name + " " + record.Afiliado.lastname1, monto = "0,00" };
+            //BeneficiarioPrepago beneficiario = repBeneficiario.Find(id);
+            SaldosMovimientos SaldosMovimientos = repAfiliado.FindSaldosMovimientos( record.Afiliado );
+
+            BeneficiarioPrepagoViewModel model = new BeneficiarioPrepagoViewModel() { numdoc = record.Afiliado.docnumber, beneficiario = record.Afiliado.name + " " + record.Afiliado.lastname1, monto = "0,00",  saldo = SaldosMovimientos.Saldos[0].saldo.ToString() };
 
             return View( model );
         
@@ -72,7 +76,12 @@ namespace Suma2Lealtad.Controllers.Prepago
                 {
                     ModelState.AddModelError("Monto", "El Monto de Transacción debe contener coma (,) como símbolo separador decimal.");
                 }
-                else {
+                else if ( decimal.Parse(model.saldoactual) <= 0 || decimal.Parse(model.monto) < decimal.Parse(model.saldoactual))
+                {
+                    ModelState.AddModelError("Monto", "El Monto de Transacción supera el Saldo Disponible.");
+                }
+                else
+                {
 
                     ViewModel viewmodel = new ViewModel();
                     viewmodel.Title = "Prepago / Fuera de Línea / Crear Transacción de Compra";
@@ -80,7 +89,7 @@ namespace Suma2Lealtad.Controllers.Prepago
                     viewmodel.ControllerName = "FueraLineaPrepago";
                     viewmodel.ActionName = "Filter";
 
-                    if (! repBeneficiario.CompraFueraLinea(model.documento, model.montotrx))
+                    if (!repBeneficiario.CompraFueraLinea(model.documento, model.montotrx))
                         viewmodel.Message = "La Transacción no pudo ser efectuada. Revise los estatus de la Tarjeta o Cuenta e intente de nuevo.";
 
                     return RedirectToAction("GenericView", viewmodel);

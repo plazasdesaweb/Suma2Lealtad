@@ -34,7 +34,12 @@
         <div class="editor-field col-md-6">
             @Html.TextBoxFor(model => model.beneficiario, new { @class = "form-control", @readonly = "true" })
         </div>
-
+        <div class="editor-label col-md-4 control-label">
+            Saldo Actual BsF:
+        </div>
+        <div class="editor-field col-md-6">
+            @Html.TextBoxFor(model => model.saldo, new { @class = "form-control", @readonly = "true" })
+        </div>
         <div class="editor-label col-md-4 control-label">
            * Monto de Transacción :
         </div>
@@ -46,11 +51,14 @@
         <div class="editor-label col-md-4 control-label"></div>
         <div class="editor-field col-md-6"><br></div>
 
+            @Html.HiddenFor( model => model.saldo )
+            @Html.HiddenFor( model => model.saldoactual )
+
         </div>
 
         <div class="col-md-12 col-tabla-btn">
             <div class="pull-right">
-                <input type="submit" class="btn btn-success btn-md" value="Agregar Recarga" />
+                <input type="submit" class="btn btn-success btn-md" value="Procesar Compra" />
                 <a href="@Url.Action("Filter", "FueraLineaPrepago")" class="btn btn-danger btn-md">Cancelar</a>
             </div>
         </div>
