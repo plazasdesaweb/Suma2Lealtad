@@ -1,4 +1,4 @@
-﻿@model Suma2Lealtad.Models.BeneficiarioPrepago
+﻿@model Suma2Lealtad.Models.AfiliadoSuma
 <!-- btn btn-success -->
 <div class="col-md-12 col-btn">
     <div class="text-center">
@@ -10,7 +10,7 @@
 
 @{
     //DEBO SACAR LA INFO DEL NRO DEL DOCUMENTO DEL MODELO Y PASARLO COMO PARAMETRO AL HELPER SE SILVERLIGHT
-    var InitParams = "nombreArchivo=" + Model.Afiliado.docnumber;
+    var InitParams = "nombreArchivo=" + Model.docnumber;
     InitParams = InitParams + "," + "idElementoHtmlControl=ElementoControl";
 }
 

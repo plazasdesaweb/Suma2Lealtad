@@ -67,31 +67,31 @@
     <script src="@Url.Content("~/Scripts/jquery.bootstrap.wizard.min.js")"></script>
 
     <script>
-            jQuery.extend(jQuery.validator.messages, {
-                required: "El campo es requerido.",
-                remote: "Please fix this field.",
-                email: "Ingrese un correo electrónico válido.",
-                url: "Please enter a valid URL.",
-                date: "Please enter a valid date.",
-                dateISO: "Please enter a valid date (ISO).",
-                number: "Please enter a valid number.",
-                digits: "Please enter only digits.",
-                equalTo: "Please enter the same value again.",
-                accept: "Please enter a value with a valid extension.",
-                maxlength: jQuery.validator.format("Please enter no more than {0} characters."),
-                minlength: jQuery.validator.format("Ingrese al menos {0} caracteres."),
-                rangelength: jQuery.validator.format("Please enter a value between {0} and {1} characters long."),
-                range: jQuery.validator.format("Please enter a value between {0} and {1}."),
-                max: jQuery.validator.format("Please enter a value less than or equal to {0}."),
-                min: jQuery.validator.format("Please enter a value greater than or equal to {0}.")
-            });
-    </script>   
+        jQuery.extend(jQuery.validator.messages, {
+            required: "El campo es requerido.",
+            remote: "Please fix this field.",
+            email: "Ingrese un correo electrónico válido.",
+            url: "Please enter a valid URL.",
+            date: "Please enter a valid date.",
+            dateISO: "Please enter a valid date (ISO).",
+            number: "Please enter a valid number.",
+            digits: "Please enter only digits.",
+            equalTo: "Please enter the same value again.",
+            accept: "Please enter a value with a valid extension.",
+            maxlength: jQuery.validator.format("Please enter no more than {0} characters."),
+            minlength: jQuery.validator.format("Ingrese al menos {0} caracteres."),
+            rangelength: jQuery.validator.format("Please enter a value between {0} and {1} characters long."),
+            range: jQuery.validator.format("Please enter a value between {0} and {1}."),
+            max: jQuery.validator.format("Please enter a value less than or equal to {0}."),
+            min: jQuery.validator.format("Please enter a value greater than or equal to {0}.")
+        });
+    </script>
 
     <script>
-    $(document).ready(function() {
+        $(document).ready(function () {
 
-        $('#cod_estado').change(function () {
-            $.getJSON('@Url.Action("/CiudadList/")' + $('#cod_estado').val(), function (data) {
+            $('#cod_estado').change(function () {
+                $.getJSON('@Url.Action("/CiudadList/")' + $('#cod_estado').val(), function (data) {
                 var items = '<option value=" ">Seleccione una Ciudad</option>';
                 $.each(data, function (i, district) {
                     items += "<option value='" + district.Value + "'>" + district.Text + "</option>";
@@ -100,7 +100,7 @@
             });
         });
 
-        $('#Afiliado_cod_estado').change(function () {
+        @*$('#Afiliado_cod_estado').change(function () {
             $.getJSON('@Url.Action("/CiudadList/")' + $('#Afiliado_cod_estado').val(), function (data) {
                 var items = '<option value=" ">Seleccione una Ciudad</option>';
                 $.each(data, function (i, district) {
@@ -108,7 +108,7 @@
                 });
                 $('#Afiliado_cod_ciudad').html(items);
             });
-        });
+        });*@
 
         $('#cod_ciudad').change(function () {
             $.getJSON('@Url.Action("/MunicipioList/")' + $('#cod_ciudad').val(), function (data) {
@@ -120,7 +120,7 @@
             });
         });
 
-        $('#Afiliado_cod_ciudad').change(function () {
+        @*$('#Afiliado_cod_ciudad').change(function () {
             $.getJSON('@Url.Action("/MunicipioList/")' + $('#Afiliado_cod_ciudad').val(), function (data) {
                 var items = '<option value=" ">Seleccione un Municipio</option>';
                 $.each(data, function (i, record) {
@@ -128,8 +128,8 @@
                 });
                 $('#Afiliado_cod_municipio').html(items);
             });
-        });
-        
+        });*@
+
         $('#cod_municipio').change(function () {
             $.getJSON('@Url.Action("/ParroquiaList/")' + $('#cod_municipio').val(), function (data) {
                 var items = '<option value=" ">Seleccione una Parroquia</option>';
@@ -140,7 +140,7 @@
             });
         });
 
-        $('#Afiliado_cod_municipio').change(function () {
+        @*$('#Afiliado_cod_municipio').change(function () {
             $.getJSON('@Url.Action("/ParroquiaList/")' + $('#Afiliado_cod_municipio').val(), function (data) {
                 var items = '<option value=" ">Seleccione una Parroquia</option>';
                 $.each(data, function (i, record) {
@@ -148,7 +148,7 @@
                 });
                 $('#Afiliado_cod_parroquia').html(items);
             });
-        });
+        });*@
 
         $('#cod_parroquia').change(function () {
             $.getJSON('@Url.Action("/UrbanizacionList/")' + $('#cod_parroquia').val(), function (data) {
@@ -160,7 +160,7 @@
             });
         });
 
-        $('#Afiliado_cod_parroquia').change(function () {
+        @*$('#Afiliado_cod_parroquia').change(function () {
             $.getJSON('@Url.Action("/UrbanizacionList/")' + $('#Afiliado_cod_parroquia').val(), function (data) {
                 var items = '<option value=" ">Seleccione una Urbanización</option>';
                 $.each(data, function (i, record) {
@@ -168,111 +168,135 @@
                 });
                 $('#Afiliado_cod_urbanizacion').html(items);
             });
+        });*@
+
+        $.validator.addMethod("regex", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Ingrese un valor correcto.");
+
+        $.validator.addMethod("regex2", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Formato Fecha Incorrecto (dd/mm/aaaa).");
+
+        $.validator.addMethod("valueNotEquals", function (value, element, arg) {
+            return arg != value;
+        }, "Es requerido seleccionar un valor de la lista.");
+
+        var $validateFilter = $("#FilterForm").validate({
+            rules: {
+                email: {
+                    email: true,
+                    minlength: 3
+                }
+            }
         });
-        
-       $.validator.addMethod("regex", function(value, element, regexpr) {          
-         return regexpr.test(value);
-       }, "Ingrese un valor correcto.");
-
-       $.validator.addMethod("valueNotEquals", function (value, element, arg) {
-           return arg != value;
-       }, "Es requerido seleccionar un valor de la lista.");
-
-       var $validateFilter = $("#FilterForm").validate({
-           rules: {
-               email: {
-                   email: true,
-                   minlength: 3
-               }
-           }
-       });
 
         var $validator = $("#commentForm").validate({
-          rules: {
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 3
+                },
+                
+                lastname1: {
+                    required: true,
+                    minlength: 3
+                },
 
-            name: {
-              required: true,
-              minlength: 3
+                email: {
+                    required: true,
+                    email: true,
+                    minlength: 3
+                },
+
+                birthdate: {
+                    required: true,
+                    regex2: /^([0][1-9]|[12][0-9]|3[01])(\/)([0][1-9]|[1][0-2])(\/)(\d{4})$/
+                },
+
+                phone1: {
+                    required: true,
+                    minlength: 3
+                },
+
+                gender: {
+                    valueNotEquals: "0"
+                },
+
+                maritalstatus: {
+                    valueNotEquals: "0"
+                },
+
+                nationality: {
+                    valueNotEquals: "0"
+                },
+
+                file: {
+                    required: true,
+                },
+
+                cod_estado: {
+                    valueNotEquals: " "
+                },
+
+                cod_ciudad: {
+                    valueNotEquals: " "
+                },
+
+                cod_municipio: {
+                    valueNotEquals: " "
+                },
+
+                cod_parroquia: {
+                    valueNotEquals: " "
+                },
+
+                cod_urbanizacion: {
+                    valueNotEquals: " "
+                },
+
+                channelid: {
+                    valueNotEquals: "0"
+                },
+
+                emailfield: {
+                    required: true,
+                    email: true,
+                    minlength: 3
+                },
+
+                namefield: {
+                    required: true,
+                    /*minlength: 3,*/
+                    regex: /^[0-9]+$/
+                },
+
+                urlfield: {
+                    required: true,
+                    minlength: 3,
+                    url: true
+                }
             },
-
-            lastname1: {
-              required: true,
-              minlength: 3
-            },
-
-            email: {
-              required: true,
-              email:true,
-              minlength: 3
-            },
-
-            birthdate: {
-                required: true,
-                minlength: 3
-            },
-
-            phone1: {
-                required: true,
-                minlength: 3
-            },
-
-            gender: { valueNotEquals: "0" },
-
-            maritalstatus: { valueNotEquals: "0" },
-
-            file: {
-                required: true,
-            },
-
-            cod_estado: { valueNotEquals: " " },
-
-            cod_ciudad: { valueNotEquals: " " },
-
-            cod_municipio: { valueNotEquals: " " },
-
-            cod_parroquia: { valueNotEquals: " " },
-
-            cod_urbanizacion: { valueNotEquals: " " },
-
-            channelid: { valueNotEquals: "0" },
-
-            emailfield: {
-              required: true,
-              email: true,
-              minlength: 3
-            },
-            namefield: {
-              required: true,
-              /*minlength: 3,*/
-              regex: /^[0-9]+$/
-            },
-            urlfield: {
-              required: true,
-              minlength: 3,
-              url: true
+            messages: {
+                emailfield: {
+                    emailfield: "Enter a valid email address."
+                }
             }
-          },
-        messages: {
-            emailfield: {
-                emailfield: "Enter a valid email address."
-            },
-            
-        }         
-
         });
 
         $('#rootwizard').bootstrapWizard({
             'tabClass': 'nav nav-pills',
-            'onNext': function(tab, navigation, index) {
+            'onNext': function (tab, navigation, index) {
                 var $valid = $("#commentForm").valid();
-                if(!$valid) {
+                if (!$valid ) {
                     $validator.focusInvalid();
                     return false;
-                }
+                }                
             }
-        }); 
+        });
         window.prettyPrint && prettyPrint()
-    }); 
+        
+    });
     </script>
 
 </body>

@@ -200,7 +200,7 @@
             document.getElementById('fechadesde').focus();
             return false;
         }
-        var RegExPattern = /^([0][1-9]|[12][0-9]|3[01])(\/|-)([0][1-9]|[1][0-2])\2(\d{4})$/;
+        var RegExPattern = /^([0][1-9]|[12][0-9]|3[01])(\/)([0][1-9]|[1][0-2])(\/)(\d{4})$/;
         if (RegExPattern.test(fecha) == false) {
             spanMessage('field2', '* Formato Fecha Incorrecto. (dd/mm/aaaa)');
             document.getElementById('fechadesde').value = "";
@@ -218,7 +218,7 @@
             document.getElementById('fechahasta').focus();
             return false;
         }
-        var RegExPattern = /^([0][1-9]|[12][0-9]|3[01])(\/|-)([0][1-9]|[1][0-2])\2(\d{4})$/;
+        var RegExPattern = /^([0][1-9]|[12][0-9]|3[01])(\/)([0][1-9]|[1][0-2])(\/)(\d{4})$/
         if (RegExPattern.test(fecha) == false) {
             spanMessage('field3', '* Formato Fecha Incorrecto. (dd/mm/aaaa)');
             document.getElementById('fechahasta').value = "";

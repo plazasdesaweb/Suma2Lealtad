@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "FindBeneficiario";
+    ViewBag.Title = "FilterBeneficiario";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -8,7 +8,7 @@
     <div class="panel panel-default">
 
         <div class="panel-heading clearfix panel-gradient">
-            <h3 class="panel-title">Afiliado / Crear Afiliación / Filtro de Búsqueda</h3>
+            <h3 class="panel-title">Beneficiario Prepago / Crear Afiliación / Filtro de Búsqueda</h3>
         </div>
 
         <div class="panel-body">
@@ -20,7 +20,7 @@
                 <br />
             </div>
 
-            <form action="@Url.Action("Filter", "AfiliadoSuma")" name="form" method="post" onsubmit="return validarDocumento();">
+            <form action="@Url.Action("Filter", "BeneficiarioPrepago")" name="form" method="post" onsubmit="return validarDocumento();">
 
 
                 <div class="editor-label col-md-4 control-label"></div>

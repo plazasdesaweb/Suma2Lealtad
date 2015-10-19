@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Suma2Lealtad.Models
 {
@@ -56,11 +57,34 @@ namespace Suma2Lealtad.Models
         //Campos extras que no se almacenan en Entidades
         public string WebType { get; set; }             // Type de Afiliado en WEBPLAZAS
 
+        public int idClientePrepago { get; set; }
+        public string NombreClientePrepago { get; set; }
+        public List<PrepaidCustomer> ListaClientes { get; set; }
+
+        public DateTime fechaAfiliacion { get; set; }
+        public string usuarioAfiliacion { get; set; }
+
         /* Excepciones */
         //public string exnumber { get; set; }
         //public string exdetail { get; set; }
 
         //ATRIBUTOS DE LISTAS DE VALORES (DINÁMICOS Y ESTÁTICOS).
+        #region Lista_Nacionalidades
+        public class Nacionalidad
+        {
+            public int id { get; set; }
+            public string nacionalidad { get; set; }
+        }
+
+        public IEnumerable<Nacionalidad> NacionalidadOptions =
+            new List<Nacionalidad>
+        {
+              new Nacionalidad { id = 0, nacionalidad = ""          },
+              new Nacionalidad { id = 1, nacionalidad = "Venezolano" },
+              new Nacionalidad { id = 2, nacionalidad = "Extranjero"  }
+        };
+        #endregion
+
         #region Listas_Datos_Geográficos
         public List<ESTADO> ListaEstados { get; set; }
         public List<CIUDAD> ListaCiudades { get; set; }
@@ -75,7 +99,6 @@ namespace Suma2Lealtad.Models
             public int id { get; set; }
             public string sexo { get; set; }
         }
-
 
         public IEnumerable<Sexo> SexoOptions =
             new List<Sexo>
@@ -144,10 +167,9 @@ namespace Suma2Lealtad.Models
         public IEnumerable<Channel> ChannelOptions =
             new List<Channel>
         {
-              new Channel { id = 0, channel = ""           },
-              new Channel { id = 1, channel = "Promotor"   },
-              new Channel { id = 2, channel = "Página Web" },
-              new Channel { id = 3, channel = "Eventos"    }
+              new Channel { id = 1, channel = "Sistema Administrador Suma/Prepago" },
+              new Channel { id = 2, channel = "Página Web"   },
+              new Channel { id = 3, channel = "Eventos" },
         };
 
         #endregion

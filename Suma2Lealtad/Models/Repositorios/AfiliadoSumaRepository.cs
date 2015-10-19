@@ -18,6 +18,7 @@ namespace Suma2Lealtad.Models
         private const string ID_ESTATUS_TARJETA_SUSPENDIDA = "6";
         private const int ID_REASONS_INICIAL = 1;
         private const string TRANSCODE_ACREDITACION_SUMA = "318";
+        private const string TIPO_CUENTA_SUMA = "7";
 
         //retorna el ojeto Photos_Affiliate a partr del id del afiliado
         private Photos_Affiliate GetPhoto(int id)
@@ -58,12 +59,13 @@ namespace Suma2Lealtad.Models
             }
             else
             {
+                //Si está en la WebPlazas
                 afiliado.nationality = clienteWebPlazas.nationality.Replace("/", "").Replace("\\", "");
                 afiliado.name = clienteWebPlazas.name.Replace("/", "").Replace("\\", "");
                 afiliado.name2 = clienteWebPlazas.name2.Replace("/", "").Replace("\\", "");
                 afiliado.lastname1 = clienteWebPlazas.lastname1.Replace("/", "").Replace("\\", "");
                 afiliado.lastname2 = clienteWebPlazas.lastname2.Replace("/", "").Replace("\\", "");
-                afiliado.birthdate = clienteWebPlazas.birthdate.Value.ToString("dd-MM-yyyy");
+                afiliado.birthdate = clienteWebPlazas.birthdate.Value.ToString("dd/MM/yyyy");
                 afiliado.gender = clienteWebPlazas.gender.Replace("/", "").Replace("\\", "");
                 afiliado.clientid = clienteWebPlazas.id;
                 afiliado.maritalstatus = clienteWebPlazas.maritalstatus.Replace("/", "").Replace("\\", "");
@@ -230,29 +232,32 @@ namespace Suma2Lealtad.Models
                 }
                 foreach (var afiliado in afiliados)
                 {
-                    Decimal p = (from t in db.TARJETAS
-                                 where t.NRO_AFILIACION.Equals(afiliado.id)
-                                 select t.NRO_TARJETA
-                                 ).SingleOrDefault();
-                    if (p != 0)
+                    if (afiliado.estatus != "Nueva")
                     {
-                        afiliado.pan = p.ToString();
-                    }
-                    else
-                    {
-                        afiliado.pan = "";
-                    }
-                    string e = (from t in db.TARJETAS
-                                where t.NRO_AFILIACION.Equals(afiliado.id)
-                                select t.ESTATUS_TARJETA
-                                ).SingleOrDefault();
-                    if (e != null)
-                    {
-                        afiliado.estatustarjeta = e.ToString();
-                    }
-                    else
-                    {
-                        afiliado.estatustarjeta = "";
+                        Decimal p = (from t in db.TARJETAS
+                                     where t.NRO_AFILIACION.Equals(afiliado.id)
+                                     select t.NRO_TARJETA
+                                     ).SingleOrDefault();
+                        if (p != 0)
+                        {
+                            afiliado.pan = p.ToString();
+                        }
+                        else
+                        {
+                            afiliado.pan = "";
+                        }
+                        string e = (from t in db.TARJETAS
+                                    where t.NRO_AFILIACION.Equals(afiliado.id)
+                                    select t.ESTATUS_TARJETA
+                                    ).SingleOrDefault();
+                        if (e != null)
+                        {
+                            afiliado.estatustarjeta = e.ToString();
+                        }
+                        else
+                        {
+                            afiliado.estatustarjeta = "";
+                        }
                     }
                 }
             }
@@ -315,7 +320,7 @@ namespace Suma2Lealtad.Models
                                    where (c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO).Equals(afiliado.docnumber)
                                    select c.FECHA_NACIMIENTO
                                    ).SingleOrDefault();
-                    afiliado.birthdate = d.Value.ToString("dd-MM-yyyy");
+                    afiliado.birthdate = d.Value.ToString("dd/MM/yyyy");
                     //ENTIDAD CustomerInterest
                     afiliado.Intereses = chargeInterestList(afiliado.id);
                     //Llenar las listas de Datos Geográficos.
@@ -325,29 +330,32 @@ namespace Suma2Lealtad.Models
                     afiliado.ListaParroquias = GetParroquias(afiliado.cod_municipio);
                     afiliado.ListaUrbanizaciones = GetUrbanizaciones(afiliado.cod_parroquia);
                     //ENTIDAD TARJETA
-                    Decimal p = (from t in db.TARJETAS
-                                 where t.NRO_AFILIACION.Equals(afiliado.id)
-                                 select t.NRO_TARJETA
-                                 ).SingleOrDefault();
-                    if (p != 0)
+                    if (afiliado.estatus != "Nueva")
                     {
-                        afiliado.pan = p.ToString();
-                    }
-                    else
-                    {
-                        afiliado.pan = "";
-                    }
-                    string e = (from t in db.TARJETAS
-                                where t.NRO_AFILIACION.Equals(afiliado.id)
-                                select t.ESTATUS_TARJETA
-                                ).SingleOrDefault();
-                    if (e != null)
-                    {
-                        afiliado.estatustarjeta = e.ToString();
-                    }
-                    else
-                    {
-                        afiliado.estatustarjeta = "";
+                        Decimal p = (from t in db.TARJETAS
+                                     where t.NRO_AFILIACION.Equals(afiliado.id)
+                                     select t.NRO_TARJETA
+                                     ).SingleOrDefault();
+                        if (p != 0)
+                        {
+                            afiliado.pan = p.ToString();
+                        }
+                        else
+                        {
+                            afiliado.pan = "";
+                        }
+                        string e = (from t in db.TARJETAS
+                                    where t.NRO_AFILIACION.Equals(afiliado.id)
+                                    select t.ESTATUS_TARJETA
+                                    ).SingleOrDefault();
+                        if (e != null)
+                        {
+                            afiliado.estatustarjeta = e.ToString();
+                        }
+                        else
+                        {
+                            afiliado.estatustarjeta = "";
+                        }
                     }
                     //ENTIDAD Photos_Affiliate 
                     afiliado.picture = GetPhoto(afiliado.id);
@@ -356,6 +364,13 @@ namespace Suma2Lealtad.Models
                     {
                         afiliado.WebType = WEB_TYPE;
                     }
+                    //TEMPORAL CARGAR FECHA Y USUARIO DE AFILIACION
+                    afiliado.fechaAfiliacion = db.Affiliates.FirstOrDefault(x => x.id == afiliado.id).creationdate;
+                    afiliado.usuarioAfiliacion = (from a in db.Affiliates
+                                                  join u in db.Users on a.creationuserid equals u.id
+                                                  where a.id == afiliado.id
+                                                  select u.firstname + " " + u.lastname + "(" + u.login + ")"
+                                                  ).SingleOrDefault();
                 }
                 return afiliado;
             }
@@ -413,7 +428,7 @@ namespace Suma2Lealtad.Models
                     NOMBRE_CLIENTE2 = afiliado.name2 == null ? "" : afiliado.name2,
                     APELLIDO_CLIENTE1 = afiliado.lastname1,
                     APELLIDO_CLIENTE2 = afiliado.lastname2 == null ? "" : afiliado.lastname2,
-                    FECHA_NACIMIENTO = DateTime.ParseExact(afiliado.birthdate, "dd-MM-yyyy", CultureInfo.InvariantCulture),
+                    FECHA_NACIMIENTO = DateTime.ParseExact(afiliado.birthdate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
                     SEXO = afiliado.gender,
                     EDO_CIVIL = afiliado.maritalstatus,
                     OCUPACION = afiliado.occupation == null ? "" : afiliado.occupation,
@@ -522,7 +537,7 @@ namespace Suma2Lealtad.Models
                     cliente.NOMBRE_CLIENTE2 = afiliado.name2;
                     cliente.APELLIDO_CLIENTE1 = afiliado.lastname1;
                     cliente.APELLIDO_CLIENTE2 = afiliado.lastname2;
-                    cliente.FECHA_NACIMIENTO = DateTime.ParseExact(afiliado.birthdate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                    cliente.FECHA_NACIMIENTO = DateTime.ParseExact(afiliado.birthdate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     cliente.SEXO = afiliado.gender;
                     cliente.EDO_CIVIL = afiliado.maritalstatus;
                     cliente.OCUPACION = afiliado.occupation;
@@ -537,18 +552,20 @@ namespace Suma2Lealtad.Models
                     cliente.COD_URBANIZACION = afiliado.cod_urbanizacion;
                 }
                 // Entida: TARJETA
-                TARJETA tarjeta = db.TARJETAS.FirstOrDefault(t => t.NRO_AFILIACION.Equals(afiliado.id));
+                //TARJETA tarjeta = db.TARJETAS.FirstOrDefault(t => t.NRO_AFILIACION.Equals(afiliado.id));
+                Decimal pan = Convert.ToDecimal(afiliado.pan);
+                TARJETA tarjeta = db.TARJETAS.FirstOrDefault(t => t.NRO_TARJETA.Equals(pan));
                 if (tarjeta != null)
                 {
                     tarjeta.ESTATUS_TARJETA = afiliado.estatustarjeta;
                     tarjeta.COD_USUARIO = (int)HttpContext.Current.Session["userid"];
-                    tarjeta.FECHA_CREACION = DateTime.Now;
+                    tarjeta.FECHA_CREACION = afiliado.printed == null ? new DateTime?() : DateTime.ParseExact(afiliado.printed, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                 }
                 else if (afiliado.pan != null && afiliado.estatustarjeta != null)
                 {
                     tarjeta = new TARJETA()
                     {
-                        NRO_TARJETA = Convert.ToDecimal(afiliado.pan),
+                        NRO_TARJETA = pan,
                         NRO_AFILIACION = afiliado.id,
                         TIPO_DOCUMENTO = afiliado.docnumber.Substring(0, 1),
                         NRO_DOCUMENTO = afiliado.docnumber.Substring(2),
@@ -559,10 +576,11 @@ namespace Suma2Lealtad.Models
                         TRACK1 = null,
                         TRACK2 = null,
                         CVV2 = null,
-                        FECHA_CREACION = DateTime.Now
+                        FECHA_CREACION = afiliado.printed == null ? new DateTime?() : DateTime.ParseExact(afiliado.printed, "dd/MM/yyyy", CultureInfo.InvariantCulture)
                     };
                     db.TARJETAS.Add(tarjeta);
                 }
+
                 // Entidad: CustomerInterest
                 foreach (var m in db.CustomerInterests.Where(f => f.customerid == afiliado.id))
                 {
@@ -591,7 +609,7 @@ namespace Suma2Lealtad.Models
                         id = AfilliateAudID(),
                         affiliateid = afiliado.id,
                         modifieduserid = (int)HttpContext.Current.Session["userid"],
-                        modifieddate = System.DateTime.Now,
+                        modifieddate = DateTime.Now,
                         statusid = afiliado.statusid,
                         reasonsid = ID_REASONS_INICIAL,
                         comments = afiliado.comments
@@ -632,7 +650,7 @@ namespace Suma2Lealtad.Models
                     }
                     ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<ClienteCards>(clienteCardsJson);
                     afiliado.pan = clienteCards.pan;
-                    afiliado.printed = clienteCards.printed;
+                    afiliado.printed = clienteCards.printed == null ? null : clienteCards.printed.Substring(6, 2) + "/" + clienteCards.printed.Substring(4, 2) + "/" + clienteCards.printed.Substring(0, 4);
                     afiliado.estatustarjeta = clienteCards.tarjeta;
                     afiliado.statusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_AFILIACION_ACTIVA) && (s.tablename == "Affiliatte")).id;
                     return SaveChanges(afiliado);
@@ -676,7 +694,7 @@ namespace Suma2Lealtad.Models
                 }
                 ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<ClienteCards>(clienteCardsJson);
                 afiliado.pan = clienteCards.pan;
-                afiliado.printed = clienteCards.printed;
+                afiliado.printed = clienteCards.printed == null ? null : clienteCards.printed.Substring(6, 2) + "/" + clienteCards.printed.Substring(4, 2) + "/" + clienteCards.printed.Substring(0, 4);
                 afiliado.estatustarjeta = clienteCards.tarjeta;
                 return SaveChanges(afiliado);
             }
@@ -727,7 +745,7 @@ namespace Suma2Lealtad.Models
                     }
                     ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<ClienteCards>(clienteCardsJson);
                     afiliado.pan = clienteCards.pan;
-                    afiliado.printed = clienteCards.printed;
+                    afiliado.printed = clienteCards.printed == null ? null : clienteCards.printed.Substring(6, 2) + "/" + clienteCards.printed.Substring(4, 2) + "/" + clienteCards.printed.Substring(0, 4);
                     afiliado.estatustarjeta = clienteCards.tarjeta;
                     return SaveChanges(afiliado);
                 }
@@ -762,7 +780,7 @@ namespace Suma2Lealtad.Models
                 }
                 ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<ClienteCards>(clienteCardsJson);
                 afiliado.pan = clienteCards.pan;
-                afiliado.printed = clienteCards.printed;
+                afiliado.printed = clienteCards.printed == null ? null : clienteCards.printed.Substring(6, 2) + "/" + clienteCards.printed.Substring(4, 2) + "/" + clienteCards.printed.Substring(0, 4);
                 afiliado.estatustarjeta = clienteCards.tarjeta;
                 return SaveChanges(afiliado);
             }
@@ -791,7 +809,7 @@ namespace Suma2Lealtad.Models
                 }
                 ClienteCards clienteCards = (ClienteCards)JsonConvert.DeserializeObject<ClienteCards>(clienteCardsJson);
                 afiliado.pan = clienteCards.pan;
-                afiliado.printed = clienteCards.printed;
+                afiliado.printed = clienteCards.printed == null ? null : clienteCards.printed.Substring(6, 2) + "/" + clienteCards.printed.Substring(4, 2) + "/" + clienteCards.printed.Substring(0, 4);
                 afiliado.estatustarjeta = clienteCards.tarjeta;
                 return SaveChanges(afiliado);
             }
@@ -818,10 +836,10 @@ namespace Suma2Lealtad.Models
             }
             SaldosMovimientos.MovimientosPrepago = (List<Movimiento>)JsonConvert.DeserializeObject<List<Movimiento>>(movimientosPrepagoJson);
             List<Movimiento> MovimientosPrepagoOrdenados = SaldosMovimientos.MovimientosPrepago.OrderByDescending(x => x.batchid).ToList();
-            SaldosMovimientos.MovimientosPrepago = MovimientosPrepagoOrdenados.Take(3).ToList();
+            SaldosMovimientos.MovimientosPrepago = MovimientosPrepagoOrdenados.Take(20).ToList();
             foreach (Movimiento mov in SaldosMovimientos.MovimientosPrepago)
             {
-                mov.fecha = mov.fecha.Substring(6, 2) + "-" + mov.fecha.Substring(4, 2) + "-" + mov.fecha.Substring(0, 4);
+                mov.fecha = mov.fecha.Substring(6, 2) + "/" + mov.fecha.Substring(4, 2) + "/" + mov.fecha.Substring(0, 4);
             }
             string movimientosLealtadJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.Skip(1).First().accounttype, SaldosMovimientos.DocId.Substring(2));
             if (WSL.Cards.ExceptionServicioCards(movimientosLealtadJson))
@@ -830,10 +848,10 @@ namespace Suma2Lealtad.Models
             }
             SaldosMovimientos.MovimientosSuma = (List<Movimiento>)JsonConvert.DeserializeObject<List<Movimiento>>(movimientosLealtadJson);
             List<Movimiento> MovimientosSumaOrdenados = SaldosMovimientos.MovimientosSuma.OrderByDescending(x => x.batchid).ToList();
-            SaldosMovimientos.MovimientosSuma = MovimientosSumaOrdenados.Take(3).ToList();
+            SaldosMovimientos.MovimientosSuma = MovimientosSumaOrdenados.Take(20).ToList();
             foreach (Movimiento mov in SaldosMovimientos.MovimientosSuma)
             {
-                mov.fecha = mov.fecha.Substring(6, 2) + "-" + mov.fecha.Substring(4, 2) + "-" + mov.fecha.Substring(0, 4);
+                mov.fecha = mov.fecha.Substring(6, 2) + "/" + mov.fecha.Substring(4, 2) + "/" + mov.fecha.Substring(0, 4);
             }
             return SaldosMovimientos;
         }
@@ -875,12 +893,113 @@ namespace Suma2Lealtad.Models
             using (LealtadEntities db = new LealtadEntities())
             {
                 Affiliate afiliate = db.Affiliates.FirstOrDefault(a => a.docnumber == afiliado.docnumber);
-                afiliate.sumastatusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_AFILIACION_INICIAL) && (s.tablename == "Affiliatte")).id;
+                afiliate.statusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_AFILIACION_INICIAL) && (s.tablename == "Affiliatte")).id;
                 db.SaveChanges();
                 afiliado.estatus = "Nueva";
                 afiliado.statusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_AFILIACION_INICIAL) && (s.tablename == "Affiliatte")).id;
                 return afiliado;
             }
+        }
+
+        public List<ReporteSuma> ReporteTransacciones(string fechadesde, string fechahasta, string tipotrans, string numdoc = "")
+        {
+            string fechasdesdemod = fechadesde.Substring(6, 4) + fechadesde.Substring(3, 2) + fechadesde.Substring(0, 2);
+            string fechahastamod = fechahasta.Substring(6, 4) + fechahasta.Substring(3, 2) + fechahasta.Substring(0, 2);
+            List<ReporteSuma> reporte = new List<ReporteSuma>();
+            EncabezadoReporteSuma encabezado = new EncabezadoReporteSuma();
+            #region Todos los Afiliados
+            if (numdoc == "")
+            {
+                List<AfiliadoSuma> afiliados = Find("", "", "", "", "").ToList();
+                encabezado.nombreReporte = "Reporte de Transacciones";
+                encabezado.numdocReporte = "Todos";
+                encabezado.fechainicioReporte = fechadesde;
+                encabezado.fechafinReporte = fechahasta;
+                encabezado.tipotransaccionReporte = tipotrans;
+                foreach (AfiliadoSuma a in afiliados)
+                {
+                    string movimientosLealtadJson = WSL.Cards.getBatch(TIPO_CUENTA_SUMA, a.docnumber.Substring(2));
+                    if (WSL.Cards.ExceptionServicioCards(movimientosLealtadJson))
+                    {
+                        return null;
+                    }
+                    List<Movimiento> movimientosSuma = (List<Movimiento>)JsonConvert.DeserializeObject<List<Movimiento>>(movimientosLealtadJson).OrderBy(x => x.fecha).ToList();
+                    foreach (Movimiento m in movimientosSuma)
+                    {
+                        ReporteSuma linea = new ReporteSuma()
+                        {
+                            Afiliado = a,
+                            fecha = DateTime.ParseExact(m.fecha.Substring(6, 2) + "/" + m.fecha.Substring(4, 2) + "/" + m.fecha.Substring(0, 4), "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                            monto = Convert.ToInt32(m.saldo),
+                            detalle = m.isodescription,
+                            tipo = m.transcode + "-" + m.transname,
+                            numerotarjeta = Convert.ToDecimal(m.pan),
+                            Encabezado = encabezado                            
+                        };
+                        if (tipotrans == "Todas")
+                        {
+                            reporte.Add(linea);
+                        }
+                        else if (tipotrans == m.transcode)
+                        {
+                            reporte.Add(linea);
+                        }
+                    }
+                }
+            }
+            #endregion
+            #region Todos los Clientes
+            else if (numdoc != "")
+            {
+                List<AfiliadoSuma> afiliados = Find(numdoc, "", "", "", "").ToList();
+                encabezado.nombreReporte = "Reporte de Transacciones";
+                encabezado.numdocReporte = afiliados.First().docnumber + " " + afiliados.First().name + " " + afiliados.First().lastname1;
+                encabezado.fechainicioReporte = fechadesde;
+                encabezado.fechafinReporte = fechahasta;
+                encabezado.tipotransaccionReporte = tipotrans;
+                foreach (AfiliadoSuma a in afiliados)
+                {
+                    string movimientosLealtadJson = WSL.Cards.getBatch(TIPO_CUENTA_SUMA, a.docnumber.Substring(2));
+                    if (WSL.Cards.ExceptionServicioCards(movimientosLealtadJson))
+                    {
+                        return null;
+                    }
+                    List<Movimiento> movimientosSuma = (List<Movimiento>)JsonConvert.DeserializeObject<List<Movimiento>>(movimientosLealtadJson).OrderBy(x => x.fecha).ToList();
+                    foreach (Movimiento m in movimientosSuma)
+                    {
+                        ReporteSuma linea = new ReporteSuma()
+                        {
+                            Afiliado = a,
+                            fecha = DateTime.ParseExact(m.fecha.Substring(6, 2) + "/" + m.fecha.Substring(4, 2) + "/" + m.fecha.Substring(0, 4), "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                            monto = Convert.ToInt32(m.saldo),
+                            detalle = m.isodescription,
+                            tipo = m.transcode + "-" + m.transname,
+                            numerotarjeta = Convert.ToDecimal(m.pan),
+                            Encabezado = encabezado
+                        };
+                        if (tipotrans == "Todas")
+                        {
+                            reporte.Add(linea);
+                        }
+                        else if (tipotrans == m.transcode)
+                        {
+                            reporte.Add(linea);
+                        }
+                    }
+                }
+            }
+            #endregion
+            if (reporte.Count == 0)
+            {
+                ReporteSuma r = new ReporteSuma()
+                {
+                    Encabezado = encabezado
+                };
+                reporte.Add(r);
+            }
+            DateTime desde = DateTime.ParseExact(fechadesde, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            DateTime hasta = DateTime.ParseExact(fechahasta, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            return reporte.Where(x => x.fecha.Date > desde && x.fecha.Date < hasta).OrderBy(x => x.fecha).ToList();        
         }
 
         public class customerInterest

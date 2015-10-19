@@ -9,7 +9,11 @@ namespace Suma2Lealtad.Controllers
 {
     public class ReporteController : Controller
     {
+        private const string TRANSCODE_ACREDITACION_SUMA = "318";
+        private const string TRANSCODE_CANJE_SUMA = "319";
+
         private BeneficiarioPrepagoRepository repBeneficiario = new BeneficiarioPrepagoRepository();
+        private AfiliadoSumaRepository repAfiliado = new AfiliadoSumaRepository();
 
         public ActionResult FilterReporteRecargas()
         {
@@ -32,6 +36,12 @@ namespace Suma2Lealtad.Controllers
             ReportePrepago reporte = new ReportePrepago();
             reporte.ListaClientes = repBeneficiario.GetClientes();
             reporte.ListaClientes.Insert(0, new PrepaidCustomer { id = 0, name = "" });
+            return View(reporte);
+        }
+
+        public ActionResult FilterReporteTransacciones()
+        {
+            ReporteSuma reporte = new ReporteSuma();
             return View(reporte);
         }
 
@@ -280,6 +290,67 @@ namespace Suma2Lealtad.Controllers
             return new Rotativa.ViewAsPdf("ReporteTarjetasPDF", reporte)
             {
                 FileName = "Reporte de Tarjetas.pdf",
+                CustomSwitches = footer
+            };
+        }
+        
+        [HttpPost]
+        public ActionResult ReporteTransacciones(string TipoTransaccion, string fechadesde, string fechahasta, string numdoc = "")
+        {
+            List<ReporteSuma> reporte = new List<ReporteSuma>();
+            if (TipoTransaccion == "Todas")
+            {
+                reporte = repAfiliado.ReporteTransacciones(fechadesde, fechahasta, TipoTransaccion, numdoc);
+            }
+            else if (TipoTransaccion == "Acreditacion")
+            {
+                reporte = repAfiliado.ReporteTransacciones(fechadesde, fechahasta, TRANSCODE_ACREDITACION_SUMA, numdoc);
+            }
+            else if (TipoTransaccion == "Canje")
+            {
+                reporte = repAfiliado.ReporteTransacciones(fechadesde, fechahasta, TRANSCODE_CANJE_SUMA, numdoc);
+            }
+            ParametrosReporteSuma p = new ParametrosReporteSuma()
+            {
+                tipotransaccion = TipoTransaccion,
+                fechadesde = fechadesde,
+                fechahasta = fechahasta,
+                numdoc = numdoc
+            };
+            if (reporte.Count == 0)
+            {
+                ReporteSuma r = new ReporteSuma()
+                {
+                    Parametros = p
+                };
+                reporte.Add(r);
+            }
+            else
+            {
+                reporte.First().Parametros = p;
+            }
+            return View(reporte);
+        }
+
+        public ActionResult GenerateReporteTransaccionesPDF(string TipoTransaccion, string fechadesde, string fechahasta, string numdoc = "")
+        {
+            List<ReporteSuma> reporte = new List<ReporteSuma>();
+            if (TipoTransaccion == "Todas")
+            {
+                reporte = repAfiliado.ReporteTransacciones(fechadesde, fechahasta, TipoTransaccion, numdoc);
+            }
+            else if (TipoTransaccion == "Acreditacion")
+            {
+                reporte = repAfiliado.ReporteTransacciones(fechadesde, fechahasta, TRANSCODE_ACREDITACION_SUMA, numdoc);
+            }
+            else if (TipoTransaccion == "Canje")
+            {
+                reporte = repAfiliado.ReporteTransacciones(fechadesde, fechahasta, TRANSCODE_CANJE_SUMA, numdoc);
+            }
+            string footer = "--footer-right \"Date: [date] [time]\" " + "--footer-center \"Page: [page] of [toPage]\" --footer-line --footer-font-size \"9\" --footer-spacing 5 --footer-font-name \"calibri light\"";
+            return new Rotativa.ViewAsPdf("ReporteTransaccionesPDF", reporte)
+            {
+                FileName = "Reporte de Transacciones.pdf",
                 CustomSwitches = footer
             };
         }

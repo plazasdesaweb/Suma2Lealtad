@@ -103,6 +103,28 @@ namespace Suma2Lealtad.Models
             }
         }
 
+        public ClientePrepago FindXidAfiliado(int idAfiliado)
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                ClientePrepago cliente;
+                cliente = (from c in db.PrepaidCustomers
+                           join b in db.PrepaidBeneficiaries on c.id equals b.prepaidcustomerid
+                           where b.affiliateid.Equals(idAfiliado)
+                           select new ClientePrepago()
+                           {
+                               idCliente = c.id,
+                               nameCliente = c.name,
+                               aliasCliente = c.alias,
+                               rifCliente = c.rif,
+                               addressCliente = c.address,
+                               phoneCliente = c.phone,
+                               emailCliente = c.email
+                           }).FirstOrDefault();
+                return cliente;
+            }
+        }
+
         public bool Save(ClientePrepago cliente)
         {
             using (LealtadEntities db = new LealtadEntities())

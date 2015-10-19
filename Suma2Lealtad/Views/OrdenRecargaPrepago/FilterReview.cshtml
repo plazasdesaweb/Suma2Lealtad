@@ -121,7 +121,7 @@
         if (fecha.length == 0) {
             return true;
         }
-        var RegExPattern = /^([0][1-9]|[12][0-9]|3[01])(\/|-)([0][1-9]|[1][0-2])\2(\d{4})$/;
+        var RegExPattern = /^([0][1-9]|[12][0-9]|3[01])(\/)([0][1-9]|[1][0-2])(\/)(\d{4})$/
         if (RegExPattern.test(fecha) == false ) {
             spanMessage('field1', '* Formato Fecha Incorrecto. (dd/mm/aaaa)');
             document.getElementById('fecha').value = "";

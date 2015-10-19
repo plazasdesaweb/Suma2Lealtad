@@ -76,7 +76,7 @@ namespace Suma2Lealtad.Controllers.Prepago
                 {
                     ModelState.AddModelError("Monto", "El Monto de Transacción debe contener coma (,) como símbolo separador decimal.");
                 }
-                else if ( decimal.Parse(model.saldoactual) <= 0 || decimal.Parse(model.monto) < decimal.Parse(model.saldoactual))
+                else if ( decimal.Parse(model.saldoactual) <= 0 || decimal.Parse(model.monto) > decimal.Parse(model.saldoactual))
                 {
                     ModelState.AddModelError("Monto", "El Monto de Transacción supera el Saldo Disponible.");
                 }

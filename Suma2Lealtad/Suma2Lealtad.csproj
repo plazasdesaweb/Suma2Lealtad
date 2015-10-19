@@ -277,6 +277,9 @@
     <Compile Include="Models\CompanyAffiliate.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ParametrosReporteSuma.cs" />
+    <Compile Include="Models\EncabezadoReporteSuma.cs" />
+    <Compile Include="Models\ReporteSuma.cs" />
     <Compile Include="Models\CreditLimit.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
@@ -655,11 +658,11 @@
     <Content Include="Views\ClientePrepago\Delete.cshtml" />
     <Content Include="Views\ClientePrepago\Edit.cshtml" />
     <Content Include="Views\ClientePrepago\Filter.cshtml" />
-    <Content Include="Views\ClientePrepago\FilterBeneficiarios.cshtml" />
+    <Content Include="Views\ClientePrepago\FilterReviewBeneficiarios.cshtml" />
     <Content Include="Views\ClientePrepago\FilterOrdenes.cshtml" />
     <Content Include="Views\ClientePrepago\IndexBeneficiarios.cshtml" />
     <Content Include="Views\ClientePrepago\GenericView.cshtml" />
-    <Content Include="Views\ClientePrepago\FindBeneficiario.cshtml" />
+    <Content Include="Views\ClientePrepago\FilterBeneficiario.cshtml" />
     <Content Include="Views\ClientePrepago\IndexOrdenes.cshtml" />
     <Content Include="Views\ClientePrepago\CreateBeneficiario.cshtml" />
     <Content Include="Views\ClientePrepago\EditBeneficiario.cshtml" />
@@ -734,6 +737,9 @@
     <Content Include="Views\Reporte\ReporteRecargasPDF.cshtml" />
     <Content Include="Views\Reporte\ReporteTarjetas.cshtml" />
     <Content Include="Views\Reporte\ReporteTarjetasPDF.cshtml" />
+    <Content Include="Views\Reporte\FilterReporteTransacciones.cshtml" />
+    <Content Include="Views\Reporte\ReporteTransacciones.cshtml" />
+    <Content Include="Views\Reporte\ReporteTransaccionesPDF.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Picture\" />

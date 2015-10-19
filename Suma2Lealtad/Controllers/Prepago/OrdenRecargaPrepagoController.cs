@@ -33,7 +33,7 @@ namespace Suma2Lealtad.Controllers.Prepago
         {
             ClientePrepago cliente = repCliente.Find(idCliente);
             List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find("", "", "", "", "").Where(b => b.Cliente.idCliente == idCliente).ToList();
-            List<DetalleOrdenRecargaPrepago> detalleOrden = repOrden.DetalleParaOrden(cliente, beneficiarios.FindAll(b => b.Afiliado.estatus == "Activa"));
+            List<DetalleOrdenRecargaPrepago> detalleOrden = repOrden.DetalleParaOrden(cliente, beneficiarios.FindAll(b => b.Afiliado.estatus == "Activa" && b.Afiliado.estatustarjeta == "Activa"));
             return View(detalleOrden);
         }
 
@@ -87,7 +87,8 @@ namespace Suma2Lealtad.Controllers.Prepago
             {
                 try
                 {
-                    path = Server.MapPath(AppModule.GetPathPicture().Replace("@filename@.jpg", idtemp));
+                    //path = Server.MapPath(AppModule.GetPathPicture().Replace("@filename@.jpg", idtemp));
+                    path = Server.MapPath("~/App_Data/" + idtemp);
                     file.SaveAs(path);
                 }
                 catch (Exception ex)
@@ -117,7 +118,7 @@ namespace Suma2Lealtad.Controllers.Prepago
                 }
                 else
                 {
-                    List<DetalleOrdenRecargaPrepago> detalleOrden = repOrden.DetalleParaOrdenArchivo(cliente, beneficiarios.FindAll(b => b.Afiliado.estatus == "Activa"), detalleOrdenArchivo);
+                    List<DetalleOrdenRecargaPrepago> detalleOrden = repOrden.DetalleParaOrdenArchivo(cliente, beneficiarios.FindAll(b => b.Afiliado.estatus == "Activa" && b.Afiliado.estatustarjeta == "Activa"), detalleOrdenArchivo);
                     return View("Create", detalleOrden);
                 }
             }

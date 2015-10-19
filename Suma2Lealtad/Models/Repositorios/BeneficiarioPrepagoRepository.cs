@@ -232,112 +232,121 @@ namespace Suma2Lealtad.Models
         public BeneficiarioPrepago Find(int id)
         {
             AfiliadoSumaRepository repAfiliado = new AfiliadoSumaRepository();
-            BeneficiarioPrepago beneficiario;
-            using (LealtadEntities db = new LealtadEntities())
+            ClientePrepagoRepository repCliente = new ClientePrepagoRepository();
+            BeneficiarioPrepago beneficiario = new BeneficiarioPrepago()
             {
-                beneficiario = (from a in db.Affiliates
-                                join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                join s in db.SumaStatuses on a.statusid equals s.id
-                                join t in db.Types on a.typeid equals t.id
-                                join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid
-                                join x in db.PrepaidCustomers on b.prepaidcustomerid equals x.id
-                                where a.id == id
-                                select new BeneficiarioPrepago
-                                {
-                                    Afiliado = new AfiliadoSuma
-                                    {
-                                        //ENTIDAD Affiliate 
-                                        id = a.id,
-                                        customerid = a.customerid,
-                                        docnumber = a.docnumber,
-                                        clientid = a.clientid,
-                                        storeid = a.storeid,
-                                        channelid = a.channelid,
-                                        typeid = a.typeid,
-                                        typedelivery = a.typedelivery,
-                                        storeiddelivery = a.storeiddelivery,
-                                        statusid = a.statusid,
-                                        reasonsid = a.reasonsid,
-                                        twitter_account = a.twitter_account,
-                                        facebook_account = a.facebook_account,
-                                        instagram_account = a.instagram_account,
-                                        comments = a.comments,
-                                        //ENTIDAD CLIENTE
-                                        nationality = c.NACIONALIDAD,
-                                        name = c.NOMBRE_CLIENTE1,
-                                        name2 = c.NOMBRE_CLIENTE2,
-                                        lastname1 = c.APELLIDO_CLIENTE1,
-                                        lastname2 = c.APELLIDO_CLIENTE2,
-                                        gender = c.SEXO,
-                                        maritalstatus = c.EDO_CIVIL,
-                                        occupation = c.OCUPACION,
-                                        phone1 = c.TELEFONO_HAB,
-                                        phone2 = c.TELEFONO_OFIC,
-                                        phone3 = c.TELEFONO_CEL,
-                                        email = c.E_MAIL,
-                                        cod_estado = c.COD_ESTADO,
-                                        cod_ciudad = c.COD_CIUDAD,
-                                        cod_municipio = c.COD_MUNICIPIO,
-                                        cod_parroquia = c.COD_PARROQUIA,
-                                        cod_urbanizacion = c.COD_URBANIZACION,
-                                        //ENTIDAD SumaStatuses
-                                        estatus = s.name,
-                                        //ENTIDAD Type
-                                        type = t.name
-                                    },
-                                    Cliente = new ClientePrepago
-                                    {
-                                        idCliente = x.id,
-                                        nameCliente = x.name,
-                                        aliasCliente = x.alias,
-                                        rifCliente = x.rif,
-                                        addressCliente = x.address,
-                                        phoneCliente = x.phone,
-                                        emailCliente = x.email
-                                    }
-                                }).FirstOrDefault();
-                if (beneficiario != null)
-                {
-                    DateTime? d = (from c in db.CLIENTES
-                                   where (c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO).Equals(beneficiario.Afiliado.docnumber)
-                                   select c.FECHA_NACIMIENTO
-                                   ).SingleOrDefault();
-                    beneficiario.Afiliado.birthdate = d.Value.ToString("dd-MM-yyyy");
-                    //ENTIDAD CustomerInterest
-                    beneficiario.Afiliado.Intereses = repAfiliado.chargeInterestList(beneficiario.Afiliado.id);
-                    //Llenar las listas de Datos Geográficos.
-                    beneficiario.Afiliado.ListaEstados = repAfiliado.GetEstados();
-                    beneficiario.Afiliado.ListaCiudades = repAfiliado.GetCiudades(beneficiario.Afiliado.cod_estado);
-                    beneficiario.Afiliado.ListaMunicipios = repAfiliado.GetMunicipios(beneficiario.Afiliado.cod_ciudad);
-                    beneficiario.Afiliado.ListaParroquias = repAfiliado.GetParroquias(beneficiario.Afiliado.cod_municipio);
-                    beneficiario.Afiliado.ListaUrbanizaciones = repAfiliado.GetUrbanizaciones(beneficiario.Afiliado.cod_parroquia);
-                    //ENTIDAD TARJETA                    
-                    Decimal p = (from t in db.TARJETAS
-                                 where t.NRO_AFILIACION.Equals(beneficiario.Afiliado.id)
-                                 select t.NRO_TARJETA
-                                 ).SingleOrDefault();
-                    if (p != 0)
-                    {
-                        beneficiario.Afiliado.pan = p.ToString();
-                    }
-                    else
-                    {
-                        beneficiario.Afiliado.pan = "";
-                    }
-                    string e = (from t in db.TARJETAS
-                                where t.NRO_AFILIACION.Equals(beneficiario.Afiliado.id)
-                                select t.ESTATUS_TARJETA
-                                ).SingleOrDefault();
-                    if (e != null)
-                    {
-                        beneficiario.Afiliado.estatustarjeta = e.ToString();
-                    }
-                    else
-                    {
-                        beneficiario.Afiliado.estatustarjeta = "";
-                    }
-                }
-            }
+                Afiliado = repAfiliado.Find(id),
+                Cliente = repCliente.FindXidAfiliado(id)
+            };
+            beneficiario.Afiliado.idClientePrepago = beneficiario.Cliente.idCliente;
+            beneficiario.Afiliado.NombreClientePrepago = beneficiario.Cliente.nameCliente;            
+            #region codigo viejo
+            //using (LealtadEntities db = new LealtadEntities())
+            //{
+            //    beneficiario = (from a in db.Affiliates
+            //                    join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+            //                    join s in db.SumaStatuses on a.statusid equals s.id
+            //                    join t in db.Types on a.typeid equals t.id
+            //                    join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid
+            //                    join x in db.PrepaidCustomers on b.prepaidcustomerid equals x.id
+            //                    where a.id == id
+            //                    select new BeneficiarioPrepago
+            //                    {
+            //                        Afiliado = new AfiliadoSuma
+            //                        {
+            //                            //ENTIDAD Affiliate 
+            //                            id = a.id,
+            //                            customerid = a.customerid,
+            //                            docnumber = a.docnumber,
+            //                            clientid = a.clientid,
+            //                            storeid = a.storeid,
+            //                            channelid = a.channelid,
+            //                            typeid = a.typeid,
+            //                            typedelivery = a.typedelivery,
+            //                            storeiddelivery = a.storeiddelivery,
+            //                            statusid = a.statusid,
+            //                            reasonsid = a.reasonsid,
+            //                            twitter_account = a.twitter_account,
+            //                            facebook_account = a.facebook_account,
+            //                            instagram_account = a.instagram_account,
+            //                            comments = a.comments,
+            //                            //ENTIDAD CLIENTE
+            //                            nationality = c.NACIONALIDAD,
+            //                            name = c.NOMBRE_CLIENTE1,
+            //                            name2 = c.NOMBRE_CLIENTE2,
+            //                            lastname1 = c.APELLIDO_CLIENTE1,
+            //                            lastname2 = c.APELLIDO_CLIENTE2,
+            //                            gender = c.SEXO,
+            //                            maritalstatus = c.EDO_CIVIL,
+            //                            occupation = c.OCUPACION,
+            //                            phone1 = c.TELEFONO_HAB,
+            //                            phone2 = c.TELEFONO_OFIC,
+            //                            phone3 = c.TELEFONO_CEL,
+            //                            email = c.E_MAIL,
+            //                            cod_estado = c.COD_ESTADO,
+            //                            cod_ciudad = c.COD_CIUDAD,
+            //                            cod_municipio = c.COD_MUNICIPIO,
+            //                            cod_parroquia = c.COD_PARROQUIA,
+            //                            cod_urbanizacion = c.COD_URBANIZACION,
+            //                            //ENTIDAD SumaStatuses
+            //                            estatus = s.name,
+            //                            //ENTIDAD Type
+            //                            type = t.name
+            //                        },
+            //                        Cliente = new ClientePrepago
+            //                        {
+            //                            idCliente = x.id,
+            //                            nameCliente = x.name,
+            //                            aliasCliente = x.alias,
+            //                            rifCliente = x.rif,
+            //                            addressCliente = x.address,
+            //                            phoneCliente = x.phone,
+            //                            emailCliente = x.email
+            //                        }
+            //                    }).SingleOrDefault();
+            //    if (beneficiario != null)
+            //    {
+            //        DateTime? d = (from c in db.CLIENTES
+            //                       where (c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO).Equals(beneficiario.Afiliado.docnumber)
+            //                       select c.FECHA_NACIMIENTO
+            //                       ).SingleOrDefault();
+            //        beneficiario.Afiliado.birthdate = d.Value.ToString("dd-MM-yyyy");
+            //        //ENTIDAD CustomerInterest
+            //        beneficiario.Afiliado.Intereses = repAfiliado.chargeInterestList(beneficiario.Afiliado.id);
+            //        //Llenar las listas de Datos Geográficos.
+            //        beneficiario.Afiliado.ListaEstados = repAfiliado.GetEstados();
+            //        beneficiario.Afiliado.ListaCiudades = repAfiliado.GetCiudades(beneficiario.Afiliado.cod_estado);
+            //        beneficiario.Afiliado.ListaMunicipios = repAfiliado.GetMunicipios(beneficiario.Afiliado.cod_ciudad);
+            //        beneficiario.Afiliado.ListaParroquias = repAfiliado.GetParroquias(beneficiario.Afiliado.cod_municipio);
+            //        beneficiario.Afiliado.ListaUrbanizaciones = repAfiliado.GetUrbanizaciones(beneficiario.Afiliado.cod_parroquia);
+            //        //ENTIDAD TARJETA                    
+            //        Decimal p = (from t in db.TARJETAS
+            //                     where t.NRO_AFILIACION.Equals(beneficiario.Afiliado.id)
+            //                     select t.NRO_TARJETA
+            //                     ).SingleOrDefault();
+            //        if (p != 0)
+            //        {
+            //            beneficiario.Afiliado.pan = p.ToString();
+            //        }
+            //        else
+            //        {
+            //            beneficiario.Afiliado.pan = "";
+            //        }
+            //        string e = (from t in db.TARJETAS
+            //                    where t.NRO_AFILIACION.Equals(beneficiario.Afiliado.id)
+            //                    select t.ESTATUS_TARJETA
+            //                    ).SingleOrDefault();
+            //        if (e != null)
+            //        {
+            //            beneficiario.Afiliado.estatustarjeta = e.ToString();
+            //        }
+            //        else
+            //        {
+            //            beneficiario.Afiliado.estatustarjeta = "";
+            //        }
+            //    }
+            //}
+            #endregion 
             return beneficiario;
         }
 
@@ -409,7 +418,7 @@ namespace Suma2Lealtad.Models
                         ReportePrepago linea = new ReportePrepago()
                         {
                             Beneficiario = b,
-                            fecha = DateTime.ParseExact(m.fecha.Substring(6, 2) + "-" + m.fecha.Substring(4, 2) + "-" + m.fecha.Substring(0, 4), "dd-MM-yyyy", CultureInfo.InvariantCulture),
+                            fecha = DateTime.ParseExact(m.fecha.Substring(6, 2) + "/" + m.fecha.Substring(4, 2) + "/" + m.fecha.Substring(0, 4), "dd/MM/yyyy", CultureInfo.InvariantCulture),
                             monto = Convert.ToDecimal(m.saldo),
                             detalle = m.isodescription,
                             tipo = m.transcode + "-" + m.transname,
@@ -464,7 +473,7 @@ namespace Suma2Lealtad.Models
                             ReportePrepago linea = new ReportePrepago()
                             {
                                 Beneficiario = b,
-                                fecha = DateTime.ParseExact(m.fecha.Substring(6, 2) + "-" + m.fecha.Substring(4, 2) + "-" + m.fecha.Substring(0, 4), "dd-MM-yyyy", CultureInfo.InvariantCulture),
+                                fecha = DateTime.ParseExact(m.fecha.Substring(6, 2) + "/" + m.fecha.Substring(4, 2) + "/" + m.fecha.Substring(0, 4), "dd/MM/yyyy", CultureInfo.InvariantCulture),
                                 monto = Convert.ToDecimal(m.saldo),
                                 detalle = m.isodescription,
                                 tipo = m.transcode + "-" + m.transname,
@@ -540,7 +549,7 @@ namespace Suma2Lealtad.Models
                         ReportePrepago linea = new ReportePrepago()
                         {
                             Beneficiario = b,
-                            fecha = DateTime.ParseExact(m.fecha.Substring(6, 2) + "-" + m.fecha.Substring(4, 2) + "-" + m.fecha.Substring(0, 4), "dd-MM-yyyy", CultureInfo.InvariantCulture),
+                            fecha = DateTime.ParseExact(m.fecha.Substring(6, 2) + "/" + m.fecha.Substring(4, 2) + "/" + m.fecha.Substring(0, 4), "dd/MM/yyyy", CultureInfo.InvariantCulture),
                             monto = Convert.ToDecimal(m.saldo),
                             detalle = m.isodescription,
                             tipo = m.transcode + "-" + m.transname,
@@ -591,7 +600,7 @@ namespace Suma2Lealtad.Models
                         ReportePrepago linea = new ReportePrepago()
                         {
                             Beneficiario = b,
-                            fecha = DateTime.ParseExact(m.fecha.Substring(6, 2) + "-" + m.fecha.Substring(4, 2) + "-" + m.fecha.Substring(0, 4), "dd-MM-yyyy", CultureInfo.InvariantCulture),
+                            fecha = DateTime.ParseExact(m.fecha.Substring(6, 2) + "/" + m.fecha.Substring(4, 2) + "/" + m.fecha.Substring(0, 4), "dd/MM/yyyy", CultureInfo.InvariantCulture),
                             monto = Convert.ToDecimal(m.saldo),
                             detalle = m.isodescription,
                             tipo = m.transcode + "-" + m.transname,

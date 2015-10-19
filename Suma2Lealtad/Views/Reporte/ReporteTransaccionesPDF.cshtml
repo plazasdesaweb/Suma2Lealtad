@@ -1,8 +1,8 @@
-﻿@model IEnumerable<Suma2Lealtad.Models.ReportePrepago>
+﻿@model IEnumerable<Suma2Lealtad.Models.ReporteSuma>
 
 @{
-    ViewBag.Title = "Prepago / Reportes / Reporte de Recargas";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Suma / Reportes / Reporte de Transacciones";
+    Layout = "";
 }
 
 @{
@@ -90,22 +90,11 @@
 <div class="editor-field col-md-12">
     @(String.Format("{0} {1}", "Nombre del Reporte: ", Model.First().Encabezado.nombreReporte))
 </div>
+
 <div class="editor-field col-md-12">
-    @(String.Format("{0} {1}", "Tipo de Consulta: ", Model.First().Encabezado.tipoconsultaReporte))
+    @(String.Format("{0} {1}", "Afiliado: ", Model.First().Encabezado.numdocReporte))
 </div>
 
-@if (Model.First().Encabezado.tipoconsultaReporte == "Por Cliente")
-{
-    <div class="editor-field col-md-12">
-        @(String.Format("{0} {1}", "Cliente: ", Model.First().Encabezado.parametrotipoconsultaReporte))
-    </div>
-}
-else
-{
-    <div class="editor-field col-md-12">
-        @(String.Format("{0} {1}", "Beneficiario: ", Model.First().Encabezado.parametrotipoconsultaReporte))
-    </div>
-}
 <div class="editor-field col-md-12">
     @(String.Format("{0} {1}", "Fecha desde: ", Model.First().Encabezado.fechainicioReporte))
 </div>
@@ -113,7 +102,7 @@ else
     @(String.Format("{0} {1}", "Fecha hasta: ", Model.First().Encabezado.fechafinReporte))
 </div>
 <div class="editor-field col-md-12">
-    @(String.Format("{0} {1}", "Documento de Referencia: ", Model.First().Encabezado.documentoreferenciaReporte))
+    @(String.Format("{0} {1}", "Tipo de Transacción: ", Model.First().Encabezado.tipotransaccionReporte))
 </div>
 
 <div class="editor-label col-md-4 control-label"></div>
@@ -156,17 +145,17 @@ else
 <table>
     <thead>
         <tr>
-            <th>Cliente
-            </th>
-            <th>Beneficiario
+            <th>Nombre
             </th>
             <th>Fecha
             </th>
+            <th>Número de Tarjeta
+            </th>
             <th>Monto
             </th>
-            <th>Nro. de Orden
+            <th>Descripción
             </th>
-            <th>Doc. Referencia
+            <th>Tipo de Transacción
             </th>
         </tr>
     </thead>
@@ -195,7 +184,7 @@ else
 </table>
 
 <table id="detalleReporte" class="table table-striped custab">
-@*<table id="detalleReporte">*@
+    @*<table id="detalleReporte">*@
     <tbody style="font-size: 12px">
         @if (Model.Count() != 0)
         {
@@ -205,23 +194,23 @@ else
                 MontoTotalTransacciones = MontoTotalTransacciones + item.monto;                 
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Beneficiario.Cliente.nameCliente)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Beneficiario.Afiliado.name) @Html.DisplayFor(modelItem => item.Beneficiario.Afiliado.lastname1)
+                    @Html.DisplayFor(modelItem => item.Afiliado.name) @Html.DisplayFor(modelItem => item.Afiliado.lastname1)
                 </td>
                 <td>
                     @*@Html.DisplayFor(modelItem => item.fecha.Day)*@
                     @(String.Format("{0}", item.fecha.ToString("dd/MM/yyyy hh:mm tt")))
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.numerotarjeta)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.monto)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.nroordenrecarga)
+                    @Html.DisplayFor(modelItem => item.detalle)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.referenciarecarga)
+                    @Html.DisplayFor(modelItem => item.tipo)
                 </td>
             </tr>                            
             }

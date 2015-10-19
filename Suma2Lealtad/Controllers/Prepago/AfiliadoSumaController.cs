@@ -27,6 +27,8 @@ namespace Suma2Lealtad.Controllers.Prepago
                 //NO ESTA EN SUMA
                 afiliado.typeid = ID_TYPE_SUMA;
                 afiliado.type = "Suma";
+                //CARGO VALOR POR DEFECTO EN LISTA DE ESTADOS
+                afiliado.ListaEstados.Insert(0, new ESTADO { COD_ESTADO = " ", DESCRIPC_ESTADO = "Seleccione un Estado" });
                 return View("Create", afiliado);
             }
             else
@@ -52,7 +54,6 @@ namespace Suma2Lealtad.Controllers.Prepago
             {
                 viewmodel.Title = "Afiliado / Crear Afiliación";
                 viewmodel.Message = "Error de aplicacion: No se pudo crear solicitud de afiliación.";
-                viewmodel.ControllerName = "Afiliado";
                 viewmodel.ControllerName = "AfiliadoSuma";
                 viewmodel.ActionName = "FilterReview";
             }

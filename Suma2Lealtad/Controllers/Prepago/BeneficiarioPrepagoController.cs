@@ -2,6 +2,7 @@
 using Suma2Lealtad.Modules;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Suma2Lealtad.Controllers.Prepago
@@ -9,10 +10,10 @@ namespace Suma2Lealtad.Controllers.Prepago
     public class BeneficiarioPrepagoController : Controller
     {
         private const int ID_TYPE_PREPAGO = 2;
-        private ClientePrepagoRepository repCliente = new ClientePrepagoRepository();        
+        private ClientePrepagoRepository repCliente = new ClientePrepagoRepository();
         private BeneficiarioPrepagoRepository repBeneficiario = new BeneficiarioPrepagoRepository();
         private AfiliadoSumaRepository repAfiliado = new AfiliadoSumaRepository();
-        
+
         public ActionResult Filter()
         {
             return View();
@@ -27,21 +28,26 @@ namespace Suma2Lealtad.Controllers.Prepago
             {
                 beneficiario = new BeneficiarioPrepago()
                 {
-                    Afiliado = repAfiliado.Find(numdoc),
-                    Cliente = new ClientePrepago()
-                    {
-                        ListaClientes = repBeneficiario.GetClientes()
-                    }
+                    Afiliado = repAfiliado.Find(numdoc)
+                    //Afiliado = repAfiliado.Find(numdoc),
+                    //Cliente = new ClientePrepago()
+                    //{
+                    //    ListaClientes = repBeneficiario.GetClientes()
+                    //}
                 };
-                beneficiario.Cliente.ListaClientes.Insert(0, new PrepaidCustomer { id = 0, name = "" });                    
+                //beneficiario.Cliente.ListaClientes.Insert(0, new PrepaidCustomer { id = 0, name = "" });     
+                //CARGO VALOR POR DEFECTO EN LISTA DE ESTADOS
+                beneficiario.Afiliado.ListaEstados.Insert(0, new ESTADO { COD_ESTADO = " ", DESCRIPC_ESTADO = "Seleccione un Estado" });
                 //SI ES SUMA. VOY A EDIT, SI NO A CREATE
                 if (beneficiario.Afiliado.type == "Suma")
                 {
                     beneficiario.Afiliado = repAfiliado.Find(beneficiario.Afiliado.id);
                     beneficiario.Afiliado = repAfiliado.ReiniciarAfiliacionSumaAPrepago(beneficiario.Afiliado);
-                    if (repBeneficiario.Save(beneficiario))
+                    if (repAfiliado.SaveChanges(beneficiario.Afiliado))
                     {
-                        return View("Edit", beneficiario);
+                        beneficiario.Afiliado.ListaClientes = repBeneficiario.GetClientes();
+                        beneficiario.Afiliado.ListaClientes.Insert(0, new PrepaidCustomer { id = 0, name = "" });
+                        return View("Edit", beneficiario.Afiliado);
                     }
                     else
                     {
@@ -57,15 +63,76 @@ namespace Suma2Lealtad.Controllers.Prepago
                 {
                     beneficiario.Afiliado.typeid = ID_TYPE_PREPAGO;
                     beneficiario.Afiliado.type = "Prepago";
-                    return View("Create", beneficiario);
-                }                
+                    beneficiario.Afiliado.ListaClientes = repBeneficiario.GetClientes();
+                    beneficiario.Afiliado.ListaClientes.Insert(0, new PrepaidCustomer { id = 0, name = "" });
+                    return View("Create", beneficiario.Afiliado);
+                }
             }
             //ES Beneficiario PrepagoPlazas
             else
             {
-                beneficiario.Afiliado = repAfiliado.Find(beneficiario.Afiliado.id);
-                return View("Edit", beneficiario);                
+                //beneficiario.Afiliado = repAfiliado.Find(beneficiario.Afiliado.id);
+                beneficiario = repBeneficiario.Find(beneficiario.Afiliado.id);
+                return View("Edit", beneficiario.Afiliado);
             }
+        }
+
+        [HttpPost]
+        public ActionResult CreateBeneficiario(AfiliadoSuma Afiliado, HttpPostedFileBase file)
+        {
+            ViewModel viewmodel = new ViewModel();
+            if (repAfiliado.Save(Afiliado, file))
+            {
+                BeneficiarioPrepago beneficiario = new BeneficiarioPrepago()
+                {
+                    Afiliado = Afiliado,
+                    Cliente = repCliente.Find(Afiliado.idClientePrepago)
+                };
+                if (repBeneficiario.Save(beneficiario))
+                {
+                    viewmodel.Title = "Prepago / Beneficiario / Crear Afiliación";
+                    viewmodel.Message = "Solicitud de afiliación creada exitosamente.";
+                    viewmodel.ControllerName = "BeneficiarioPrepago";
+                    viewmodel.ActionName = "FilterReview";
+                }
+            }
+            else
+            {
+                viewmodel.Title = "Prepago / Beneficiario / Crear Afiliación";
+                viewmodel.Message = "Error de aplicacion: No se pudo crear solicitud de afiliación.";
+                viewmodel.ControllerName = "BeneficiarioPrepago";
+                viewmodel.ActionName = "FilterReview";
+            }
+            return RedirectToAction("GenericView", viewmodel);
+        }
+
+        [HttpPost]
+        public ActionResult EditBeneficiarioSuma(AfiliadoSuma Afiliado, HttpPostedFileBase file)
+        {
+            ViewModel viewmodel = new ViewModel();
+            if (repAfiliado.SaveChanges(Afiliado))
+            {
+                BeneficiarioPrepago beneficiario = new BeneficiarioPrepago()
+                {
+                    Afiliado = Afiliado,
+                    Cliente = repCliente.Find(Afiliado.idClientePrepago)
+                };
+                if (repBeneficiario.Save(beneficiario))
+                {
+                    viewmodel.Title = "Prepago / Beneficiario / Crear Afiliación";
+                    viewmodel.Message = "Solicitud de afiliación creada exitosamente.";
+                    viewmodel.ControllerName = "BeneficiarioPrepago";
+                    viewmodel.ActionName = "FilterReview";
+                }
+            }
+            else
+            {
+                viewmodel.Title = "Prepago / Beneficiario / Crear Afiliación";
+                viewmodel.Message = "Error de aplicacion: No se pudo crear solicitud de afiliación.";
+                viewmodel.ControllerName = "BeneficiarioPrepago";
+                viewmodel.ActionName = "FilterReview";
+            }
+            return RedirectToAction("GenericView", viewmodel);
         }
 
         public ActionResult FilterReview()
@@ -84,11 +151,12 @@ namespace Suma2Lealtad.Controllers.Prepago
         public ActionResult EditBeneficiario(int id)
         {
             BeneficiarioPrepago beneficiario = repBeneficiario.Find(id);
-            return View("Edit",beneficiario);
+            return View("Edit", beneficiario.Afiliado);
         }
 
         [HttpPost]
-        public ActionResult EditBeneficiario(AfiliadoSuma afiliado, ClientePrepago Cliente)
+        //public ActionResult EditBeneficiario(AfiliadoSuma afiliado, ClientePrepago Cliente)
+        public ActionResult EditBeneficiario(AfiliadoSuma afiliado)
         {
             ViewModel viewmodel = new ViewModel();
             if (!repAfiliado.SaveChanges(afiliado))
@@ -112,19 +180,53 @@ namespace Suma2Lealtad.Controllers.Prepago
         {
             ViewModel viewmodel = new ViewModel();
             BeneficiarioPrepago beneficiario = repBeneficiario.Find(id);
-            if (repAfiliado.Aprobar(beneficiario.Afiliado))
+            //SI ES AFILIADO SUMA, SE CAMBIA EL TIPO Y SE BLOQUEA LA TARJETA ACTUAL
+            if (beneficiario.Afiliado.type == "Suma")
             {
-                viewmodel.Title = "Prepago / Beneficiario / Aprobar Afiliación:";
-                viewmodel.Message = "Afiliación Aprobada.";
-                viewmodel.ControllerName = "BeneficiarioPrepago";
-                viewmodel.ActionName = "FilterReview";
+                if (repAfiliado.Aprobar(beneficiario.Afiliado))
+                {
+                    beneficiario.Afiliado = repAfiliado.CambiarAPrepago(beneficiario.Afiliado);
+                    if (repAfiliado.BloquearTarjeta(beneficiario.Afiliado) == false)
+                    {
+                        repAfiliado.SaveChanges(beneficiario.Afiliado);
+                        viewmodel.Title = "Prepago / Beneficiario / Aprobar Afiliación:";
+                        viewmodel.Message = "Afiliación Aprobada. Se creó una nueva tarjeta Prepago Plaza's";
+                        viewmodel.ControllerName = "BeneficiarioPrepago";
+                        viewmodel.ActionName = "FilterReview";
+                    }
+                    else
+                    {
+                        repAfiliado.SaveChanges(beneficiario.Afiliado);
+                        viewmodel.Title = "Prepago / Beneficiario / Eliminar Beneficiario";
+                        viewmodel.Message = "Afiliación Aprobada. No se pudo crear una nueva tarjeta Prepago Plaza's";
+                        viewmodel.ControllerName = "BeneficiarioPrepago";
+                        viewmodel.ActionName = "FilterReview";
+                    }
+                }
+                else
+                {
+                    viewmodel.Title = "Prepago / Beneficiario / Aprobar Afiliación:";
+                    viewmodel.Message = "Error de aplicacion: No se pudo aprobar afiliación.";
+                    viewmodel.ControllerName = "BeneficiarioPrepago";
+                    viewmodel.ActionName = "FilterReview";
+                }
             }
             else
             {
-                viewmodel.Title = "Prepago / Beneficiario / Aprobar Afiliación:";
-                viewmodel.Message = "Error de aplicacion: No se pudo aprobar afiliación.";
-                viewmodel.ControllerName = "BeneficiarioPrepago";
-                viewmodel.ActionName = "FilterReview";
+                if (repAfiliado.Aprobar(beneficiario.Afiliado))
+                {
+                    viewmodel.Title = "Prepago / Beneficiario / Aprobar Afiliación:";
+                    viewmodel.Message = "Afiliación Aprobada.";
+                    viewmodel.ControllerName = "BeneficiarioPrepago";
+                    viewmodel.ActionName = "FilterReview";
+                }
+                else
+                {
+                    viewmodel.Title = "Prepago / Beneficiario / Aprobar Afiliación:";
+                    viewmodel.Message = "Error de aplicacion: No se pudo aprobar afiliación.";
+                    viewmodel.ControllerName = "BeneficiarioPrepago";
+                    viewmodel.ActionName = "FilterReview";
+                }
             }
             return RedirectToAction("GenericView", viewmodel);
         }
@@ -133,7 +235,7 @@ namespace Suma2Lealtad.Controllers.Prepago
         {
             BeneficiarioPrepago beneficiario = repBeneficiario.Find(id);
             beneficiario.Afiliado.trackI = Tarjeta.ConstruirTrackI(beneficiario.Afiliado.pan);
-            beneficiario.Afiliado.trackII = Tarjeta.ConstruirTrackII(beneficiario.Afiliado.pan);            
+            beneficiario.Afiliado.trackII = Tarjeta.ConstruirTrackII(beneficiario.Afiliado.pan);
             return View("ImpresoraImprimirTarjeta", beneficiario);
         }
 
@@ -151,7 +253,7 @@ namespace Suma2Lealtad.Controllers.Prepago
                 if (repAfiliado.BloquearTarjeta(beneficiario.Afiliado))
                 {
                     beneficiario.Afiliado.trackI = Tarjeta.ConstruirTrackI(beneficiario.Afiliado.pan);
-                    beneficiario.Afiliado.trackII = Tarjeta.ConstruirTrackII(beneficiario.Afiliado.pan);                        
+                    beneficiario.Afiliado.trackII = Tarjeta.ConstruirTrackII(beneficiario.Afiliado.pan);
                     return View("ImpresoraImprimirTarjeta", beneficiario);
                 }
                 else
@@ -276,7 +378,7 @@ namespace Suma2Lealtad.Controllers.Prepago
             BeneficiarioPrepago beneficiario = repBeneficiario.Find(id);
             return View(beneficiario);
         }
-        
+
         [HttpPost]
         public ActionResult ReactivarTarjeta(int id, string mode = "post")
         {
@@ -331,5 +433,50 @@ namespace Suma2Lealtad.Controllers.Prepago
             return View(viewmodel);
         }
 
+        public FileContentResult GetImageBeneficiario(int id)
+        {
+            Photos_Affiliate Photo = repAfiliado.Find(id).picture;
+            if (Photo.photo != null)
+            {
+                return File(Photo.photo, Photo.photo_type);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public JsonResult CiudadList(string id)
+        {
+            List<CIUDAD> ciudades = repAfiliado.GetCiudades(id);
+
+            return Json(new SelectList(ciudades, "COD_CIUDAD", "DESCRIPC_CIUDAD"), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult MunicipioList(string id)
+        {
+            List<MUNICIPIO> municipios = repAfiliado.GetMunicipios(id);
+
+            return Json(new SelectList(municipios, "COD_MUNICIPIO", "DESCRIPC_MUNICIPIO"), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ParroquiaList(string id)
+        {
+            List<PARROQUIA> parroquias = repAfiliado.GetParroquias(id);
+
+            return Json(new SelectList(parroquias, "COD_PARROQUIA", "DESCRIPC_PARROQUIA"), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UrbanizacionList(string id)
+        {
+            List<URBANIZACION> urb = repAfiliado.GetUrbanizaciones(id);
+
+            return Json(new SelectList(urb, "COD_URBANIZACION", "DESCRIPC_URBANIZACION"), JsonRequestBehavior.AllowGet);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+        }
     }
 }

@@ -142,6 +142,17 @@
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
+                                * Nacionalidad :
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.DropDownListFor(m => m.nationality,
+                                new SelectList(Model.NacionalidadOptions, 
+                                "id", "nacionalidad",
+                                Model.NacionalidadOptions), new { @class = "form-control" })                                
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
                                 * Teléfono de Casa :
                             </div>
 
@@ -175,15 +186,6 @@
                             <div class="editor-field col-md-6">
                                 @Html.TextBoxFor(model => model.occupation, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.occupation)
-                            </div>
-
-                            <div class="editor-label col-md-4 control-label">
-                                Nacionalidad :
-                            </div>
-
-                            <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.nationality, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.nationality)
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
