@@ -1,4 +1,5 @@
-﻿using Suma2Lealtad.Models;
+﻿using Suma2Lealtad.Filters;
+using Suma2Lealtad.Models;
 using Suma2Lealtad.Modules;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Suma2Lealtad.Controllers.Prepago
 {
+    [AuditingFilter]
     public class OrdenRecargaPrepagoController : Controller
     {
         private ClientePrepagoRepository repCliente = new ClientePrepagoRepository();

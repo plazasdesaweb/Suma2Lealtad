@@ -1,4 +1,5 @@
-﻿using Suma2Lealtad.Models;
+﻿using Suma2Lealtad.Filters;
+using Suma2Lealtad.Models;
 using Suma2Lealtad.Modules;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace Suma2Lealtad.Controllers.Prepago
 {
+    [AuditingFilter]
     public class BeneficiarioPrepagoController : Controller
     {
         private const int ID_TYPE_PREPAGO = 2;

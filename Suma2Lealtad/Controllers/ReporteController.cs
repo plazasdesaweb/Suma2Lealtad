@@ -1,4 +1,5 @@
-﻿using Suma2Lealtad.Models;
+﻿using Suma2Lealtad.Filters;
+using Suma2Lealtad.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace Suma2Lealtad.Controllers
 {
+    [AuditingFilter]
     public class ReporteController : Controller
     {
         private const string TRANSCODE_ACREDITACION_SUMA = "318";
