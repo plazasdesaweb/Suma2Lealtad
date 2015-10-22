@@ -87,47 +87,47 @@
                                 @Html.ValidationMessageFor(model => model.name)
                             </div>
 
-                            <div class="editor-label col-md-4 control-label">
+                            <div class="editor-label col-md-4 control-label Natural">
                                 Segundo Nombre :
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.name2, new { @class = "form-control" })
+                                @Html.TextBoxFor(model => model.name2, new { @class = "form-control Natural" })
                                 @Html.ValidationMessageFor(model => model.name2)
                             </div>
 
-                            <div class="editor-label col-md-4 control-label">
+                            <div class="editor-label col-md-4 control-label Natural">
                                 * Primer Apellido :
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.lastname1, new { @class = "form-control" })
+                                @Html.TextBoxFor(model => model.lastname1, new { @class = "form-control Natural" })
                                 @Html.ValidationMessageFor(model => model.lastname1)
                             </div>
 
-                            <div class="editor-label col-md-4 control-label">
+                            <div class="editor-label col-md-4 control-label Natural">
                                 Segundo Apellido :
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.lastname2, new { @class = "form-control" })
+                                @Html.TextBoxFor(model => model.lastname2, new { @class = "form-control Natural" })
                                 @Html.ValidationMessageFor(model => model.lastname2)
                             </div>
 
-                            <div class="editor-label col-md-4 control-label">
+                            <div class="editor-label col-md-4 control-label Natural">
                                 * Fecha de Nacimiento :
                             </div>
 
                             <div class="editor-field col-md-6">
-                                @Html.TextBoxFor(model => model.birthdate, new { @class = "form-control" })
+                                @Html.TextBoxFor(model => model.birthdate, new { @class = "form-control Natural" })
                                 @Html.ValidationMessageFor(model => model.birthdate)
                             </div>
 
-                            <div class="editor-label col-md-4 control-label">
+                            <div class="editor-label col-md-4 control-label Natural">
                                 * Sexo :
                             </div>
 
-                            <div class="editor-field col-md-6">
+                            <div class="editor-field col-md-6 Natural">
                                 @Html.DropDownListFor(m => m.gender,
                                                       new SelectList(Model.SexoOptions,
                                                       "id", 
@@ -137,11 +137,11 @@
                                                       )
                             </div>
 
-                            <div class="editor-label col-md-4 control-label">
+                            <div class="editor-label col-md-4 control-label Natural">
                                 * Estado Civil :
                             </div>
 
-                            <div class="editor-field col-md-6">
+                            <div class="editor-field col-md-6 Natural">
                                 @Html.DropDownListFor(m => m.maritalstatus,
                                                       new SelectList(Model.MaritalStatusOptions,
                                                       "id", 
@@ -151,11 +151,11 @@
                                                       )
                             </div>
 
-                            <div class="editor-label col-md-4 control-label">
+                            <div class="editor-label col-md-4 control-label Natural">
                                 * Nacionalidad :
                             </div>
 
-                            <div class="editor-field col-md-6">
+                            <div class="editor-field col-md-6 Natural">
                                 @Html.DropDownListFor(m => m.nationality,
                                                       new SelectList(Model.NacionalidadOptions,
                                                       "id", 
@@ -514,3 +514,16 @@
 </div>
 <!--// container -->
 
+<script src="~/Scripts/jquery-2.1.3.min.js"></script>
+<script>
+    $(document).ready(function () {
+        VerificarTipoDocumento()
+    });
+
+    function VerificarTipoDocumento() {
+        var str = document.getElementById('docnumber').value;
+        if (str.search("J") == -1 || str.search("G") == -1) {
+            $(".Natural").hide();
+        }
+    }
+</script>

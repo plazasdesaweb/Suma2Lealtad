@@ -320,7 +320,14 @@ namespace Suma2Lealtad.Models
                                    where (c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO).Equals(afiliado.docnumber)
                                    select c.FECHA_NACIMIENTO
                                    ).SingleOrDefault();
-                    afiliado.birthdate = d.Value.ToString("dd/MM/yyyy");
+                    if (d == null)
+                    {
+                        afiliado.birthdate = null;
+                    }
+                    else
+                    {
+                        afiliado.birthdate = d.Value.ToString("dd/MM/yyyy");
+                    }
                     //ENTIDAD CustomerInterest
                     afiliado.Intereses = chargeInterestList(afiliado.id);
                     //Llenar las listas de Datos Geográficos.
@@ -423,19 +430,19 @@ namespace Suma2Lealtad.Models
                 {
                     TIPO_DOCUMENTO = afiliado.docnumber.Substring(0, 1),
                     NRO_DOCUMENTO = afiliado.docnumber.Substring(2),
-                    NACIONALIDAD = afiliado.nationality,
+                    E_MAIL = afiliado.email,
+                    NACIONALIDAD = afiliado.nationality == null ? "" : afiliado.nationality,
                     NOMBRE_CLIENTE1 = afiliado.name,
                     NOMBRE_CLIENTE2 = afiliado.name2 == null ? "" : afiliado.name2,
-                    APELLIDO_CLIENTE1 = afiliado.lastname1,
+                    APELLIDO_CLIENTE1 = afiliado.lastname1 == null ? "" : afiliado.lastname1,
                     APELLIDO_CLIENTE2 = afiliado.lastname2 == null ? "" : afiliado.lastname2,
-                    FECHA_NACIMIENTO = DateTime.ParseExact(afiliado.birthdate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                    SEXO = afiliado.gender,
-                    EDO_CIVIL = afiliado.maritalstatus,
+                    FECHA_NACIMIENTO = afiliado.birthdate == null ? new DateTime?() : DateTime.ParseExact(afiliado.birthdate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                    SEXO = afiliado.gender == null ? "" : afiliado.gender,
+                    EDO_CIVIL = afiliado.maritalstatus == null ? "" : afiliado.gender,
                     OCUPACION = afiliado.occupation == null ? "" : afiliado.occupation,
                     TELEFONO_HAB = afiliado.phone1,
                     TELEFONO_OFIC = afiliado.phone2 == null ? "" : afiliado.phone2,
-                    TELEFONO_CEL = afiliado.phone3 == null ? "" : afiliado.phone3,
-                    E_MAIL = afiliado.email,
+                    TELEFONO_CEL = afiliado.phone3 == null ? "" : afiliado.phone3,                    
                     COD_SUCURSAL = afiliado.storeid,
                     COD_ESTADO = afiliado.cod_estado,
                     COD_CIUDAD = afiliado.cod_ciudad,
@@ -537,7 +544,7 @@ namespace Suma2Lealtad.Models
                     cliente.NOMBRE_CLIENTE2 = afiliado.name2;
                     cliente.APELLIDO_CLIENTE1 = afiliado.lastname1;
                     cliente.APELLIDO_CLIENTE2 = afiliado.lastname2;
-                    cliente.FECHA_NACIMIENTO = DateTime.ParseExact(afiliado.birthdate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    cliente.FECHA_NACIMIENTO = afiliado.birthdate == null ? new DateTime?() : DateTime.ParseExact(afiliado.birthdate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     cliente.SEXO = afiliado.gender;
                     cliente.EDO_CIVIL = afiliado.maritalstatus;
                     cliente.OCUPACION = afiliado.occupation;
