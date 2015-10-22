@@ -478,14 +478,14 @@ namespace SumaPlazas.Dispositivos.Impresora
                     listBox1.Items.Add("Los datos a imprimir son: " + nombre + "," + apellido + "," + nroTarjeta); //+ "," + track1 + "," + track2 + "," + tipoTarjeta + "," + corporacion + "," + fechaVencimiento);
                     listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 });
-                bool Resultado = proyDataCardCP60.Imprimir(ref nombre, ref apellido, ref nroTarjeta, ref track1, ref track2, ref tipoTarjeta, ref corporacion, ref fechaVencimiento);
+                string Resultado = proyDataCardCP60.Imprimir(ref nombre, ref apellido, ref nroTarjeta, ref track1, ref track2, ref tipoTarjeta, ref corporacion, ref fechaVencimiento);
                 //La pregunta la haremos en la página web, no en el silverlight
                 //Respuesta = MessageBox.Show("¿Se imprimió correctamente la tarjeta?", "Pregunta", MessageBoxButton.);
                 //Thread.Sleep(demora);
                 //Dispatcher.BeginInvoke(delegate()
                 //{
-                //    listBox1.Items.Add("Resultado de la operación: " + Resultado + ".");
-                //    listBox1.SelectedIndex = listBox1.Items.Count - 1;
+                    listBox1.Items.Add("Resultado de la operación: " + Resultado );
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 //});
                 //if (Resultado == true)
                 //{
@@ -512,14 +512,14 @@ namespace SumaPlazas.Dispositivos.Impresora
                     listBox1.Items.Add("Los datos a imprimir son: " + nombre + "," + apellido + "," + nroTarjeta); // + "," + track1 + "," + track2 + "," + tipoTarjeta + "," + corporacion + "," + fechaVencimiento);
                     listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 });
-                bool Resultado = smartDriverDotNet.Imprimir(nombre, apellido, nroTarjeta, track1, track2, tipoTarjeta, corporacion, fechaVencimiento);
+                string Resultado = smartDriverDotNet.Imprimir(nombre, apellido, nroTarjeta, track1, track2, tipoTarjeta, corporacion, fechaVencimiento);
                 //La pregunta la haremos en la página web, no en el silverlight
                 //Respuesta = MessageBox.Show("¿Se imprimió correctamente la tarjeta?", "Pregunta", MessageBoxButton.);
                 //Thread.Sleep(demora);
                 //Dispatcher.BeginInvoke(delegate()
                 //{
-                //    listBox1.Items.Add("Resultado de la operación: " + Resultado + ".");
-                //    listBox1.SelectedIndex = listBox1.Items.Count - 1;
+                    listBox1.Items.Add("Resultado de la operación: " + Resultado);
+                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 //});
                 //if (Resultado == true)
                 //{

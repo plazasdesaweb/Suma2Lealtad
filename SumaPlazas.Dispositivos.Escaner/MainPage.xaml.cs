@@ -74,9 +74,16 @@ namespace SumaPlazas.Dispositivos.Escaner
             string RutaArchivo = EscanerWia.ObtenerImagen(NombreArchivo);
             listBox1.Items.Add("Escaner desactivado.");
             listBox1.SelectedIndex = listBox1.Items.Count - 1;
-            if (RutaArchivo == "")
+            //listBox1.Items.Add("Resultado de la operación: " + RutaArchivo);
+            //listBox1.SelectedIndex = listBox1.Items.Count - 1;
+            if (RutaArchivo.Contains("Error"))
+            //if (RutaArchivo == "")
             {
-                listBox1.Items.Add("Error de Aplicación: No se pudo escanear el documento.");
+                //listBox1.Items.Add("Resultado de la operación: " + RutaArchivo);
+                //listBox1.SelectedIndex = listBox1.Items.Count - 1;
+
+                listBox1.Items.Add(RutaArchivo);
+                listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 //MessageBox.Show("Error de Aplicación: No se pudo escanear el documento.", "SumaPlazas.Dispositivos.Escaner.MainPage.Escanear", MessageBoxButton.OK);
                 //listBox1.Visibility = System.Windows.Visibility.Collapsed;
             }

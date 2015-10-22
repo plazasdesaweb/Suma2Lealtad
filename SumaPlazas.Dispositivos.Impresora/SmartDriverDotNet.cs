@@ -7,7 +7,7 @@ namespace SumaPlazas.Dispositivos.Impresora
     {
         public const string NombreImpresora = "XPS Card Printer";
         
-        public bool Imprimir(string Nombre, string Apellido, string NroTarjeta, string Track1, string Track2, string TipoTarjeta, string Corporacion, string FechaVencimiento)
+        public string Imprimir(string Nombre, string Apellido, string NroTarjeta, string Track1, string Track2, string TipoTarjeta, string Corporacion, string FechaVencimiento)
         {
             try
             {
@@ -20,27 +20,27 @@ namespace SumaPlazas.Dispositivos.Impresora
                             //MessageBox.Show("Aqui voy");
                             bool Resultado = SmartDriverDotNet.Imprimir(NombreImpresora, Nombre, Apellido, NroTarjeta, Track1, Track2, TipoTarjeta, Corporacion, FechaVencimiento);
                             //MessageBox.Show("Resultado: " + Resultado );
-                            return Resultado;
+                            return Resultado.ToString();
                         }
                         else
                         {
                             //MessageBox.Show("Error de Aplicación. No se pudo imprimir en la cd800 1.", "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.Imprimir", MessageBoxButton.OK);
-                            return false;
+                            return "Error de Automatización: No se pudo crear SumaPlazas.Librerias.Impresora.CD800.SmartDriverDotNet";
+                            //return false;
                         }
                     }
                 }
                else
                 {
                     //MessageBox.Show("Error de Aplicación. No se pudo imprimir en la cd800 2.", "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.Imprimir", MessageBoxButton.OK);
-                    return false;
+                    return "Error de Automatización: No está disponible";
                 }
             }
             //catch
-            catch (Exception originalException)
+            catch (Exception ex)
             {
-                //MessageBox.Show("Error de Aplicación: " + originalException, "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.Imprimir", MessageBoxButton.OK);
-                string error = "Error de Aplicación: " + originalException;
-                return false;
+                return ("Error de Aplicación: " + ex.Message);
+                //return "";
             }
         }
 
@@ -60,21 +60,20 @@ namespace SumaPlazas.Dispositivos.Impresora
                         else
                         {
                             //MessageBox.Show("Error de Aplicación. No se pudo recibir estado cd800 1.", "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.EstadoImpresora", MessageBoxButton.OK);
-                            return "";
+                            return "Error de Automatización: No se pudo crear SumaPlazas.Librerias.Impresora.CD800.SmartDriverDotNet";                            
                         }
                     }
                 }
                 else
                 {
                     //MessageBox.Show("Error de Aplicación. No se pudo recibir estado cd800 2.", "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.EstadoImpresora", MessageBoxButton.OK);
-                    return "";
+                    return "Error de Automatización: No está disponible";
                 }
             }
-            catch
-            //catch (Exception originalException)
+            catch (Exception ex)
             {
-                //MessageBox.Show("Error de Aplicación: " + originalException, "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.EstadoImpresora", MessageBoxButton.OK);
-                return "";
+                return ("Error de Aplicación: " + ex.Message);
+                //return "";
             }
         }
 
@@ -94,21 +93,20 @@ namespace SumaPlazas.Dispositivos.Impresora
                         else
                         {
                             //MessageBox.Show("Error de Aplicación. No se pudo recibir estado cd800 1.", "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.EstadoImpresora", MessageBoxButton.OK);
-                            return "";
+                            return "Error de Automatización: No se pudo crear SumaPlazas.Librerias.Impresora.CD800.SmartDriverDotNet";
                         }
                     }
                 }
                 else
                 {
                     //MessageBox.Show("Error de Aplicación. No se pudo recibir estado cd800 2.", "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.EstadoImpresora", MessageBoxButton.OK);
-                    return "";
+                    return "Error de Automatización: No está disponible";
                 }
             }
-            catch
-            //catch (Exception originalException)
+            catch (Exception ex)
             {
-                //MessageBox.Show("Error de Aplicación: " + originalException, "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.EstadoImpresora", MessageBoxButton.OK);
-                return "";
+                return ("Error de Aplicación: " + ex.Message);
+                //return "";
             }
         }
 
@@ -128,21 +126,20 @@ namespace SumaPlazas.Dispositivos.Impresora
                         else
                         {
                             //MessageBox.Show("Error de Aplicación. No se pudo recibir estado cd800 1.", "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.EstadoImpresora", MessageBoxButton.OK);
-                            return "";
+                            return "Error de Automatización: No se pudo crear SumaPlazas.Librerias.Impresora.CD800.SmartDriverDotNet";
                         }
                     }
                 }
                 else
                 {
                     //MessageBox.Show("Error de Aplicación. No se pudo recibir estado cd800 2.", "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.EstadoImpresora", MessageBoxButton.OK);
-                    return "";
+                    return "Error de Automatización: No está disponible";
                 }
             }
-            catch
-            //catch (Exception originalException)
+            catch (Exception ex)
             {
-                //MessageBox.Show("Error de Aplicación: " + originalException, "SumaPlazas.Dispositivos.Impresora.CD800.SmartDriverDotNet.EstadoImpresora", MessageBoxButton.OK);
-                return "";
+                return ("Error de Aplicación: " + ex.Message);
+                //return "";
             }
         }
     }

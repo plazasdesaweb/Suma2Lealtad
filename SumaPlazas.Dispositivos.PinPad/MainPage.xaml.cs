@@ -74,7 +74,7 @@ namespace SumaPlazas.Dispositivos.PinPad
             {
                 listBox1.Items.Add("Respuesta recibida: Pin no creado.");
                 listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                listBox1.Items.Add("Error de Aplicación: No se pudo crear el pin.");
+                listBox1.Items.Add(Resultado);
                 listBox1.SelectedIndex = listBox1.Items.Count - 1;
             }
             else
@@ -127,7 +127,7 @@ namespace SumaPlazas.Dispositivos.PinPad
             {
                 listBox1.Items.Add("Respuesta recibida: Pin no cambiado.");
                 listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                listBox1.Items.Add("Error de Aplicación: No se pudo cambiar el pin.");
+                listBox1.Items.Add(Resultado);
                 listBox1.SelectedIndex = listBox1.Items.Count - 1;
             }
             else
@@ -180,7 +180,7 @@ namespace SumaPlazas.Dispositivos.PinPad
             {
                 listBox1.Items.Add("Respuesta recibida: Pin no reiniciado.");
                 listBox1.SelectedIndex = listBox1.Items.Count - 1;
-                listBox1.Items.Add("Error de Aplicación: No se pudo reiniciar el pin.");
+                listBox1.Items.Add(Resultado);
                 listBox1.SelectedIndex = listBox1.Items.Count - 1;
             }
             else

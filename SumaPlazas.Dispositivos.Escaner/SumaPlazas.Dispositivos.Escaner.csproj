@@ -64,10 +64,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>E0144222F924E65B8D6F090A0CF955F4F0D967A9</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>C4A5D60B5859725F678A133547F22D617F6304F2</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>SumaPlazas.Dispositivos.Escaner_TemporaryKey.pfx</ManifestKeyFile>

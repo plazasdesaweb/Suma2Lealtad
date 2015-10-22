@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices.Automation;
+﻿using System;
+using System.Runtime.InteropServices.Automation;
 
 namespace SumaPlazas.Dispositivos.PinPad
 {
@@ -19,23 +20,21 @@ namespace SumaPlazas.Dispositivos.PinPad
                         }
                         else
                         {
-                            return "";
-                            //MessageBox.Show("Error de Aplicación: No se pudo crear objeto Vpos.", NombreMetodo, MessageBoxButton.OK);
+                            return "Error de Automatización: No se pudo crear SumaPlazas.Librerias.PinPad.Vpos"; ;
+                            //MessageBox.Show("Error de Aplicación: No se pudo crear objeto Vpos.", NombreMetodo, MessageBoxButton.OK);                           
                         }
                     }
                 }
                 else
                 {
-                    return "";
+                    return "Error de Automatización: No está disponible";
                     //MessageBox.Show("Error de Aplicación: AutomationFactory no disponible.", NombreMetodo, MessageBoxButton.OK);
                 }
             }
-            catch
-            //catch (Exception originalException)
+            catch (Exception ex)
             {
-                return "";
-                //MessageBox.Show("Error de Aplicación: " + originalException, NombreMetodo, MessageBoxButton.OK);
-                //return null;
+                return ("Error de Aplicación: " + ex.Message);
+                //return "";
             }
         }
 
@@ -54,23 +53,21 @@ namespace SumaPlazas.Dispositivos.PinPad
                         }
                         else
                         {
-                            return "";
+                            return "Error de Automatización: No se pudo crear SumaPlazas.Librerias.PinPad.Vpos"; ;                            
                             //MessageBox.Show("Error de Aplicación. No se pudo cambiar pin 1.", "SumaPlazas.Dispositivos.PinPad.Vpos.CambiarPin", MessageBoxButton.OK);
                         }
                     }
                 }
                 else
                 {
-                    return "";
+                    return "Error de Automatización: No está disponible";
                     //MessageBox.Show("Error de Aplicación. No se pudo cambiar pin 2.", "SumaPlazas.Dispositivos.PinPad.Vpos.CambiarPin", MessageBoxButton.OK);
                 }
             }
-            catch
-            //catch (Exception originalException)
+            catch (Exception ex)
             {
-                return "";
-                //MessageBox.Show("Error de Aplicación: " + originalException, "SumaPlazas.Dispositivos.PinPad.Vpos.CambiarPin", MessageBoxButton.OK);
-                //return null;
+                return ("Error de Aplicación: " + ex.Message);
+                //return "";
             }
         }
 
@@ -89,23 +86,21 @@ namespace SumaPlazas.Dispositivos.PinPad
                         }
                         else
                         {
-                            return "";
+                            return "Error de Automatización: No se pudo crear SumaPlazas.Librerias.PinPad.Vpos"; ;
                             //MessageBox.Show("Error de Aplicación. No se pudo reiniciar pin 1.", "SumaPlazas.Dispositivos.PinPad.Vpos.ReiniciarPin", MessageBoxButton.OK);
                         }
                     }
                 }
                 else
                 {
-                    return "";
+                    return "Error de Automatización: No está disponible";
                     //MessageBox.Show("Error de Aplicación. No se pudo reiniciar pin 2.", "SumaPlazas.Dispositivos.PinPad.Vpos.ReiniciarPin", MessageBoxButton.OK);
                 }
             }
-            catch
-            //catch (Exception originalException)
+            catch (Exception ex)
             {
-                return "";
-                //MessageBox.Show("Error de Aplicación: " + originalException, "SumaPlazas.Dispositivos.PinPad.Vpos.ReiniciarPin", MessageBoxButton.OK);
-                //return null;
+                return ("Error de Aplicación: " + ex.Message);
+                //return "";
             }
         }
 

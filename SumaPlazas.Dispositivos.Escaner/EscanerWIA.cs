@@ -36,20 +36,20 @@ namespace SumaPlazas.Dispositivos.Escaner
                         else
                         {
                             //MessageBox.Show("EscanerWia es null");
-                            return "";
+                            return "Error de Automatización: No se pudo crear SumaPlazas.Librerias.Escaner.EscanerWIA";
                         }
                     }
                 }
                 else
                 {
                     //MessageBox.Show("No hay automatizacion");
-                    return "";
+                    return "Error de Automatización: No está disponible";
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                //MessageBox.Show("catch");
-                return "";
+                return("Error de Aplicación: " + ex.Message);
+                //return "";
             }
         }
 
