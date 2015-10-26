@@ -443,7 +443,7 @@
 
     function VerificarTipoDocumento() {
         var str = document.getElementById('docnumber').value;
-        if (str.search("J") == -1 || str.search("G") == -1) {
+        if (str.search("J") == 0 || str.search("G") == 0) {
             $(".Natural").hide();
         }
     }
