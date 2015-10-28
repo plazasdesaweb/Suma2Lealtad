@@ -1133,7 +1133,7 @@ namespace Suma2Lealtad.Models
                                                nameCliente = p.name
                                            }
                                        },
-                                       fecha = tar.FECHA_CREACION.Value,
+                                       fecha = tar.FECHA_CREACION == null ? new DateTime() : tar.FECHA_CREACION.Value,
                                        numerotarjeta = tar.NRO_TARJETA,
                                        estatustarjeta = tar.ESTATUS_TARJETA,
                                        Encabezado = new EncabezadoReporte()
@@ -1173,7 +1173,7 @@ namespace Suma2Lealtad.Models
                                                nameCliente = p.name
                                            }
                                        },
-                                       fecha = tar.FECHA_CREACION.Value,
+                                       fecha = tar.FECHA_CREACION == null ? new DateTime() : tar.FECHA_CREACION.Value,
                                        numerotarjeta = tar.NRO_TARJETA,
                                        estatustarjeta = tar.ESTATUS_TARJETA,
                                        Encabezado = new EncabezadoReporte()
@@ -1235,7 +1235,7 @@ namespace Suma2Lealtad.Models
                                                nameCliente = p.name
                                            }
                                        },
-                                       fecha = tar.FECHA_CREACION.Value,
+                                       fecha = tar.FECHA_CREACION == null ? new DateTime() : tar.FECHA_CREACION.Value,
                                        numerotarjeta = tar.NRO_TARJETA,
                                        estatustarjeta = tar.ESTATUS_TARJETA,
                                        Encabezado = new EncabezadoReporte()
@@ -1275,7 +1275,7 @@ namespace Suma2Lealtad.Models
                                                nameCliente = p.name
                                            }
                                        },
-                                       fecha = tar.FECHA_CREACION.Value,
+                                       fecha = tar.FECHA_CREACION == null ? new DateTime() : tar.FECHA_CREACION.Value,
                                        numerotarjeta = tar.NRO_TARJETA,
                                        estatustarjeta = tar.ESTATUS_TARJETA,
                                        Encabezado = new EncabezadoReporte()
@@ -1359,7 +1359,7 @@ namespace Suma2Lealtad.Models
                                                     nameCliente = p.name
                                                 }
                                             },
-                                            fecha = tar.FECHA_CREACION.Value,
+                                            fecha = tar.FECHA_CREACION == null ? new DateTime() : tar.FECHA_CREACION.Value,
                                             numerotarjeta = tar.NRO_TARJETA,
                                             estatustarjeta = tar.ESTATUS_TARJETA,
                                             Encabezado = new EncabezadoReporte()
@@ -1399,7 +1399,7 @@ namespace Suma2Lealtad.Models
                                                     nameCliente = p.name
                                                 }
                                             },
-                                            fecha = tar.FECHA_CREACION.Value,
+                                            fecha = tar.FECHA_CREACION == null ? new DateTime() : tar.FECHA_CREACION.Value,
                                             numerotarjeta = tar.NRO_TARJETA,
                                             estatustarjeta = tar.ESTATUS_TARJETA,
                                             Encabezado = new EncabezadoReporte()
@@ -1460,7 +1460,7 @@ namespace Suma2Lealtad.Models
                                                nameCliente = p.name
                                            }
                                        },
-                                       fecha = tar.FECHA_CREACION.Value,
+                                       fecha = tar.FECHA_CREACION == null ? new DateTime() : tar.FECHA_CREACION.Value,
                                        numerotarjeta = tar.NRO_TARJETA,
                                        estatustarjeta = tar.ESTATUS_TARJETA,
                                        Encabezado = new EncabezadoReporte()
@@ -1500,7 +1500,7 @@ namespace Suma2Lealtad.Models
                                                nameCliente = p.name
                                            }
                                        },
-                                       fecha = tar.FECHA_CREACION.Value,
+                                       fecha = tar.FECHA_CREACION == null ? new DateTime() : tar.FECHA_CREACION.Value,
                                        numerotarjeta = tar.NRO_TARJETA,
                                        estatustarjeta = tar.ESTATUS_TARJETA,
                                        Encabezado = new EncabezadoReporte()

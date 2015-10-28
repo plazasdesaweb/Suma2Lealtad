@@ -74,8 +74,8 @@ namespace Suma2Lealtad.Modules
                                  parentid = mainMenu.parentid,
                                  order_no = mainMenu.order_no
                              }).Distinct().OrderBy(m => m.id).ThenBy(m => m.parentid).ThenBy(m => m.order_no).ToList();
-                    _menu.Add(new CMenu { id = 10000, name = "Salir", controller = "", actions = "", parentid = 0, order_no = 10000 });
-                    _menu.Add(new CMenu { id = 10001, name = "Cerrar Sesión", controller = "Home", actions = "Logout", parentid = 1000, order_no = 1 });
+                    _menu.Add(new CMenu { id = 10000, name = "Salir", controller = "", actions = "", parentid = 0, order_no = 1 });
+                    _menu.Add(new CMenu { id = 10001, name = "Cerrar Sesión", controller = "Home", actions = "Logout", parentid = 10000, order_no = 2 });
                 }
                 return (user != null);
             }

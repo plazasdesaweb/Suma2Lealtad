@@ -484,8 +484,8 @@ namespace SumaPlazas.Dispositivos.Impresora
                 //Thread.Sleep(demora);
                 //Dispatcher.BeginInvoke(delegate()
                 //{
-                    listBox1.Items.Add("Resultado de la operación: " + Resultado );
-                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
+                //    listBox1.Items.Add("Resultado de la operación: " + Resultado);
+                //    listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 //});
                 //if (Resultado == true)
                 //{
@@ -518,8 +518,8 @@ namespace SumaPlazas.Dispositivos.Impresora
                 //Thread.Sleep(demora);
                 //Dispatcher.BeginInvoke(delegate()
                 //{
-                    listBox1.Items.Add("Resultado de la operación: " + Resultado);
-                    listBox1.SelectedIndex = listBox1.Items.Count - 1;
+                //    listBox1.Items.Add("Resultado de la operación: " + Resultado);
+                //    listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 //});
                 //if (Resultado == true)
                 //{
