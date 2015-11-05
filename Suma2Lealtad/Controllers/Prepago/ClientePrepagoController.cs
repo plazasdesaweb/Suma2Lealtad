@@ -182,28 +182,28 @@ namespace Suma2Lealtad.Controllers.Prepago
                     beneficiario.Afiliado = repAfiliado.Find(beneficiario.Afiliado.id);
                     beneficiario.Afiliado = repAfiliado.ReiniciarAfiliacionSumaAPrepago(beneficiario.Afiliado);
                     if (repAfiliado.SaveChanges(beneficiario.Afiliado))
-                        {
-                            beneficiario.Afiliado.idClientePrepago = beneficiario.Cliente.idCliente;
-                            beneficiario.Afiliado.NombreClientePrepago = beneficiario.Cliente.nameCliente;
-                            return View("EditBeneficiario", beneficiario.Afiliado);
-                        }
-                        else
-                        {
-                            ViewModel viewmodel = new ViewModel();
-                            viewmodel.Title = "Prepago / Cliente / Crear Beneficiario / Filtro de Búsqueda";
-                            viewmodel.Message = "Error de aplicación: No se pudo guardar afiliacion Prepago";
-                            viewmodel.ControllerName = "ClientePrepago";
-                            viewmodel.ActionName = "FilterBeneficiario";
-                            viewmodel.RouteValues = id.ToString();
-                            return RedirectToAction("GenericView", viewmodel);
-                        }                  
+                    {
+                        beneficiario.Afiliado.idClientePrepago = beneficiario.Cliente.idCliente;
+                        beneficiario.Afiliado.NombreClientePrepago = beneficiario.Cliente.nameCliente;
+                        return View("EditBeneficiario", beneficiario.Afiliado);
+                    }
+                    else
+                    {
+                        ViewModel viewmodel = new ViewModel();
+                        viewmodel.Title = "Prepago / Cliente / Crear Beneficiario / Filtro de Búsqueda";
+                        viewmodel.Message = "Error de aplicación: No se pudo guardar afiliacion Prepago";
+                        viewmodel.ControllerName = "ClientePrepago";
+                        viewmodel.ActionName = "FilterBeneficiario";
+                        viewmodel.RouteValues = id.ToString();
+                        return RedirectToAction("GenericView", viewmodel);
+                    }
                 }
                 else
                 {
                     beneficiario.Afiliado.typeid = ID_TYPE_PREPAGO;
                     beneficiario.Afiliado.type = "Prepago";
                     beneficiario.Afiliado.idClientePrepago = beneficiario.Cliente.idCliente;
-                    beneficiario.Afiliado.NombreClientePrepago = beneficiario.Cliente.nameCliente;            
+                    beneficiario.Afiliado.NombreClientePrepago = beneficiario.Cliente.nameCliente;
                     return View("CreateBeneficiario", beneficiario.Afiliado);
                 }
             }
@@ -214,7 +214,7 @@ namespace Suma2Lealtad.Controllers.Prepago
                 if (beneficiario.Cliente.idCliente == id)
                 {
                     //beneficiario.Afiliado = repAfiliado.Find(beneficiario.Afiliado.id);
-                    beneficiario = repBeneficiario.Find(beneficiario.Afiliado.id);                
+                    beneficiario = repBeneficiario.Find(beneficiario.Afiliado.id);
                     return View("EditBeneficiario", beneficiario.Afiliado);
                 }
                 //ES Beneficiario Prepago Plazas de otro cliente
@@ -414,7 +414,7 @@ namespace Suma2Lealtad.Controllers.Prepago
                     viewmodel.RouteValues = beneficiario.Cliente.idCliente.ToString();
                 }
             }
-            return RedirectToAction("GenericView", viewmodel);                
+            return RedirectToAction("GenericView", viewmodel);
         }
 
         public ActionResult DeleteBeneficiario(int id, int idBeneficiario)
@@ -838,7 +838,19 @@ namespace Suma2Lealtad.Controllers.Prepago
             ClientePrepago cliente = repCliente.Find(id);
             List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find("", "", "", "", "").Where(b => b.Cliente.idCliente == id).ToList();
             List<DetalleOrdenRecargaPrepago> detalleOrden = repOrden.DetalleParaOrden(cliente, beneficiarios.FindAll(b => b.Afiliado.estatus == "Activa" && b.Afiliado.estatustarjeta == "Activa"));
-            return View(detalleOrden);
+            if (detalleOrden.Count == 0)
+            {
+                ViewModel viewmodel = new ViewModel();
+                viewmodel.Title = "Prepago / Cliente / Ordenes de Recarga / Crear Orden";
+                viewmodel.Message = "No se puede crear Orden. El cliente no tiene beneficiarios activos con tarjeta activa.";
+                viewmodel.ControllerName = "ClientePrepago";
+                viewmodel.ActionName = "FilterReview";
+                return RedirectToAction("GenericView", viewmodel);
+            }
+            else
+            {
+                return View(detalleOrden);
+            }
         }
 
         [HttpPost]
@@ -913,26 +925,41 @@ namespace Suma2Lealtad.Controllers.Prepago
                 }
                 ClientePrepago cliente = repCliente.Find(id);
                 List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find("", "", "", "", "").Where(b => b.Cliente.idCliente == id).ToList();
-                //leer el archivo
-                List<DetalleOrdenRecargaPrepago> detalleOrdenArchivo = repOrden.GetBeneficiariosArchivo(path);
-                //borrar el archivo
-                if (System.IO.File.Exists(path))
+                if (beneficiarios.Count == 0)
                 {
-                    System.IO.File.Delete(path);
-                }
-                if (detalleOrdenArchivo == null)
-                {
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
                     viewmodel.Title = "Prepago / Cliente / Ordenes de Recarga / Crear Orden desde Archivo";
-                    viewmodel.Message = "Error de aplicacion: No se pudo leer el archivo.";
+                    viewmodel.Message = "No se puede crear Orden. El cliente no tiene beneficiarios activos con tarjeta activa.";
                     viewmodel.ControllerName = "ClientePrepago";
-                    viewmodel.ActionName = "FilterOrdenes";
-                    viewmodel.RouteValues = id.ToString();
+                    viewmodel.ActionName = "FilterReview";
                     return RedirectToAction("GenericView", viewmodel);
                 }
                 else
                 {
-                    List<DetalleOrdenRecargaPrepago> detalleOrden = repOrden.DetalleParaOrdenArchivo(cliente, beneficiarios.FindAll(b => b.Afiliado.estatus == "Activa" && b.Afiliado.estatustarjeta == "Activa"), detalleOrdenArchivo);
-                    return View("CreateOrdenRecarga", detalleOrden);
+                    //leer el archivo
+                    List<DetalleOrdenRecargaPrepago> detalleOrdenArchivo = repOrden.GetBeneficiariosArchivo(path);
+                    //borrar el archivo
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                    if (detalleOrdenArchivo == null)
+                    {
+                        viewmodel.Title = "Prepago / Cliente / Ordenes de Recarga / Crear Orden desde Archivo";
+                        viewmodel.Message = "Error de aplicacion: No se pudo leer el archivo.";
+                        viewmodel.ControllerName = "ClientePrepago";
+                        viewmodel.ActionName = "FilterOrdenes";
+                        viewmodel.RouteValues = id.ToString();
+                        return RedirectToAction("GenericView", viewmodel);
+                    }
+                    else
+                    {
+                        List<DetalleOrdenRecargaPrepago> detalleOrden = repOrden.DetalleParaOrdenArchivo(cliente, beneficiarios.FindAll(b => b.Afiliado.estatus == "Activa" && b.Afiliado.estatustarjeta == "Activa"), detalleOrdenArchivo);
+                        return View("CreateOrdenRecarga", detalleOrden);
+                    }
                 }
             }
             else

@@ -36,7 +36,19 @@ namespace Suma2Lealtad.Controllers.Prepago
             ClientePrepago cliente = repCliente.Find(idCliente);
             List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find("", "", "", "", "").Where(b => b.Cliente.idCliente == idCliente).ToList();
             List<DetalleOrdenRecargaPrepago> detalleOrden = repOrden.DetalleParaOrden(cliente, beneficiarios.FindAll(b => b.Afiliado.estatus == "Activa" && b.Afiliado.estatustarjeta == "Activa"));
-            return View(detalleOrden);
+            if (detalleOrden.Count == 0)
+            {
+                ViewModel viewmodel = new ViewModel();
+                viewmodel.Title = "Prepago / Ordenes de Recarga / Crear Orden";
+                viewmodel.Message = "No se puede crear Orden. El cliente no tiene beneficiarios activos con tarjeta activa.";
+                viewmodel.ControllerName = "OrdenRecargaPrepago";
+                viewmodel.ActionName = "Filter";
+                return RedirectToAction("GenericView", viewmodel);
+            }
+            else
+            {
+                return View(detalleOrden);
+            }
         }
 
         [HttpPost]
@@ -103,25 +115,40 @@ namespace Suma2Lealtad.Controllers.Prepago
                 }
                 ClientePrepago cliente = repCliente.Find(idCliente);
                 List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find("", "", "", "", "").Where(b => b.Cliente.idCliente == idCliente).ToList();
-                //leer el archivo
-                List<DetalleOrdenRecargaPrepago> detalleOrdenArchivo = repOrden.GetBeneficiariosArchivo(path);
-                //borrar el archivo
-                if (System.IO.File.Exists(path))
+                if (beneficiarios.Count == 0)
                 {
-                    System.IO.File.Delete(path);
-                }
-                if (detalleOrdenArchivo == null)
-                {
-                    viewmodel.Title = "Prepago / Ordenes de Recarga / Crear Orden desde Archivo";
-                    viewmodel.Message = "Error de aplicacion: No se pudo leer el archivo.";
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                    viewmodel.Title = "Prepago / Ordenes de Recarga / Crear Orden";
+                    viewmodel.Message = "No se puede crear Orden. El cliente no tiene beneficiarios activos con tarjeta activa.";
                     viewmodel.ControllerName = "OrdenRecargaPrepago";
                     viewmodel.ActionName = "Filter";
                     return RedirectToAction("GenericView", viewmodel);
                 }
                 else
                 {
-                    List<DetalleOrdenRecargaPrepago> detalleOrden = repOrden.DetalleParaOrdenArchivo(cliente, beneficiarios.FindAll(b => b.Afiliado.estatus == "Activa" && b.Afiliado.estatustarjeta == "Activa"), detalleOrdenArchivo);
-                    return View("Create", detalleOrden);
+                    //leer el archivo
+                    List<DetalleOrdenRecargaPrepago> detalleOrdenArchivo = repOrden.GetBeneficiariosArchivo(path);
+                    //borrar el archivo
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                    if (detalleOrdenArchivo == null)
+                    {
+                        viewmodel.Title = "Prepago / Ordenes de Recarga / Crear Orden desde Archivo";
+                        viewmodel.Message = "Error de aplicacion: No se pudo leer el archivo.";
+                        viewmodel.ControllerName = "OrdenRecargaPrepago";
+                        viewmodel.ActionName = "Filter";
+                        return RedirectToAction("GenericView", viewmodel);
+                    }
+                    else
+                    {
+                        List<DetalleOrdenRecargaPrepago> detalleOrden = repOrden.DetalleParaOrdenArchivo(cliente, beneficiarios.FindAll(b => b.Afiliado.estatus == "Activa" && b.Afiliado.estatustarjeta == "Activa"), detalleOrdenArchivo);
+                        return View("Create", detalleOrden);
+                    }
                 }
             }
             else

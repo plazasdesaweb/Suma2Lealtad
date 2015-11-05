@@ -117,7 +117,7 @@
                                 @(String.Format("{0}", item.fecha.ToString("dd/MM/yyyy hh:mm tt")))
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.numerotarjeta)
+                               @(String.Format("{0}", Math.Truncate(item.numerotarjeta)))
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.monto)
