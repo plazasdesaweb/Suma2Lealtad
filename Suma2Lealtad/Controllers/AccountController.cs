@@ -14,6 +14,7 @@ namespace Suma2Lealtad.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]
+    [HandleError]
     public class AccountController : Controller
     {
         //

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 namespace Suma2Lealtad.Controllers
 {
     [AuditingFilter]
+    [HandleError]
     public class ChannelController : Controller
     {
         private LealtadEntities db = new LealtadEntities();

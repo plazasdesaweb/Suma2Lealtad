@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Suma2Lealtad.Controllers
 {
+    [HandleError]
     public class EstadoController : Controller
     {
         private LealtadEntities db = new LealtadEntities();

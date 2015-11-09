@@ -76,7 +76,7 @@
     <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.bootstrap.wizard.min.js")"></script>
-
+    <script src="@Url.Content("~/Scripts/clipboard.js")"></script>
     <script src="@Url.Content("~/Scripts/PruebaBS3Dialog/assets/prettify/run_prettify.js")"></script>
     <link href="@Url.Content("~/Scripts/PruebaBS3Dialog/assets/bootstrap-dialog/css/bootstrap-dialog.css")" rel="stylesheet" />
     <script src="@Url.Content("~/Scripts/PruebaBS3Dialog/assets/bootstrap-dialog/js/bootstrap-dialog.js")"></script>
@@ -184,6 +184,18 @@
                 $('#Afiliado_cod_urbanizacion').html(items);
             });
         });*@
+
+            /* Clipboard */
+            var btns = document.querySelectorAll('button');
+            var clipboard = new Clipboard(btns);
+            /*
+            clipboard.on('success', function(e) {
+                console.log(e);
+            });
+            clipboard.on('error', function(e) {
+                console.log(e);
+            });
+            */
 
             $.validator.addMethod("regex", function (value, element, regexpr) {
                 return regexpr.test(value);

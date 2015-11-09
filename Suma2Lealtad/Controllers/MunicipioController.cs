@@ -9,6 +9,7 @@ using Suma2Lealtad.Models;
 
 namespace Suma2Lealtad.Controllers
 {
+    [HandleError]
     public class MunicipioController : Controller
     {
         private LealtadEntities db = new LealtadEntities();

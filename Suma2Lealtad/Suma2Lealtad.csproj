@@ -511,6 +511,7 @@
     <None Include="Properties\PublishProfiles\SumaLealtad.pubxml" />
     <None Include="Properties\PublishProfiles\SumaLealtadArturo.pubxml" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <Content Include="Scripts\clipboard.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
     <Content Include="Scripts\jquery-2.1.3.min.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.js" />

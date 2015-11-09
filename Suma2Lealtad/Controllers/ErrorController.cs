@@ -2,6 +2,7 @@
 
 namespace Suma2Lealtad.Controllers
 {
+    [HandleError]
     public class ErrorController : Controller
     {
 
