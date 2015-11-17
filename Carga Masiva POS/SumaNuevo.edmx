@@ -1,0 +1,574 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SumaLealtadModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="SumaLealtadModelStoreContainer">
+          <EntitySet Name="CIUDAD" EntityType="SumaLealtadModel.Store.CIUDAD" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CIUDAD_MUNICIPIO" EntityType="SumaLealtadModel.Store.CIUDAD_MUNICIPIO" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ESTADO" EntityType="SumaLealtadModel.Store.ESTADO" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ESTADO_CIUDAD" EntityType="SumaLealtadModel.Store.ESTADO_CIUDAD" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MUNICIPIO" EntityType="SumaLealtadModel.Store.MUNICIPIO" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MUNICIPIO_PARROQUIA" EntityType="SumaLealtadModel.Store.MUNICIPIO_PARROQUIA" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PAIS" EntityType="SumaLealtadModel.Store.PAIS" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PAIS_ESTADO" EntityType="SumaLealtadModel.Store.PAIS_ESTADO" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PARAMETROS" EntityType="SumaLealtadModel.Store.PARAMETROS" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PARROQUIA" EntityType="SumaLealtadModel.Store.PARROQUIA" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PARROQUIA_URBANIZACION" EntityType="SumaLealtadModel.Store.PARROQUIA_URBANIZACION" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="RESTRICCIONES" EntityType="SumaLealtadModel.Store.RESTRICCIONES" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="URBANIZACION" EntityType="SumaLealtadModel.Store.URBANIZACION" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_CIUDAD_MUNICIPIO_CIUDAD" Association="SumaLealtadModel.Store.FK_CIUDAD_MUNICIPIO_CIUDAD">
+            <End Role="CIUDAD" EntitySet="CIUDAD" />
+            <End Role="CIUDAD_MUNICIPIO" EntitySet="CIUDAD_MUNICIPIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CIUDAD_MUNICIPIO_MUNICIPIO" Association="SumaLealtadModel.Store.FK_CIUDAD_MUNICIPIO_MUNICIPIO">
+            <End Role="MUNICIPIO" EntitySet="MUNICIPIO" />
+            <End Role="CIUDAD_MUNICIPIO" EntitySet="CIUDAD_MUNICIPIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ESTADO_CIUDAD_CIUDAD" Association="SumaLealtadModel.Store.FK_ESTADO_CIUDAD_CIUDAD">
+            <End Role="CIUDAD" EntitySet="CIUDAD" />
+            <End Role="ESTADO_CIUDAD" EntitySet="ESTADO_CIUDAD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ESTADO_CIUDAD_ESTADO" Association="SumaLealtadModel.Store.FK_ESTADO_CIUDAD_ESTADO">
+            <End Role="ESTADO" EntitySet="ESTADO" />
+            <End Role="ESTADO_CIUDAD" EntitySet="ESTADO_CIUDAD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MUNICIPIO_PARROQUIA_MUNICIPIO" Association="SumaLealtadModel.Store.FK_MUNICIPIO_PARROQUIA_MUNICIPIO">
+            <End Role="MUNICIPIO" EntitySet="MUNICIPIO" />
+            <End Role="MUNICIPIO_PARROQUIA" EntitySet="MUNICIPIO_PARROQUIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MUNICIPIO_PARROQUIA_PARROQUIA" Association="SumaLealtadModel.Store.FK_MUNICIPIO_PARROQUIA_PARROQUIA">
+            <End Role="PARROQUIA" EntitySet="PARROQUIA" />
+            <End Role="MUNICIPIO_PARROQUIA" EntitySet="MUNICIPIO_PARROQUIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PARROQUIA_URBANIZACION_PARROQUIA" Association="SumaLealtadModel.Store.FK_PARROQUIA_URBANIZACION_PARROQUIA">
+            <End Role="PARROQUIA" EntitySet="PARROQUIA" />
+            <End Role="PARROQUIA_URBANIZACION" EntitySet="PARROQUIA_URBANIZACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PARROQUIA_URBANIZACION_URBANIZACION" Association="SumaLealtadModel.Store.FK_PARROQUIA_URBANIZACION_URBANIZACION">
+            <End Role="URBANIZACION" EntitySet="URBANIZACION" />
+            <End Role="PARROQUIA_URBANIZACION" EntitySet="PARROQUIA_URBANIZACION" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CIUDAD">
+          <Key>
+            <PropertyRef Name="COD_CIUDAD" />
+          </Key>
+          <Property Name="COD_CIUDAD" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="DESCRIPC_CIUDAD" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CIUDAD_MUNICIPIO">
+          <Key>
+            <PropertyRef Name="COD_CIUDAD" />
+            <PropertyRef Name="COD_MUNICIPIO" />
+          </Key>
+          <Property Name="COD_CIUDAD" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="COD_MUNICIPIO" Type="varchar" Nullable="false" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="ESTADO">
+          <Key>
+            <PropertyRef Name="COD_ESTADO" />
+          </Key>
+          <Property Name="COD_ESTADO" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="DESCRIPC_ESTADO" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ESTADO_CIUDAD">
+          <Key>
+            <PropertyRef Name="COD_ESTADO" />
+            <PropertyRef Name="COD_CIUDAD" />
+          </Key>
+          <Property Name="COD_ESTADO" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="COD_CIUDAD" Type="varchar" Nullable="false" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="MUNICIPIO">
+          <Key>
+            <PropertyRef Name="COD_MUNICIPIO" />
+          </Key>
+          <Property Name="COD_MUNICIPIO" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="DESCRIPC_MUNICIPIO" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MUNICIPIO_PARROQUIA">
+          <Key>
+            <PropertyRef Name="COD_MUNICIPIO" />
+            <PropertyRef Name="COD_PARROQUIA" />
+          </Key>
+          <Property Name="COD_MUNICIPIO" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="COD_PARROQUIA" Type="varchar" Nullable="false" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="PAIS">
+          <Key>
+            <PropertyRef Name="COD_PAIS" />
+          </Key>
+          <Property Name="COD_PAIS" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="DESCRIPC_PAIS" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PAIS_ESTADO">
+          <Key>
+            <PropertyRef Name="COD_PAIS" />
+            <PropertyRef Name="COD_ESTADO" />
+          </Key>
+          <Property Name="COD_PAIS" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="COD_ESTADO" Type="varchar" Nullable="false" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="PARAMETROS">
+          <Key>
+            <PropertyRef Name="ID_PARAM" />
+            <PropertyRef Name="NOMBRE_PARAM" />
+          </Key>
+          <Property Name="ID_PARAM" Type="int" Nullable="false" />
+          <Property Name="NOMBRE_PARAM" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="50" />
+          <Property Name="MTO_CANJE" Type="int" />
+          <Property Name="PTS_CANJE" Type="int" />
+          <Property Name="MTO_ACR" Type="int" />
+          <Property Name="PTS_ACR" Type="int" />
+          <Property Name="TIPO_PRE" Type="int" />
+          <Property Name="TIPO_SUMA" Type="int" />
+          <Property Name="FECHA_ACT_PARAM" Type="datetime" />
+          <Property Name="FECHA_DESAC_PARAM" Type="datetime" />
+          <Property Name="FECHA" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PARROQUIA">
+          <Key>
+            <PropertyRef Name="COD_PARROQUIA" />
+          </Key>
+          <Property Name="COD_PARROQUIA" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="DESCRIPC_PARROQUIA" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PARROQUIA_URBANIZACION">
+          <Key>
+            <PropertyRef Name="COD_PARROQUIA" />
+            <PropertyRef Name="COD_URBANIZACION" />
+          </Key>
+          <Property Name="COD_PARROQUIA" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="COD_URBANIZACION" Type="varchar" Nullable="false" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="RESTRICCIONES">
+          <Key>
+            <PropertyRef Name="COD_RESTRICCION" />
+          </Key>
+          <Property Name="COD_RESTRICCION" Type="int" Nullable="false" />
+          <Property Name="FECHA_ACT_REST" Type="datetime" />
+          <Property Name="FECHA_DESAC_REST" Type="datetime" />
+          <Property Name="MINTRAN_ACR" Type="tinyint" />
+          <Property Name="MAXTRAN_ACR" Type="tinyint" />
+          <Property Name="MINMONTO_ACR" Type="money" />
+          <Property Name="MAXMONTO_ACR" Type="money" />
+          <Property Name="MINTRAN_RED" Type="tinyint" />
+          <Property Name="MAXTRAN_RED" Type="tinyint" />
+          <Property Name="MINMONTO_RED" Type="money" />
+          <Property Name="MAXMONTO_RED" Type="money" />
+        </EntityType>
+        <EntityType Name="URBANIZACION">
+          <Key>
+            <PropertyRef Name="COD_URBANIZACION" />
+          </Key>
+          <Property Name="COD_URBANIZACION" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="DESCRIPC_URBANIZACION" Type="varchar" Nullable="false" MaxLength="40" />
+        </EntityType>
+        <Association Name="FK_CIUDAD_MUNICIPIO_CIUDAD">
+          <End Role="CIUDAD" Type="SumaLealtadModel.Store.CIUDAD" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CIUDAD_MUNICIPIO" Type="SumaLealtadModel.Store.CIUDAD_MUNICIPIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CIUDAD">
+              <PropertyRef Name="COD_CIUDAD" />
+            </Principal>
+            <Dependent Role="CIUDAD_MUNICIPIO">
+              <PropertyRef Name="COD_CIUDAD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CIUDAD_MUNICIPIO_MUNICIPIO">
+          <End Role="MUNICIPIO" Type="SumaLealtadModel.Store.MUNICIPIO" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CIUDAD_MUNICIPIO" Type="SumaLealtadModel.Store.CIUDAD_MUNICIPIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MUNICIPIO">
+              <PropertyRef Name="COD_MUNICIPIO" />
+            </Principal>
+            <Dependent Role="CIUDAD_MUNICIPIO">
+              <PropertyRef Name="COD_MUNICIPIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ESTADO_CIUDAD_CIUDAD">
+          <End Role="CIUDAD" Type="SumaLealtadModel.Store.CIUDAD" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ESTADO_CIUDAD" Type="SumaLealtadModel.Store.ESTADO_CIUDAD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CIUDAD">
+              <PropertyRef Name="COD_CIUDAD" />
+            </Principal>
+            <Dependent Role="ESTADO_CIUDAD">
+              <PropertyRef Name="COD_CIUDAD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ESTADO_CIUDAD_ESTADO">
+          <End Role="ESTADO" Type="SumaLealtadModel.Store.ESTADO" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ESTADO_CIUDAD" Type="SumaLealtadModel.Store.ESTADO_CIUDAD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ESTADO">
+              <PropertyRef Name="COD_ESTADO" />
+            </Principal>
+            <Dependent Role="ESTADO_CIUDAD">
+              <PropertyRef Name="COD_ESTADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MUNICIPIO_PARROQUIA_MUNICIPIO">
+          <End Role="MUNICIPIO" Type="SumaLealtadModel.Store.MUNICIPIO" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MUNICIPIO_PARROQUIA" Type="SumaLealtadModel.Store.MUNICIPIO_PARROQUIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MUNICIPIO">
+              <PropertyRef Name="COD_MUNICIPIO" />
+            </Principal>
+            <Dependent Role="MUNICIPIO_PARROQUIA">
+              <PropertyRef Name="COD_MUNICIPIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MUNICIPIO_PARROQUIA_PARROQUIA">
+          <End Role="PARROQUIA" Type="SumaLealtadModel.Store.PARROQUIA" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MUNICIPIO_PARROQUIA" Type="SumaLealtadModel.Store.MUNICIPIO_PARROQUIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PARROQUIA">
+              <PropertyRef Name="COD_PARROQUIA" />
+            </Principal>
+            <Dependent Role="MUNICIPIO_PARROQUIA">
+              <PropertyRef Name="COD_PARROQUIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PARROQUIA_URBANIZACION_PARROQUIA">
+          <End Role="PARROQUIA" Type="SumaLealtadModel.Store.PARROQUIA" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PARROQUIA_URBANIZACION" Type="SumaLealtadModel.Store.PARROQUIA_URBANIZACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PARROQUIA">
+              <PropertyRef Name="COD_PARROQUIA" />
+            </Principal>
+            <Dependent Role="PARROQUIA_URBANIZACION">
+              <PropertyRef Name="COD_PARROQUIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PARROQUIA_URBANIZACION_URBANIZACION">
+          <End Role="URBANIZACION" Type="SumaLealtadModel.Store.URBANIZACION" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PARROQUIA_URBANIZACION" Type="SumaLealtadModel.Store.PARROQUIA_URBANIZACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="URBANIZACION">
+              <PropertyRef Name="COD_URBANIZACION" />
+            </Principal>
+            <Dependent Role="PARROQUIA_URBANIZACION">
+              <PropertyRef Name="COD_URBANIZACION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SumaLealtadModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SumaLealtadEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="CIUDADES" EntityType="SumaLealtadModel.CIUDAD" />
+          <EntitySet Name="ESTADOS" EntityType="SumaLealtadModel.ESTADO" />
+          <EntitySet Name="MUNICIPIOS" EntityType="SumaLealtadModel.MUNICIPIO" />
+          <EntitySet Name="PAISES" EntityType="SumaLealtadModel.PAIS" />
+          <EntitySet Name="PAISES_ESTADOS" EntityType="SumaLealtadModel.PAIS_ESTADO" />
+          <EntitySet Name="PARAMETROS" EntityType="SumaLealtadModel.PARAMETRO" />
+          <EntitySet Name="PARROQUIAS" EntityType="SumaLealtadModel.PARROQUIA" />
+          <EntitySet Name="RESTRICCIONES" EntityType="SumaLealtadModel.RESTRICCION" />
+          <EntitySet Name="URBANIZACIONES" EntityType="SumaLealtadModel.URBANIZACION" />
+          <AssociationSet Name="CIUDAD_MUNICIPIO" Association="SumaLealtadModel.CIUDAD_MUNICIPIO">
+            <End Role="CIUDAD" EntitySet="CIUDADES" />
+            <End Role="MUNICIPIO" EntitySet="MUNICIPIOS" />
+          </AssociationSet>
+          <AssociationSet Name="ESTADO_CIUDAD" Association="SumaLealtadModel.ESTADO_CIUDAD">
+            <End Role="CIUDAD" EntitySet="CIUDADES" />
+            <End Role="ESTADO" EntitySet="ESTADOS" />
+          </AssociationSet>
+          <AssociationSet Name="MUNICIPIO_PARROQUIA" Association="SumaLealtadModel.MUNICIPIO_PARROQUIA">
+            <End Role="MUNICIPIO" EntitySet="MUNICIPIOS" />
+            <End Role="PARROQUIA" EntitySet="PARROQUIAS" />
+          </AssociationSet>
+          <AssociationSet Name="PARROQUIA_URBANIZACION" Association="SumaLealtadModel.PARROQUIA_URBANIZACION">
+            <End Role="PARROQUIA" EntitySet="PARROQUIAS" />
+            <End Role="URBANIZACION" EntitySet="URBANIZACIONES" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CIUDAD">
+          <Key>
+            <PropertyRef Name="COD_CIUDAD" />
+          </Key>
+          <Property Name="COD_CIUDAD" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="DESCRIPC_CIUDAD" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="MUNICIPIOs" Relationship="SumaLealtadModel.CIUDAD_MUNICIPIO" FromRole="CIUDAD" ToRole="MUNICIPIO" />
+          <NavigationProperty Name="ESTADOes" Relationship="SumaLealtadModel.ESTADO_CIUDAD" FromRole="CIUDAD" ToRole="ESTADO" />
+        </EntityType>
+        <EntityType Name="ESTADO">
+          <Key>
+            <PropertyRef Name="COD_ESTADO" />
+          </Key>
+          <Property Name="COD_ESTADO" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="DESCRIPC_ESTADO" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="CIUDADs" Relationship="SumaLealtadModel.ESTADO_CIUDAD" FromRole="ESTADO" ToRole="CIUDAD" />
+        </EntityType>
+        <EntityType Name="MUNICIPIO">
+          <Key>
+            <PropertyRef Name="COD_MUNICIPIO" />
+          </Key>
+          <Property Name="COD_MUNICIPIO" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="DESCRIPC_MUNICIPIO" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="CIUDADs" Relationship="SumaLealtadModel.CIUDAD_MUNICIPIO" FromRole="MUNICIPIO" ToRole="CIUDAD" />
+          <NavigationProperty Name="PARROQUIAs" Relationship="SumaLealtadModel.MUNICIPIO_PARROQUIA" FromRole="MUNICIPIO" ToRole="PARROQUIA" />
+        </EntityType>
+        <EntityType Name="PAIS">
+          <Key>
+            <PropertyRef Name="COD_PAIS" />
+          </Key>
+          <Property Name="COD_PAIS" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="DESCRIPC_PAIS" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="PAIS_ESTADO">
+          <Key>
+            <PropertyRef Name="COD_PAIS" />
+            <PropertyRef Name="COD_ESTADO" />
+          </Key>
+          <Property Name="COD_PAIS" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="COD_ESTADO" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="PARAMETRO">
+          <Key>
+            <PropertyRef Name="ID_PARAM" />
+            <PropertyRef Name="NOMBRE_PARAM" />
+          </Key>
+          <Property Name="ID_PARAM" Type="Int32" Nullable="false" />
+          <Property Name="NOMBRE_PARAM" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DESCRIPCION" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="MTO_CANJE" Type="Int32" />
+          <Property Name="PTS_CANJE" Type="Int32" />
+          <Property Name="MTO_ACR" Type="Int32" />
+          <Property Name="PTS_ACR" Type="Int32" />
+          <Property Name="TIPO_PRE" Type="Int32" />
+          <Property Name="TIPO_SUMA" Type="Int32" />
+          <Property Name="FECHA_ACT_PARAM" Type="DateTime" Precision="3" />
+          <Property Name="FECHA_DESAC_PARAM" Type="DateTime" Precision="3" />
+          <Property Name="FECHA" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="PARROQUIA">
+          <Key>
+            <PropertyRef Name="COD_PARROQUIA" />
+          </Key>
+          <Property Name="COD_PARROQUIA" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="DESCRIPC_PARROQUIA" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="MUNICIPIOs" Relationship="SumaLealtadModel.MUNICIPIO_PARROQUIA" FromRole="PARROQUIA" ToRole="MUNICIPIO" />
+          <NavigationProperty Name="URBANIZACIONs" Relationship="SumaLealtadModel.PARROQUIA_URBANIZACION" FromRole="PARROQUIA" ToRole="URBANIZACION" />
+        </EntityType>
+        <EntityType Name="RESTRICCION">
+          <Key>
+            <PropertyRef Name="COD_RESTRICCION" />
+          </Key>
+          <Property Name="COD_RESTRICCION" Type="Int32" Nullable="false" />
+          <Property Name="FECHA_ACT_REST" Type="DateTime" Precision="3" />
+          <Property Name="FECHA_DESAC_REST" Type="DateTime" Precision="3" />
+          <Property Name="MINTRAN_ACR" Type="Byte" />
+          <Property Name="MAXTRAN_ACR" Type="Byte" />
+          <Property Name="MINMONTO_ACR" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MAXMONTO_ACR" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MINTRAN_RED" Type="Byte" />
+          <Property Name="MAXTRAN_RED" Type="Byte" />
+          <Property Name="MINMONTO_RED" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MAXMONTO_RED" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="URBANIZACION">
+          <Key>
+            <PropertyRef Name="COD_URBANIZACION" />
+          </Key>
+          <Property Name="COD_URBANIZACION" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="DESCRIPC_URBANIZACION" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="PARROQUIAs" Relationship="SumaLealtadModel.PARROQUIA_URBANIZACION" FromRole="URBANIZACION" ToRole="PARROQUIA" />
+        </EntityType>
+        <Association Name="CIUDAD_MUNICIPIO">
+          <End Role="CIUDAD" Type="SumaLealtadModel.CIUDAD" Multiplicity="*" />
+          <End Role="MUNICIPIO" Type="SumaLealtadModel.MUNICIPIO" Multiplicity="*" />
+        </Association>
+        <Association Name="ESTADO_CIUDAD">
+          <End Role="CIUDAD" Type="SumaLealtadModel.CIUDAD" Multiplicity="*" />
+          <End Role="ESTADO" Type="SumaLealtadModel.ESTADO" Multiplicity="*" />
+        </Association>
+        <Association Name="MUNICIPIO_PARROQUIA">
+          <End Role="MUNICIPIO" Type="SumaLealtadModel.MUNICIPIO" Multiplicity="*" />
+          <End Role="PARROQUIA" Type="SumaLealtadModel.PARROQUIA" Multiplicity="*" />
+        </Association>
+        <Association Name="PARROQUIA_URBANIZACION">
+          <End Role="PARROQUIA" Type="SumaLealtadModel.PARROQUIA" Multiplicity="*" />
+          <End Role="URBANIZACION" Type="SumaLealtadModel.URBANIZACION" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SumaLealtadModelStoreContainer" CdmEntityContainer="SumaLealtadEntities">
+          <EntitySetMapping Name="CIUDADES">
+            <EntityTypeMapping TypeName="SumaLealtadModel.CIUDAD">
+              <MappingFragment StoreEntitySet="CIUDAD">
+                <ScalarProperty Name="COD_CIUDAD" ColumnName="COD_CIUDAD" />
+                <ScalarProperty Name="DESCRIPC_CIUDAD" ColumnName="DESCRIPC_CIUDAD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ESTADOS">
+            <EntityTypeMapping TypeName="SumaLealtadModel.ESTADO">
+              <MappingFragment StoreEntitySet="ESTADO">
+                <ScalarProperty Name="COD_ESTADO" ColumnName="COD_ESTADO" />
+                <ScalarProperty Name="DESCRIPC_ESTADO" ColumnName="DESCRIPC_ESTADO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MUNICIPIOS">
+            <EntityTypeMapping TypeName="SumaLealtadModel.MUNICIPIO">
+              <MappingFragment StoreEntitySet="MUNICIPIO">
+                <ScalarProperty Name="COD_MUNICIPIO" ColumnName="COD_MUNICIPIO" />
+                <ScalarProperty Name="DESCRIPC_MUNICIPIO" ColumnName="DESCRIPC_MUNICIPIO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PAISES">
+            <EntityTypeMapping TypeName="SumaLealtadModel.PAIS">
+              <MappingFragment StoreEntitySet="PAIS">
+                <ScalarProperty Name="COD_PAIS" ColumnName="COD_PAIS" />
+                <ScalarProperty Name="DESCRIPC_PAIS" ColumnName="DESCRIPC_PAIS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PAISES_ESTADOS">
+            <EntityTypeMapping TypeName="SumaLealtadModel.PAIS_ESTADO">
+              <MappingFragment StoreEntitySet="PAIS_ESTADO">
+                <ScalarProperty Name="COD_PAIS" ColumnName="COD_PAIS" />
+                <ScalarProperty Name="COD_ESTADO" ColumnName="COD_ESTADO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PARAMETROS">
+            <EntityTypeMapping TypeName="SumaLealtadModel.PARAMETRO">
+              <MappingFragment StoreEntitySet="PARAMETROS">
+                <ScalarProperty Name="ID_PARAM" ColumnName="ID_PARAM" />
+                <ScalarProperty Name="NOMBRE_PARAM" ColumnName="NOMBRE_PARAM" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="MTO_CANJE" ColumnName="MTO_CANJE" />
+                <ScalarProperty Name="PTS_CANJE" ColumnName="PTS_CANJE" />
+                <ScalarProperty Name="MTO_ACR" ColumnName="MTO_ACR" />
+                <ScalarProperty Name="PTS_ACR" ColumnName="PTS_ACR" />
+                <ScalarProperty Name="TIPO_PRE" ColumnName="TIPO_PRE" />
+                <ScalarProperty Name="TIPO_SUMA" ColumnName="TIPO_SUMA" />
+                <ScalarProperty Name="FECHA_ACT_PARAM" ColumnName="FECHA_ACT_PARAM" />
+                <ScalarProperty Name="FECHA_DESAC_PARAM" ColumnName="FECHA_DESAC_PARAM" />
+                <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PARROQUIAS">
+            <EntityTypeMapping TypeName="SumaLealtadModel.PARROQUIA">
+              <MappingFragment StoreEntitySet="PARROQUIA">
+                <ScalarProperty Name="COD_PARROQUIA" ColumnName="COD_PARROQUIA" />
+                <ScalarProperty Name="DESCRIPC_PARROQUIA" ColumnName="DESCRIPC_PARROQUIA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RESTRICCIONES">
+            <EntityTypeMapping TypeName="SumaLealtadModel.RESTRICCION">
+              <MappingFragment StoreEntitySet="RESTRICCIONES">
+                <ScalarProperty Name="COD_RESTRICCION" ColumnName="COD_RESTRICCION" />
+                <ScalarProperty Name="FECHA_ACT_REST" ColumnName="FECHA_ACT_REST" />
+                <ScalarProperty Name="FECHA_DESAC_REST" ColumnName="FECHA_DESAC_REST" />
+                <ScalarProperty Name="MINTRAN_ACR" ColumnName="MINTRAN_ACR" />
+                <ScalarProperty Name="MAXTRAN_ACR" ColumnName="MAXTRAN_ACR" />
+                <ScalarProperty Name="MINMONTO_ACR" ColumnName="MINMONTO_ACR" />
+                <ScalarProperty Name="MAXMONTO_ACR" ColumnName="MAXMONTO_ACR" />
+                <ScalarProperty Name="MINTRAN_RED" ColumnName="MINTRAN_RED" />
+                <ScalarProperty Name="MAXTRAN_RED" ColumnName="MAXTRAN_RED" />
+                <ScalarProperty Name="MINMONTO_RED" ColumnName="MINMONTO_RED" />
+                <ScalarProperty Name="MAXMONTO_RED" ColumnName="MAXMONTO_RED" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="URBANIZACIONES">
+            <EntityTypeMapping TypeName="SumaLealtadModel.URBANIZACION">
+              <MappingFragment StoreEntitySet="URBANIZACION">
+                <ScalarProperty Name="COD_URBANIZACION" ColumnName="COD_URBANIZACION" />
+                <ScalarProperty Name="DESCRIPC_URBANIZACION" ColumnName="DESCRIPC_URBANIZACION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="CIUDAD_MUNICIPIO" TypeName="SumaLealtadModel.CIUDAD_MUNICIPIO" StoreEntitySet="CIUDAD_MUNICIPIO">
+            <EndProperty Name="CIUDAD">
+              <ScalarProperty Name="COD_CIUDAD" ColumnName="COD_CIUDAD" />
+            </EndProperty>
+            <EndProperty Name="MUNICIPIO">
+              <ScalarProperty Name="COD_MUNICIPIO" ColumnName="COD_MUNICIPIO" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ESTADO_CIUDAD" TypeName="SumaLealtadModel.ESTADO_CIUDAD" StoreEntitySet="ESTADO_CIUDAD">
+            <EndProperty Name="CIUDAD">
+              <ScalarProperty Name="COD_CIUDAD" ColumnName="COD_CIUDAD" />
+            </EndProperty>
+            <EndProperty Name="ESTADO">
+              <ScalarProperty Name="COD_ESTADO" ColumnName="COD_ESTADO" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="MUNICIPIO_PARROQUIA" TypeName="SumaLealtadModel.MUNICIPIO_PARROQUIA" StoreEntitySet="MUNICIPIO_PARROQUIA">
+            <EndProperty Name="MUNICIPIO">
+              <ScalarProperty Name="COD_MUNICIPIO" ColumnName="COD_MUNICIPIO" />
+            </EndProperty>
+            <EndProperty Name="PARROQUIA">
+              <ScalarProperty Name="COD_PARROQUIA" ColumnName="COD_PARROQUIA" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="PARROQUIA_URBANIZACION" TypeName="SumaLealtadModel.PARROQUIA_URBANIZACION" StoreEntitySet="PARROQUIA_URBANIZACION">
+            <EndProperty Name="PARROQUIA">
+              <ScalarProperty Name="COD_PARROQUIA" ColumnName="COD_PARROQUIA" />
+            </EndProperty>
+            <EndProperty Name="URBANIZACION">
+              <ScalarProperty Name="COD_URBANIZACION" ColumnName="COD_URBANIZACION" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CardsModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="CardsModelStoreContainer">
+          <EntitySet Name="Cards" EntityType="CardsModel.Store.Cards" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Clients" EntityType="CardsModel.Store.Clients" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_CARDS_CLIENTS" Association="CardsModel.Store.FK_CARDS_CLIENTS">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Cards" EntitySet="Cards" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Cards">
+          <Key>
+            <PropertyRef Name="cardID" />
+          </Key>
+          <Property Name="cardID" Type="int" Nullable="false" />
+          <Property Name="PAN" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="pluginID" Type="int" />
+          <Property Name="merchantID" Type="int" />
+          <Property Name="clientID" Type="int" />
+          <Property Name="brandID" Type="int" />
+          <Property Name="expdateCard" Type="varchar" MaxLength="4" />
+          <Property Name="cvv2Card" Type="varchar" MaxLength="3" />
+          <Property Name="status" Type="int" />
+          <Property Name="offset" Type="varchar" MaxLength="12" />
+          <Property Name="lastOffset" Type="varchar" MaxLength="12" />
+          <Property Name="printed" Type="varchar" MaxLength="8" />
+          <Property Name="batchprinted" Type="int" />
+          <Property Name="carddate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="clientID" />
+          </Key>
+          <Property Name="clientID" Type="int" Nullable="false" />
+          <Property Name="nameClient" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="CIDClient" Type="varchar" MaxLength="15" />
+          <Property Name="addressClient" Type="varchar" MaxLength="100" />
+          <Property Name="phoneClient" Type="varchar" MaxLength="30" />
+          <Property Name="statusClient" Type="int" />
+          <Property Name="fileid" Type="int" />
+          <Property Name="password" Type="varchar" MaxLength="100" />
+          <Property Name="enabled" Type="int" />
+          <Property Name="pwd_expired" Type="int" />
+          <Property Name="reminder_id" Type="int" />
+          <Property Name="reminder_answer" Type="varchar" MaxLength="150" />
+          <Property Name="clientdate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CARDS_CLIENTS">
+          <End Role="Clients" Type="CardsModel.Store.Clients" Multiplicity="0..1" />
+          <End Role="Cards" Type="CardsModel.Store.Cards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="clientID" />
+            </Principal>
+            <Dependent Role="Cards">
+              <PropertyRef Name="clientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CardsModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CardsEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="CardsModel.Client" />
+          <EntitySet Name="Cards" EntityType="CardsModel.Card" />
+          <AssociationSet Name="FK_CARDS_CLIENTS" Association="CardsModel.FK_CARDS_CLIENTS">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Card" EntitySet="Cards" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="clientID" />
+          </Key>
+          <Property Name="clientID" Type="Int32" Nullable="false" />
+          <Property Name="nameClient" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="CIDClient" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="addressClient" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="phoneClient" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="statusClient" Type="Int32" />
+          <Property Name="fileid" Type="Int32" />
+          <Property Name="password" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="enabled" Type="Int32" />
+          <Property Name="pwd_expired" Type="Int32" />
+          <Property Name="reminder_id" Type="Int32" />
+          <Property Name="reminder_answer" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+          <Property Name="clientdate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Cards" Relationship="CardsModel.FK_CARDS_CLIENTS" FromRole="Client" ToRole="Card" />
+        </EntityType>
+        <EntityType Name="Card">
+          <Key>
+            <PropertyRef Name="cardID" />
+          </Key>
+          <Property Type="Int32" Name="cardID" Nullable="false" />
+          <Property Type="String" Name="PAN" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="pluginID" />
+          <Property Type="Int32" Name="merchantID" />
+          <Property Type="Int32" Name="clientID" />
+          <Property Type="Int32" Name="brandID" />
+          <Property Type="String" Name="expdateCard" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="cvv2Card" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="status" />
+          <Property Type="String" Name="offset" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="lastOffset" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="printed" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="batchprinted" />
+          <Property Type="DateTime" Name="carddate" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Client" Relationship="CardsModel.FK_CARDS_CLIENTS" FromRole="Card" ToRole="Client" />
+        </EntityType>
+        <Association Name="FK_CARDS_CLIENTS">
+          <End Type="CardsModel.Client" Role="Client" Multiplicity="0..1" />
+          <End Type="CardsModel.Card" Role="Card" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="clientID" />
+            </Principal>
+            <Dependent Role="Card">
+              <PropertyRef Name="clientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CardsModelStoreContainer" CdmEntityContainer="CardsEntities">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="CardsModel.Client">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="clientID" ColumnName="clientID" />
+                <ScalarProperty Name="nameClient" ColumnName="nameClient" />
+                <ScalarProperty Name="CIDClient" ColumnName="CIDClient" />
+                <ScalarProperty Name="addressClient" ColumnName="addressClient" />
+                <ScalarProperty Name="phoneClient" ColumnName="phoneClient" />
+                <ScalarProperty Name="statusClient" ColumnName="statusClient" />
+                <ScalarProperty Name="fileid" ColumnName="fileid" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="pwd_expired" ColumnName="pwd_expired" />
+                <ScalarProperty Name="reminder_id" ColumnName="reminder_id" />
+                <ScalarProperty Name="reminder_answer" ColumnName="reminder_answer" />
+                <ScalarProperty Name="clientdate" ColumnName="clientdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cards">
+            <EntityTypeMapping TypeName="CardsModel.Card">
+              <MappingFragment StoreEntitySet="Cards">
+                <ScalarProperty Name="carddate" ColumnName="carddate" />
+                <ScalarProperty Name="batchprinted" ColumnName="batchprinted" />
+                <ScalarProperty Name="printed" ColumnName="printed" />
+                <ScalarProperty Name="lastOffset" ColumnName="lastOffset" />
+                <ScalarProperty Name="offset" ColumnName="offset" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="cvv2Card" ColumnName="cvv2Card" />
+                <ScalarProperty Name="expdateCard" ColumnName="expdateCard" />
+                <ScalarProperty Name="brandID" ColumnName="brandID" />
+                <ScalarProperty Name="clientID" ColumnName="clientID" />
+                <ScalarProperty Name="merchantID" ColumnName="merchantID" />
+                <ScalarProperty Name="pluginID" ColumnName="pluginID" />
+                <ScalarProperty Name="PAN" ColumnName="PAN" />
+                <ScalarProperty Name="cardID" ColumnName="cardID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

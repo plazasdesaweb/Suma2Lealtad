@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="32b19c37be664a458bb2c5712514475b" Name="Diagram1">
+        <EntityTypeShape EntityType="SumaLealtadModel.CIUDAD" Width="1.5" PointX="0.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.ESTADO" Width="1.5" PointX="0.5" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.MUNICIPIO" Width="1.5" PointX="0.5" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.PAIS" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.PAIS_ESTADO" Width="1.5" PointX="2.25" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.PARAMETRO" Width="1.5" PointX="7" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.PARROQUIA" Width="1.5" PointX="0.5" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.RESTRICCION" Width="1.5" PointX="5.25" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtadModel.URBANIZACION" Width="1.5" PointX="2.25" PointY="8" IsExpanded="true" />
+        <AssociationConnector Association="SumaLealtadModel.CIUDAD_MUNICIPIO" ManuallyRouted="false" />
+        <AssociationConnector Association="SumaLealtadModel.ESTADO_CIUDAD" ManuallyRouted="false" />
+        <AssociationConnector Association="SumaLealtadModel.MUNICIPIO_PARROQUIA" ManuallyRouted="false" />
+        <AssociationConnector Association="SumaLealtadModel.PARROQUIA_URBANIZACION" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

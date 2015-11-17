@@ -438,7 +438,7 @@ namespace Suma2Lealtad.Models
                     APELLIDO_CLIENTE2 = afiliado.lastname2 == null ? "" : afiliado.lastname2,
                     FECHA_NACIMIENTO = afiliado.birthdate == null ? new DateTime?() : DateTime.ParseExact(afiliado.birthdate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
                     SEXO = afiliado.gender == null ? "" : afiliado.gender,
-                    EDO_CIVIL = afiliado.maritalstatus == null ? "" : afiliado.gender,
+                    EDO_CIVIL = afiliado.maritalstatus == null ? "" : afiliado.maritalstatus,
                     OCUPACION = afiliado.occupation == null ? "" : afiliado.occupation,
                     TELEFONO_HAB = afiliado.phone1,
                     TELEFONO_OFIC = afiliado.phone2 == null ? "" : afiliado.phone2,
