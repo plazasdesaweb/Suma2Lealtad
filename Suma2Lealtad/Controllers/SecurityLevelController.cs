@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 namespace Suma2Lealtad.Controllers
 {
+    [HandleError]
     public class SecurityLevelController : Controller
     {
         private LealtadEntities db = new LealtadEntities();

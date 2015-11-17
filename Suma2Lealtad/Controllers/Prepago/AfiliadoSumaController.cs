@@ -10,6 +10,7 @@ using System.Web.Mvc;
 namespace Suma2Lealtad.Controllers.Prepago
 {
     [AuditingFilter]
+    [HandleError]
     public class AfiliadoSumaController : Controller
     {
         private const int ID_TYPE_SUMA = 1;

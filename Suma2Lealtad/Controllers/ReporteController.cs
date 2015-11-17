@@ -9,6 +9,7 @@ using System.Web.Mvc;
 namespace Suma2Lealtad.Controllers
 {
     [AuditingFilter]
+    [HandleError]
     public class ReporteController : Controller
     {
         private const string TRANSCODE_ACREDITACION_SUMA = "318";

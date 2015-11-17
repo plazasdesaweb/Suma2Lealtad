@@ -126,13 +126,18 @@
     //}
 
     function validateForm() {
+
+        alert(document.getElementById('name').value);
+ 
+        if ( validateNumDoc() && validateName() ) {
         //if (validateNumDoc() && validateName() && validateEmail()) {
-        if (validateNumDoc() && validateName() && (document.getElementById('name').value != "" || document.getElementById('numdoc').value != "" )) {
+        //if (validateNumDoc() && validateName() && (document.getElementById('name').value != "" || document.getElementById('numdoc').value != "" )) {
             return true;
         }
         else {
             return false;
         }
+
     }
 
 </script>

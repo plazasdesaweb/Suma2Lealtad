@@ -11,6 +11,7 @@ using System.Web.Mvc;
 namespace Suma2Lealtad.Controllers.Prepago
 {
     [AuditingFilter]
+    [HandleError]
     public class OrdenRecargaPrepagoController : Controller
     {
         private ClientePrepagoRepository repCliente = new ClientePrepagoRepository();
