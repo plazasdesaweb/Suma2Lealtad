@@ -5,7 +5,7 @@ namespace SumaPlazas.Dispositivos.PinPad
 {
     public class Vpos
     {
-        public string CrearPin()
+        public string CrearPin(string CI, string CVV2)
         {
             try
             {
@@ -15,7 +15,7 @@ namespace SumaPlazas.Dispositivos.PinPad
                     {
                         if (Vpos != null)
                         {
-                            string Resultado = Vpos.CrearPin();
+                            string Resultado = Vpos.CrearPin(CI, CVV2);
                             return Resultado;
                         }
                         else
@@ -38,7 +38,7 @@ namespace SumaPlazas.Dispositivos.PinPad
             }
         }
 
-        public string CambiarPin()
+        public string CambiarPin(string CI, string CVV2)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace SumaPlazas.Dispositivos.PinPad
                     {
                         if (Vpos != null)
                         {
-                            string Resultado = Vpos.CambiarPin();
+                            string Resultado = Vpos.CambiarPin(CI, CVV2);
                             return Resultado;
                         }
                         else
@@ -71,7 +71,7 @@ namespace SumaPlazas.Dispositivos.PinPad
             }
         }
 
-        public string ReiniciarPin()
+        public string ReiniciarPin(string CI, string CVV2)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace SumaPlazas.Dispositivos.PinPad
                     {
                         if (Vpos != null)
                         {
-                            string Resultado = Vpos.ReiniciarPin();
+                            string Resultado = Vpos.ReiniciarPin(CI, CVV2);
                             return Resultado;
                         }
                         else

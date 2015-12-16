@@ -123,7 +123,7 @@ namespace Suma2Lealtad.Controllers.Prepago
         {
             ViewModel viewmodel = new ViewModel();
             ClientePrepago cliente = repCliente.Find(id);
-            List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find("", "", "", "", "").Where(b => b.Cliente.idCliente == id).ToList();
+            List<BeneficiarioPrepagoIndex> beneficiarios = repCliente.FindBeneficiarios(id,"", "", "", "", "").ToList();
             if (beneficiarios.Count != 0)
             {
                 viewmodel.Title = "Prepapago / Cliente / Eliminar";
@@ -166,9 +166,10 @@ namespace Suma2Lealtad.Controllers.Prepago
         [HttpPost]
         public ActionResult FilterBeneficiario(int id, string numdoc)
         {
-            BeneficiarioPrepago beneficiario = repBeneficiario.Find(numdoc, "", "", "", "").FirstOrDefault();
+            BeneficiarioPrepago beneficiario;
+            BeneficiarioPrepagoIndex beneficiarioIndex = repBeneficiario.Find(numdoc, "", "", "", "").FirstOrDefault();
             //NO ES Beneficiario PrepagoPlazas
-            if (beneficiario == null)
+            if (beneficiarioIndex == null)
             {
                 beneficiario = new BeneficiarioPrepago()
                 {
@@ -212,6 +213,7 @@ namespace Suma2Lealtad.Controllers.Prepago
             else
             {
                 //ES Beneficiario PrepagoPlazas de el cliente
+                beneficiario = repBeneficiario.Find(beneficiarioIndex.Afiliado.id);                
                 if (beneficiario.Cliente.idCliente == id)
                 {
                     //beneficiario.Afiliado = repAfiliado.Find(beneficiario.Afiliado.id);
@@ -264,10 +266,10 @@ namespace Suma2Lealtad.Controllers.Prepago
         }
 
         [HttpPost]
-        public ActionResult EditBeneficiarioSuma(AfiliadoSuma Afiliado)
+        public ActionResult EditBeneficiarioSuma(AfiliadoSuma Afiliado, HttpPostedFileBase fileNoValidado)
         {
             ViewModel viewmodel = new ViewModel();
-            if (repAfiliado.SaveChanges(Afiliado))
+            if (repAfiliado.SaveChanges(Afiliado, fileNoValidado))
             {
                 BeneficiarioPrepago beneficiario = new BeneficiarioPrepago()
                 {
@@ -303,14 +305,14 @@ namespace Suma2Lealtad.Controllers.Prepago
         [HttpPost]
         public ActionResult FilterReviewBeneficiarios(int id, string numdoc, string name, string email, string estadoAfiliacion, string estadoTarjeta)
         {
-            List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find(numdoc, name, email, estadoAfiliacion, estadoTarjeta).Where(b => b.Cliente.idCliente == id).ToList();
+            List<BeneficiarioPrepagoIndex> beneficiarios = repCliente.FindBeneficiarios(id, numdoc, name, email, estadoAfiliacion, estadoTarjeta).ToList();
             if (beneficiarios.Count > 0)
             {
                 return View("IndexBeneficiarios", beneficiarios);
             }
             else
             {
-                BeneficiarioPrepago beneficiario = new BeneficiarioPrepago()
+                BeneficiarioPrepagoIndex beneficiario = new BeneficiarioPrepagoIndex()
                 {
                     Cliente = repCliente.Find(id)
                 };
@@ -321,21 +323,15 @@ namespace Suma2Lealtad.Controllers.Prepago
 
         public ActionResult EditBeneficiario(int id, int idBeneficiario)
         {
-            //BeneficiarioPrepago beneficiario = new BeneficiarioPrepago()
-            //{
-            //    Afiliado = repAfiliado.Find(idBeneficiario),
-            //    Cliente = repCliente.Find(id)
-            //};
             BeneficiarioPrepago beneficiario = repBeneficiario.Find(idBeneficiario);
             return View(beneficiario.Afiliado);
         }
 
         [HttpPost]
-        //public ActionResult EditBeneficiario(AfiliadoSuma Afiliado, ClientePrepago Cliente)
-        public ActionResult EditBeneficiario(AfiliadoSuma Afiliado)
+        public ActionResult EditBeneficiario(AfiliadoSuma Afiliado, HttpPostedFileBase fileNoValidado)
         {
             ViewModel viewmodel = new ViewModel();
-            if (!repAfiliado.SaveChanges(Afiliado))
+            if (!repAfiliado.SaveChanges(Afiliado, fileNoValidado))
             {
                 viewmodel.Title = "Prepago / Cliente / Beneficiario / Revisar Afiliación";
                 viewmodel.Message = "Error de aplicacion: No se pudo actualizar afiliación.";
@@ -665,7 +661,7 @@ namespace Suma2Lealtad.Controllers.Prepago
         public ActionResult SuspenderCliente(int id)
         {
             ViewModel viewmodel = new ViewModel();
-            List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find("", "", "", "", "").Where(b => b.Cliente.idCliente == id && b.Afiliado.estatustarjeta == "Activa").ToList();
+            List<BeneficiarioPrepagoIndex> beneficiarios = repCliente.FindBeneficiarios(id, "", "", "", "", "").Where(b => b.Afiliado.estatustarjeta == "Activa").ToList();
             if (beneficiarios.Count == 0)
             {
                 viewmodel.Title = "Prepago / Cliente / Suspender Cliente";
@@ -687,8 +683,8 @@ namespace Suma2Lealtad.Controllers.Prepago
             ViewModel viewmodel = new ViewModel();
             Boolean result = true;
             AfiliadoSuma afiliado;
-            List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find("", "", "", "", "").Where(b => b.Cliente.idCliente == id && b.Afiliado.estatustarjeta == "Activa").ToList();
-            foreach (BeneficiarioPrepago b in beneficiarios)
+            List<BeneficiarioPrepagoIndex> beneficiarios = repCliente.FindBeneficiarios(id, "", "", "", "", "").Where(b => b.Afiliado.estatustarjeta == "Activa").ToList();
+            foreach (BeneficiarioPrepagoIndex b in beneficiarios)
             {
                 afiliado = repAfiliado.Find(b.Afiliado.id);
                 if (repAfiliado.SuspenderTarjeta(afiliado) == false)
@@ -718,7 +714,7 @@ namespace Suma2Lealtad.Controllers.Prepago
         public ActionResult ReactivarCliente(int id)
         {
             ViewModel viewmodel = new ViewModel();
-            List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find("", "", "", "", "").Where(b => b.Cliente.idCliente == id && b.Afiliado.estatustarjeta == "Suspendida").ToList();
+            List<BeneficiarioPrepagoIndex> beneficiarios = repCliente.FindBeneficiarios(id, "", "", "", "", "").Where(b => b.Afiliado.estatustarjeta == "Suspendida").ToList();
             if (beneficiarios.Count == 0)
             {
                 viewmodel.Title = "Prepago / Cliente / Suspender Cliente";
@@ -740,8 +736,8 @@ namespace Suma2Lealtad.Controllers.Prepago
             ViewModel viewmodel = new ViewModel();
             Boolean result = true;
             AfiliadoSuma afiliado;
-            List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find("", "", "", "", "").Where(b => b.Cliente.idCliente == id && b.Afiliado.estatustarjeta == "Suspendida").ToList();
-            foreach (BeneficiarioPrepago b in beneficiarios)
+            List<BeneficiarioPrepagoIndex> beneficiarios = repCliente.FindBeneficiarios(id, "", "", "", "", "").Where(b => b.Afiliado.estatustarjeta == "Suspendida").ToList();
+            foreach (BeneficiarioPrepagoIndex b in beneficiarios)
             {
                 afiliado = repAfiliado.Find(b.Afiliado.id);
                 if (repAfiliado.ReactivarTarjeta(afiliado) == false)
@@ -815,10 +811,11 @@ namespace Suma2Lealtad.Controllers.Prepago
         {
             ViewModel viewmodel = new ViewModel();
             AfiliadoSuma afiliado = repAfiliado.Find(idBeneficiario);
-            if (repAfiliado.Acreditar(afiliado, monto))
+            string resultado = repAfiliado.Acreditar(afiliado, monto);
+            if (resultado != null)
             {
                 viewmodel.Title = "Prepago / Cliente / Beneficiario / Acreditar";
-                viewmodel.Message = "Acreditación exitosa.";
+                viewmodel.Message = "Acreditación exitosa. Clave de aprobación: "+ resultado;
                 viewmodel.ControllerName = "ClientePrepago";
                 viewmodel.ActionName = "FilterReviewBeneficiarios";
                 viewmodel.RouteValues = id.ToString();
@@ -837,7 +834,7 @@ namespace Suma2Lealtad.Controllers.Prepago
         public ActionResult CreateOrdenRecarga(int id)
         {
             ClientePrepago cliente = repCliente.Find(id);
-            List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find("", "", "", "", "").Where(b => b.Cliente.idCliente == id).ToList();
+            List<BeneficiarioPrepagoIndex> beneficiarios = repCliente.FindBeneficiarios(id, "", "", "", "", "").ToList();
             List<DetalleOrdenRecargaPrepago> detalleOrden = repOrden.DetalleParaOrden(cliente, beneficiarios.FindAll(b => b.Afiliado.estatus == "Activa" && b.Afiliado.estatustarjeta == "Activa"));
             if (detalleOrden.Count == 0)
             {
@@ -912,7 +909,7 @@ namespace Suma2Lealtad.Controllers.Prepago
             {
                 try
                 {
-                    path = Server.MapPath(AppModule.GetPathPicture().Replace("@filename@.jpg", idtemp));
+                    path = Server.MapPath("~/App_Data/" + idtemp);
                     file.SaveAs(path);
                 }
                 catch (Exception ex)
@@ -925,7 +922,7 @@ namespace Suma2Lealtad.Controllers.Prepago
                     return RedirectToAction("GenericView", viewmodel);
                 }
                 ClientePrepago cliente = repCliente.Find(id);
-                List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find("", "", "", "", "").Where(b => b.Cliente.idCliente == id).ToList();
+                List<BeneficiarioPrepagoIndex> beneficiarios = repCliente.FindBeneficiarios(id, "", "", "", "", "").ToList();
                 if (beneficiarios.Count == 0)
                 {
                     if (System.IO.File.Exists(path))

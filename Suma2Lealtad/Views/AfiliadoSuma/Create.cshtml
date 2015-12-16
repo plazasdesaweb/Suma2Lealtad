@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container">
@@ -308,9 +309,12 @@
 
                             <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.cod_estado,
-                                new SelectList(Model.ListaEstados,
-                                "COD_ESTADO", "DESCRIPC_ESTADO",
-                                Model.ListaEstados), new { @class = "form-control" })
+                                                      new SelectList(Model.ListaEstados,
+                                                      "COD_ESTADO", 
+                                                      "DESCRIPC_ESTADO",
+                                                      Model.ListaEstados), 
+                                                      new { @class = "form-control" }
+                                                      )
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -319,7 +323,7 @@
 
                             <div class="editor-field col-md-6">
                                 <select id="cod_ciudad" name="cod_ciudad" class="form-control"></select>
-                                @Html.ValidationMessage("Ciudad")
+                                    @Html.ValidationMessage("Ciudad")
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -328,7 +332,7 @@
 
                             <div class="editor-field col-md-6">
                                 <select id="cod_municipio" name="cod_municipio" class="form-control"></select>
-                                @Html.ValidationMessage("Municipio")
+                                    @Html.ValidationMessage("Municipio")
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -336,8 +340,8 @@
                             </div>
 
                             <div class="editor-field col-md-6">
-                                <select id="cod_parroquia" name="cod_parroquia" class="form-control"></select>
-                                @Html.ValidationMessage("Parroquia")
+                               <select id="cod_parroquia" name="cod_parroquia" class="form-control"></select>
+                                    @Html.ValidationMessage("Parroquia")
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -346,7 +350,7 @@
 
                             <div class="editor-field col-md-6">
                                 <select id="cod_urbanizacion" name="cod_urbanizacion" class="form-control"></select>
-                                @Html.ValidationMessage("Urbanización")
+                                    @Html.ValidationMessage("Urbanización")
                             </div>
 
                             <div class="editor-label col-md-4 control-label"></div>
@@ -360,9 +364,24 @@
 
                             <div class="editor-field col-md-6">
                                 @Html.DropDownListFor(m => m.channelid,
-                                new SelectList(Model.ChannelOptions,
-                                "id", "channel",
-                                Model.ChannelOptions), new { @class = "form-control" })
+                                                      new SelectList(Model.ChannelOptions,
+                                                      "id", 
+                                                      "channel",
+                                                      Model.ChannelOptions), 
+                                                      new { @class = "form-control" }
+                                                      )
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Sucursal de Afiliación:
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.DropDownListFor(m => m.storeid,
+                                new SelectList(Model.StoreOptions,
+                                "id", "sucursal",
+                                Model.StoreOptions), new { @class = "form-control" , @disabled = "disabled" })
+                                @Html.HiddenFor(model => model.storeid)
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -485,7 +504,7 @@
 @*<script src="~/Scripts/jquery-2.1.3.min.js"></script>*@
 <script>
     $(document).ready(function () {
-        VerificarTipoDocumento()
+        VerificarTipoDocumento();
     });
 
     function VerificarTipoDocumento() {

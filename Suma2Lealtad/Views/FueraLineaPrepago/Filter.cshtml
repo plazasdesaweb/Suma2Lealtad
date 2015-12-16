@@ -32,7 +32,7 @@
         </div>
 
         <div class="editor-field col-md-6">
-            <input type="text" id="numdoc" name="numdoc" maxlength="10" placeholder="V-12345678" class="form-control">
+            <input type="text" id="numdoc" name="numdoc" maxlength="11" placeholder="V-12345678" class="form-control">
             <span id="field1"></span>
         </div>
 
@@ -127,8 +127,6 @@
 
     function validateForm() {
 
-        alert(document.getElementById('name').value);
- 
         if ( validateNumDoc() && validateName() ) {
         //if (validateNumDoc() && validateName() && validateEmail()) {
         //if (validateNumDoc() && validateName() && (document.getElementById('name').value != "" || document.getElementById('numdoc').value != "" )) {

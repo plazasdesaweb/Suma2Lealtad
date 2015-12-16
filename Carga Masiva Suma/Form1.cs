@@ -17,15 +17,20 @@ using System.IO;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace Carga_Masiva_Suma
 {
     public partial class Form1 : Form
     {
         List<CedulaTarjeta> CedulasCards;
-        List<AFILIACION_CLIENTE> ClientesSuma = new List<AFILIACION_CLIENTE>();
-        List<AfiliadoSuma> AfiliadosMigrados = new List<AfiliadoSuma>();
-        List<AFILIACION_CLIENTE> ClientesError = new List<AFILIACION_CLIENTE>();
+        List<AFILIACION_CLIENTE> AfiliacionesClientesSumaViejo = new List<AFILIACION_CLIENTE>();
+        List<AFILIACION_CLIENTE> AfiliacionesClientesError = new List<AFILIACION_CLIENTE>();
+        List<CLIENTE> ClientesMigrados = new List<CLIENTE>();
+        List<AfiliadoSuma> AfiliadosSumaMigrados = new List<AfiliadoSuma>();
+        List<AfiliadoSuma> AfiliadosPrepagoMigrados = new List<AfiliadoSuma>();
+        List<Corporation> Corporaciones = new List<Corporation>();
+        //List<PrepaidCustomer> ClientesSinBeneficiarios = new List<PrepaidCustomer>();
 
         public Form1()
         {
@@ -37,9 +42,11 @@ namespace Carga_Masiva_Suma
             btnProcesar.Enabled = false;
             btnFase2.Enabled = false;
             btnFase3.Enabled = false;
-
             DateTime inicio = DateTime.Now;
             lblInicio.Text = inicio.ToString();
+            lstBuenos.Items.Clear();
+            lstBuenos.Items.Add("INICIANDO FASE I - MIGRACIÓN DE CLIENTES  Y TARJETAS");
+            lstBuenos.SelectedIndex = lstBuenos.Items.Count - 1;
             //Leer indice de cédulas desde Cards - SQL2005 - Entity Framework
             using (CardsEntities dbCards = new CardsEntities())
             {
@@ -90,18 +97,18 @@ namespace Carga_Masiva_Suma
                 cliente.CLIENTE.COD_URBANIZACION = DbReader.IsDBNull(21) == true ? "103" : DbReader.GetString(21).Trim();
                 cliente.CLIENTE.FECHA_CREACION = DbReader.GetDateTime(22);
                 cliente.COD_TIPO_CLIENTE = DbReader.IsDBNull(23) == true ? "" : DbReader.GetString(23).Trim();
-                ClientesSuma.Add(cliente);
+                AfiliacionesClientesSumaViejo.Add(cliente);
             }
             DbReader.Close();
             DbCommand.Dispose();
             DbConnection.Close();
-            lblClientes.Text = ClientesSuma.Count.ToString() + " documentos de identificación en 172.20.1.23/SumaLealtad/CLIENTE";
+            lblClientes.Text = AfiliacionesClientesSumaViejo.Count.ToString() + " documentos de identificación en 172.20.1.23/SumaLealtad/CLIENTE";
             lblClientes.Refresh();
             int Migrados = 0;
             int Errores = 0;
             foreach (CedulaTarjeta c in CedulasCards)
             {
-                if ((Migrados+Errores) % 300 == 0)
+                if ((Migrados + Errores) % 300 == 0)
                 {
                     lblTotalBuenos.Text = Migrados.ToString();
                     lblTotalMalos.Text = Errores.ToString();
@@ -112,10 +119,10 @@ namespace Carga_Masiva_Suma
                 AFILIACION_CLIENTE clienteViejo = new AFILIACION_CLIENTE();
                 try
                 {
-                    ocurrencias = ClientesSuma.FindAll(x => x.CLIENTE.NRO_DOCUMENTO.Equals(c.cedula)).Count;
+                    ocurrencias = AfiliacionesClientesSumaViejo.FindAll(x => x.CLIENTE.NRO_DOCUMENTO.Equals(c.cedula)).Count;
                     if (ocurrencias == 1)
                     {
-                        clienteViejo = ClientesSuma.Find(x => x.CLIENTE.NRO_DOCUMENTO.Equals(c.cedula));
+                        clienteViejo = AfiliacionesClientesSumaViejo.Find(x => x.CLIENTE.NRO_DOCUMENTO.Equals(c.cedula));
                         if (clienteViejo.COD_TIPO_CLIENTE == "1")
                         {
                             tipoafiliacion = "Suma";
@@ -130,15 +137,13 @@ namespace Carga_Masiva_Suma
                         }
                         AfiliadoSuma afiliado = new AfiliadoSuma();
                         //ENTIDAD Affiliate 
-                        //id = a.id,
                         afiliado.id = 0;
                         afiliado.customerid = 0;
                         afiliado.docnumber = clienteViejo.CLIENTE.TIPO_DOCUMENTO + "-" + clienteViejo.CLIENTE.NRO_DOCUMENTO;
                         afiliado.storeid = clienteViejo.CLIENTE.COD_SUCURSAL.Value;
                         afiliado.channelid = 1;
-                        //typeid = 1,
                         afiliado.typedelivery = "0";
-                        afiliado.statusid = 2;
+                        afiliado.sumastatusid = 2;
                         //ENTIDAD CLIENTE
                         afiliado.nationality = clienteViejo.CLIENTE.NACIONALIDAD;
                         afiliado.name = clienteViejo.CLIENTE.NOMBRE_CLIENTE1;
@@ -183,72 +188,8 @@ namespace Carga_Masiva_Suma
                             afiliado.typeid = 2;
                             afiliado.type = tipoafiliacion;
                         }
-                        ////Bucar datos del Cliente en Web Plazas
-                        ////Primero se buscan los datos de CLIENTE en WebPlazas
-                        ////SERVICIO WSL.WebPlazas.getClientByNumDoc 
-                        //string clienteWebPlazasJson = WSL.WebPlazas.getClientByNumDoc(afiliado.docnumber);
-                        //if (WSL.WebPlazas.ExceptionServicioWebPlazas(clienteWebPlazasJson))
-                        //{
-                        //    throw new Exception("Error en Llamada WSL.WebPlazas.getClientByNumDoc " + afiliado.docnumber);
-                        //}
-                        //ClienteWebPlazas clienteWebPlazas = (ClienteWebPlazas)JsonConvert.DeserializeObject<ClienteWebPlazas>(clienteWebPlazasJson);
-                        //if (clienteWebPlazas == null)
-                        //{
-                        //    //No está en WebPlazas
-                        //    afiliado.clientid = 0;
-                        //}
-                        //else
-                        //{
-                        //    //Si está en la WebPlazas
-                        //    afiliado.nationality = clienteWebPlazas.nationality.Replace("/", "").Replace("\\", "");
-                        //    afiliado.name = clienteWebPlazas.name.Replace("/", "").Replace("\\", "");
-                        //    afiliado.name2 = clienteWebPlazas.name2.Replace("/", "").Replace("\\", "");
-                        //    afiliado.lastname1 = clienteWebPlazas.lastname1.Replace("/", "").Replace("\\", "");
-                        //    afiliado.lastname2 = clienteWebPlazas.lastname2.Replace("/", "").Replace("\\", "");
-                        //    afiliado.birthdate = clienteWebPlazas.birthdate.Value.ToString("dd/MM/yyyy");
-                        //    afiliado.gender = clienteWebPlazas.gender.Replace("/", "").Replace("\\", "");
-                        //    afiliado.clientid = clienteWebPlazas.id;
-                        //    afiliado.maritalstatus = clienteWebPlazas.maritalstatus.Replace("/", "").Replace("\\", "");
-                        //    afiliado.occupation = clienteWebPlazas.occupation.Replace("/", "").Replace("\\", "");
-                        //    afiliado.phone1 = clienteWebPlazas.phone1.Replace("/", "").Replace("\\", "");
-                        //    afiliado.phone2 = clienteWebPlazas.phone2.Replace("/", "").Replace("\\", "");
-                        //    afiliado.phone3 = clienteWebPlazas.phone3.Replace("/", "").Replace("\\", "");
-                        //    afiliado.email = clienteWebPlazas.email.Replace("/", "").Replace("\\", "");
-                        //    afiliado.WebType = clienteWebPlazas.type;
-                        //}
-                        //Buscar imagen del documento del Cliente en copia de carpeta cedulas desde 172.20.1.21, comprimir imgen a menos de 50kb
-                        //Primero determinar nombre de archivo desde tabla Afiliacion_Cliente
-                        //DbCommand = DbConnection.CreateCommand();
-                        //DbCommand.CommandText = "SELECT a.TIPO_DOCUMENTO,a.NRO_DOCUMENTO,a.COD_FOTO,LTRIM(RTRIM(b.NOMBRE)),b.TAMANO,CONVERT(CHAR,b.FECHA_CREACION,120) FROM AFILIACION_CLIENTE a, FOTO b WHERE a.TIPO_DOCUMENTO = '" + clienteViejo.TIPO_DOCUMENTO + "' AND a.NRO_DOCUMENTO = '" + clienteViejo.NRO_DOCUMENTO + "' AND a.COD_FOTO =  b.CODIGO AND a.COD_FOTO <> 0 AND b.TAMANO > 0 ORDER BY a.TIPO_DOCUMENTO, a.NRO_DOCUMENTO";
-                        //DbReader = DbCommand.ExecuteReader();
-                        //string NombreArchivo = "";
-                        //int filas2 = 0;
-                        //while (DbReader.Read())
-                        //{
-                        //    filas2++;
-                        //    NombreArchivo = DbReader.GetString(3);
-                        //}
-                        //DbReader.Close();
-                        //DbCommand.Dispose();
-                        //if (filas2 == 0)
-                        //{
-                        //    throw new Exception("NO TIENE IMAGEN REGISTRADA");
-                        //}
-                        //if (filas2 > 1)
-                        //{
-                        //    throw new Exception("TIENE MAS DE UNA IMAGEN REGISTRADA");
-                        //}
-                        //string FilePath = ObtenerImagen(NombreArchivo);
-                        //byte[] imageData = ReadFile(FilePath);
-
-                        ////Insertar Cliente, tablas Affiliate, CLIENTE, Photos_Affiliate
-                        //int id = 0;
-                        //id = Save(afiliado, imageData);
-
                         //INSERTAR TABLA CLIENTE
                         SaveCLIENTE(afiliado);
-                        ////BUSCAR DATOS EN CARDS CON GETCLIENT
-                        //afiliado = BuscarTARJETA(afiliado);
                         afiliado.pan = c.pan;
                         afiliado.printed = c.printed == null ? null : c.printed.Substring(6, 2) + "/" + c.printed.Substring(4, 2) + "/" + c.printed.Substring(0, 4);
                         afiliado.estatustarjeta = "Activa";
@@ -256,33 +197,8 @@ namespace Carga_Masiva_Suma
                         c.trackII = Tarjeta.ConstruirTrackII(c.pan);
                         c.cvv2 = "123";
                         SaveTARJETA(afiliado, c.trackII, c.cvv2);
-                        ////Buscar Afiliado
-                        //afiliado = Find(id);
-                        ////Aprobar Afiliado
-                        //if (Aprobar(afiliado))
-                        //{
-                        //Incluir en lista de buenos, continuar con siguiente
-                        //lstBuenos.Items.Add("CLIENTE MIGRADO: " + clienteViejo.TIPO_DOCUMENTO + clienteViejo.NRO_DOCUMENTO + " " + FilePath);
-                        //lstBuenos.Items.Add("CLIENTE MIGRADO: " + afiliado.docnumber + " " + afiliado.pan);
-                        //lstBuenos.SelectedIndex = lstBuenos.Items.Count - 1;
-                        //lblTotalBuenos.Text = lstBuenos.Items.Count.ToString();
-                        AfiliadosMigrados.Add(afiliado);
-                        Migrados++;                                               
-                        //myWriter = new StreamWriter(directory + "Migrados.txt", true);
-                        //myWriter.WriteLine("CLIENTE MIGRADO: " + clienteViejo.TIPO_DOCUMENTO + clienteViejo.NRO_DOCUMENTO + " " + FilePath);
-                        //myWriter.WriteLine("CLIENTE MIGRADO:@" + "@" + afiliado.docnumber + "@" + afiliado.pan);
-                        //myWriter.Close();
-                        //}
-                        //else
-                        //{
-                        //    throw new Exception("FALLÓ APROBACIÓN DE CLIENTE");
-                        //}
-
-                        //}
-                        //else
-                        //{
-                        //    throw new Exception("NO PUDO DETERMINARSE TIPO");
-                        //}
+                        AfiliadosSumaMigrados.Add(afiliado);
+                        Migrados++;
                     }
                     //Si hay mas de una fila, se coloca en la lista de malos. Continuar con siguiente             
                     else if (ocurrencias > 1)
@@ -298,9 +214,6 @@ namespace Carga_Masiva_Suma
                 //Si sucede algún error, incluir en la lista de malos y continuar con siguiente
                 catch (Exception ex)
                 {
-                    //lstMalos.Items.Add("ERROR: " + c.cedula + " " + ex.Message);
-                    //lstMalos.SelectedIndex = lstMalos.Items.Count - 1;
-                    //lblTotalMalos.Text = lstMalos.Items.Count.ToString();
                     if (clienteViejo.CLIENTE == null)
                     {
                         clienteViejo.CLIENTE = new CLIENTE()
@@ -310,15 +223,12 @@ namespace Carga_Masiva_Suma
                         };
                     }
                     clienteViejo.MensajeError = ex.Message;
-                    ClientesError.Add(clienteViejo);
-                    Errores++;                                        
-                    //DbReader.Close();
-                    //DbCommand.Dispose();
-                    //myWriter = new StreamWriter(directory + "Errores.txt", true);
-                    //myWriter.WriteLine("ERROR:@" + c.cedula + "@" + ex.Message);
-                    //myWriter.Close();
+                    AfiliacionesClientesError.Add(clienteViejo);
+                    Errores++;
                 }
             }
+            lblTotalBuenos.Text = Migrados.ToString();
+            lblTotalMalos.Text = Errores.ToString();
             DateTime fin = DateTime.Now;
             lblFin.Text = fin.ToString();
             lblTotal.Text = Math.Round((fin - inicio).TotalMinutes, 2).ToString() + " minutos";
@@ -333,91 +243,372 @@ namespace Carga_Masiva_Suma
             myWriter.WriteLine("Carga Masiva Suma, Fase 1.");
             myWriter.WriteLine("Inicio del proceso " + inicio);
             myWriter.WriteLine("Fin del proceso " + fin);
-            foreach (AfiliadoSuma a in AfiliadosMigrados)
+            foreach (AfiliadoSuma a in AfiliadosSumaMigrados)
             {
                 myWriter.WriteLine(a.docnumber + "@" + a.type);
             }
             myWriter.Close();
             myWriter = new StreamWriter(directory + "Errores.txt", false);
             myWriter.WriteLine("Errores en Carga Masiva Suma, Fase 1.");
-            foreach (AFILIACION_CLIENTE q in ClientesError)
+            foreach (AFILIACION_CLIENTE q in AfiliacionesClientesError)
             {
                 myWriter.WriteLine(q.CLIENTE.TIPO_DOCUMENTO + "@" + q.CLIENTE.NRO_DOCUMENTO + "@" + q.COD_TIPO_CLIENTE + "@" + q.MensajeError.Replace(System.Environment.NewLine, " "));
             }
             myWriter.Close();
-            MessageBox.Show("Proceso Finalizado. Archivos de Log creados.");
+            lstBuenos.Items.Add("FINALIZÓ FASE I - ARCHIVOS DE LOG CREADOS");
+            lstBuenos.Items.Add("CLIENTES Y TARJETAS MIGRADOS: " + Migrados.ToString());
+            lstBuenos.SelectedIndex = lstBuenos.Items.Count - 1;
+            btnFase2.Enabled = true;
         }
 
         private void btnFase2_Click(object sender, EventArgs e)
         {
-
+            btnProcesar.Enabled = false;
+            btnFase2.Enabled = false;
+            btnFase3.Enabled = false;
+            DateTime inicio = DateTime.Now;
+            lblInicio.Text = inicio.ToString();
+            //ETAPA A - CARGAR CLIENTES PREPAGO
+            int Migrados = 0;
+            int Errores = 0;
+            lstBuenos.Items.Clear();
+            lstBuenos.Items.Add("INICIANDO ETAPA A - MIGRACIÓN DE CLIENTES PREPAGO");
+            lstBuenos.SelectedIndex = lstBuenos.Items.Count - 1;
+            lblTotalBuenos.Text = Migrados.ToString();
+            lblTotalMalos.Text = Errores.ToString();
+            this.Refresh();
+            using (CardsEntities dbCards = new CardsEntities())
+            {
+                Corporaciones = dbCards.Corporations.OrderBy(c => c.nname).ToList();
+                using (SumaLealtadEntities db = new SumaLealtadEntities())
+                {
+                    Regex RegExPattern2 = new Regex(@"^([VvEeJjGg]){1}(\d){3,10}$");
+                    Regex RegExPattern4 = new Regex(@"^([Pp]){1}([A-Za-z0-9]){3,10}$");
+                    foreach (Corporation c in Corporaciones)
+                    {
+                        try
+                        {
+                            PrepaidCustomer ClientePrepago = new PrepaidCustomer();
+                            ClientePrepago.id = ClientePrepagoID();
+                            ClientePrepago.alias = c.corporationID.ToString();
+                            if (c.nname == "Corporacion Plazas")
+                            {
+                                ClientePrepago.name = "Automercados Plaza's";
+                            }
+                            else
+                            {
+                                ClientePrepago.name = c.nname;
+                            }
+                            ClientePrepago.phone = c.phone;
+                            if (c.rif == null)
+                            {
+                                ClientePrepago.rif = null;
+                            }
+                            else
+                            {
+                                ClientePrepago.rif = c.rif.Replace("-", "");
+                                Match match2 = RegExPattern2.Match(ClientePrepago.rif);
+                                Match match4 = RegExPattern4.Match(ClientePrepago.rif);
+                                if (!match2.Success && !match4.Success)
+                                {
+                                    ClientePrepago.rif = null;
+                                }
+                                else
+                                {
+                                    ClientePrepago.rif = ClientePrepago.rif.Substring(0, 1).ToUpper() + "-" + ClientePrepago.rif.Substring(1).ToUpper();
+                                }
+                            }
+                            ClientePrepago.email = null;
+                            ClientePrepago.address = c.address;
+                            ClientePrepago.creationdate = DateTime.Now;
+                            ClientePrepago.userid = 11;
+                            db.PrepaidCustomers.Add(ClientePrepago);
+                            db.SaveChanges();
+                            Migrados++;
+                        }
+                        catch (Exception ex)
+                        {
+                            Errores++;
+                            lstMalos.Items.Add("ERROR: " + c.nname + " " + ex.Message);
+                            lstMalos.SelectedIndex = lstMalos.Items.Count - 1;
+                        }
+                    }
+                }
+            }
+            lblTotalBuenos.Text = Migrados.ToString();
+            lblTotalMalos.Text = Errores.ToString();
+            lstBuenos.Items.Add("FINALIZADA ETAPA A - CLIENTES PREPAGO MIGRADOS: " + Migrados.ToString());
+            lstBuenos.SelectedIndex = lstBuenos.Items.Count - 1;
+            DateTime fin = DateTime.Now;
+            lblFin.Text = fin.ToString();
+            lblTotal.Text = Math.Round((fin - inicio).TotalMinutes, 2).ToString() + " minutos";
+            this.Refresh();
+            //ETAPA B - CREAR AFILIACIONES SUMA Y PREPAGO            
+            //Leer clientes y afiliacion_cliente desde SumaLealtad - SQL2000 - OdbcDataReader
+            OdbcConnection DbConnection = new OdbcConnection("Driver={SQL Server};Server=172.20.1.23;Database=SumaLealtad;Uid=UserSisLeal;Pwd=1234;");
+            DbConnection.Open();
+            OdbcCommand DbCommand = DbConnection.CreateCommand();
+            DbCommand.CommandText = "SELECT a.[TIPO_DOCUMENTO],a.[NRO_DOCUMENTO],a.[NACIONALIDAD],a.[NOMBRE_CLIENTE1],a.[NOMBRE_CLIENTE2],a.[APELLIDO_CLIENTE1],a.[APELLIDO_CLIENTE2],a.[FECHA_NACIMIENTO],a.[SEXO],a.[EDO_CIVIL],a.[OCUPACION],a.[TELEFONO_HAB],a.[TELEFONO_OFIC],a.[TELEFONO_CEL],a.[E_MAIL],a.[COD_SUCURSAL],a.[COD_PAIS],a.[COD_ESTADO],a.[COD_CIUDAD],a.[COD_MUNICIPIO],a.[COD_PARROQUIA],a.[COD_URBANIZACION],a.[FECHA_CREACION], b.[COD_TIPO_CLIENTE] FROM CLIENTE a, AFILIACION_CLIENTE b WHERE a.[TIPO_DOCUMENTO] <> '' AND a.[TIPO_DOCUMENTO] = b.[TIPO_DOCUMENTO] AND a.[NRO_DOCUMENTO] = b.[NRO_DOCUMENTO] AND b.[ESTATUS_AFILIADO] = 'Activo' ORDER BY a.[NRO_DOCUMENTO]";
+            OdbcDataReader DbReader = DbCommand.ExecuteReader();
+            while (DbReader.Read())
+            {
+                AFILIACION_CLIENTE cliente = new AFILIACION_CLIENTE();
+                cliente.CLIENTE = new CLIENTE();
+                cliente.CLIENTE.TIPO_DOCUMENTO = DbReader.GetString(0).ToUpper().Trim();
+                cliente.CLIENTE.NRO_DOCUMENTO = DbReader.IsDBNull(1) == true ? "" : DbReader.GetString(1).Trim();
+                cliente.COD_TIPO_CLIENTE = DbReader.IsDBNull(23) == true ? "" : DbReader.GetString(23).Trim();
+                AfiliacionesClientesSumaViejo.Add(cliente);
+            }
+            DbReader.Close();
+            DbCommand.Dispose();
+            DbConnection.Close();
+            lblClientes.Text = AfiliacionesClientesSumaViejo.Count.ToString() + " documentos de identificación en 172.20.1.23/SumaLealtad/CLIENTE";
+            lstBuenos.Items.Add("INICIANDO ETAPA B - AFILIACIONES SUMA Y PREPAGO");
+            lstBuenos.SelectedIndex = lstBuenos.Items.Count - 1;
+            lblClientes.Refresh();
+            Migrados = 0;
+            Errores = 0;
+            using (SumaLealtadEntities db = new SumaLealtadEntities())
+            {
+                ClientesMigrados = db.CLIENTES.OrderBy(x => x.NRO_DOCUMENTO).ToList();
+                foreach (CLIENTE c in ClientesMigrados)
+                {
+                    try
+                    {
+                        if ((Migrados + Errores) % 300 == 0)
+                        {
+                            lblTotalBuenos.Text = Migrados.ToString();
+                            lblTotalMalos.Text = Errores.ToString();
+                            this.Refresh();
+                        }
+                        AFILIACION_CLIENTE ac = AfiliacionesClientesSumaViejo.Find(x => x.CLIENTE.TIPO_DOCUMENTO.Equals(c.TIPO_DOCUMENTO) && x.CLIENTE.NRO_DOCUMENTO.Equals(c.NRO_DOCUMENTO));
+                        if (ac == null)
+                        {
+                            throw new Exception("NO ENCONTRADO EN AFILIACION_CLIENTE");
+                        }
+                        else if (ac.COD_TIPO_CLIENTE == "1")
+                        {
+                            AfiliadoSuma afiliado = new AfiliadoSuma();
+                            afiliado.docnumber = c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO;
+                            afiliado.storeid = c.COD_SUCURSAL.Value;
+                            afiliado.typeid = 1;
+                            afiliado.fechaAfiliacion = c.FECHA_CREACION.Value;
+                            afiliado.id = Save(afiliado);
+                            AfiliadosSumaMigrados.Add(afiliado);
+                            Migrados++;
+                        }
+                        else if (ac.COD_TIPO_CLIENTE == "4")
+                        {
+                            AfiliadoSuma afiliado = new AfiliadoSuma();
+                            afiliado.docnumber = c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO;
+                            afiliado.storeid = c.COD_SUCURSAL.Value;
+                            afiliado.typeid = 2;
+                            afiliado.fechaAfiliacion = c.FECHA_CREACION.Value;
+                            afiliado.id = Save(afiliado);
+                            AfiliadosPrepagoMigrados.Add(afiliado);
+                            Migrados++;
+                        }
+                        else
+                        {
+                            throw new Exception("NO SE PUDO DETERMINAR TIPO DE AFILIACION");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        AFILIACION_CLIENTE clienteerror = new AFILIACION_CLIENTE()
+                        {
+                            CLIENTE = c,
+                            COD_TIPO_CLIENTE = "1",
+                            MensajeError = ex.Message
+                        };
+                        AfiliacionesClientesError.Add(clienteerror);
+                        Errores++;
+                    }
+                }
+            }
+            lblTotalBuenos.Text = Migrados.ToString();
+            lblTotalMalos.Text = Errores.ToString();
+            fin = DateTime.Now;
+            lblFin.Text = fin.ToString();
+            lblTotal.Text = Math.Round((fin - inicio).TotalMinutes, 2).ToString() + " minutos";
+            this.Refresh();
+            //ETAPA B - BORRAR CLIENTES SIN AFILIACIONES
+            using (SumaLealtadEntities db = new SumaLealtadEntities())
+            {
+                db.Database.ExecuteSqlCommand("DELETE FROM PrepaidCustomer WHERE id NOT IN (SELECT DISTINCT prepaidcustomerid FROM PrepaidBeneficiary)");
+            }
+            //Genero los archivos de texto con el resultado de la corrida
+            string directory = System.AppDomain.CurrentDomain.BaseDirectory + "Errores" + @"\";
+            if (System.IO.Directory.Exists(directory) == false)
+            {
+                System.IO.Directory.CreateDirectory(directory);
+            }
+            StreamWriter myWriter = new StreamWriter(directory + "AfiliacionesSumaFaseII-etapaB.txt", false);
+            myWriter.WriteLine("Carga Masiva Suma, Fase 2 Etapa B - Afiliaciones Suma.");
+            myWriter.WriteLine("Inicio del proceso " + inicio);
+            myWriter.WriteLine("Fin del proceso " + fin);
+            foreach (AfiliadoSuma a in AfiliadosSumaMigrados)
+            {
+                myWriter.WriteLine(a.docnumber + "@" + a.type);
+            }
+            myWriter.Close();
+            myWriter = new StreamWriter(directory + "AfiliacionesPrepagoFaseII-etapaB.txt", false);
+            myWriter.WriteLine("Carga Masiva Suma, Fase 2 Etapa B - Afiliaciones Prepago.");
+            myWriter.WriteLine("Inicio del proceso " + inicio);
+            myWriter.WriteLine("Fin del proceso " + fin);
+            foreach (AfiliadoSuma a in AfiliadosPrepagoMigrados)
+            {
+                myWriter.WriteLine(a.docnumber + "@" + a.type);
+            }
+            myWriter.Close();
+            myWriter = new StreamWriter(directory + "ErroresFaseII-etapaB.txt", false);
+            myWriter.WriteLine("Errores en Carga Masiva Suma, Fase 2 Etapa B.");
+            foreach (AFILIACION_CLIENTE q in AfiliacionesClientesError)
+            {
+                myWriter.WriteLine(q.CLIENTE.TIPO_DOCUMENTO + "@" + q.CLIENTE.NRO_DOCUMENTO + "@" + q.COD_TIPO_CLIENTE + "@" + q.MensajeError.Replace(System.Environment.NewLine, " "));
+            }
+            myWriter.Close();
+            lstBuenos.Items.Add("FINALIZADA ESTAPA B - ARCHIVOS DE LOG CREADOS");
+            lstBuenos.Items.Add("AFLIADOS SUMA MIGRADOS: " + AfiliadosSumaMigrados.Count.ToString());
+            lstBuenos.Items.Add("BENEFICIARIOS PREPAGO MIGRADOS: " + AfiliadosPrepagoMigrados.Count.ToString());
+            lstBuenos.SelectedIndex = lstBuenos.Items.Count - 1;
+            btnFase3.Enabled = true;
         }
 
         private void btnFase3_Click(object sender, EventArgs e)
         {
+            btnProcesar.Enabled = false;
+            btnFase2.Enabled = false;
+            btnFase3.Enabled = false;
+            DateTime inicio = DateTime.Now;
+            lblInicio.Text = inicio.ToString();
+            lstBuenos.Items.Clear();
 
+            ////Bucar datos del Cliente en Web Plazas
+            ////Primero se buscan los datos de CLIENTE en WebPlazas
+            ////SERVICIO WSL.WebPlazas.getClientByNumDoc 
+            //string clienteWebPlazasJson = WSL.WebPlazas.getClientByNumDoc(afiliado.docnumber);
+            //if (WSL.WebPlazas.ExceptionServicioWebPlazas(clienteWebPlazasJson))
+            //{
+            //    throw new Exception("Error en Llamada WSL.WebPlazas.getClientByNumDoc " + afiliado.docnumber);
+            //}
+            //ClienteWebPlazas clienteWebPlazas = (ClienteWebPlazas)JsonConvert.DeserializeObject<ClienteWebPlazas>(clienteWebPlazasJson);
+            //if (clienteWebPlazas == null)
+            //{
+            //    //No está en WebPlazas
+            //    afiliado.clientid = 0;
+            //}
+            //else
+            //{
+            //    //Si está en la WebPlazas
+            //    afiliado.nationality = clienteWebPlazas.nationality.Replace("/", "").Replace("\\", "");
+            //    afiliado.name = clienteWebPlazas.name.Replace("/", "").Replace("\\", "");
+            //    afiliado.name2 = clienteWebPlazas.name2.Replace("/", "").Replace("\\", "");
+            //    afiliado.lastname1 = clienteWebPlazas.lastname1.Replace("/", "").Replace("\\", "");
+            //    afiliado.lastname2 = clienteWebPlazas.lastname2.Replace("/", "").Replace("\\", "");
+            //    afiliado.birthdate = clienteWebPlazas.birthdate.Value.ToString("dd/MM/yyyy");
+            //    afiliado.gender = clienteWebPlazas.gender.Replace("/", "").Replace("\\", "");
+            //    afiliado.clientid = clienteWebPlazas.id;
+            //    afiliado.maritalstatus = clienteWebPlazas.maritalstatus.Replace("/", "").Replace("\\", "");
+            //    afiliado.occupation = clienteWebPlazas.occupation.Replace("/", "").Replace("\\", "");
+            //    afiliado.phone1 = clienteWebPlazas.phone1.Replace("/", "").Replace("\\", "");
+            //    afiliado.phone2 = clienteWebPlazas.phone2.Replace("/", "").Replace("\\", "");
+            //    afiliado.phone3 = clienteWebPlazas.phone3.Replace("/", "").Replace("\\", "");
+            //    afiliado.email = clienteWebPlazas.email.Replace("/", "").Replace("\\", "");
+            //    afiliado.WebType = clienteWebPlazas.type;
+            //}
+            //Buscar imagen del documento del Cliente en copia de carpeta cedulas desde 172.20.1.21, comprimir imgen a menos de 50kb
+            //Primero determinar nombre de archivo desde tabla Afiliacion_Cliente
+            //DbCommand = DbConnection.CreateCommand();
+            //DbCommand.CommandText = "SELECT a.TIPO_DOCUMENTO,a.NRO_DOCUMENTO,a.COD_FOTO,LTRIM(RTRIM(b.NOMBRE)),b.TAMANO,CONVERT(CHAR,b.FECHA_CREACION,120) FROM AFILIACION_CLIENTE a, FOTO b WHERE a.TIPO_DOCUMENTO = '" + clienteViejo.TIPO_DOCUMENTO + "' AND a.NRO_DOCUMENTO = '" + clienteViejo.NRO_DOCUMENTO + "' AND a.COD_FOTO =  b.CODIGO AND a.COD_FOTO <> 0 AND b.TAMANO > 0 ORDER BY a.TIPO_DOCUMENTO, a.NRO_DOCUMENTO";
+            //DbReader = DbCommand.ExecuteReader();
+            //string NombreArchivo = "";
+            //int filas2 = 0;
+            //while (DbReader.Read())
+            //{
+            //    filas2++;
+            //    NombreArchivo = DbReader.GetString(3);
+            //}
+            //DbReader.Close();
+            //DbCommand.Dispose();
+            //if (filas2 == 0)
+            //{
+            //    throw new Exception("NO TIENE IMAGEN REGISTRADA");
+            //}
+            //if (filas2 > 1)
+            //{
+            //    throw new Exception("TIENE MAS DE UNA IMAGEN REGISTRADA");
+            //}
+            //string FilePath = ObtenerImagen(NombreArchivo);
+            //byte[] imageData = ReadFile(FilePath);
+
+            ////Insertar Cliente, tablas Affiliate, CLIENTE, Photos_Affiliate
+            //int id = 0;
+            //id = Save(afiliado, imageData);
+
+            MessageBox.Show("Proceso Finalizado. Archivos de Log creados.");
         }
 
-        //private string ObtenerImagen(string NombreArchivo)
-        //{
-        //    string FilePath = "C:\\Users\\mromani\\Desktop\\cedulas\\" + NombreArchivo;
-        //    if (!File.Exists(FilePath))
-        //    {
-        //        FilePath = "C:\\Users\\mromani\\Desktop\\cedulas\\" + NombreArchivo.Replace(".jpg", "_.jpg");
-        //    }
-        //    string TempPath = "C:\\Users\\mromani\\Desktop\\cedulas\\Temp.jpg";
-        //    long fileLength = new FileInfo(FilePath).Length;
-        //    //MessageBox.Show("tamaño anterior: " + fileLength);
-        //    //Si la imagen escaneada es mayor 50Kb, se itera reduciendo la imagen a la mitad de su tamaño
-        //    while (fileLength > 51200)
-        //    {
-        //        if (File.Exists(FilePath))
-        //        {
-        //            File.Copy(FilePath, TempPath);
-        //            File.Delete(FilePath);
-        //        }
-        //        using (Image oldImage = Image.FromFile(TempPath))
-        //        {
-        //            int w = oldImage.Width / 2;
-        //            int h = oldImage.Height / 2;
-        //            Image thumb = new Bitmap(w, h, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-        //            Graphics oGraphic = Graphics.FromImage(thumb);
-        //            oGraphic.CompositingQuality = CompositingQuality.HighSpeed;
-        //            oGraphic.SmoothingMode = SmoothingMode.HighSpeed;
-        //            oGraphic.InterpolationMode = InterpolationMode.Low;
-        //            Rectangle rect = new Rectangle(0, 0, w, h);
-        //            oGraphic.DrawImage(oldImage, rect);
-        //            thumb.Save(FilePath, ImageFormat.Jpeg);
-        //        }
-        //        if (File.Exists(TempPath))
-        //        {
-        //            File.Delete(TempPath);
-        //        }
-        //        fileLength = new FileInfo(FilePath).Length;
-        //        //MessageBox.Show("tamaño nuevo: " + fileLength);
-        //    }
-        //    return FilePath;
-        //}
+        private string ObtenerImagen(string NombreArchivo)
+        {
+            string FilePath = "C:\\Users\\mromani\\Desktop\\cedulas\\" + NombreArchivo;
+            if (!File.Exists(FilePath))
+            {
+                FilePath = "C:\\Users\\mromani\\Desktop\\cedulas\\" + NombreArchivo.Replace(".jpg", "_.jpg");
+            }
+            string TempPath = "C:\\Users\\mromani\\Desktop\\cedulas\\Temp.jpg";
+            long fileLength = new FileInfo(FilePath).Length;
+            //MessageBox.Show("tamaño anterior: " + fileLength);
+            //Si la imagen escaneada es mayor 50Kb, se itera reduciendo la imagen a la mitad de su tamaño
+            while (fileLength > 51200)
+            {
+                if (File.Exists(FilePath))
+                {
+                    File.Copy(FilePath, TempPath);
+                    File.Delete(FilePath);
+                }
+                using (Image oldImage = Image.FromFile(TempPath))
+                {
+                    int w = oldImage.Width / 2;
+                    int h = oldImage.Height / 2;
+                    Image thumb = new Bitmap(w, h, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+                    Graphics oGraphic = Graphics.FromImage(thumb);
+                    oGraphic.CompositingQuality = CompositingQuality.HighSpeed;
+                    oGraphic.SmoothingMode = SmoothingMode.HighSpeed;
+                    oGraphic.InterpolationMode = InterpolationMode.Low;
+                    Rectangle rect = new Rectangle(0, 0, w, h);
+                    oGraphic.DrawImage(oldImage, rect);
+                    thumb.Save(FilePath, ImageFormat.Jpeg);
+                }
+                if (File.Exists(TempPath))
+                {
+                    File.Delete(TempPath);
+                }
+                fileLength = new FileInfo(FilePath).Length;
+                //MessageBox.Show("tamaño nuevo: " + fileLength);
+            }
+            return FilePath;
+        }
 
-        ////Open file in to a filestream and read data in a byte array.
-        //private byte[] ReadFile(string sPath)
-        //{
-        //    //Initialize byte array with a null value initially.
-        //    byte[] data = null;
-        //    //Use FileInfo object to get file size.
-        //    FileInfo fInfo = new FileInfo(sPath);
-        //    long numBytes = fInfo.Length;
-        //    //Open FileStream to read file
-        //    FileStream fStream = new FileStream(sPath, FileMode.Open, FileAccess.Read);
-        //    //Use BinaryReader to read file stream into byte array.
-        //    BinaryReader br = new BinaryReader(fStream);
-        //    //When you use BinaryReader, you need to supply number of bytes 
-        //    //to read from file.
-        //    //In this case we want to read entire file. 
-        //    //So supplying total number of bytes.
-        //    data = br.ReadBytes((int)numBytes);
-        //    return data;
-        //}
+        //Open file in to a filestream and read data in a byte array.
+        private byte[] ReadFile(string sPath)
+        {
+            //Initialize byte array with a null value initially.
+            byte[] data = null;
+            //Use FileInfo object to get file size.
+            FileInfo fInfo = new FileInfo(sPath);
+            long numBytes = fInfo.Length;
+            //Open FileStream to read file
+            FileStream fStream = new FileStream(sPath, FileMode.Open, FileAccess.Read);
+            //Use BinaryReader to read file stream into byte array.
+            BinaryReader br = new BinaryReader(fStream);
+            //When you use BinaryReader, you need to supply number of bytes 
+            //to read from file.
+            //In this case we want to read entire file. 
+            //So supplying total number of bytes.
+            data = br.ReadBytes((int)numBytes);
+            return data;
+        }
 
         private void SaveCLIENTE(AfiliadoSuma afiliado)
         {
@@ -477,9 +668,22 @@ namespace Carga_Masiva_Suma
                 }
             }
 
-            //PERSONA JURIDICA => NACIONALIDAD = "0", SEXO = "0", EDO_CIVIL = "0", FECHA_NACIMIENTO = NULL, OCUPACION = ""
+            //PERSONA JURIDICA => NACIONALIDAD = "0", SEXO = "0", EDO_CIVIL = "0", FECHA_NACIMIENTO = NULL, OCUPACION = "", UN SOLO NOMBRE.
             if (afiliado.docnumber.Substring(0, 1).ToUpper() == "J" || afiliado.docnumber.Substring(0, 1).ToUpper() == "G")
             {
+                if (afiliado.name == afiliado.lastname1)
+                {
+                    afiliado.name2 = "";
+                    afiliado.lastname1 = "";
+                    afiliado.lastname2 = "";
+                }
+                else
+                {
+                    afiliado.name = afiliado.name + " (" + afiliado.lastname1 + ")";
+                    afiliado.name2 = "";
+                    afiliado.lastname1 = "";
+                    afiliado.lastname2 = "";
+                }
                 afiliado.nationality = "0";
                 afiliado.gender = "0";
                 afiliado.maritalstatus = "0";
@@ -613,174 +817,108 @@ namespace Carga_Masiva_Suma
             }
         }
 
-        //private int AfilliatesID()
-        //{
-        //    using (LealtadEntities db = new LealtadEntities())
-        //    {
-        //        if (db.Affiliates.Count() == 0)
-        //            return 1;
-        //        return (db.Affiliates.Max(a => a.id) + 1);
-        //    }
-        //}
+        private int AfilliatesID()
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                if (db.Affiliates.Count() == 0)
+                    return 1;
+                return (db.Affiliates.Max(a => a.id) + 1);
+            }
+        }
 
-        //private int Save(AfiliadoSuma afiliado, byte[] imageData)
-        //{
-        //    //REGLAS DE EQUIVALENCIA PARA TRANSFORMACION DE LAS COLUMNAS
+        private int AfilliateAudID()
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                if (db.AffiliateAuds.Count() == 0)
+                    return 1;
+                return (db.AffiliateAuds.Max(a => a.id) + 1);
+            }
+        }
 
-        //    //PERSONA NATURAL
-        //    if (afiliado.docnumber.Substring(0, 1).ToUpper() != "J" && afiliado.docnumber.Substring(0, 1).ToUpper() != "G")
-        //    {
-        //        //NACIONALIDAD => NINGUNA = "0", VENEZOLANO = "1", EXTRANJERO = "2"
-        //        if (afiliado.docnumber.Substring(0, 1).ToUpper() == "V")
-        //        {
-        //            afiliado.nationality = "1";
-        //        }
-        //        else if (afiliado.docnumber.Substring(0, 1).ToUpper() == "E" || afiliado.docnumber.Substring(0, 1).ToUpper() == "P")
-        //        {
-        //            afiliado.nationality = "2";
-        //        }
-        //        else
-        //        {
-        //            afiliado.nationality = "0";
-        //        }
+        private int ClientePrepagoID()
+        {
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                if (db.PrepaidCustomers.Count() == 0)
+                    return 1;
+                return (db.PrepaidCustomers.Max(c => c.id) + 1);
+            }
+        }
 
-        //        //GENERO => NINGUNO = "0", MASCULINO = "1", FEMENINO = "2"
-        //        if (afiliado.gender.ToUpper() == "M")
-        //        {
-        //            afiliado.gender = "1";
-        //        }
-        //        else if (afiliado.gender.ToUpper() == "F")
-        //        {
-        //            afiliado.gender = "2";
-        //        }
-        //        else
-        //        {
-        //            afiliado.gender = "0";
-        //        }
-
-        //        //ESTADO CIVIL => NINGUNO = "0", SOLTERO = "1", CASADO = "2", DIVORCIADO = "3", VIUDO = "4"
-        //        if (afiliado.maritalstatus.ToUpper() == "S")
-        //        {
-        //            afiliado.maritalstatus = "1";
-        //        }
-        //        else if (afiliado.maritalstatus.ToUpper() == "C")
-        //        {
-        //            afiliado.maritalstatus = "2";
-        //        }
-        //        else if (afiliado.maritalstatus.ToUpper() == "D")
-        //        {
-        //            afiliado.maritalstatus = "3";
-        //        }
-        //        else if (afiliado.maritalstatus.ToUpper() == "V")
-        //        {
-        //            afiliado.maritalstatus = "4";
-        //        }
-        //        else
-        //        {
-        //            afiliado.maritalstatus = "0";
-        //        }
-        //    }
-
-        //    //PERSONA JURIDICA => NACIONALIDAD = "0", SEXO = "0", EDO_CIVIL = "0", FECHA_NACIMIENTO = NULL, OCUPACION = ""
-        //    if (afiliado.docnumber.Substring(0, 1).ToUpper() == "J" || afiliado.docnumber.Substring(0, 1).ToUpper() == "G")
-        //    {
-        //        afiliado.nationality = "0";
-        //        afiliado.gender = "0";
-        //        afiliado.maritalstatus = "0";
-        //        afiliado.birthdate = null;
-        //        afiliado.occupation = "";
-        //    }
-
-        //    //DEBE TENER AL MENOS UN TELEFONO EN EL CAMPO PHONE1
-        //    if (afiliado.phone1 == "")
-        //    {
-        //        if (afiliado.phone2 != "")
-        //        {
-        //            afiliado.phone1 = afiliado.phone2;
-        //            afiliado.phone2 = "";
-        //        }
-        //        else if (afiliado.phone3 != "")
-        //        {
-        //            afiliado.phone1 = afiliado.phone3;
-        //            afiliado.phone3 = "";
-        //        }
-        //        else
-        //        {
-        //            afiliado.phone1 = "9031411";
-        //        }
-        //    }
-
-        //    //SE CAMBIA AL FORMATO SAP DE NUMERO DE SUCURSAL
-        //    afiliado.storeid = afiliado.storeid + 1000;
-
-        //    //se guardan los datos en las entidades, creationuserid = 5, modifieduserid = 5, statusid = 2
-        //    using (SumaLealtadEntities db = new SumaLealtadEntities())
-        //    {
-        //        //ENTIDAD Affiliatte                   
-        //        var Affiliate = new Affiliate()
-        //        {
-        //            id = AfilliatesID(),
-        //            customerid = afiliado.customerid,
-        //            docnumber = afiliado.docnumber,
-        //            clientid = afiliado.clientid,
-        //            storeid = afiliado.storeid,
-        //            channelid = afiliado.channelid,
-        //            typeid = afiliado.typeid,
-        //            affiliatedate = System.DateTime.Now,
-        //            typedelivery = afiliado.typedelivery,
-        //            storeiddelivery = afiliado.storeiddelivery,
-        //            estimateddatedelivery = new DateTime(),
-        //            creationdate = afiliado.fechaAfiliacion,
-        //            creationuserid = 5,
-        //            modifieddate = DateTime.Now,
-        //            modifieduserid = 5,
-        //            statusid = 2,
-        //            reasonsid = null,
-        //            twitter_account = afiliado.twitter_account,
-        //            facebook_account = afiliado.facebook_account,
-        //            instagram_account = afiliado.instagram_account,
-        //            comments = afiliado.comments
-        //        };
-        //        db.Affiliates.Add(Affiliate);
-        //        //ENTIDAD CLIENTE
-        //        var CLIENTE = new CLIENTE()
-        //        {
-        //            TIPO_DOCUMENTO = afiliado.docnumber.Substring(0, 1),
-        //            NRO_DOCUMENTO = afiliado.docnumber.Substring(2),
-        //            E_MAIL = afiliado.email,
-        //            NACIONALIDAD = afiliado.nationality,
-        //            NOMBRE_CLIENTE1 = afiliado.name,
-        //            NOMBRE_CLIENTE2 = afiliado.name2,
-        //            APELLIDO_CLIENTE1 = afiliado.lastname1,
-        //            APELLIDO_CLIENTE2 = afiliado.lastname2,
-        //            FECHA_NACIMIENTO = afiliado.birthdate == null ? new DateTime?() : DateTime.ParseExact(afiliado.birthdate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
-        //            SEXO = afiliado.gender,
-        //            EDO_CIVIL = afiliado.maritalstatus,
-        //            OCUPACION = afiliado.occupation,
-        //            TELEFONO_HAB = afiliado.phone1,
-        //            TELEFONO_OFIC = afiliado.phone2,
-        //            TELEFONO_CEL = afiliado.phone3,
-        //            COD_SUCURSAL = afiliado.storeid,
-        //            COD_ESTADO = afiliado.cod_estado,
-        //            COD_CIUDAD = afiliado.cod_ciudad,
-        //            COD_MUNICIPIO = afiliado.cod_municipio,
-        //            COD_PARROQUIA = afiliado.cod_parroquia,
-        //            COD_URBANIZACION = afiliado.cod_urbanizacion,
-        //            FECHA_CREACION = afiliado.fechaAfiliacion
-        //        };
-        //        db.CLIENTES.Add(CLIENTE);
-        //        //ENTIDAD Photos_Affiliate
-        //        var Photos_Affiliate = new Photos_Affiliate()
-        //        {
-        //            photo = imageData,
-        //            photo_type = "image/jpeg",
-        //            Affiliate_id = Affiliate.id
-        //        };
-        //        db.Photos_Affiliates.Add(Photos_Affiliate);
-        //        db.SaveChanges();
-        //        return Affiliate.id;
-        //    }
-        //}
+        private int Save(AfiliadoSuma afiliado, byte[] imageData = null)
+        {
+            //se guardan los datos en las entidades, creationuserid = 5, modifieduserid = 5, statusid = 4
+            using (SumaLealtadEntities db = new SumaLealtadEntities())
+            {
+                //ENTIDAD Affiliatte                   
+                Affiliate Affiliate = new Affiliate()
+                {
+                    id = AfilliatesID(),
+                    customerid = 0,
+                    docnumber = afiliado.docnumber,
+                    clientid = 0,
+                    storeid = afiliado.storeid,
+                    channelid = 1,
+                    typeid = afiliado.typeid,
+                    affiliatedate = afiliado.fechaAfiliacion,
+                    typedelivery = "0",
+                    storeiddelivery = null,
+                    estimateddatedelivery = new DateTime(),
+                    creationdate = DateTime.Now,
+                    creationuserid = 5,
+                    modifieddate = DateTime.Now,
+                    modifieduserid = 5,
+                    sumastatusid = 4,
+                    reasonsid = null,
+                    twitter_account = null,
+                    facebook_account = null,
+                    instagram_account = null,
+                    comments = null
+                };
+                db.Affiliates.Add(Affiliate);
+                //ENTIDAD AffiliateAud
+                AffiliateAud affiliateauditoria = new AffiliateAud()
+                {
+                    id = AfilliateAudID(),
+                    affiliateid = Affiliate.id,
+                    modifieduserid = 5,
+                    modifieddate = DateTime.Now,
+                    statusid = 4,
+                    reasonsid = 1,
+                    comments = null
+                };
+                db.AffiliateAuds.Add(affiliateauditoria);
+                //ENTIDAD TARJETA
+                TARJETA tarjeta = db.TARJETAS.Single(t => t.TIPO_DOCUMENTO.Equals(afiliado.docnumber.Substring(0, 1)) && t.NRO_DOCUMENTO.Equals(afiliado.docnumber.Substring(2)));
+                if (tarjeta != null)
+                {
+                    tarjeta.NRO_AFILIACION = Affiliate.id;
+                }
+                if (afiliado.typeid == 2)
+                {
+                    string codconsorcio;
+                    string docnumber = afiliado.docnumber.Substring(2);
+                    //Buscar consorcio
+                    using (CardsEntities dbCards = new CardsEntities())
+                    {
+                        codconsorcio = (from p in dbCards.Clients
+                                        where p.CIDClient.Equals(docnumber)
+                                        select p.Corporations.FirstOrDefault().corporationID).First().ToString();
+                    }
+                    //crear registro prepaid beneficiary
+                    PrepaidBeneficiary prepaidbeneficiary = new PrepaidBeneficiary();
+                    prepaidbeneficiary.affiliateid = Affiliate.id;
+                    prepaidbeneficiary.prepaidcustomerid = db.PrepaidCustomers.First(x => x.alias.Equals(codconsorcio)).id;
+                    prepaidbeneficiary.begindate = DateTime.Now;
+                    prepaidbeneficiary.active = true;
+                    db.PrepaidBeneficiaries.Add(prepaidbeneficiary);
+                }
+                db.SaveChanges();
+                return Affiliate.id;
+            }
+        }
 
         //private bool SaveChanges(AfiliadoSuma afiliado)
         //{
@@ -967,7 +1105,6 @@ namespace Carga_Masiva_Suma
         //        }
         //    }
         //}
-
 
     }
 }

@@ -35,7 +35,7 @@ namespace Suma2Lealtad.Controllers.Prepago
         public ActionResult Create(int idCliente)
         {
             ClientePrepago cliente = repCliente.Find(idCliente);
-            List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find("", "", "", "", "").Where(b => b.Cliente.idCliente == idCliente).ToList();
+            List<BeneficiarioPrepagoIndex> beneficiarios = repCliente.FindBeneficiarios(idCliente,"", "", "", "", "").ToList();
             List<DetalleOrdenRecargaPrepago> detalleOrden = repOrden.DetalleParaOrden(cliente, beneficiarios.FindAll(b => b.Afiliado.estatus == "Activa" && b.Afiliado.estatustarjeta == "Activa"));
             if (detalleOrden.Count == 0)
             {
@@ -102,7 +102,6 @@ namespace Suma2Lealtad.Controllers.Prepago
             {
                 try
                 {
-                    //path = Server.MapPath(AppModule.GetPathPicture().Replace("@filename@.jpg", idtemp));
                     path = Server.MapPath("~/App_Data/" + idtemp);
                     file.SaveAs(path);
                 }
@@ -115,7 +114,7 @@ namespace Suma2Lealtad.Controllers.Prepago
                     return RedirectToAction("GenericView", viewmodel);
                 }
                 ClientePrepago cliente = repCliente.Find(idCliente);
-                List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find("", "", "", "", "").Where(b => b.Cliente.idCliente == idCliente).ToList();
+                List<BeneficiarioPrepagoIndex> beneficiarios = repCliente.FindBeneficiarios(idCliente,"", "", "", "", "").ToList();
                 if (beneficiarios.Count == 0)
                 {
                     if (System.IO.File.Exists(path))

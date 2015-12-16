@@ -21,7 +21,6 @@ namespace Carga_Masiva_POS
         private void button1_Click(object sender, EventArgs e)
         {
             int contadorMalos = 0;
-
             OdbcConnection DbConnection = new OdbcConnection("Driver={SQL Server};Server=172.20.1.23;Database=SumaLealtad;Uid=UserSisLeal;Pwd=1234;");
             DbConnection.Open();
             OdbcCommand DbCommand = DbConnection.CreateCommand();
@@ -151,7 +150,6 @@ namespace Carga_Masiva_POS
                 listBox1.SelectedIndex = listBox1.Items.Count - 1;
                 listBox1.Refresh();
             }
-
 
             //TABLA ESTADO_CIUDAD 
             using (SumaLealtadEntities db = new SumaLealtadEntities())
@@ -529,7 +527,8 @@ namespace Carga_Masiva_POS
                                                               );
                     listBox1.SelectedIndex = listBox1.Items.Count - 1;
                     listBox1.Refresh();
-                    try {
+                    try
+                    {
                         db.Database.ExecuteSqlCommand("INSERT INTO CIUDAD_MUNICIPIO VALUES ('" + DbReader.GetString(0) + "','" + DbReader.GetString(1) + "')");
                     }
                     catch (Exception EX)
@@ -568,7 +567,8 @@ namespace Carga_Masiva_POS
                                                               );
                     listBox1.SelectedIndex = listBox1.Items.Count - 1;
                     listBox1.Refresh();
-                    try{
+                    try
+                    {
                         db.Database.ExecuteSqlCommand("INSERT INTO MUNICIPIO_PARROQUIA VALUES ('" + DbReader.GetString(0) + "','" + DbReader.GetString(1) + "')");
                     }
                     catch (Exception EX)
@@ -607,8 +607,9 @@ namespace Carga_Masiva_POS
                                                               );
                     listBox1.SelectedIndex = listBox1.Items.Count - 1;
                     listBox1.Refresh();
-                    try{
-                    db.Database.ExecuteSqlCommand("INSERT INTO PARROQUIA_URBANIZACION VALUES ('" + DbReader.GetString(0) + "','" + DbReader.GetString(1) + "')");
+                    try
+                    {
+                        db.Database.ExecuteSqlCommand("INSERT INTO PARROQUIA_URBANIZACION VALUES ('" + DbReader.GetString(0) + "','" + DbReader.GetString(1) + "')");
                     }
                     catch (Exception EX)
                     {

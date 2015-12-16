@@ -19,6 +19,7 @@ namespace Suma2Lealtad.Models
         private const int ID_REASONS_INICIAL = 1;
         private const string TRANSCODE_ACREDITACION_SUMA = "318";
         private const string TIPO_CUENTA_SUMA = "7";
+        private const string TIPO_CUENTA_PREPAGO = "5";
 
         //retorna el ojeto Photos_Affiliate a partr del id del afiliado
         private Photos_Affiliate GetPhoto(int id)
@@ -43,6 +44,8 @@ namespace Suma2Lealtad.Models
             {
                 docnumber = numdoc
             };
+            //SE CALCULA LA SUCURSAL DE AFILIACION EN FUNCION A LA DIRECCION IP DEL CLIENTE
+            afiliado.storeid = DeterminarSucursalAfiliacion();
             //Primero se buscan los datos de CLIENTE en WebPlazas
             //SERVICIO WSL.WebPlazas.getClientByNumDoc 
             string clienteWebPlazasJson = WSL.WebPlazas.getClientByNumDoc(afiliado.docnumber);
@@ -60,7 +63,19 @@ namespace Suma2Lealtad.Models
             else
             {
                 //Si está en la WebPlazas
-                afiliado.nationality = clienteWebPlazas.nationality.Replace("/", "").Replace("\\", "");
+                //afiliado.nationality = clienteWebPlazas.nationality.Replace("/", "").Replace("\\", "");
+                if (afiliado.docnumber.Substring(0, 1).ToUpper() == "V")
+                {
+                    afiliado.nationality = "1";
+                }
+                else if (afiliado.docnumber.Substring(0, 1).ToUpper() == "E" || afiliado.docnumber.Substring(0, 1).ToUpper() == "P")
+                {
+                    afiliado.nationality = "2";
+                }
+                else
+                {
+                    afiliado.nationality = "0";
+                }
                 afiliado.name = clienteWebPlazas.name.Replace("/", "").Replace("\\", "");
                 afiliado.name2 = clienteWebPlazas.name2.Replace("/", "").Replace("\\", "");
                 afiliado.lastname1 = clienteWebPlazas.lastname1.Replace("/", "").Replace("\\", "");
@@ -96,17 +111,17 @@ namespace Suma2Lealtad.Models
                     //ENTIDAD TYPE 
                     afiliado.typeid = db.Affiliates.FirstOrDefault(a => a.id == afiliado.id).typeid;
                     afiliado.type = db.Types.FirstOrDefault(t => t.id == afiliado.typeid).name;
-                    afiliado.statusid = db.Affiliates.FirstOrDefault(a => a.docnumber == afiliado.docnumber).statusid;
-                    afiliado.estatus = db.SumaStatuses.FirstOrDefault(s => s.id == afiliado.statusid).name;
+                    afiliado.sumastatusid = db.Affiliates.FirstOrDefault(a => a.docnumber == afiliado.docnumber).sumastatusid.Value;
+                    afiliado.estatus = db.SumaStatuses.FirstOrDefault(s => s.id == afiliado.sumastatusid).name;
                     afiliado.Intereses = chargeInterestList(afiliado.id);
                 }
             }
             return afiliado;
         }
 
-        public List<AfiliadoSuma> Find(string numdoc, string name, string email, string estadoAfiliacion, string estadoTarjeta)
+        public List<AfiliadoSumaIndex> Find(string numdoc, string name, string email, string estadoAfiliacion, string estadoTarjeta)
         {
-            List<AfiliadoSuma> afiliados;
+            List<AfiliadoSumaIndex> afiliados = new List<AfiliadoSumaIndex>();
             using (LealtadEntities db = new LealtadEntities())
             {
                 if (numdoc == "")
@@ -132,133 +147,186 @@ namespace Suma2Lealtad.Models
                 //BUSCAR POR ESTADO DE TARJETA
                 if (estadoTarjeta != null)
                 {
-                    afiliados = (from a in db.Affiliates
+                    var query = (from t in db.TARJETAS
+                                 where t.ESTATUS_TARJETA.Equals(estadoTarjeta)
+                                 join a in db.Affiliates on t.NRO_AFILIACION equals a.id
                                  join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                 //join s in db.SumaStatuses on a.statusid equals s.value
-                                 join s in db.SumaStatuses on a.statusid equals s.id
-                                 join t in db.Types on a.typeid equals t.id
-                                 join tar in db.TARJETAS on a.id equals tar.NRO_AFILIACION
-                                 where tar.ESTATUS_TARJETA.Equals(estadoTarjeta)
-                                 select new AfiliadoSuma()
+                                 select new
                                  {
-                                     //ENTIDAD Affiliate 
-                                     id = a.id,
+                                     pan = t.NRO_TARJETA,
+                                     estatustarjeta = t.ESTATUS_TARJETA,
+                                     id = t.NRO_AFILIACION,
                                      docnumber = a.docnumber,
                                      typeid = a.typeid,
-                                     //ENTIDAD CLIENTE
+                                     sumastatusid = a.sumastatusid,
                                      name = c.NOMBRE_CLIENTE1,
                                      lastname1 = c.APELLIDO_CLIENTE1,
-                                     email = c.E_MAIL,
-                                     //ENTIDAD SumaStatuses
+                                     email = c.E_MAIL
+                                 }).OrderBy(d => d.docnumber);
+                    afiliados = (from q in query.AsEnumerable()
+                                 join s in db.SumaStatuses on q.sumastatusid equals s.id
+                                 join ty in db.Types on q.typeid equals ty.id
+                                 select new AfiliadoSumaIndex()
+                                 {
+                                     pan = q.pan.ToString(),
+                                     estatustarjeta = q.estatustarjeta,
+                                     id = q.id,
+                                     docnumber = q.docnumber,
+                                     typeid = q.typeid,
+                                     sumastatusid = q.sumastatusid.Value,
+                                     name = q.name,
+                                     lastname1 = q.lastname1,
+                                     email = q.email,
                                      estatus = s.name,
-                                     //ENTIDAD Type
-                                     type = t.name
-                                 }).OrderBy(x => x.docnumber).ToList();
-                    return afiliados;
+                                     type = ty.name
+                                 }).ToList();
                 }
-                else
+                //BUSCAR POR ESTADO DE AFILIACION
+                else if (estadoAfiliacion != null)
                 {
-                    //BUSCAR TODOS
-                    if (numdoc == null && name == null && email == null && estadoAfiliacion == null && estadoTarjeta == null)
-                    {
-                        afiliados = (from a in db.Affiliates
-                                     join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                     join s in db.SumaStatuses on a.statusid equals s.id
-                                     join t in db.Types on a.typeid equals t.id
-                                     select new AfiliadoSuma()
-                                     {
-                                         //ENTIDAD Affiliate 
-                                         id = a.id,
-                                         docnumber = a.docnumber,
-                                         typeid = a.typeid,
-                                         //ENTIDAD CLIENTE
-                                         name = c.NOMBRE_CLIENTE1,
-                                         lastname1 = c.APELLIDO_CLIENTE1,
-                                         email = c.E_MAIL,
-                                         //ENTIDAD SumaStatuses
-                                         estatus = s.name,
-                                         //ENTIDAD Type
-                                         type = t.name
-                                     }).OrderBy(x => x.docnumber).ToList();
-                    }
-                    //BUSCAR POR numdoc
-                    else if (numdoc != null)
-                    {
-                        afiliados = (from a in db.Affiliates
-                                     join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                     join s in db.SumaStatuses on a.statusid equals s.id
-                                     join t in db.Types on a.typeid equals t.id
-                                     where a.docnumber.Equals(numdoc)
-                                     select new AfiliadoSuma()
-                                     {
-                                         //ENTIDAD Affiliate 
-                                         id = a.id,
-                                         docnumber = a.docnumber,
-                                         typeid = a.typeid,
-                                         //ENTIDAD CLIENTE
-                                         name = c.NOMBRE_CLIENTE1,
-                                         lastname1 = c.APELLIDO_CLIENTE1,
-                                         email = c.E_MAIL,
-                                         //ENTIDAD SumaStatuses
-                                         estatus = s.name,
-                                         //ENTIDAD Type
-                                         type = t.name
-                                     }).OrderBy(x => x.docnumber).ToList();
-                    }
-                    //BUSCAR POR name O email O estadoAfiliacion
-                    else
-                    {
-                        afiliados = (from a in db.Affiliates
-                                     join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                     join s in db.SumaStatuses on a.statusid equals s.id
-                                     join t in db.Types on a.typeid equals t.id
-                                     where (c.NOMBRE_CLIENTE1.Contains(name) || c.APELLIDO_CLIENTE1.Contains(name) || c.E_MAIL.Equals(email) || s.name.Equals(estadoAfiliacion))
-                                     select new AfiliadoSuma()
-                                     {
-                                         //ENTIDAD Affiliate 
-                                         id = a.id,
-                                         docnumber = a.docnumber,
-                                         typeid = a.typeid,
-                                         //ENTIDAD CLIENTE
-                                         name = c.NOMBRE_CLIENTE1,
-                                         lastname1 = c.APELLIDO_CLIENTE1,
-                                         email = c.E_MAIL,
-                                         //ENTIDAD SumaStatuses
-                                         estatus = s.name,
-                                         //ENTIDAD Type
-                                         type = t.name
-                                     }).OrderBy(x => x.docnumber).ToList();
-                    }
+                    var query = (from a in db.Affiliates
+                                 where a.SumaStatu.name.Equals(estadoAfiliacion)
+                                 join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION
+                                 select new
+                                 {
+                                     pan = t.NRO_TARJETA,
+                                     estatustarjeta = t.ESTATUS_TARJETA,
+                                     id = t.NRO_AFILIACION,
+                                     docnumber = a.docnumber,
+                                     typeid = a.typeid,
+                                     sumastatusid = a.sumastatusid,
+                                     name = c.NOMBRE_CLIENTE1,
+                                     lastname1 = c.APELLIDO_CLIENTE1,
+                                     email = c.E_MAIL
+                                 }).OrderBy(d => d.docnumber);
+                    afiliados = (from q in query.AsEnumerable()
+                                 join s in db.SumaStatuses on q.sumastatusid equals s.id
+                                 join ty in db.Types on q.typeid equals ty.id
+                                 select new AfiliadoSumaIndex()
+                                 {
+                                     pan = q.pan.ToString(),
+                                     estatustarjeta = q.estatustarjeta,
+                                     id = q.id,
+                                     docnumber = q.docnumber,
+                                     typeid = q.typeid,
+                                     sumastatusid = q.sumastatusid.Value,
+                                     name = q.name,
+                                     lastname1 = q.lastname1,
+                                     email = q.email,
+                                     estatus = s.name,
+                                     type = ty.name
+                                 }).ToList();
                 }
-                foreach (var afiliado in afiliados)
+                //BUSCAR POR NUMERO DE DOCUMENTO
+                else if (numdoc != null)
                 {
-                    if (afiliado.estatus != "Nueva")
-                    {
-                        Decimal p = (from t in db.TARJETAS
-                                     where t.NRO_AFILIACION.Equals(afiliado.id)
-                                     select t.NRO_TARJETA
-                                     ).SingleOrDefault();
-                        if (p != 0)
-                        {
-                            afiliado.pan = p.ToString();
-                        }
-                        else
-                        {
-                            afiliado.pan = "";
-                        }
-                        string e = (from t in db.TARJETAS
-                                    where t.NRO_AFILIACION.Equals(afiliado.id)
-                                    select t.ESTATUS_TARJETA
-                                    ).SingleOrDefault();
-                        if (e != null)
-                        {
-                            afiliado.estatustarjeta = e.ToString();
-                        }
-                        else
-                        {
-                            afiliado.estatustarjeta = "";
-                        }
-                    }
+                    var query = (from a in db.Affiliates
+                                 where a.docnumber.Equals(numdoc)
+                                 join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION
+                                 select new
+                                 {
+                                     pan = t.NRO_TARJETA,
+                                     estatustarjeta = t.ESTATUS_TARJETA,
+                                     id = t.NRO_AFILIACION,
+                                     docnumber = a.docnumber,
+                                     typeid = a.typeid,
+                                     sumastatusid = a.sumastatusid,
+                                     name = c.NOMBRE_CLIENTE1,
+                                     lastname1 = c.APELLIDO_CLIENTE1,
+                                     email = c.E_MAIL
+                                 }).OrderBy(d => d.docnumber);
+                    afiliados = (from q in query.AsEnumerable()
+                                 join s in db.SumaStatuses on q.sumastatusid equals s.id
+                                 join ty in db.Types on q.typeid equals ty.id
+                                 select new AfiliadoSumaIndex()
+                                 {
+                                     pan = q.pan.ToString(),
+                                     estatustarjeta = q.estatustarjeta,
+                                     id = q.id,
+                                     docnumber = q.docnumber,
+                                     typeid = q.typeid,
+                                     sumastatusid = q.sumastatusid.Value,
+                                     name = q.name,
+                                     lastname1 = q.lastname1,
+                                     email = q.email,
+                                     estatus = s.name,
+                                     type = ty.name
+                                 }).ToList();
+                }
+                //BUSCAR POR NOMBRE O CORREO
+                else if (name != null || email != null)
+                {
+                    var query = (from a in db.Affiliates
+                                 join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                 where (c.NOMBRE_CLIENTE1.Contains(name) || c.APELLIDO_CLIENTE1.Contains(name) || c.E_MAIL.Equals(email))
+                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION
+                                 select new
+                                 {
+                                     pan = t.NRO_TARJETA,
+                                     estatustarjeta = t.ESTATUS_TARJETA,
+                                     id = t.NRO_AFILIACION,
+                                     docnumber = a.docnumber,
+                                     typeid = a.typeid,
+                                     sumastatusid = a.sumastatusid,
+                                     name = c.NOMBRE_CLIENTE1,
+                                     lastname1 = c.APELLIDO_CLIENTE1,
+                                     email = c.E_MAIL
+                                 }).OrderBy(d => d.docnumber);
+                    afiliados = (from q in query.AsEnumerable()
+                                 join s in db.SumaStatuses on q.sumastatusid equals s.id
+                                 join ty in db.Types on q.typeid equals ty.id
+                                 select new AfiliadoSumaIndex()
+                                 {
+                                     pan = q.pan.ToString(),
+                                     estatustarjeta = q.estatustarjeta,
+                                     id = q.id,
+                                     docnumber = q.docnumber,
+                                     typeid = q.typeid,
+                                     sumastatusid = q.sumastatusid.Value,
+                                     name = q.name,
+                                     lastname1 = q.lastname1,
+                                     email = q.email,
+                                     estatus = s.name,
+                                     type = ty.name
+                                 }).ToList();                    
+                }
+                //BUSCAR TODOS
+                else if (numdoc == null && name == null && email == null && estadoAfiliacion == null && estadoTarjeta == null)
+                {
+                    var query = (from a in db.Affiliates
+                                 join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION
+                                 select new
+                                 {
+                                     pan = t.NRO_TARJETA,
+                                     estatustarjeta = t.ESTATUS_TARJETA,
+                                     id = t.NRO_AFILIACION,
+                                     docnumber = a.docnumber,
+                                     typeid = a.typeid,
+                                     sumastatusid = a.sumastatusid,
+                                     name = c.NOMBRE_CLIENTE1,
+                                     lastname1 = c.APELLIDO_CLIENTE1,
+                                     email = c.E_MAIL
+                                 }).OrderBy(d => d.docnumber);
+                    afiliados = (from q in query.AsEnumerable()
+                                 join s in db.SumaStatuses on q.sumastatusid equals s.id
+                                 join ty in db.Types on q.typeid equals ty.id
+                                 select new AfiliadoSumaIndex()
+                                 {
+                                     pan = q.pan.ToString(),
+                                     estatustarjeta = q.estatustarjeta,
+                                     id = q.id,
+                                     docnumber = q.docnumber,
+                                     typeid = q.typeid,
+                                     sumastatusid = q.sumastatusid.Value,
+                                     name = q.name,
+                                     lastname1 = q.lastname1,
+                                     email = q.email,
+                                     estatus = s.name,
+                                     type = ty.name
+                                 }).ToList();         
                 }
             }
             return afiliados;
@@ -270,7 +338,7 @@ namespace Suma2Lealtad.Models
             {
                 AfiliadoSuma afiliado = (from a in db.Affiliates
                                          join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                         join s in db.SumaStatuses on a.statusid equals s.id
+                                         join s in db.SumaStatuses on a.sumastatusid equals s.id
                                          join t in db.Types on a.typeid equals t.id
                                          where a.id.Equals(id)
                                          select new AfiliadoSuma()
@@ -285,7 +353,7 @@ namespace Suma2Lealtad.Models
                                              typeid = a.typeid,
                                              typedelivery = a.typedelivery,
                                              storeiddelivery = a.storeiddelivery,
-                                             statusid = a.statusid,
+                                             sumastatusid = a.sumastatusid.Value,
                                              reasonsid = a.reasonsid,
                                              twitter_account = a.twitter_account,
                                              facebook_account = a.facebook_account,
@@ -363,6 +431,18 @@ namespace Suma2Lealtad.Models
                         {
                             afiliado.estatustarjeta = "";
                         }
+                        string v = (from t in db.TARJETAS
+                                    where t.NRO_AFILIACION.Equals(afiliado.id)
+                                    select t.CVV2
+                                    ).SingleOrDefault();
+                        if (v != null)
+                        {
+                            afiliado.cvv2 = v;
+                        }
+                        else
+                        {
+                            afiliado.cvv2 = "";
+                        }
                     }
                     //ENTIDAD Photos_Affiliate 
                     afiliado.picture = GetPhoto(afiliado.id);
@@ -417,7 +497,7 @@ namespace Suma2Lealtad.Models
                     creationuserid = (int)HttpContext.Current.Session["userid"],
                     modifieddate = DateTime.Now,
                     modifieduserid = (int)HttpContext.Current.Session["userid"],
-                    statusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_AFILIACION_INICIAL) && (s.tablename == "Affiliatte")).id,
+                    sumastatusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_AFILIACION_INICIAL) && (s.tablename == "Affiliatte")).id,
                     reasonsid = null,
                     twitter_account = afiliado.twitter_account,
                     facebook_account = afiliado.facebook_account,
@@ -426,32 +506,58 @@ namespace Suma2Lealtad.Models
                 };
                 db.Affiliates.Add(Affiliate);
                 //ENTIDAD CLIENTE
-                var CLIENTE = new CLIENTE()
+                CLIENTE cliente = db.CLIENTES.FirstOrDefault(c => c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO == afiliado.docnumber);
+                if (cliente == null)
                 {
-                    TIPO_DOCUMENTO = afiliado.docnumber.Substring(0, 1),
-                    NRO_DOCUMENTO = afiliado.docnumber.Substring(2),
-                    E_MAIL = afiliado.email,
-                    NACIONALIDAD = afiliado.nationality == null ? "" : afiliado.nationality,
-                    NOMBRE_CLIENTE1 = afiliado.name,
-                    NOMBRE_CLIENTE2 = afiliado.name2 == null ? "" : afiliado.name2,
-                    APELLIDO_CLIENTE1 = afiliado.lastname1 == null ? "" : afiliado.lastname1,
-                    APELLIDO_CLIENTE2 = afiliado.lastname2 == null ? "" : afiliado.lastname2,
-                    FECHA_NACIMIENTO = afiliado.birthdate == null ? new DateTime?() : DateTime.ParseExact(afiliado.birthdate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                    SEXO = afiliado.gender == null ? "" : afiliado.gender,
-                    EDO_CIVIL = afiliado.maritalstatus == null ? "" : afiliado.maritalstatus,
-                    OCUPACION = afiliado.occupation == null ? "" : afiliado.occupation,
-                    TELEFONO_HAB = afiliado.phone1,
-                    TELEFONO_OFIC = afiliado.phone2 == null ? "" : afiliado.phone2,
-                    TELEFONO_CEL = afiliado.phone3 == null ? "" : afiliado.phone3,                    
-                    COD_SUCURSAL = afiliado.storeid,
-                    COD_ESTADO = afiliado.cod_estado,
-                    COD_CIUDAD = afiliado.cod_ciudad,
-                    COD_MUNICIPIO = afiliado.cod_municipio,
-                    COD_PARROQUIA = afiliado.cod_parroquia,
-                    COD_URBANIZACION = afiliado.cod_urbanizacion,
-                    FECHA_CREACION = DateTime.Now
-                };
-                db.CLIENTES.Add(CLIENTE);
+                    var CLIENTE = new CLIENTE()
+                    {
+                        TIPO_DOCUMENTO = afiliado.docnumber.Substring(0, 1),
+                        NRO_DOCUMENTO = afiliado.docnumber.Substring(2),
+                        E_MAIL = afiliado.email,
+                        NACIONALIDAD = afiliado.nationality == null ? "" : afiliado.nationality,
+                        NOMBRE_CLIENTE1 = afiliado.name,
+                        NOMBRE_CLIENTE2 = afiliado.name2 == null ? "" : afiliado.name2,
+                        APELLIDO_CLIENTE1 = afiliado.lastname1 == null ? "" : afiliado.lastname1,
+                        APELLIDO_CLIENTE2 = afiliado.lastname2 == null ? "" : afiliado.lastname2,
+                        FECHA_NACIMIENTO = afiliado.birthdate == null ? new DateTime?() : DateTime.ParseExact(afiliado.birthdate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                        SEXO = afiliado.gender == null ? "" : afiliado.gender,
+                        EDO_CIVIL = afiliado.maritalstatus == null ? "" : afiliado.maritalstatus,
+                        OCUPACION = afiliado.occupation == null ? "" : afiliado.occupation,
+                        TELEFONO_HAB = afiliado.phone1,
+                        TELEFONO_OFIC = afiliado.phone2 == null ? "" : afiliado.phone2,
+                        TELEFONO_CEL = afiliado.phone3 == null ? "" : afiliado.phone3,
+                        COD_SUCURSAL = afiliado.storeid,
+                        COD_ESTADO = afiliado.cod_estado,
+                        COD_CIUDAD = afiliado.cod_ciudad,
+                        COD_MUNICIPIO = afiliado.cod_municipio,
+                        COD_PARROQUIA = afiliado.cod_parroquia,
+                        COD_URBANIZACION = afiliado.cod_urbanizacion,
+                        FECHA_CREACION = DateTime.Now
+                    };
+                    db.CLIENTES.Add(CLIENTE);
+                }
+                else
+                {
+                    cliente.E_MAIL = afiliado.email;
+                    cliente.NACIONALIDAD = afiliado.nationality == null ? "" : afiliado.nationality;
+                    cliente.NOMBRE_CLIENTE1 = afiliado.name;
+                    cliente.NOMBRE_CLIENTE2 = afiliado.name2 == null ? "" : afiliado.name2;
+                    cliente.APELLIDO_CLIENTE1 = afiliado.lastname1 == null ? "" : afiliado.lastname1;
+                    cliente.APELLIDO_CLIENTE2 = afiliado.lastname2 == null ? "" : afiliado.lastname2;
+                    cliente.FECHA_NACIMIENTO = afiliado.birthdate == null ? new DateTime?() : DateTime.ParseExact(afiliado.birthdate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    cliente.SEXO = afiliado.gender == null ? "" : afiliado.gender;
+                    cliente.EDO_CIVIL = afiliado.maritalstatus == null ? "" : afiliado.maritalstatus;
+                    cliente.OCUPACION = afiliado.occupation == null ? "" : afiliado.occupation;
+                    cliente.TELEFONO_HAB = afiliado.phone1;
+                    cliente.TELEFONO_OFIC = afiliado.phone2 == null ? "" : afiliado.phone2;
+                    cliente.TELEFONO_CEL = afiliado.phone3 == null ? "" : afiliado.phone3;
+                    cliente.COD_SUCURSAL = afiliado.storeid;
+                    cliente.COD_ESTADO = afiliado.cod_estado;
+                    cliente.COD_CIUDAD = afiliado.cod_ciudad;
+                    cliente.COD_MUNICIPIO = afiliado.cod_municipio;
+                    cliente.COD_PARROQUIA = afiliado.cod_parroquia;
+                    cliente.COD_URBANIZACION = afiliado.cod_urbanizacion;
+                }
                 //ENTIDAD CustomerInterest
                 foreach (var interes in afiliado.Intereses.Where(x => x.Checked == true))
                 {
@@ -484,10 +590,11 @@ namespace Suma2Lealtad.Models
                         return false;
                     }
                 }
-                else
-                {
-                    return false;
-                }
+                //PARA QUE LA IMAGEN DEL DOCUMENTO SEA OPCIONAL
+                //else
+                //{
+                //    return false;
+                //}
                 //ENTIDAD AffiliateAud
                 var affiliateauditoria = new AffiliateAud()
                 {
@@ -495,7 +602,7 @@ namespace Suma2Lealtad.Models
                     affiliateid = Affiliate.id,
                     modifieduserid = (int)HttpContext.Current.Session["userid"],
                     modifieddate = System.DateTime.Now,
-                    statusid = Affiliate.statusid,
+                    statusid = Affiliate.sumastatusid.Value,
                     reasonsid = ID_REASONS_INICIAL,
                     comments = afiliado.comments
                 };
@@ -513,7 +620,7 @@ namespace Suma2Lealtad.Models
             }
         }
 
-        public bool SaveChanges(AfiliadoSuma afiliado)
+        public bool SaveChanges(AfiliadoSuma afiliado, HttpPostedFileBase fileNoValidado = null)
         {
             using (LealtadEntities db = new LealtadEntities())
             {
@@ -528,7 +635,8 @@ namespace Suma2Lealtad.Models
                     affiliate.storeiddelivery = afiliado.storeiddelivery;
                     affiliate.modifieduserid = (int)HttpContext.Current.Session["userid"];
                     affiliate.modifieddate = System.DateTime.Now;
-                    affiliate.statusid = afiliado.statusid;
+                    //affiliate.statusid = afiliado.statusid;
+                    affiliate.sumastatusid = afiliado.sumastatusid;
                     affiliate.reasonsid = afiliado.reasonsid;
                     affiliate.twitter_account = afiliado.twitter_account;
                     affiliate.facebook_account = afiliado.facebook_account;
@@ -539,6 +647,7 @@ namespace Suma2Lealtad.Models
                 CLIENTE cliente = db.CLIENTES.FirstOrDefault(c => c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO == afiliado.docnumber);
                 if (cliente != null)
                 {
+                    cliente.E_MAIL = afiliado.email;
                     cliente.NACIONALIDAD = afiliado.nationality;
                     cliente.NOMBRE_CLIENTE1 = afiliado.name;
                     cliente.NOMBRE_CLIENTE2 = afiliado.name2;
@@ -564,6 +673,7 @@ namespace Suma2Lealtad.Models
                 TARJETA tarjeta = db.TARJETAS.FirstOrDefault(t => t.NRO_TARJETA.Equals(pan));
                 if (tarjeta != null)
                 {
+                    tarjeta.NRO_AFILIACION = afiliado.id;
                     tarjeta.ESTATUS_TARJETA = afiliado.estatustarjeta;
                     tarjeta.COD_USUARIO = (int)HttpContext.Current.Session["userid"];
                     tarjeta.FECHA_CREACION = afiliado.printed == null ? new DateTime?() : DateTime.ParseExact(afiliado.printed, "dd/MM/yyyy", CultureInfo.InvariantCulture);
@@ -581,8 +691,8 @@ namespace Suma2Lealtad.Models
                         OBSERVACIONES = null,
                         COD_USUARIO = (int)HttpContext.Current.Session["userid"],
                         TRACK1 = null,
-                        TRACK2 = null,
-                        CVV2 = null,
+                        TRACK2 = afiliado.trackII,
+                        CVV2 = afiliado.cvv2,
                         FECHA_CREACION = afiliado.printed == null ? new DateTime?() : DateTime.ParseExact(afiliado.printed, "dd/MM/yyyy", CultureInfo.InvariantCulture)
                     };
                     db.TARJETAS.Add(tarjeta);
@@ -604,12 +714,12 @@ namespace Suma2Lealtad.Models
                     db.CustomerInterests.Add(customerInterest);
                 }
                 //Entidad: AffiliateAud 
-                int statusidactual = (from a in db.Affiliates
-                                      where a.id.Equals(afiliado.id)
-                                      select a.statusid
-                                       ).SingleOrDefault();
+                int sumastatusidactual = (from a in db.Affiliates
+                                          where a.id.Equals(afiliado.id)
+                                          select a.sumastatusid
+                                         ).SingleOrDefault().Value;
                 //Solo inserto registros cuando hay cambio de estado de Afiliación
-                if (statusidactual != afiliado.statusid)
+                if (sumastatusidactual != afiliado.sumastatusid)
                 {
                     var affiliateAuditoria = new AffiliateAud()
                     {
@@ -617,7 +727,7 @@ namespace Suma2Lealtad.Models
                         affiliateid = afiliado.id,
                         modifieduserid = (int)HttpContext.Current.Session["userid"],
                         modifieddate = DateTime.Now,
-                        statusid = afiliado.statusid,
+                        statusid = afiliado.sumastatusid,
                         reasonsid = ID_REASONS_INICIAL,
                         comments = afiliado.comments
                     };
@@ -626,6 +736,27 @@ namespace Suma2Lealtad.Models
                 //YA NO SE ENVIARÁ INFORMACIÓN A LA WEB
                 //if (SaveWebPlazas(afiliado))
                 //{
+                //ENTIDAD Photos_Affiliate
+                if (fileNoValidado != null)
+                {
+                    try
+                    {
+                        int length = fileNoValidado.ContentLength;
+                        byte[] buffer = new byte[length];
+                        fileNoValidado.InputStream.Read(buffer, 0, length);
+                        var Photos_Affiliate = new Photos_Affiliate()
+                        {
+                            photo = buffer,
+                            photo_type = fileNoValidado.ContentType,
+                            Affiliate_id = afiliado.id
+                        };
+                        db.Photos_Affiliates.Add(Photos_Affiliate);
+                    }
+                    catch
+                    {
+                    }
+                }
+
                 db.SaveChanges();
                 return true;
                 //}
@@ -659,7 +790,9 @@ namespace Suma2Lealtad.Models
                     afiliado.pan = clienteCards.pan;
                     afiliado.printed = clienteCards.printed == null ? null : clienteCards.printed.Substring(6, 2) + "/" + clienteCards.printed.Substring(4, 2) + "/" + clienteCards.printed.Substring(0, 4);
                     afiliado.estatustarjeta = clienteCards.tarjeta;
-                    afiliado.statusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_AFILIACION_ACTIVA) && (s.tablename == "Affiliatte")).id;
+                    afiliado.sumastatusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_AFILIACION_ACTIVA) && (s.tablename == "Affiliatte")).id;
+                    afiliado.trackII = Tarjeta.ConstruirTrackII(afiliado.pan);
+                    afiliado.cvv2 = "123";
                     return SaveChanges(afiliado);
                 }
                 else
@@ -836,7 +969,7 @@ namespace Suma2Lealtad.Models
                 return null;
             }
             SaldosMovimientos.Saldos = (List<Saldo>)JsonConvert.DeserializeObject<List<Saldo>>(saldosJson);
-            string movimientosPrepagoJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.First().accounttype, SaldosMovimientos.DocId.Substring(2));
+            string movimientosPrepagoJson = WSL.Cards.getBatch(TIPO_CUENTA_PREPAGO, SaldosMovimientos.DocId.Substring(2));
             if (WSL.Cards.ExceptionServicioCards(movimientosPrepagoJson))
             {
                 return null;
@@ -848,7 +981,7 @@ namespace Suma2Lealtad.Models
             {
                 mov.fecha = mov.fecha.Substring(6, 2) + "/" + mov.fecha.Substring(4, 2) + "/" + mov.fecha.Substring(0, 4);
             }
-            string movimientosLealtadJson = WSL.Cards.getBatch(SaldosMovimientos.Saldos.Skip(1).First().accounttype, SaldosMovimientos.DocId.Substring(2));
+            string movimientosLealtadJson = WSL.Cards.getBatch(TIPO_CUENTA_SUMA, SaldosMovimientos.DocId.Substring(2));
             if (WSL.Cards.ExceptionServicioCards(movimientosLealtadJson))
             {
                 return null;
@@ -863,21 +996,21 @@ namespace Suma2Lealtad.Models
             return SaldosMovimientos;
         }
 
-        public bool Acreditar(AfiliadoSuma afiliado, string monto)
+        public string Acreditar(AfiliadoSuma afiliado, string monto)
         {
             string RespuestaCardsJson = WSL.Cards.addBatch(afiliado.docnumber.Substring(2), monto, TRANSCODE_ACREDITACION_SUMA, "NULL");
             if (WSL.Cards.ExceptionServicioCards(RespuestaCardsJson))
             {
-                return false;
+                return null;
             }
             RespuestaCards RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
-            if (RespuestaCards.excode == "0")
+            if (Convert.ToDecimal(RespuestaCards.excode) < 0)
             {
-                return true;
+                return null;
             }
             else
             {
-                return false;
+                return RespuestaCards.exdetail;
             }
         }
 
@@ -900,10 +1033,10 @@ namespace Suma2Lealtad.Models
             using (LealtadEntities db = new LealtadEntities())
             {
                 Affiliate afiliate = db.Affiliates.FirstOrDefault(a => a.docnumber == afiliado.docnumber);
-                afiliate.statusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_AFILIACION_INICIAL) && (s.tablename == "Affiliatte")).id;
+                afiliate.sumastatusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_AFILIACION_INICIAL) && (s.tablename == "Affiliatte")).id;
                 db.SaveChanges();
                 afiliado.estatus = "Nueva";
-                afiliado.statusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_AFILIACION_INICIAL) && (s.tablename == "Affiliatte")).id;
+                afiliado.sumastatusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_AFILIACION_INICIAL) && (s.tablename == "Affiliatte")).id;
                 return afiliado;
             }
         }
@@ -917,13 +1050,13 @@ namespace Suma2Lealtad.Models
             #region Todos los Afiliados
             if (numdoc == "")
             {
-                List<AfiliadoSuma> afiliados = Find("", "", "", "", "").ToList();
+                List<AfiliadoSumaIndex> afiliados = Find("", "", "", "", "").ToList();
                 encabezado.nombreReporte = "Reporte de Transacciones";
                 encabezado.numdocReporte = "Todos";
                 encabezado.fechainicioReporte = fechadesde;
                 encabezado.fechafinReporte = fechahasta;
                 encabezado.tipotransaccionReporte = tipotrans;
-                foreach (AfiliadoSuma a in afiliados)
+                foreach (AfiliadoSumaIndex a in afiliados)
                 {
                     string movimientosLealtadJson = WSL.Cards.getBatch(TIPO_CUENTA_SUMA, a.docnumber.Substring(2));
                     if (WSL.Cards.ExceptionServicioCards(movimientosLealtadJson))
@@ -941,7 +1074,7 @@ namespace Suma2Lealtad.Models
                             detalle = m.isodescription,
                             tipo = m.transcode + "-" + m.transname,
                             numerotarjeta = Convert.ToDecimal(m.pan),
-                            Encabezado = encabezado                            
+                            Encabezado = encabezado
                         };
                         if (tipotrans == "Todas")
                         {
@@ -958,13 +1091,13 @@ namespace Suma2Lealtad.Models
             #region Todos los Clientes
             else if (numdoc != "")
             {
-                List<AfiliadoSuma> afiliados = Find(numdoc, "", "", "", "").ToList();
+                List<AfiliadoSumaIndex> afiliados = Find(numdoc, "", "", "", "").ToList();
                 encabezado.nombreReporte = "Reporte de Transacciones";
                 encabezado.numdocReporte = afiliados.First().docnumber + " " + afiliados.First().name + " " + afiliados.First().lastname1;
                 encabezado.fechainicioReporte = fechadesde;
                 encabezado.fechafinReporte = fechahasta;
                 encabezado.tipotransaccionReporte = tipotrans;
-                foreach (AfiliadoSuma a in afiliados)
+                foreach (AfiliadoSumaIndex a in afiliados)
                 {
                     string movimientosLealtadJson = WSL.Cards.getBatch(TIPO_CUENTA_SUMA, a.docnumber.Substring(2));
                     if (WSL.Cards.ExceptionServicioCards(movimientosLealtadJson))
@@ -1006,7 +1139,51 @@ namespace Suma2Lealtad.Models
             }
             DateTime desde = DateTime.ParseExact(fechadesde, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             DateTime hasta = DateTime.ParseExact(fechahasta, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            return reporte.Where(x => x.fecha.Date > desde && x.fecha.Date < hasta).OrderBy(x => x.fecha).ToList();        
+            return reporte.Where(x => x.fecha.Date >= desde && x.fecha.Date <= hasta).OrderBy(x => x.fecha).ToList();
+        }
+
+        private int DeterminarSucursalAfiliacion()
+        {
+            string ip;
+            ip = HttpContext.Current.Request.UserHostAddress;
+            //ip = ip + HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+            //ip = ip + HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];        
+            if (ip.Contains("192.168.2"))
+                return 1003;
+            if (ip.Contains("192.168.3"))
+                return 1006;
+            if (ip.Contains("192.168.4"))
+                return 1002;
+            if (ip.Contains("192.168.5"))
+                return 1005;
+            if (ip.Contains("192.168.6"))
+                return 1007;
+            if (ip.Contains("192.168.8"))
+                return 1008;
+            if (ip.Contains("192.168.9"))
+                return 1009;
+            if (ip.Contains("192.168.10"))
+                return 1010;
+            if (ip.Contains("192.168.11"))
+                return 1011;
+            if (ip.Contains("192.168.12"))
+                return 1012;
+            if (ip.Contains("192.168.13"))
+                return 1013;
+            if (ip.Contains("192.168.14"))
+                return 1014;
+            if (ip.Contains("192.168.16"))
+                return 1016;
+            if (ip.Contains("192.168.17"))
+                return 1017;
+            if (ip.Contains("192.168.18"))
+                return 1018;
+            if (ip.Contains("192.168.19"))
+                return 1019;
+            if (ip.Contains("192.168.21"))
+                return 1021;
+            else
+                return 1001;
         }
 
         public class customerInterest

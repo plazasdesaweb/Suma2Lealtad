@@ -25,9 +25,10 @@ namespace Suma2Lealtad.Controllers.Prepago
         [HttpPost]
         public ActionResult Filter(string numdoc)
         {
-            BeneficiarioPrepago beneficiario = repBeneficiario.Find(numdoc, "", "", "", "").FirstOrDefault();
+            BeneficiarioPrepago beneficiario;
+            BeneficiarioPrepagoIndex beneficiarioIndex = repBeneficiario.Find(numdoc, "", "", "", "").FirstOrDefault();
             //NO ES Beneficiario PrepagoPlazas
-            if (beneficiario == null)
+            if (beneficiarioIndex == null)
             {
                 beneficiario = new BeneficiarioPrepago()
                 {
@@ -75,7 +76,7 @@ namespace Suma2Lealtad.Controllers.Prepago
             else
             {
                 //beneficiario.Afiliado = repAfiliado.Find(beneficiario.Afiliado.id);
-                beneficiario = repBeneficiario.Find(beneficiario.Afiliado.id);
+                beneficiario = repBeneficiario.Find(beneficiarioIndex.Afiliado.id);
                 return View("Edit", beneficiario.Afiliado);
             }
         }
@@ -110,10 +111,10 @@ namespace Suma2Lealtad.Controllers.Prepago
         }
 
         [HttpPost]
-        public ActionResult EditBeneficiarioSuma(AfiliadoSuma Afiliado, HttpPostedFileBase file)
+        public ActionResult EditBeneficiarioSuma(AfiliadoSuma Afiliado, HttpPostedFileBase fileNoValidado)
         {
             ViewModel viewmodel = new ViewModel();
-            if (repAfiliado.SaveChanges(Afiliado))
+            if (repAfiliado.SaveChanges(Afiliado, fileNoValidado))
             {
                 BeneficiarioPrepago beneficiario = new BeneficiarioPrepago()
                 {
@@ -147,7 +148,7 @@ namespace Suma2Lealtad.Controllers.Prepago
         [HttpPost]
         public ActionResult FilterReview(string numdoc, string name, string email, string estadoAfiliacion, string estadoTarjeta)
         {
-            List<BeneficiarioPrepago> beneficiarios = repBeneficiario.Find(numdoc, name, email, estadoAfiliacion, estadoTarjeta).OrderBy(x => x.Cliente.nameCliente).ThenBy(y => y.Afiliado.docnumber).ToList();
+            List<BeneficiarioPrepagoIndex> beneficiarios = repBeneficiario.Find(numdoc, name, email, estadoAfiliacion, estadoTarjeta).OrderBy(x => x.Cliente.nameCliente).ThenBy(y => y.Afiliado.docnumber).ToList();
             return View("Index", beneficiarios);
         }
 
@@ -159,10 +160,10 @@ namespace Suma2Lealtad.Controllers.Prepago
 
         [HttpPost]
         //public ActionResult EditBeneficiario(AfiliadoSuma afiliado, ClientePrepago Cliente)
-        public ActionResult EditBeneficiario(AfiliadoSuma afiliado)
+        public ActionResult EditBeneficiario(AfiliadoSuma afiliado, HttpPostedFileBase fileNoValidado)
         {
             ViewModel viewmodel = new ViewModel();
-            if (!repAfiliado.SaveChanges(afiliado))
+            if (!repAfiliado.SaveChanges(afiliado, fileNoValidado))
             {
                 viewmodel.Title = "Prepago / Beneficiario / Revisar Afiliación";
                 viewmodel.Message = "Error de aplicacion: No se pudo actualizar afiliación.";

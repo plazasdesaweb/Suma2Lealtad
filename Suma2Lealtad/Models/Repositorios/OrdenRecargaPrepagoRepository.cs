@@ -365,7 +365,7 @@ namespace Suma2Lealtad.Models
                 return false;
             }
             RespuestaCards RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
-            if (RespuestaCards.excode == "0")
+            if ((Convert.ToDecimal(RespuestaCards.excode) > 0))
             {
                 detalleorden.resultadoRecarga = "0";
                 return true;
@@ -422,10 +422,10 @@ namespace Suma2Lealtad.Models
             }
         }
 
-        public List<DetalleOrdenRecargaPrepago> DetalleParaOrden(ClientePrepago cliente, List<BeneficiarioPrepago> beneficiarios)
+        public List<DetalleOrdenRecargaPrepago> DetalleParaOrden(ClientePrepago cliente, List<BeneficiarioPrepagoIndex> beneficiarios)
         {
             List<DetalleOrdenRecargaPrepago> detalleOrden = new List<DetalleOrdenRecargaPrepago>();
-            foreach (BeneficiarioPrepago item in beneficiarios)
+            foreach (BeneficiarioPrepagoIndex item in beneficiarios)
             {
                 DetalleOrdenRecargaPrepago detalle = new DetalleOrdenRecargaPrepago()
                 {
@@ -446,7 +446,7 @@ namespace Suma2Lealtad.Models
             return detalleOrden;
         }
 
-        public List<DetalleOrdenRecargaPrepago> DetalleParaOrdenArchivo(ClientePrepago cliente, List<BeneficiarioPrepago> beneficiarios, List<DetalleOrdenRecargaPrepago> detalleOrdenArchivo)
+        public List<DetalleOrdenRecargaPrepago> DetalleParaOrdenArchivo(ClientePrepago cliente, List<BeneficiarioPrepagoIndex> beneficiarios, List<DetalleOrdenRecargaPrepago> detalleOrdenArchivo)
         {
             List<DetalleOrdenRecargaPrepago> detalleOrdenBase = DetalleParaOrden(cliente, beneficiarios);
             List<DetalleOrdenRecargaPrepago> detalleOrden = new List<DetalleOrdenRecargaPrepago>();
@@ -580,10 +580,8 @@ namespace Suma2Lealtad.Models
             //    return null;
             //}
 
-
             try
             {
-
                 var book = new ExcelQueryFactory(pathDelArchivoExcel);
                 var resultado = (from row in book.Worksheet("Hoja1")
                                  let item = new DetalleOrdenRecargaPrepago()
@@ -593,7 +591,6 @@ namespace Suma2Lealtad.Models
                                  }
                                  select item).ToList();
                 book.Dispose();
-
                 if (resultado.Count != 0)
                 {
                     return resultado.OrderBy(x => x.docnumberAfiliado).ToList();

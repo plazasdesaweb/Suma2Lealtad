@@ -75,22 +75,6 @@
                 @Html.TextBoxFor(model => model.First().Encabezado.estatustarjetaReporte, new { @class = "form-control", @readonly = "true" })
             </div>
 
-            @*<div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.tipoconsultaReporte))
-            </div>
-            <div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.parametrotipoconsultaReporte))
-            </div>
-            <div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.fechainicioReporte))
-            </div>
-            <div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.fechafinReporte))
-            </div>
-            <div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.modotransaccionReporte))
-            </div>*@
-
             <div class="editor-label col-md-4 control-label"></div>
             <div class="editor-field col-md-8">
                 <br />
@@ -106,7 +90,7 @@
                         </th>
                         <th>Fecha
                         </th>
-                        <th>Tarjeta
+                        <th>Número de Tarjeta
                         </th>
                         <th>Estatus                        
                     </tr>
@@ -125,11 +109,9 @@
                                 @Html.DisplayFor(modelItem => item.Beneficiario.Afiliado.name) @Html.DisplayFor(modelItem => item.Beneficiario.Afiliado.lastname1)
                             </td>
                             <td>
-                                @*@Html.DisplayFor(modelItem => item.fecha.Day)*@
                                 @(String.Format("{0}", item.fecha.ToString("dd/MM/yyyy hh:mm tt")))
                             </td>
                             <td>
-                                @*@Html.DisplayFor(modelItem => item.numerotarjeta)*@
                                 @(String.Format("{0}", Math.Truncate(item.numerotarjeta)))
                             </td>
                             <td>

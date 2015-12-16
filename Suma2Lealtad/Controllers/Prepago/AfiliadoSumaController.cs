@@ -72,7 +72,7 @@ namespace Suma2Lealtad.Controllers.Prepago
         [HttpPost]
         public ActionResult FilterReview(string numdoc, string name, string email, string estadoAfiliacion, string estadoTarjeta)
         {
-            List<AfiliadoSuma> afiliados = repAfiliado.Find(numdoc, name, email, estadoAfiliacion, estadoTarjeta);
+            List<AfiliadoSumaIndex> afiliados = repAfiliado.Find(numdoc, name, email, estadoAfiliacion, estadoTarjeta);
             return View("Index",afiliados);                        
         }
 
@@ -83,10 +83,10 @@ namespace Suma2Lealtad.Controllers.Prepago
         }
 
         [HttpPost]
-        public ActionResult Edit(AfiliadoSuma afiliado)
+        public ActionResult Edit(AfiliadoSuma afiliado, HttpPostedFileBase fileNoValidado)
         {
             ViewModel viewmodel = new ViewModel();
-            if (!repAfiliado.SaveChanges(afiliado))
+            if (!repAfiliado.SaveChanges(afiliado, fileNoValidado))
             {
                 viewmodel.Title = "Afiliado / Revisar Afiliación";
                 viewmodel.Message = "Error de aplicacion: No se pudo actualizar afiliación.";
@@ -106,7 +106,7 @@ namespace Suma2Lealtad.Controllers.Prepago
         public FileContentResult GetImage(int id)
         {
             Photos_Affiliate Photo = repAfiliado.Find(id).picture;
-            if (Photo.photo != null)
+            if (Photo != null)
             {
                 return File(Photo.photo, Photo.photo_type);
             }
@@ -341,10 +341,11 @@ namespace Suma2Lealtad.Controllers.Prepago
         {
             ViewModel viewmodel = new ViewModel();
             AfiliadoSuma afiliado = repAfiliado.Find(id);
-            if (repAfiliado.Acreditar(afiliado, monto))
+            string respuesta = repAfiliado.Acreditar(afiliado, monto);
+            if (respuesta != null)
             {
                 viewmodel.Title = "Afiliado / Acreditar";
-                viewmodel.Message = "Acreditación exitosa";
+                viewmodel.Message = "Acreditación exitosa. Clave de aprobación: " + respuesta;
                 viewmodel.ControllerName = "AfiliadoSuma";
                 viewmodel.ActionName = "FilterReview";
             }

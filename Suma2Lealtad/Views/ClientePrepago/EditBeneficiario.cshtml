@@ -12,10 +12,10 @@
         <div class="panel-body col-md-offset-1 col-md-10">
 
              @{if (Model.type == "Suma"){
-                  @:<form id="commentForm" method="post" action="@Url.Action("EditBeneficiarioSuma", "ClientePrepago")" class="form-horizontal">                         
+                  @:<form id="commentForm" method="post" action="@Url.Action("EditBeneficiarioSuma", "ClientePrepago")" class="form-horizontal" enctype = "multipart/form-data">                         
               }
               else{
-                  @:<form id="commentForm" method="post" action="@Url.Action("EditBeneficiario", "ClientePrepago")" class="form-horizontal">
+                  @:<form id="commentForm" method="post" action="@Url.Action("EditBeneficiario", "ClientePrepago")" class="form-horizontal" enctype = "multipart/form-data">
               }
              }
 
@@ -45,7 +45,7 @@
 
                             @Html.HiddenFor(model => model.id)
                             @Html.HiddenFor(model => model.reasonsid)
-                            @Html.HiddenFor(model => model.statusid)
+                            @Html.HiddenFor(model => model.sumastatusid)
                             @Html.HiddenFor(model => model.clientid)
                             @Html.HiddenFor(model => model.typeid)
                             @Html.HiddenFor(model => model.WebType)
@@ -240,18 +240,40 @@
                         </div>
                         <!--// DATOS BÁSICOS -->
 
-                        <!-- FOTO DEL DOCUMENTO DE IDENTIFICACION -->
                         <div class="tab-pane" id="tab2">
-                            <div class="editor-label col-md-2 control-label">
-                            </div>
-
-                            <div class="editor-field col-md-10">
-                                @*<img src="@Url.Content(@Model.picture)" />*@
-                                <img src="@Url.Action("GetImageBeneficiario", "BeneficiarioPrepago", new { id = Model.id })" />
-                            </div>
+                            @*COLOCAREMOS CODIGO PARA PERMITIR ESCANEAR/ADJUNTAR IMAGEN, OPCIONAL, SI EL AFILIADO NO TIENE IMAGEN EN BD*@
+                            @{
+                                if (Model.picture != null)
+                                {
+                                    @:<div class="editor-label col-md-2 control-label">
+                                    @:</div>
+                                    @:<div class="editor-field col-md-10">
+                                        @:<img src="@Url.Action("GetImage", "AfiliadoSuma", new { id = Model.id })" />
+                                    @:</div>
+                                }
+                                else
+                                {
+                                    @:<div class="editor-label col-md-10 control-label">
+                                        @:<div class="editor-label col-md-10 control-label">
+                                            @:<p class="text-left text-danger">Escanee el documento de identidad, o seleccione el archivo si ya está escaneado.</p>
+                                        @:</div>
+                                    @:</div>
+                                    @:<div class="col-md-12">
+                                        Html.RenderPartial("SilverlightEscaner");
+                                        @:<div class="editor-label col-md-10">
+                                            @:<p class="text-left" id="ElementoControl" style="display: none">ElementoControl</p>
+                                        @:</div>
+                                    @:</div>
+                                    @:<div class="col-md-12 col-btn">
+                                        @:<div id="capaarchivo" class="text-left">
+                                            @:<input id="fileNoValidado" type=file name="fileNoValidado" style="visibility:hidden;position:absolute;top:0;left:0" onchange="ActualizaElementoControl('ElementoControl','Seleccionada', this, '@Model.docnumber')">
+                                            @:<input type="button" value="Seleccione Archivo" class="btn btn-success btn-md" onclick="this.form.fileNoValidado.click()">
+                                            @:<span id="info" style="border: 0px solid black"></span>
+                                        @:</div>
+                                    @:</div>
+                                }                                                       
+                             }
                         </div>
-                        <!-- //FOTO DEL DOCUMENTO DE IDENTIFICACION -->
-
 
                         <!-- DIRECCIÓN -->
                         <div class="tab-pane" id="tab3">
@@ -347,6 +369,18 @@
                                                       Model.channelid),
                                                       new { @class = "form-control" }
                                                       )
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Sucursal de Afiliación:
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.DropDownListFor(m => m.storeid,
+                                new SelectList(Model.StoreOptions,
+                                "id", "sucursal",
+                                Model.StoreOptions), new { @class = "form-control" , @disabled = "disabled" })
+                                @Html.HiddenFor(model => model.storeid)
                             </div>
 
                             <div class="editor-label col-md-4 control-label">
@@ -481,4 +515,34 @@
             $(".Natural").hide();
         }
     }
+
+    //<!-- SECCION PARA VERIFICAR OPERACIONES ESCANER-->
+    function ActualizaElementoControl(ElementoControl, ValorDeControl, InputFile, Docnumber) {
+        var NombreArchivo = InputFile.value.split('\\');
+        var TamañoArchivo = InputFile.files[0].size;
+        if (NombreArchivo[NombreArchivo.length - 1] != Docnumber + ".jpg") {
+            alert("El archivo seleccionado no corresponde con el cliente Número de Documento / Cédula: " + Docnumber);
+            Borracampofile();
+        }
+        else if (TamañoArchivo > 51200) {
+            alert("El tamaño del archivo seleccionado no puede ser mayor a 50 Kb");
+            Borracampofile();
+        }
+        else {
+            document.getElementById(ElementoControl).innerHTML = ValorDeControl;
+            document.getElementById("info").innerHTML = NombreArchivo[NombreArchivo.length - 1];
+        }
+    }
+
+    function Borracampofile() {
+        var textofuncion = "ActualizaElementoControl('ElementoControl', 'Seleccionada', this, '@Model.docnumber')"
+        capa = window.capaarchivo;
+        varHTML = '';
+        capa.innerHTML = varHTML;
+        varHTML += '<input id="fileNoValidado" type=file name="fileNoValidado" style="visibility:hidden;position:absolute;top:0;left:0" onchange="' + textofuncion + '" />';
+        varHTML += '<input type="button" value="Seleccione Archivo" class="btn btn-success btn-md" onclick="this.form.fileNoValidado.click()">'
+        varHTML += '<span id="info" style="border: 0px solid black"></span>'
+        capa.innerHTML = varHTML;
+    }
+    //<!-- FIN SECCION PARA VERIFICAR OPERACIONES --> 
 </script>

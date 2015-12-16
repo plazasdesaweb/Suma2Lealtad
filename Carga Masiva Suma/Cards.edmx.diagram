@@ -8,6 +8,8 @@
         <EntityTypeShape EntityType="CardsModel.Client" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CardsModel.Card" Width="1.5" PointX="6.9144216621827441" PointY="1.4213439381780773" />
         <AssociationConnector Association="CardsModel.FK_CARDS_CLIENTS" />
+        <EntityTypeShape EntityType="CardsModel.Corporation" Width="1.5" PointX="3.375" PointY="3.25" />
+        <AssociationConnector Association="CardsModel.Corporation_Clients" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

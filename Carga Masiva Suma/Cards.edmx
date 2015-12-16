@@ -8,9 +8,19 @@
         <EntityContainer Name="CardsModelStoreContainer">
           <EntitySet Name="Cards" EntityType="CardsModel.Store.Cards" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Clients" EntityType="CardsModel.Store.Clients" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Corporation_Clients" EntityType="CardsModel.Store.Corporation_Clients" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Corporations" EntityType="CardsModel.Store.Corporations" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_CARDS_CLIENTS" Association="CardsModel.Store.FK_CARDS_CLIENTS">
             <End Role="Clients" EntitySet="Clients" />
             <End Role="Cards" EntitySet="Cards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CC_CLIENTS" Association="CardsModel.Store.FK_CC_CLIENTS">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Corporation_Clients" EntitySet="Corporation_Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CC_CORPORATIONS" Association="CardsModel.Store.FK_CC_CORPORATIONS">
+            <End Role="Corporations" EntitySet="Corporations" />
+            <End Role="Corporation_Clients" EntitySet="Corporation_Clients" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Cards">
@@ -50,6 +60,26 @@
           <Property Name="reminder_answer" Type="varchar" MaxLength="150" />
           <Property Name="clientdate" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Corporation_Clients">
+          <Key>
+            <PropertyRef Name="corporationID" />
+            <PropertyRef Name="clientID" />
+          </Key>
+          <Property Name="corporationID" Type="int" Nullable="false" />
+          <Property Name="clientID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Corporations">
+          <Key>
+            <PropertyRef Name="corporationID" />
+          </Key>
+          <Property Name="corporationID" Type="int" Nullable="false" />
+          <Property Name="nname" Type="varchar" MaxLength="50" />
+          <Property Name="address" Type="varchar" MaxLength="80" />
+          <Property Name="phone" Type="varchar" MaxLength="15" />
+          <Property Name="fax" Type="varchar" MaxLength="15" />
+          <Property Name="agentName" Type="varchar" MaxLength="30" />
+          <Property Name="rif" Type="varchar" MaxLength="50" />
+        </EntityType>
         <Association Name="FK_CARDS_CLIENTS">
           <End Role="Clients" Type="CardsModel.Store.Clients" Multiplicity="0..1" />
           <End Role="Cards" Type="CardsModel.Store.Cards" Multiplicity="*" />
@@ -59,6 +89,30 @@
             </Principal>
             <Dependent Role="Cards">
               <PropertyRef Name="clientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CC_CLIENTS">
+          <End Role="Clients" Type="CardsModel.Store.Clients" Multiplicity="1" />
+          <End Role="Corporation_Clients" Type="CardsModel.Store.Corporation_Clients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="clientID" />
+            </Principal>
+            <Dependent Role="Corporation_Clients">
+              <PropertyRef Name="clientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CC_CORPORATIONS">
+          <End Role="Corporations" Type="CardsModel.Store.Corporations" Multiplicity="1" />
+          <End Role="Corporation_Clients" Type="CardsModel.Store.Corporation_Clients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Corporations">
+              <PropertyRef Name="corporationID" />
+            </Principal>
+            <Dependent Role="Corporation_Clients">
+              <PropertyRef Name="corporationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -72,6 +126,11 @@
           <AssociationSet Name="FK_CARDS_CLIENTS" Association="CardsModel.FK_CARDS_CLIENTS">
             <End Role="Client" EntitySet="Clients" />
             <End Role="Card" EntitySet="Cards" />
+          </AssociationSet>
+          <EntitySet Name="Corporations" EntityType="CardsModel.Corporation" />
+          <AssociationSet Name="Corporation_Clients" Association="CardsModel.Corporation_Clients">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Corporation" EntitySet="Corporations" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Client">
@@ -92,6 +151,7 @@
           <Property Name="reminder_answer" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
           <Property Name="clientdate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Cards" Relationship="CardsModel.FK_CARDS_CLIENTS" FromRole="Client" ToRole="Card" />
+          <NavigationProperty Name="Corporations" Relationship="CardsModel.Corporation_Clients" FromRole="Client" ToRole="Corporation" />
         </EntityType>
         <EntityType Name="Card">
           <Key>
@@ -124,6 +184,23 @@
               <PropertyRef Name="clientID" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Corporation">
+          <Key>
+            <PropertyRef Name="corporationID" />
+          </Key>
+          <Property Type="Int32" Name="corporationID" Nullable="false" />
+          <Property Type="String" Name="nname" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="address" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="phone" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="fax" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="agentName" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="rif" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Clients" Relationship="CardsModel.Corporation_Clients" FromRole="Corporation" ToRole="Client" />
+        </EntityType>
+        <Association Name="Corporation_Clients">
+          <End Type="CardsModel.Client" Role="Client" Multiplicity="*" />
+          <End Type="CardsModel.Corporation" Role="Corporation" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -170,6 +247,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Corporations">
+            <EntityTypeMapping TypeName="CardsModel.Corporation">
+              <MappingFragment StoreEntitySet="Corporations">
+                <ScalarProperty Name="rif" ColumnName="rif" />
+                <ScalarProperty Name="agentName" ColumnName="agentName" />
+                <ScalarProperty Name="fax" ColumnName="fax" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="nname" ColumnName="nname" />
+                <ScalarProperty Name="corporationID" ColumnName="corporationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Corporation_Clients" TypeName="CardsModel.Corporation_Clients" StoreEntitySet="Corporation_Clients">
+            <EndProperty Name="Corporation">
+              <ScalarProperty Name="corporationID" ColumnName="corporationID" />
+            </EndProperty>
+            <EndProperty Name="Client">
+              <ScalarProperty Name="clientID" ColumnName="clientID" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -4,15 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e4651b8165f842c6ad365bba15983f5e" Name="Diagram1" ZoomLevel="54">
+      <Diagram DiagramId="e4651b8165f842c6ad365bba15983f5e" Name="Diagram1" ZoomLevel="71">
         <EntityTypeShape EntityType="SumaLealtad.Affiliate" Width="1.5" PointX="5.75" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtad.AffiliateAud" Width="1.5" PointX="3.375" PointY="13.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtad.Auditing" Width="1.5" PointX="14.25" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtad.Channel" Width="1.5" PointX="5.75" PointY="12.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtad.CIUDAD" Width="1.5" PointX="0.875" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtad.CLIENTE" Width="1.5" PointX="12.25" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SumaLealtad.Company" Width="1.5" PointX="22.5" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SumaLealtad.CompanyAffiliate" Width="1.5" PointX="22.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtad.Company" Width="1.5" PointX="20.5" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SumaLealtad.CompanyAffiliate" Width="1.5" PointX="20.5" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtad.CreditLimit" Width="1.5" PointX="10" PointY="10.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtad.CustomerInterest" Width="1.5" PointX="3.375" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtad.ESTADO" Width="1.5" PointX="0.875" PointY="4.25" IsExpanded="true" />
@@ -35,7 +35,6 @@
         <EntityTypeShape EntityType="SumaLealtad.Role" Width="1.5" PointX="18.5" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtad.SecurityLevel" Width="1.5" PointX="18.625" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtad.SecurityMenu" Width="1.5" PointX="16.25" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SumaLealtad.Status" Width="1.5" PointX="22.5" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtad.sysdiagram" Width="1.5" PointX="10.875" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtad.TARJETA" Width="1.5" PointX="17.875" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtad.Type" Width="1.5" PointX="3.375" PointY="6.375" IsExpanded="true" />

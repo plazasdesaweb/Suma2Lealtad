@@ -12,9 +12,21 @@ namespace Carga_Masiva_Suma
     using System;
     using System.Collections.Generic;
     
-    public partial class Status
+    public partial class Corporation
     {
-        public int id { get; set; }
-        public string name { get; set; }
+        public Corporation()
+        {
+            this.Clients = new HashSet<Client>();
+        }
+    
+        public int corporationID { get; set; }
+        public string nname { get; set; }
+        public string address { get; set; }
+        public string phone { get; set; }
+        public string fax { get; set; }
+        public string agentName { get; set; }
+        public string rif { get; set; }
+    
+        public virtual ICollection<Client> Clients { get; set; }
     }
 }

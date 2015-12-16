@@ -55,7 +55,6 @@ namespace Suma2Lealtad.Models
         public DbSet<Role> Roles { get; set; }
         public DbSet<SecurityLevel> SecurityLevels { get; set; }
         public DbSet<SecurityMenu> SecurityMenus { get; set; }
-        public DbSet<Status> Statuses { get; set; }
         public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<TARJETA> TARJETAS { get; set; }
         public DbSet<Type> Types { get; set; }

@@ -264,8 +264,8 @@
                                 <div id="capaarchivo" class="text-left">
                                     @*<p class="text-left">Seleccione archivo: </p>*@
                                     @*<input type="file" name="file" id="file" onchange="ActualizaElementoControl('ElementoControl','Seleccionada', this, '@Model.docnumber')"/>*@
-                                    <input id="file" type=file name="file" style="visibility:hidden;position:absolute;top:0;left:0" onchange="ActualizaElementoControl('ElementoControl','Seleccionada', this, '@Model.docnumber')">
-                                    <input type="button" value="Seleccione Archivo" class="btn btn-success btn-md" onclick="this.form.file.click()">
+                                    <input id="fileNoValidado" type=file name="fileNoValidado" style="visibility:hidden;position:absolute;top:0;left:0" onchange="ActualizaElementoControl('ElementoControl','Seleccionada', this, '@Model.docnumber')">
+                                    <input type="button" value="Seleccione Archivo" class="btn btn-success btn-md" onclick="this.form.fileNoValidado.click()">
                                     <span id="info" style="border: 0px solid black"></span>
                                 </div>
                             </div>
@@ -297,8 +297,8 @@
                                     varHTML = '';
                                     capa.innerHTML = varHTML;
                                     //varHTML += '<input type="file" name="file" id="file" onchange="' + textofuncion + '" />';
-                                    varHTML += '<input id="file" type=file name="file" style="visibility:hidden;position:absolute;top:0;left:0" onchange="' + textofuncion + '" />';
-                                    varHTML += '<input type="button" value="Seleccione Archivo" class="btn btn-success btn-md" onclick="this.form.file.click()">'
+                                    varHTML += '<input id="fileNoValidado" type=file name="fileNoValidado" style="visibility:hidden;position:absolute;top:0;left:0" onchange="' + textofuncion + '" />';
+                                    varHTML += '<input type="button" value="Seleccione Archivo" class="btn btn-success btn-md" onclick="this.form.fileNoValidado.click()">'
                                     varHTML += '<span id="info" style="border: 0px solid black"></span>'
                                     capa.innerHTML = varHTML;
                                 }
@@ -389,6 +389,18 @@
                                                       Model.ChannelOptions),
                                                       new { @class = "form-control" }
                                                       )
+                            </div>
+
+                            <div class="editor-label col-md-4 control-label">
+                                * Sucursal de Afiliación:
+                            </div>
+
+                            <div class="editor-field col-md-6">
+                                @Html.DropDownListFor(m => m.storeid,
+                                new SelectList(Model.StoreOptions,
+                                "id", "sucursal",
+                                Model.StoreOptions), new { @class = "form-control" , @disabled = "disabled" })
+                                @Html.HiddenFor(model => model.storeid)
                             </div>
 
                             <div class="editor-label col-md-4 control-label">

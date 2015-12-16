@@ -39,7 +39,6 @@
         <EntityTypeShape EntityType="SumaLealtadModel.Role" Width="1.5" PointX="16.75" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtadModel.SecurityLevel" Width="1.5" PointX="16.75" PointY="13.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtadModel.SecurityMenu" Width="1.5" PointX="16.75" PointY="16.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SumaLealtadModel.Status" Width="1.5" PointX="5.75" PointY="17.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtadModel.SumaStatus" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtadModel.sysdiagram" Width="1.5" PointX="18.75" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SumaLealtadModel.TARJETA" Width="1.5" PointX="18.75" PointY="3.875" IsExpanded="true" />

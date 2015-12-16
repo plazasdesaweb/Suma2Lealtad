@@ -15,7 +15,7 @@
     }
 
     .table tbody tr.active td {
-        background-color: #1C2B2B; /*#476B6B #29A329;*/
+        background-color: #5e8262; /*#476B6B #29A329;*/
         color: white;
     }
 </style>
@@ -182,9 +182,14 @@
         ValidarMontos()
     });
 
-    var Myinterval = setInterval(function () {
-        ValidarMontos()
-    }, 500);
+    //var Myinterval = setInterval(function () {
+    //    ValidarMontos()
+    //}, 500);
+
+    $(".Monto").on("input", function () {
+        //alert("Change to " + this.value);
+        ValidarMontos();
+    });
 
     function ValidarMontos() {
         var TotalRecargas = 0;
@@ -214,10 +219,11 @@
                                     spanMessage('field_' + idrow, '* Monto invalido (' + campo3 + ')');
                                     resultado = false;
                                 }
-                                else if (campo3 > parseFloat("5000")) {
-                                    spanMessage('field_' + idrow, '* El monto excede el valor máximo permitido (5000)');
-                                    resultado = false;
-                                }
+                                //PARA VERIFICAR PARAMETROS ESTABLECIDOS - UNA VEZ SE DEFINA EL ESQUEMA
+                                //else if (campo3 > parseFloat("5000")) {
+                                //    spanMessage('field_' + idrow, '* El monto excede el valor máximo permitido (5000)');
+                                //    resultado = false;
+                                //}
                                 TotalRecargas = TotalRecargas + 1;
                                 MontoTotalRecargas = MontoTotalRecargas + campo3;
                             } else {
@@ -254,7 +260,7 @@
             alert("Hay campos invalidos, verifique.");
             return false;
         }
-        if (document.getElementById('MontoTotalRecargas').value == 0) {
+        if (document.getElementById('MontoTotalRecargas').value.toString() == "0,00") {
             alert("Debe incluir al menos un benficiario de recarga.");
             return false;
         }

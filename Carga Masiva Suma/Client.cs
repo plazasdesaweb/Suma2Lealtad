@@ -17,6 +17,7 @@ namespace Carga_Masiva_Suma
         public Client()
         {
             this.Cards = new HashSet<Card>();
+            this.Corporations = new HashSet<Corporation>();
         }
     
         public int clientID { get; set; }
@@ -34,5 +35,6 @@ namespace Carga_Masiva_Suma
         public System.DateTime clientdate { get; set; }
     
         public virtual ICollection<Card> Cards { get; set; }
+        public virtual ICollection<Corporation> Corporations { get; set; }
     }
 }

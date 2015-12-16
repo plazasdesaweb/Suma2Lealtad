@@ -110,81 +110,27 @@
     <br />
 </div>
 
-@*<div class="editor-label col-md-4 control-label">
-                <br />
-            </div>
-
-            <div class="editor-field col-md-8">
-                <br />
-            </div>
-
-            <div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.nombreReporte))
-            </div>
-            <div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.tipoconsultaReporte))
-            </div>
-            <div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.parametrotipoconsultaReporte))
-            </div>
-            <div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.fechainicioReporte))
-            </div>
-            <div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.fechafinReporte))
-            </div>
-            <div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.modotransaccionReporte))
-            </div>
-
-            <div class="editor-label col-md-4 control-label"></div>
-            <div class="editor-field col-md-8">
-                <br />
-            </div>*@
-
-<table>
+<table id="detalleReporte" class="table table-striped custab">
+    
     <thead>
         <tr>
-            <th>Nombre
+            <th>Afiliado
             </th>
             <th>Fecha
+            </th>
+            <th>Referencia
+            </th>
+            <th>Descripción
             </th>
             <th>Número de Tarjeta
             </th>
             <th>Monto
             </th>
-            <th>Descripción
-            </th>
             <th>Tipo de Transacción
             </th>
         </tr>
     </thead>
-    @*<tbody style="font-size: 12px">
-        <tr>
-            <td>   
-                @(String.Format("{0}", "---------------------------------"))           
-            </td>
-            <td>     
-                @(String.Format("{0}", "-------------------------------"))             
-            </td>
-            <td>   
-                @(String.Format("{0}", "-------------"))               
-            </td>
-            <td>    
-                @(String.Format("{0}", "-----------"))              
-            </td>
-            <td>   
-                @(String.Format("{0}", "-----------------------------------------------------------"))               
-            </td>
-            <td>     
-                @(String.Format("{0}", "--------------------"))             
-            </td>
-        </tr>
-    </tbody>*@
-</table>
 
-<table id="detalleReporte" class="table table-striped custab">
-    @*<table id="detalleReporte">*@
     <tbody style="font-size: 12px">
         @if (Model.Count() != 0)
         {
@@ -197,17 +143,19 @@
                     @Html.DisplayFor(modelItem => item.Afiliado.name) @Html.DisplayFor(modelItem => item.Afiliado.lastname1)
                 </td>
                 <td>
-                    @*@Html.DisplayFor(modelItem => item.fecha.Day)*@
                     @(String.Format("{0}", item.fecha.ToString("dd/MM/yyyy hh:mm tt")))
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.numerotarjeta)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.monto)
+                    @(String.Format("{0}", "------"))
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.detalle)
+                </td>
+                <td>
+                    @(String.Format("{0}", Math.Truncate(item.numerotarjeta)))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.monto)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.tipo)
@@ -227,11 +175,3 @@
     Monto Total Transacciones : @MontoTotalTransacciones
 </div>
 
-
-@*</div>
-        <!-- panel-body -->
-
-</div>
-    <!-- panel -->
-
-</div>*@

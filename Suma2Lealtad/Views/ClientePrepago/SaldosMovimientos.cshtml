@@ -16,7 +16,7 @@
     }
 
     .table tbody tr.active td {
-        background-color: #1C2B2B; /*#476B6B #29A329;*/
+        background-color: #5e8262; /*#476B6B #29A329;*/
         color: white;
     }
 </style>
@@ -129,7 +129,14 @@
                                 @Html.DisplayFor(modelItem => item.accountnumber)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.saldo)
+                                @if (item.accounttype == "5")
+                                {
+                                    @Html.DisplayFor(modelItem => item.saldo)                                    
+                                }
+                                else
+                                {
+                                    @(String.Format("{0}", Math.Truncate(item.saldo)))
+                                }
                             </td>
                             <td>
                                 @if (item.accounttype == "5")
@@ -179,6 +186,8 @@
                     <tr>
                         <th>Fecha
                         </th>
+                        <th>Referencia
+                        </th>
                         <th>Descripción
                         </th>
                         <th>Número de Tarjeta
@@ -197,6 +206,9 @@
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.fecha)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.batchid)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.isodescription)
@@ -249,11 +261,13 @@
                     <tr>
                         <th>Fecha 
                         </th>
+                        <th>Referencia 
+                        </th>
                         <th>Descripción
                         </th>
                         <th>Número de Tarjeta
                         </th>
-                        <th>Puntos
+                        <th>Monto
                         </th>
                         <th>Tipo de Transacción
                         </th>
@@ -270,13 +284,16 @@
                                 @Html.DisplayFor(modelItem => item.fecha)
                             </td>
                             <td>
+                                @Html.DisplayFor(modelItem => item.batchid)
+                            </td>
+                            <td>
                                 @Html.DisplayFor(modelItem => item.isodescription)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.pan)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.puntos)
+                                @(String.Format("{0}", Math.Truncate(item.saldo)))
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.transcode)-@Html.DisplayFor(modelItem => item.transname)

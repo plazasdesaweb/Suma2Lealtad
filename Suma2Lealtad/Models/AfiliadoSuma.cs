@@ -15,7 +15,7 @@ namespace Suma2Lealtad.Models
         public int typeid { get; set; }                 // id de Tipo de Afiliación
         public string typedelivery { get; set; }        // Tipo de Envío de WEBPLAZAS
         public int? storeiddelivery { get; set; }       // id Sucursal de Envío DE WEBPLAZAS
-        public int statusid { get; set; }               // id de Estatus de Afiliación
+        public int sumastatusid { get; set; }           // id de Estatus de Afiliación en Sumastatus
         public int? reasonsid { get; set; }             // id de Razon de Cambio de Estatus
         public string twitter_account { get; set; }     // cuenta de Twitter
         public string facebook_account { get; set; }    // cuenta de Facebook
@@ -52,6 +52,7 @@ namespace Suma2Lealtad.Models
         public string printed { get; set; }             // Fecha de Impresión de la Tarjeta
         public string trackI { get; set; }              // TrackI de la Tarjeta
         public string trackII { get; set; }             // TrackII de la Tarjeta
+        public string cvv2 { get; set; }                // CVV2 de la Tarjeta
         //ENTIDAD Photos_Affiliate 
         public Photos_Affiliate picture { get; set; }   // imagen del Documento de Identificación del Afiliado
         //Campos extras que no se almacenan en Entidades
@@ -138,6 +139,7 @@ namespace Suma2Lealtad.Models
             new List<Store>
         {
             new Store {id = null, sucursal = ""                 },
+            new Store {id = "1001", sucursal = "Sede Principal Baruta"  },
             new Store {id = "1002", sucursal = "Prados del Este"  },
             new Store {id = "1003", sucursal = "Cafetal"          },
             new Store {id = "1005", sucursal = "Los Samanes"      },

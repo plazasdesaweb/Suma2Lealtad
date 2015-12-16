@@ -11,11 +11,18 @@ namespace SumaPlazas.Dispositivos.PinPad
         //valores para la demora delos Workers
         private int demora = 500;
 
+        //parámetros para la impresión
+        string ci;
+        string cvv2;
+
         //se escribira en este elemento Htlml "Pin creado", "Pin cambiado", "Pin reiniciado", "No realizado"
         HtmlElement ElementoHtmlControl;
 
-        public MainPage(string idElementoHtmlControl)
+        public MainPage(string CI, string CVV2, string idElementoHtmlControl)
         {
+            ci = CI;
+            cvv2 = CVV2;
+
             ElementoHtmlControl = HtmlPage.Document.GetElementById(idElementoHtmlControl);
 
             if (ElementoHtmlControl == null)
@@ -66,7 +73,7 @@ namespace SumaPlazas.Dispositivos.PinPad
         private void w_RunWorkerCompletedCrearPin(object sender, RunWorkerCompletedEventArgs e)
         {
             Vpos Vpos = new Vpos();
-            string Resultado = Vpos.CrearPin();
+            string Resultado = Vpos.CrearPin(ci,cvv2);
             listBox1.Items.Add("Pinpad desactivado.");
             listBox1.SelectedIndex = listBox1.Items.Count - 1;
             string[] ArrResultado = Resultado.Split(',');
@@ -121,7 +128,7 @@ namespace SumaPlazas.Dispositivos.PinPad
         private void w_RunWorkerCompletedCambiarPin(object sender, RunWorkerCompletedEventArgs e)
         {
             Vpos Vpos = new Vpos();
-            string Resultado = Vpos.CambiarPin();
+            string Resultado = Vpos.CambiarPin(ci, cvv2);
             string[] ArrResultado = Resultado.Split(',');
             if (ArrResultado[0] != "00")
             {
@@ -174,7 +181,7 @@ namespace SumaPlazas.Dispositivos.PinPad
         private void w_RunWorkerCompletedReiniciarPin(object sender, RunWorkerCompletedEventArgs e)
         {
             Vpos Vpos = new Vpos();
-            string Resultado = Vpos.ReiniciarPin();
+            string Resultado = Vpos.ReiniciarPin(ci, cvv2);
             string[] ArrResultado = Resultado.Split(',');
             if (ArrResultado[0] != "00")
             {

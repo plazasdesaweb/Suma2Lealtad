@@ -8,7 +8,7 @@ namespace Suma2Lealtad.Models
     public class ReportePrepago
     {
         public EncabezadoReporte Encabezado { get; set; }
-        public BeneficiarioPrepago Beneficiario { get; set; }
+        public BeneficiarioPrepagoIndex Beneficiario { get; set; }
         public DateTime fecha { get; set; }
         public Decimal monto { get; set; }        
         public string comentario { get; set; }

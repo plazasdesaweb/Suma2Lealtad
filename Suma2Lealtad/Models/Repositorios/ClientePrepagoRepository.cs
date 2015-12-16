@@ -62,7 +62,7 @@ namespace Suma2Lealtad.Models
                                     rifCliente = c.rif,
                                     phoneCliente = c.phone,
                                     emailCliente = c.email
-                                }).OrderBy(x => x.rifCliente).ToList();
+                                }).OrderBy(x => x.nameCliente).ToList();
                 }
                 else
                 {
@@ -76,7 +76,7 @@ namespace Suma2Lealtad.Models
                                     rifCliente = c.rif,
                                     phoneCliente = c.phone,
                                     emailCliente = c.email
-                                }).OrderBy(x => x.rifCliente).ToList();
+                                }).OrderBy(x => x.nameCliente).ToList();
                 }
             }
             return clientes;
@@ -123,6 +123,325 @@ namespace Suma2Lealtad.Models
                            }).FirstOrDefault();
                 return cliente;
             }
+        }
+
+        public List<BeneficiarioPrepagoIndex> FindBeneficiarios(int id, string numdoc, string name, string email, string estadoAfiliacion, string estadoTarjeta)
+        {
+            List<BeneficiarioPrepagoIndex> beneficiarios = new List<BeneficiarioPrepagoIndex>();
+            using (LealtadEntities db = new LealtadEntities())
+            {
+                if (numdoc == "")
+                {
+                    numdoc = null;
+                }
+                if (name == "")
+                {
+                    name = null;
+                }
+                if (email == "")
+                {
+                    email = null;
+                }
+                if (estadoAfiliacion == "")
+                {
+                    estadoAfiliacion = null;
+                }
+                if (estadoTarjeta == "")
+                {
+                    estadoTarjeta = null;
+                }
+                //BUSCAR POR ESTADO DE TARJETA
+                if (estadoTarjeta != null)
+                {
+                    var query = (from t in db.TARJETAS
+                                 where t.ESTATUS_TARJETA.Equals(estadoTarjeta)
+                                 join a in db.Affiliates on t.NRO_AFILIACION equals a.id
+                                 join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid
+                                 where b.prepaidcustomerid.Equals(id)
+                                 join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                 select new
+                                 {
+                                     pan = t.NRO_TARJETA,
+                                     estatustarjeta = t.ESTATUS_TARJETA,
+                                     id = t.NRO_AFILIACION,
+                                     docnumber = a.docnumber,
+                                     typeid = a.typeid,
+                                     sumastatusid = a.sumastatusid,
+                                     idCliente = b.prepaidcustomerid,
+                                     name = c.NOMBRE_CLIENTE1,
+                                     lastname1 = c.APELLIDO_CLIENTE1,
+                                     email = c.E_MAIL
+                                 }).OrderBy(d => d.docnumber);
+                    beneficiarios = (from q in query.AsEnumerable()
+                                     join p in db.PrepaidCustomers on q.idCliente equals p.id
+                                     join s in db.SumaStatuses on q.sumastatusid equals s.id
+                                     join ty in db.Types on q.typeid equals ty.id
+                                     select new BeneficiarioPrepagoIndex
+                                     {
+                                         Afiliado = new AfiliadoSumaIndex
+                                         {
+                                             //ENTIDAD Affiliate 
+                                             id = q.id,
+                                             docnumber = q.docnumber,
+                                             typeid = q.typeid,
+                                             //ENTIDAD CLIENTE
+                                             name = q.name,
+                                             lastname1 = q.lastname1,
+                                             email = q.email,
+                                             //ENTIDAD SumaStatuses
+                                             estatus = s.name,
+                                             //ENTIDAD Type
+                                             type = ty.name,
+                                             //ENTIDAD TARJETA
+                                             pan = q.pan.ToString(),
+                                             estatustarjeta = q.estatustarjeta
+                                         },
+                                         Cliente = new ClientePrepago
+                                         {
+                                             idCliente = p.id,
+                                             nameCliente = p.name,
+                                             aliasCliente = p.alias,
+                                             rifCliente = p.rif,
+                                             addressCliente = p.address,
+                                             phoneCliente = p.phone,
+                                             emailCliente = p.email
+                                         }
+                                     }).OrderBy(n => n.Cliente.nameCliente).OrderBy(x => x.Afiliado.docnumber).ToList();
+                }
+                //BUSCAR POR ESTADO DE AFILIACION
+                else if (estadoAfiliacion != null)
+                {
+                    var query = (from a in db.Affiliates
+                                 where a.SumaStatu.name.Equals(estadoAfiliacion)
+                                 join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid
+                                 where b.prepaidcustomerid.Equals(id)
+                                 join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION
+                                 select new
+                                 {
+                                     pan = t.NRO_TARJETA,
+                                     estatustarjeta = t.ESTATUS_TARJETA,
+                                     id = t.NRO_AFILIACION,
+                                     docnumber = a.docnumber,
+                                     typeid = a.typeid,
+                                     sumastatusid = a.sumastatusid,
+                                     idCliente = b.prepaidcustomerid,
+                                     name = c.NOMBRE_CLIENTE1,
+                                     lastname1 = c.APELLIDO_CLIENTE1,
+                                     email = c.E_MAIL
+                                 }).OrderBy(d => d.docnumber);
+                    beneficiarios = (from q in query.AsEnumerable()
+                                     join p in db.PrepaidCustomers on q.idCliente equals p.id
+                                     join s in db.SumaStatuses on q.sumastatusid equals s.id
+                                     join ty in db.Types on q.typeid equals ty.id
+                                     select new BeneficiarioPrepagoIndex
+                                     {
+                                         Afiliado = new AfiliadoSumaIndex
+                                         {
+                                             //ENTIDAD Affiliate 
+                                             id = q.id,
+                                             docnumber = q.docnumber,
+                                             typeid = q.typeid,
+                                             //ENTIDAD CLIENTE
+                                             name = q.name,
+                                             lastname1 = q.lastname1,
+                                             email = q.email,
+                                             //ENTIDAD SumaStatuses
+                                             estatus = s.name,
+                                             //ENTIDAD Type
+                                             type = ty.name,
+                                             //ENTIDAD TARJETA
+                                             pan = q.pan.ToString(),
+                                             estatustarjeta = q.estatustarjeta
+                                         },
+                                         Cliente = new ClientePrepago
+                                         {
+                                             idCliente = p.id,
+                                             nameCliente = p.name,
+                                             aliasCliente = p.alias,
+                                             rifCliente = p.rif,
+                                             addressCliente = p.address,
+                                             phoneCliente = p.phone,
+                                             emailCliente = p.email
+                                         }
+                                     }).OrderBy(n => n.Cliente.nameCliente).OrderBy(x => x.Afiliado.docnumber).ToList();
+
+                }
+                //BUSCAR POR NUMERO DE DOCUMENTO
+                else if (numdoc != null)
+                {
+                    var query = (from a in db.Affiliates
+                                 where a.docnumber.Equals(numdoc)
+                                 join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid
+                                 where b.prepaidcustomerid.Equals(id)
+                                 join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION
+                                 select new
+                                 {
+                                     pan = t.NRO_TARJETA,
+                                     estatustarjeta = t.ESTATUS_TARJETA,
+                                     id = t.NRO_AFILIACION,
+                                     docnumber = a.docnumber,
+                                     typeid = a.typeid,
+                                     sumastatusid = a.sumastatusid,
+                                     idCliente = b.prepaidcustomerid,
+                                     name = c.NOMBRE_CLIENTE1,
+                                     lastname1 = c.APELLIDO_CLIENTE1,
+                                     email = c.E_MAIL
+                                 }).OrderBy(d => d.docnumber);
+                    beneficiarios = (from q in query.AsEnumerable()
+                                     join p in db.PrepaidCustomers on q.idCliente equals p.id
+                                     join s in db.SumaStatuses on q.sumastatusid equals s.id
+                                     join ty in db.Types on q.typeid equals ty.id
+                                     select new BeneficiarioPrepagoIndex
+                                     {
+                                         Afiliado = new AfiliadoSumaIndex
+                                         {
+                                             //ENTIDAD Affiliate 
+                                             id = q.id,
+                                             docnumber = q.docnumber,
+                                             typeid = q.typeid,
+                                             //ENTIDAD CLIENTE
+                                             name = q.name,
+                                             lastname1 = q.lastname1,
+                                             email = q.email,
+                                             //ENTIDAD SumaStatuses
+                                             estatus = s.name,
+                                             //ENTIDAD Type
+                                             type = ty.name,
+                                             //ENTIDAD TARJETA
+                                             pan = q.pan.ToString(),
+                                             estatustarjeta = q.estatustarjeta
+                                         },
+                                         Cliente = new ClientePrepago
+                                         {
+                                             idCliente = p.id,
+                                             nameCliente = p.name,
+                                             aliasCliente = p.alias,
+                                             rifCliente = p.rif,
+                                             addressCliente = p.address,
+                                             phoneCliente = p.phone,
+                                             emailCliente = p.email
+                                         }
+                                     }).OrderBy(n => n.Cliente.nameCliente).OrderBy(x => x.Afiliado.docnumber).ToList();
+                }
+                //BUSCAR POR NOMBRE O CORREO
+                else if (name != null || email != null)
+                {
+                    var query = (from a in db.Affiliates
+                                 join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid
+                                 where b.prepaidcustomerid.Equals(id)
+                                 join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                 where (c.NOMBRE_CLIENTE1.Contains(name) || c.APELLIDO_CLIENTE1.Contains(name) || c.E_MAIL.Equals(email))
+                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION
+                                 select new
+                                 {
+                                     pan = t.NRO_TARJETA,
+                                     estatustarjeta = t.ESTATUS_TARJETA,
+                                     id = t.NRO_AFILIACION,
+                                     docnumber = a.docnumber,
+                                     typeid = a.typeid,
+                                     sumastatusid = a.sumastatusid,
+                                     idCliente = b.prepaidcustomerid,
+                                     name = c.NOMBRE_CLIENTE1,
+                                     lastname1 = c.APELLIDO_CLIENTE1,
+                                     email = c.E_MAIL
+                                 }).OrderBy(d => d.docnumber);
+                    beneficiarios = (from q in query.AsEnumerable()
+                                     join p in db.PrepaidCustomers on q.idCliente equals p.id
+                                     join s in db.SumaStatuses on q.sumastatusid equals s.id
+                                     join ty in db.Types on q.typeid equals ty.id
+                                     select new BeneficiarioPrepagoIndex
+                                     {
+                                         Afiliado = new AfiliadoSumaIndex
+                                         {
+                                             //ENTIDAD Affiliate 
+                                             id = q.id,
+                                             docnumber = q.docnumber,
+                                             typeid = q.typeid,
+                                             //ENTIDAD CLIENTE
+                                             name = q.name,
+                                             lastname1 = q.lastname1,
+                                             email = q.email,
+                                             //ENTIDAD SumaStatuses
+                                             estatus = s.name,
+                                             //ENTIDAD Type
+                                             type = ty.name,
+                                             //ENTIDAD TARJETA
+                                             pan = q.pan.ToString(),
+                                             estatustarjeta = q.estatustarjeta
+                                         },
+                                         Cliente = new ClientePrepago
+                                         {
+                                             idCliente = p.id,
+                                             nameCliente = p.name,
+                                             aliasCliente = p.alias,
+                                             rifCliente = p.rif,
+                                             addressCliente = p.address,
+                                             phoneCliente = p.phone,
+                                             emailCliente = p.email
+                                         }
+                                     }).OrderBy(n => n.Cliente.nameCliente).OrderBy(x => x.Afiliado.docnumber).ToList();
+                }
+                //BUSCAR TODOS
+                else if (numdoc == null && name == null && email == null && estadoAfiliacion == null && estadoTarjeta == null)
+                {
+                    var query = (from a in db.Affiliates
+                                 join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid
+                                 where b.prepaidcustomerid.Equals(id)
+                                 join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
+                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION
+                                 select new
+                                 {
+                                     pan = t.NRO_TARJETA,
+                                     estatustarjeta = t.ESTATUS_TARJETA,
+                                     id = t.NRO_AFILIACION,
+                                     docnumber = a.docnumber,
+                                     typeid = a.typeid,
+                                     sumastatusid = a.sumastatusid,
+                                     idCliente = b.prepaidcustomerid,
+                                     name = c.NOMBRE_CLIENTE1,
+                                     lastname1 = c.APELLIDO_CLIENTE1,
+                                     email = c.E_MAIL
+                                 }).OrderBy(d => d.docnumber);
+                    beneficiarios = (from q in query.AsEnumerable()
+                                     join p in db.PrepaidCustomers on q.idCliente equals p.id
+                                     join s in db.SumaStatuses on q.sumastatusid equals s.id
+                                     join ty in db.Types on q.typeid equals ty.id
+                                     select new BeneficiarioPrepagoIndex
+                                     {
+                                         Afiliado = new AfiliadoSumaIndex
+                                         {
+                                             //ENTIDAD Affiliate 
+                                             id = q.id,
+                                             docnumber = q.docnumber,
+                                             typeid = q.typeid,
+                                             //ENTIDAD CLIENTE
+                                             name = q.name,
+                                             lastname1 = q.lastname1,
+                                             email = q.email,
+                                             //ENTIDAD SumaStatuses
+                                             estatus = s.name,
+                                             //ENTIDAD Type
+                                             type = ty.name,
+                                             //ENTIDAD TARJETA
+                                             pan = q.pan.ToString(),
+                                             estatustarjeta = q.estatustarjeta
+                                         },
+                                         Cliente = new ClientePrepago
+                                         {
+                                             idCliente = p.id,
+                                             nameCliente = p.name,
+                                             aliasCliente = p.alias,
+                                             rifCliente = p.rif,
+                                             addressCliente = p.address,
+                                             phoneCliente = p.phone,
+                                             emailCliente = p.email
+                                         }
+                                     }).OrderBy(n => n.Cliente.nameCliente).OrderBy(x => x.Afiliado.docnumber).ToList();
+                }
+            }
+            return beneficiarios;
         }
 
         public bool Save(ClientePrepago cliente)

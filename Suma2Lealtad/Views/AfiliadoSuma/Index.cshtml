@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Suma2Lealtad.Models.AfiliadoSuma>
+﻿@model IEnumerable<Suma2Lealtad.Models.AfiliadoSumaIndex>
 @{
     ViewBag.Title = "IndexBeneficiarios";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,7 +15,7 @@
     }
 
     .table tbody tr.active td {
-        background-color: #1C2B2B; /*#476B6B #29A329;*/
+        background-color: #5e8262; /*#476B6B #29A329;*/
         color: white;
     }
 </style>
@@ -118,7 +118,7 @@
                     <a id="Acreditar" class="btn btn-success btn-md" role="button">Acreditar</a>
                 </div>
                 <div class="pull-right">
-                    <a href="@Url.Action("Filter", "AfiliadoSuma")" class="btn btn-success btn-md">Agregar Nuevo Beneficiario</a>
+                    <a href="@Url.Action("Filter", "AfiliadoSuma")" class="btn btn-success btn-md">Agregar Nuevo Afiliado</a>
                     <a href="@Url.Action("FilterReview", "AfiliadoSuma")" class="btn btn-danger btn-md">Regresar</a>
                 </div>
             </div>
@@ -188,7 +188,7 @@
             }
             $("#SuspenderTarjeta").show();
             $("#SaldosMovimientos").show();
-            $("#Acreditar").show();
+            //$("#Acreditar").show();
         }
         else if (statusAfiliacion == "Activa" && statusTarjeta == "Suspendida") {
             $("#CrearPin").show();

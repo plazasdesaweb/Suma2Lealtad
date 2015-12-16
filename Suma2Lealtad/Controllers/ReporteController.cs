@@ -139,7 +139,7 @@ namespace Suma2Lealtad.Controllers
             {
                 if (idCliente == 0)
                 {
-                    reporte = repBeneficiario.ReporteRecargasxCliente("todos", fechadesde, fechahasta,0,Referencia);
+                    reporte = repBeneficiario.ReporteRecargasxCliente("todos", fechadesde, fechahasta, 0, Referencia);
                 }
                 else
                 {
@@ -164,7 +164,7 @@ namespace Suma2Lealtad.Controllers
                 fechahasta = fechahasta,
                 idCliente = idCliente,
                 numdoc = numdoc,
-                referencia = Referencia                
+                referencia = Referencia
             };
             if (reporte.Count == 0)
             {
@@ -296,7 +296,7 @@ namespace Suma2Lealtad.Controllers
                 CustomSwitches = footer
             };
         }
-        
+
         [HttpPost]
         public ActionResult ReporteTransacciones(string TipoTransaccion, string fechadesde, string fechahasta, string numdoc = "")
         {

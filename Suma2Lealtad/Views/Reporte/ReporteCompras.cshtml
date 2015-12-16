@@ -75,22 +75,6 @@
                 @Html.TextBoxFor(model => model.First().Encabezado.modotransaccionReporte, new { @class = "form-control", @readonly = "true" })
             </div>
 
-            @*<div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.tipoconsultaReporte))
-            </div>
-            <div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.parametrotipoconsultaReporte))
-            </div>
-            <div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.fechainicioReporte))
-            </div>
-            <div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.fechafinReporte))
-            </div>
-            <div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.modotransaccionReporte))
-            </div>*@
-
             <div class="editor-label col-md-4 control-label"></div>
             <div class="editor-field col-md-8">
                 <br />
@@ -106,11 +90,15 @@
                         </th>
                         <th>Fecha
                         </th>
+                        <th>Referencia
+                        </th>
+                        <th>Descripción
+                        </th>
+                        <th>Número de Tarjeta
+                        </th>
                         <th>Monto
-                        </th>
-                        <th>Detalle
-                        </th>
-                        <th>Tipo
+                        </th>                        
+                        <th>Tipo de Transacción
                         </th>
                     </tr>
                 </thead>
@@ -128,15 +116,20 @@
                                 @Html.DisplayFor(modelItem => item.Beneficiario.Afiliado.name) @Html.DisplayFor(modelItem => item.Beneficiario.Afiliado.lastname1)
                             </td>
                             <td>
-                                @*@Html.DisplayFor(modelItem => item.fecha.Day)*@
                                 @(String.Format("{0}", item.fecha.ToString("dd/MM/yyyy hh:mm tt")))
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.monto)
+                                @(String.Format("{0}", "------"))
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.detalle)
                             </td>
+                            <td>
+                                @(String.Format("{0}", Math.Truncate(item.numerotarjeta)))
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.monto)
+                            </td>                            
                             <td>
                                 @Html.DisplayFor(modelItem => item.tipo)
                             </td>
@@ -200,14 +193,14 @@
         var TotalTransacciones = 0;       
         var MontoTotalTransacciones = parseFloat("0");
         $("#detalleReporte tbody tr").each(function (index) {
-            var campo3 = 0;
+            var campo7 = 0;
             var temp;
             $(this).children("td").each(function (index2) {
                 switch (index2) {
-                    case 3:
+                    case 6:
                         temp = $(this).text();
                         temp = temp.replace(",", ".");
-                        campo3 = parseFloat(temp);
+                        campo7 = parseFloat(temp);
                         break;
                     //case 3:
                     //    campo4 = $.trim($(this).text());
@@ -221,7 +214,7 @@
             });
             //if (campo4 != "Excluido") {
             TotalTransacciones = TotalTransacciones + 1;
-            MontoTotalTransacciones = MontoTotalTransacciones + campo3;
+            MontoTotalTransacciones = MontoTotalTransacciones + campo7;
             //}
         });
         @*if (TotalRecargas == 0) {

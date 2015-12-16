@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SumaLealtadModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SumaLealtadModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="SumaLealtadModelStoreContainer">
           <EntitySet Name="Affiliate" EntityType="SumaLealtadModel.Store.Affiliate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="AffiliateAud" EntityType="SumaLealtadModel.Store.AffiliateAud" store:Type="Tables" Schema="dbo" />
@@ -59,7 +59,6 @@
           <EntitySet Name="Role" EntityType="SumaLealtadModel.Store.Role" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SecurityLevel" EntityType="SumaLealtadModel.Store.SecurityLevel" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SecurityMenu" EntityType="SumaLealtadModel.Store.SecurityMenu" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Status" EntityType="SumaLealtadModel.Store.Status" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SumaStatus" EntityType="SumaLealtadModel.Store.SumaStatus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="sysdiagrams" EntityType="SumaLealtadModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="TARJETA" EntityType="SumaLealtadModel.Store.TARJETA" store:Type="Tables" Schema="dbo" />
@@ -155,7 +154,6 @@
           <Property Name="creationuserid" Type="int" Nullable="false" />
           <Property Name="modifieduserid" Type="int" Nullable="false" />
           <Property Name="modifieddate" Type="datetime" Nullable="false" />
-          <Property Name="statusid" Type="int" Nullable="false" />
           <Property Name="reasonsid" Type="int" />
           <Property Name="twitter_account" Type="varchar" MaxLength="120" />
           <Property Name="facebook_account" Type="varchar" MaxLength="120" />
@@ -514,7 +512,7 @@
           <Property Name="rif" Type="varchar" MaxLength="20" />
           <Property Name="address" Type="varchar" MaxLength="120" />
           <Property Name="phone" Type="varchar" MaxLength="25" />
-          <Property Name="email" Type="varchar" MaxLength="25" />
+          <Property Name="email" Type="varchar" MaxLength="100" />
           <Property Name="creationdate" Type="datetime" Nullable="false" />
           <Property Name="userid" Type="int" Nullable="false" />
         </EntityType>
@@ -567,13 +565,6 @@
           <Property Name="roleid" Type="int" Nullable="false" />
           <Property Name="menuid" Type="int" Nullable="false" />
           <Property Name="securitylevelid" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Status">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <EntityType Name="SumaStatus">
           <Key>
@@ -867,8 +858,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SumaLealtadModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -907,7 +897,6 @@
           <EntitySet Name="Roles" EntityType="SumaLealtadModel.Role" />
           <EntitySet Name="SecurityLevels" EntityType="SumaLealtadModel.SecurityLevel" />
           <EntitySet Name="SecurityMenus" EntityType="SumaLealtadModel.SecurityMenu" />
-          <EntitySet Name="Status" EntityType="SumaLealtadModel.Status" />
           <EntitySet Name="SumaStatuses" EntityType="SumaLealtadModel.SumaStatus" />
           <EntitySet Name="sysdiagrams" EntityType="SumaLealtadModel.sysdiagram" />
           <EntitySet Name="TARJETAS" EntityType="SumaLealtadModel.TARJETA" />
@@ -987,7 +976,6 @@
           <Property Name="creationuserid" Type="Int32" Nullable="false" />
           <Property Name="modifieduserid" Type="Int32" Nullable="false" />
           <Property Name="modifieddate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="statusid" Type="Int32" Nullable="false" />
           <Property Name="reasonsid" Type="Int32" />
           <Property Name="twitter_account" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
           <Property Name="facebook_account" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
@@ -1329,7 +1317,7 @@
           <Property Name="rif" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="address" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
           <Property Name="phone" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-          <Property Name="email" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
+          <Property Name="email" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
           <Property Name="creationdate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="userid" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="SumaLealtadModel.FK_Orders_PrepaidCustomer" FromRole="PrepaidCustomer" ToRole="Orders" />
@@ -1384,13 +1372,6 @@
           <Property Name="roleid" Type="Int32" Nullable="false" />
           <Property Name="menuid" Type="Int32" Nullable="false" />
           <Property Name="securitylevelid" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Status">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
         </EntityType>
         <EntityType Name="SumaStatus">
           <Key>
@@ -1618,7 +1599,6 @@
                 <ScalarProperty Name="creationuserid" ColumnName="creationuserid" />
                 <ScalarProperty Name="modifieduserid" ColumnName="modifieduserid" />
                 <ScalarProperty Name="modifieddate" ColumnName="modifieddate" />
-                <ScalarProperty Name="statusid" ColumnName="statusid" />
                 <ScalarProperty Name="reasonsid" ColumnName="reasonsid" />
                 <ScalarProperty Name="twitter_account" ColumnName="twitter_account" />
                 <ScalarProperty Name="facebook_account" ColumnName="facebook_account" />
@@ -2011,14 +1991,6 @@
                 <ScalarProperty Name="roleid" ColumnName="roleid" />
                 <ScalarProperty Name="menuid" ColumnName="menuid" />
                 <ScalarProperty Name="securitylevelid" ColumnName="securitylevelid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Status">
-            <EntityTypeMapping TypeName="SumaLealtadModel.Status">
-              <MappingFragment StoreEntitySet="Status">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

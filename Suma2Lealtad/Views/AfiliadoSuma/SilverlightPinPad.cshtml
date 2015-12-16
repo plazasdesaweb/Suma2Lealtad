@@ -1,8 +1,9 @@
 ﻿@model Suma2Lealtad.Models.AfiliadoSuma
 
 @{
-    //DEBO SACAR LA INFO DEL NRO DEL DOCUMENTO DEL MODELO Y PASARLO COMO PARAMETRO AL HELPER SE SILVERLIGHT
-    var InitParams = "idElementoHtmlControl=ElementoControl";
+    var InitParams = "CI=" + Model.docnumber.Substring(2);
+    InitParams = InitParams + "," + "CVV2=" + Model.cvv2;
+    InitParams = InitParams + "," + "idElementoHtmlControl=ElementoControl";   
 }
 
 @Helpers.Silverlight(xapPath: "~/ClientBin/SumaPlazas.Dispositivos.PinPad.xap", slObjectId: "sl", divObjectWidth: "100%", divObjectHeight: "350px", customParams: @InitParams, divObjectClass: "col-md-12")

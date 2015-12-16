@@ -29,7 +29,6 @@ namespace Carga_Masiva_Suma
         public int creationuserid { get; set; }
         public int modifieduserid { get; set; }
         public System.DateTime modifieddate { get; set; }
-        public int statusid { get; set; }
         public Nullable<int> reasonsid { get; set; }
         public string twitter_account { get; set; }
         public string facebook_account { get; set; }

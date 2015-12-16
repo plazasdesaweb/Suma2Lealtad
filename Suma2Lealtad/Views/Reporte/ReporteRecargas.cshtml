@@ -75,23 +75,7 @@
                 @Html.TextBoxFor(model => model.First().Encabezado.documentoreferenciaReporte, new { @class = "form-control", @readonly = "true" })
             </div>
 
-            @*<div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.tipoconsultaReporte))
-            </div>
-            <div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.parametrotipoconsultaReporte))
-            </div>
-            <div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.fechainicioReporte))
-            </div>
-            <div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.fechafinReporte))
-            </div>
-            <div class="editor-field col-md-12">
-                @(String.Format("{0}", Model.First().Encabezado.modotransaccionReporte))
-            </div>*@
-
-            <div class="editor-label col-md-4 control-label"></div>
+           <div class="editor-label col-md-4 control-label"></div>
             <div class="editor-field col-md-8">
                 <br />
             </div>
@@ -105,6 +89,10 @@
                         <th>Beneficiario
                         </th>
                         <th>Fecha
+                        </th>
+                        <th>Referencia
+                        </th>
+                        <th>Descripción
                         </th>
                         <th>Monto
                         </th>
@@ -128,8 +116,13 @@
                                 @Html.DisplayFor(modelItem => item.Beneficiario.Afiliado.name) @Html.DisplayFor(modelItem => item.Beneficiario.Afiliado.lastname1)
                             </td>
                             <td>
-                                @*@Html.DisplayFor(modelItem => item.fecha.Day)*@
                                 @(String.Format("{0}", item.fecha.ToString("dd/MM/yyyy hh:mm tt")))
+                            </td>
+                            <td>
+                                @(String.Format("{0}", "------"))
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.detalle)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.monto)
@@ -200,14 +193,14 @@
         var TotalTransacciones = 0;       
         var MontoTotalTransacciones = parseFloat("0");
         $("#detalleReporte tbody tr").each(function (index) {
-            var campo3 = 0;
+            var campo6 = 0;
             var temp;
             $(this).children("td").each(function (index2) {
                 switch (index2) {
-                    case 3:
+                    case 5:
                         temp = $(this).text();
                         temp = temp.replace(",", ".");
-                        campo3 = parseFloat(temp);
+                        campo6 = parseFloat(temp);
                         break;
                     //case 3:
                     //    campo4 = $.trim($(this).text());
@@ -221,7 +214,7 @@
             });
             //if (campo4 != "Excluido") {
             TotalTransacciones = TotalTransacciones + 1;
-            MontoTotalTransacciones = MontoTotalTransacciones + campo3;
+            MontoTotalTransacciones = MontoTotalTransacciones + campo6;
             //}
         });
         @*if (TotalRecargas == 0) {

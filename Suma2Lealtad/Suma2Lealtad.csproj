@@ -240,7 +240,6 @@
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SecurityLevelController.cs" />
-    <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Controllers\TypeController.cs" />
     <Compile Include="Controllers\UrbanizacionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -257,10 +256,12 @@
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AfiliadoSuma.cs" />
+    <Compile Include="Models\AfiliadoSumaIndex.cs" />
     <Compile Include="Models\Auditing.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BeneficiarioPrepago.cs" />
+    <Compile Include="Models\BeneficiarioPrepagoIndex.cs" />
     <Compile Include="Models\BeneficiarioPrepagoViewModel.cs" />
     <Compile Include="Models\Channel.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
@@ -376,9 +377,6 @@
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SecurityMenu.cs">
-      <DependentUpon>SumaLealtad.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Status.cs">
       <DependentUpon>SumaLealtad.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SumaLealtad.Context.cs">
@@ -508,6 +506,7 @@
     </Content>
     <Content Include="App_Data\Plantilla.xls" />
     <Content Include="App_Browsers\qt.browser" />
+    <None Include="Properties\PublishProfiles\Prueba.pubxml" />
     <None Include="Properties\PublishProfiles\SumaLealtad.pubxml" />
     <None Include="Properties\PublishProfiles\SumaLealtadArturo.pubxml" />
     <None Include="Properties\PublishProfiles\Suma_DESA.pubxml" />
@@ -608,10 +607,6 @@
     <Content Include="Views\Type\Create.cshtml" />
     <Content Include="Views\Type\Edit.cshtml" />
     <Content Include="Views\Type\Delete.cshtml" />
-    <Content Include="Views\Status\Index.cshtml" />
-    <Content Include="Views\Status\Create.cshtml" />
-    <Content Include="Views\Status\Edit.cshtml" />
-    <Content Include="Views\Status\Delete.cshtml" />
     <Content Include="Views\Auditing\Index.cshtml" />
     <Content Include="Views\Auditing\Details.cshtml" />
     <Content Include="Views\Auditing\Create.cshtml" />
@@ -752,9 +747,7 @@
     <Content Include="Views\Reporte\ReporteTransaccionesPDF.cshtml" />
     <Content Include="Scripts\PruebaBS3Dialog\assets\bootstrap-dialog\less\bootstrap-dialog.less" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Picture\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

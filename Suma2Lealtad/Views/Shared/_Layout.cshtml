@@ -9,14 +9,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    @if (@Session["titulo"].ToString() != null)
-      {
-        <title>@Session["titulo"].ToString()</title>
-      }
-      else
-      {
+    @if (@Session["titulo"] == null)
+    {
         <title>Administrador SUMA/PREPAGO</title>
-      }
+    }
+    else
+    {
+        <title>@Session["titulo"].ToString()</title>     
+    }
 
     <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet">
     <link href="@Url.Content("~/Content/style.css")" rel="stylesheet">
@@ -40,16 +40,23 @@
                 <img src="@Url.Content("~/Images/plzlogo.jpg")" />
             </div>
 
-            <div class="col-md-6 col-plz col-left">
-                <div class="font-plz">@Session["titulo"].ToString()</div>
-                <small>V.0.0.5</small>
-            </div>
-
             @if (Session["username"] != null)
             {
+                <div class="col-md-6 col-plz col-left">
+                    <div class="font-plz">@Session["titulo"].ToString()</div>
+                    <small>V.1.0.0</small>
+                </div>
+
                 <div class="col-md-4 col-plz col-right">
                     <div class="row">@Html.Raw(Session["username"].ToString())</div>
                     <div class="row">@Html.Raw(Session["appdate"].ToString())</div>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-6 col-plz col-left">
+                    <div class="font-plz">Administrador SUMA/PREPAGO</div>
+                    <small>V.1.0.0</small>
                 </div>
             }
 
@@ -72,7 +79,7 @@
 
     </div>
 
-    
+
     <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.bootstrap.wizard.min.js")"></script>
@@ -115,75 +122,35 @@
                 });
             });
 
-        @*$('#Afiliado_cod_estado').change(function () {
-            $.getJSON('@Url.Action("/CiudadList/")' + $('#Afiliado_cod_estado').val(), function (data) {
-                var items = '<option value=" ">Seleccione una Ciudad</option>';
-                $.each(data, function (i, district) {
-                    items += "<option value='" + district.Value + "'>" + district.Text + "</option>";
-                });
-                $('#Afiliado_cod_ciudad').html(items);
-            });
-        });*@
-
             $('#cod_ciudad').change(function () {
                 $.getJSON('@Url.Action("/MunicipioList/")' + $('#cod_ciudad').val(), function (data) {
-                var items = '<option value=" ">Seleccione un Municipio</option>';
-                $.each(data, function (i, record) {
-                    items += "<option value='" + record.Value + "'>" + record.Text + "</option>";
+                    var items = '<option value=" ">Seleccione un Municipio</option>';
+                    $.each(data, function (i, record) {
+                        items += "<option value='" + record.Value + "'>" + record.Text + "</option>";
+                    });
+                    $('#cod_municipio').html(items);
                 });
-                $('#cod_municipio').html(items);
             });
-        });
-
-        @*$('#Afiliado_cod_ciudad').change(function () {
-            $.getJSON('@Url.Action("/MunicipioList/")' + $('#Afiliado_cod_ciudad').val(), function (data) {
-                var items = '<option value=" ">Seleccione un Municipio</option>';
-                $.each(data, function (i, record) {
-                    items += "<option value='" + record.Value + "'>" + record.Text + "</option>";
-                });
-                $('#Afiliado_cod_municipio').html(items);
-            });
-        });*@
 
             $('#cod_municipio').change(function () {
                 $.getJSON('@Url.Action("/ParroquiaList/")' + $('#cod_municipio').val(), function (data) {
-                var items = '<option value=" ">Seleccione una Parroquia</option>';
-                $.each(data, function (i, record) {
-                    items += "<option value='" + record.Value + "'>" + record.Text + "</option>";
+                    var items = '<option value=" ">Seleccione una Parroquia</option>';
+                    $.each(data, function (i, record) {
+                        items += "<option value='" + record.Value + "'>" + record.Text + "</option>";
+                    });
+                    $('#cod_parroquia').html(items);
                 });
-                $('#cod_parroquia').html(items);
             });
-        });
-
-        @*$('#Afiliado_cod_municipio').change(function () {
-            $.getJSON('@Url.Action("/ParroquiaList/")' + $('#Afiliado_cod_municipio').val(), function (data) {
-                var items = '<option value=" ">Seleccione una Parroquia</option>';
-                $.each(data, function (i, record) {
-                    items += "<option value='" + record.Value + "'>" + record.Text + "</option>";
-                });
-                $('#Afiliado_cod_parroquia').html(items);
-            });
-        });*@
 
             $('#cod_parroquia').change(function () {
                 $.getJSON('@Url.Action("/UrbanizacionList/")' + $('#cod_parroquia').val(), function (data) {
-                var items = '<option value=" ">Seleccione una Urbanización</option>';
-                $.each(data, function (i, record) {
-                    items += "<option value='" + record.Value + "'>" + record.Text + "</option>";
+                    var items = '<option value=" ">Seleccione una Urbanización</option>';
+                    $.each(data, function (i, record) {
+                        items += "<option value='" + record.Value + "'>" + record.Text + "</option>";
+                    });
+                    $('#cod_urbanizacion').html(items);
                 });
-                $('#cod_urbanizacion').html(items);
             });
-        });
-
-        @*$('#Afiliado_cod_parroquia').change(function () {
-            $.getJSON('@Url.Action("/UrbanizacionList/")' + $('#Afiliado_cod_parroquia').val(), function (data) {
-                var items = '<option value=" ">Seleccione una Urbanización</option>';
-                $.each(data, function (i, record) {
-                    items += "<option value='" + record.Value + "'>" + record.Text + "</option>";
-                });
-                $('#Afiliado_cod_urbanizacion').html(items);
-            });
-        });*@
 
             /* Clipboard */
             var btns = document.querySelectorAll('button');
@@ -231,7 +198,7 @@
                     },
 
                     email: {
-                        required: true,
+                        //required: true,
                         email: true,
                         minlength: 3
                     },
@@ -287,7 +254,7 @@
                     },
 
                     emailfield: {
-                        required: true,
+                        //required: true,
                         email: true,
                         minlength: 3
                     },

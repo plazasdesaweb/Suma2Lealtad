@@ -8,7 +8,7 @@ namespace Suma2Lealtad.Models
     public class ReporteSuma
     {
         public EncabezadoReporteSuma Encabezado { get; set; }
-        public AfiliadoSuma Afiliado { get; set; }
+        public AfiliadoSumaIndex Afiliado { get; set; }
         public DateTime fecha { get; set; }
         public int monto { get; set; }        
         public string comentario { get; set; }

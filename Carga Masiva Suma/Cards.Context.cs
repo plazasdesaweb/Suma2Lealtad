@@ -27,5 +27,6 @@ namespace Carga_Masiva_Suma
     
         public DbSet<Client> Clients { get; set; }
         public DbSet<Card> Cards { get; set; }
+        public DbSet<Corporation> Corporations { get; set; }
     }
 }

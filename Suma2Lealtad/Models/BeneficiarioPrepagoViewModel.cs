@@ -20,12 +20,12 @@ namespace Suma2Lealtad.Models
         [RegularExpression(@"[\d]{1,6}([,][\d]{2})?", ErrorMessage = "El campo Monto de Transacción permite únicamente números en formato decimal : 999999,99")]
         public string monto { get; set; }
 
-        public string saldo { get; set; }
+        public decimal saldo { get; set; }
 
         public string documento { get { return numdoc.Replace("V-", "").Replace("J-", "").Replace("E-", ""); } }
         public string montotrx { get { return monto.Replace(",", "").Replace(".", ""); } }
 
-        public string saldoactual { get { return saldo.Replace(".", ","); } }
+        public string saldoactual { get { return saldo.ToString(); } }
 
 
     }

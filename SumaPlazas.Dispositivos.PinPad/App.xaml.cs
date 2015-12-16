@@ -17,11 +17,16 @@ namespace SumaPlazas.Dispositivos.PinPad
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            // parámetro llamado nombreArchivo
+            // parámetro llamado Nombre
+            string CI = e.InitParams["CI"];
+            // parámetro llamado Apellido
+            string CVV2 = e.InitParams["CVV2"];
+
+            // parámetro llamado idElementoHtmlControl
             string idElementoHtmlControl = e.InitParams["idElementoHtmlControl"];
             
             //Pasar a la página principal como parámetro  
-            this.RootVisual = new MainPage(idElementoHtmlControl); 
+            this.RootVisual = new MainPage(CI, CVV2, idElementoHtmlControl); 
         }
 
         private void Application_Exit(object sender, EventArgs e)

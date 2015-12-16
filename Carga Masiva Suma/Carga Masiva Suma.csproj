@@ -107,6 +107,9 @@
     <Compile Include="CompanyAffiliate.cs">
       <DependentUpon>SumaNuevo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Corporation.cs">
+      <DependentUpon>Cards.tt</DependentUpon>
+    </Compile>
     <Compile Include="CreditLimit.cs">
       <DependentUpon>SumaNuevo.tt</DependentUpon>
     </Compile>
@@ -188,9 +191,6 @@
       <DependentUpon>SumaNuevo.tt</DependentUpon>
     </Compile>
     <Compile Include="SecurityMenu.cs">
-      <DependentUpon>SumaNuevo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Status.cs">
       <DependentUpon>SumaNuevo.tt</DependentUpon>
     </Compile>
     <Compile Include="SumaNuevo.Context.cs">
