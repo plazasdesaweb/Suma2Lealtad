@@ -30,7 +30,7 @@ namespace Suma2Lealtad.Modules
         private string _userlogin = "";
         private string _usertype = "";
         private int _userID;
-        //se usa para determinar el nivel de usuario en el rol en prepago, para saber si hace operaciones de (creación,lectura) = 0, (aprobación, rechazo, acreditación) = 1
+        //se usa para determinar el nivel de usuario en el rol en prepago, las acciones definidas de momento son: Visualizar = 1, Editar = 2, Aprobar = 3
         private int _rolelevel;
         public int RoleLevel { get { return _rolelevel; } }
 
@@ -57,10 +57,11 @@ namespace Suma2Lealtad.Modules
                                    select item.roleid
                                    ).ToArray();
                     //se busca el nivel maximo definido en los roles del usuario
+                    //Ojo: Los roles están definidos uno por usuario.
                     _rolelevel = (from r in db.Roles
                                   where roles.Contains(r.id)
                                   select r.level).ToList().Max();
-                    //Ojo: No se fltra el Menú por Tipo de Usuario, sino por Rol del Usuario. Hay que tener esto en cuenta al definir los roles que sean excluyentes.
+                    //Ojo: No se filtra el Menú por Tipo de Usuario, sino por Rol del Usuario. Hay que tener esto en cuenta al definir los roles que sean excluyentes.
                     _menu = (from mainMenu in db.Menus
                              join securityMenu in db.SecurityMenus
                              on mainMenu.id equals securityMenu.menuid
