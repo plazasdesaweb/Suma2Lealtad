@@ -507,6 +507,7 @@
     <Content Include="App_Data\Plantilla.xls" />
     <Content Include="App_Browsers\qt.browser" />
     <None Include="Properties\PublishProfiles\Prueba.pubxml" />
+    <None Include="Properties\PublishProfiles\Suma2.pubxml" />
     <None Include="Properties\PublishProfiles\SumaLealtad.pubxml" />
     <None Include="Properties\PublishProfiles\SumaLealtadArturo.pubxml" />
     <None Include="Properties\PublishProfiles\Suma_DESA.pubxml" />

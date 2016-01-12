@@ -104,12 +104,13 @@ namespace Suma2Lealtad.Models
                                  where a.SumaStatu.name.Equals(estadoAfiliacion)
 								 join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid                                 
                                  join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION
+                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION into PRUEBA
+                                 from prue in PRUEBA.DefaultIfEmpty()
                                  select new
                                  {
-                                     pan = t.NRO_TARJETA,
-                                     estatustarjeta = t.ESTATUS_TARJETA,
-                                     id = t.NRO_AFILIACION,
+                                     pan = prue == null ? new decimal() : prue.NRO_TARJETA,
+                                     estatustarjeta = prue == null ? "" : prue.ESTATUS_TARJETA,
+                                     id = a.id,
                                      docnumber = a.docnumber,
                                      typeid = a.typeid,
                                      sumastatusid = a.sumastatusid,
@@ -139,7 +140,7 @@ namespace Suma2Lealtad.Models
                                              //ENTIDAD Type
                                              type = ty.name,
                                              //ENTIDAD TARJETA
-                                             pan = q.pan.ToString(),
+                                             pan = q.pan == 0 ? "" : q.pan.ToString(),
                                              estatustarjeta = q.estatustarjeta
                                          },
                                          Cliente = new ClientePrepago
@@ -161,12 +162,13 @@ namespace Suma2Lealtad.Models
                                  where a.docnumber.Equals(numdoc)
                                  join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid                                 
                                  join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION
+                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION into PRUEBA
+                                 from prue in PRUEBA.DefaultIfEmpty()
                                  select new
                                  {
-                                     pan = t.NRO_TARJETA,
-                                     estatustarjeta = t.ESTATUS_TARJETA,
-                                     id = t.NRO_AFILIACION,
+                                     pan = prue == null ? new decimal() : prue.NRO_TARJETA,
+                                     estatustarjeta = prue == null ? "" : prue.ESTATUS_TARJETA,
+                                     id = a.id,
                                      docnumber = a.docnumber,
                                      typeid = a.typeid,
                                      sumastatusid = a.sumastatusid,
@@ -196,7 +198,7 @@ namespace Suma2Lealtad.Models
                                              //ENTIDAD Type
                                              type = ty.name,
                                              //ENTIDAD TARJETA
-                                             pan = q.pan.ToString(),
+                                             pan = q.pan == 0 ? "" : q.pan.ToString(),
                                              estatustarjeta = q.estatustarjeta
                                          },
                                          Cliente = new ClientePrepago
@@ -218,12 +220,13 @@ namespace Suma2Lealtad.Models
                                  join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid                                 
                                  join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
                                  where (c.NOMBRE_CLIENTE1.Contains(name) || c.APELLIDO_CLIENTE1.Contains(name) || c.E_MAIL.Equals(email))
-                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION
+                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION into PRUEBA
+                                 from prue in PRUEBA.DefaultIfEmpty()
                                  select new
                                  {
-                                     pan = t.NRO_TARJETA,
-                                     estatustarjeta = t.ESTATUS_TARJETA,
-                                     id = t.NRO_AFILIACION,
+                                     pan = prue == null ? new decimal() : prue.NRO_TARJETA,
+                                     estatustarjeta = prue == null ? "" : prue.ESTATUS_TARJETA,
+                                     id = a.id,
                                      docnumber = a.docnumber,
                                      typeid = a.typeid,
                                      sumastatusid = a.sumastatusid,
@@ -253,7 +256,7 @@ namespace Suma2Lealtad.Models
                                              //ENTIDAD Type
                                              type = ty.name,
                                              //ENTIDAD TARJETA
-                                             pan = q.pan.ToString(),
+                                             pan = q.pan == 0 ? "" : q.pan.ToString(),
                                              estatustarjeta = q.estatustarjeta
                                          },
                                          Cliente = new ClientePrepago
@@ -274,12 +277,13 @@ namespace Suma2Lealtad.Models
                     var query = (from a in db.Affiliates
                                  join b in db.PrepaidBeneficiaries on a.id equals b.affiliateid                                 
                                  join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION
+                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION into PRUEBA
+                                 from prue in PRUEBA.DefaultIfEmpty()
                                  select new
                                  {
-                                     pan = t.NRO_TARJETA,
-                                     estatustarjeta = t.ESTATUS_TARJETA,
-                                     id = t.NRO_AFILIACION,
+                                     pan = prue == null ? new decimal() : prue.NRO_TARJETA,
+                                     estatustarjeta = prue == null ? "" : prue.ESTATUS_TARJETA,
+                                     id = a.id,
                                      docnumber = a.docnumber,
                                      typeid = a.typeid,
                                      sumastatusid = a.sumastatusid,
@@ -309,7 +313,7 @@ namespace Suma2Lealtad.Models
                                              //ENTIDAD Type
                                              type = ty.name,
                                              //ENTIDAD TARJETA
-                                             pan = q.pan.ToString(),
+                                             pan = q.pan == 0 ? "" : q.pan.ToString(),
                                              estatustarjeta = q.estatustarjeta
                                          },
                                          Cliente = new ClientePrepago

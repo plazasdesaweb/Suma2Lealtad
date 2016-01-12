@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Suma2Lealtad.Models;
+﻿using Suma2Lealtad.Models;
 using Suma2Lealtad.Modules;
-using System.Threading;
-using System.Data.SqlClient;
+using System;
+using System.Collections.Generic;
 using System.Data.Odbc;
-using Newtonsoft.Json;
-using System.IO;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace Carga_Masiva_Suma
 {
@@ -30,7 +23,6 @@ namespace Carga_Masiva_Suma
         List<AfiliadoSuma> AfiliadosSumaMigrados = new List<AfiliadoSuma>();
         List<AfiliadoSuma> AfiliadosPrepagoMigrados = new List<AfiliadoSuma>();
         List<Corporation> Corporaciones = new List<Corporation>();
-        //List<PrepaidCustomer> ClientesSinBeneficiarios = new List<PrepaidCustomer>();
 
         public Form1()
         {
@@ -60,11 +52,11 @@ namespace Carga_Masiva_Suma
                                     printed = t.printed,
                                     status = t.status.Value
                                 }).OrderBy(x => x.cedula).ToList();
-                lblCedulas.Text = CedulasCards.Count.ToString() + " documentos de identificación en 172.20.7.26/Cards/Clients";
+                lblCedulas.Text = CedulasCards.Count.ToString() + " documentos de identificación en 172.20.1.46/Cards/Clients";
                 lblCedulas.Refresh();
             }
             //Leer clientes y afiliacion_cliente desde SumaLealtad - SQL2000 - OdbcDataReader
-            OdbcConnection DbConnection = new OdbcConnection("Driver={SQL Server};Server=172.20.1.23;Database=SumaLealtad;Uid=UserSisLeal;Pwd=1234;");
+            OdbcConnection DbConnection = new OdbcConnection("Driver={SQL Server};Server=172.20.1.24;Database=SumaLealtad;Uid=UserSisLeal;Pwd=1234;");
             DbConnection.Open();
             OdbcCommand DbCommand = DbConnection.CreateCommand();
             DbCommand.CommandText = "SELECT a.[TIPO_DOCUMENTO],a.[NRO_DOCUMENTO],a.[NACIONALIDAD],a.[NOMBRE_CLIENTE1],a.[NOMBRE_CLIENTE2],a.[APELLIDO_CLIENTE1],a.[APELLIDO_CLIENTE2],a.[FECHA_NACIMIENTO],a.[SEXO],a.[EDO_CIVIL],a.[OCUPACION],a.[TELEFONO_HAB],a.[TELEFONO_OFIC],a.[TELEFONO_CEL],a.[E_MAIL],a.[COD_SUCURSAL],a.[COD_PAIS],a.[COD_ESTADO],a.[COD_CIUDAD],a.[COD_MUNICIPIO],a.[COD_PARROQUIA],a.[COD_URBANIZACION],a.[FECHA_CREACION], b.[COD_TIPO_CLIENTE] FROM CLIENTE a, AFILIACION_CLIENTE b WHERE a.[TIPO_DOCUMENTO] <> '' AND a.[TIPO_DOCUMENTO] = b.[TIPO_DOCUMENTO] AND a.[NRO_DOCUMENTO] = b.[NRO_DOCUMENTO] AND b.[ESTATUS_AFILIADO] = 'Activo' ORDER BY a.[NRO_DOCUMENTO]";
@@ -89,6 +81,7 @@ namespace Carga_Masiva_Suma
                 cliente.CLIENTE.TELEFONO_CEL = DbReader.IsDBNull(13) == true ? "" : DbReader.GetString(13).Trim();
                 cliente.CLIENTE.E_MAIL = DbReader.IsDBNull(14) == true ? "" : DbReader.GetString(14).Trim();
                 cliente.CLIENTE.COD_SUCURSAL = DbReader.IsDBNull(15) == true ? 0 : DbReader.GetInt32(15);
+                //COD_PAIS no existe en CLIENTE.
                 //COD_PAIS = DbReader.IsDBNull(16) == true ? 1 : DbReader.GetString(16).Trim(),
                 cliente.CLIENTE.COD_ESTADO = DbReader.IsDBNull(17) == true ? "11" : DbReader.GetString(17).Trim();
                 cliente.CLIENTE.COD_CIUDAD = DbReader.IsDBNull(18) == true ? "228" : DbReader.GetString(18).Trim();
@@ -102,7 +95,7 @@ namespace Carga_Masiva_Suma
             DbReader.Close();
             DbCommand.Dispose();
             DbConnection.Close();
-            lblClientes.Text = AfiliacionesClientesSumaViejo.Count.ToString() + " documentos de identificación en 172.20.1.23/SumaLealtad/CLIENTE";
+            lblClientes.Text = AfiliacionesClientesSumaViejo.Count.ToString() + " documentos de identificación en 172.20.1.24/SumaLealtad/CLIENTE";
             lblClientes.Refresh();
             int Migrados = 0;
             int Errores = 0;
@@ -205,7 +198,7 @@ namespace Carga_Masiva_Suma
                     {
                         throw new Exception("NUMERO DE DOCUMENTO DUPLICADO");
                     }
-                    //Si NO HAY fila, se coloca en la lista de malos. Continuar con siguiente 
+                    //Si no hay fila, se coloca en la lista de malos. Continuar con siguiente 
                     else
                     {
                         throw new Exception("DOCUMENTO NO ENCONTRADO");
@@ -262,7 +255,7 @@ namespace Carga_Masiva_Suma
         }
 
         private void btnFase2_Click(object sender, EventArgs e)
-        {
+        {           
             btnProcesar.Enabled = false;
             btnFase2.Enabled = false;
             btnFase3.Enabled = false;
@@ -345,7 +338,7 @@ namespace Carga_Masiva_Suma
             this.Refresh();
             //ETAPA B - CREAR AFILIACIONES SUMA Y PREPAGO            
             //Leer clientes y afiliacion_cliente desde SumaLealtad - SQL2000 - OdbcDataReader
-            OdbcConnection DbConnection = new OdbcConnection("Driver={SQL Server};Server=172.20.1.23;Database=SumaLealtad;Uid=UserSisLeal;Pwd=1234;");
+            OdbcConnection DbConnection = new OdbcConnection("Driver={SQL Server};Server=172.20.1.24;Database=SumaLealtad;Uid=UserSisLeal;Pwd=1234;");
             DbConnection.Open();
             OdbcCommand DbCommand = DbConnection.CreateCommand();
             DbCommand.CommandText = "SELECT a.[TIPO_DOCUMENTO],a.[NRO_DOCUMENTO],a.[NACIONALIDAD],a.[NOMBRE_CLIENTE1],a.[NOMBRE_CLIENTE2],a.[APELLIDO_CLIENTE1],a.[APELLIDO_CLIENTE2],a.[FECHA_NACIMIENTO],a.[SEXO],a.[EDO_CIVIL],a.[OCUPACION],a.[TELEFONO_HAB],a.[TELEFONO_OFIC],a.[TELEFONO_CEL],a.[E_MAIL],a.[COD_SUCURSAL],a.[COD_PAIS],a.[COD_ESTADO],a.[COD_CIUDAD],a.[COD_MUNICIPIO],a.[COD_PARROQUIA],a.[COD_URBANIZACION],a.[FECHA_CREACION], b.[COD_TIPO_CLIENTE] FROM CLIENTE a, AFILIACION_CLIENTE b WHERE a.[TIPO_DOCUMENTO] <> '' AND a.[TIPO_DOCUMENTO] = b.[TIPO_DOCUMENTO] AND a.[NRO_DOCUMENTO] = b.[NRO_DOCUMENTO] AND b.[ESTATUS_AFILIADO] = 'Activo' ORDER BY a.[NRO_DOCUMENTO]";
@@ -362,7 +355,7 @@ namespace Carga_Masiva_Suma
             DbReader.Close();
             DbCommand.Dispose();
             DbConnection.Close();
-            lblClientes.Text = AfiliacionesClientesSumaViejo.Count.ToString() + " documentos de identificación en 172.20.1.23/SumaLealtad/CLIENTE";
+            lblClientes.Text = AfiliacionesClientesSumaViejo.Count.ToString() + " documentos de identificación en 172.20.1.24/SumaLealtad/CLIENTE";
             lstBuenos.Items.Add("INICIANDO ETAPA B - AFILIACIONES SUMA Y PREPAGO");
             lstBuenos.SelectedIndex = lstBuenos.Items.Count - 1;
             lblClientes.Refresh();
@@ -384,6 +377,7 @@ namespace Carga_Masiva_Suma
                         AFILIACION_CLIENTE ac = AfiliacionesClientesSumaViejo.Find(x => x.CLIENTE.TIPO_DOCUMENTO.Equals(c.TIPO_DOCUMENTO) && x.CLIENTE.NRO_DOCUMENTO.Equals(c.NRO_DOCUMENTO));
                         if (ac == null)
                         {
+                            //Si no hay fila, se coloca en la lista de malos. Continuar con siguiente 
                             throw new Exception("NO ENCONTRADO EN AFILIACION_CLIENTE");
                         }
                         else if (ac.COD_TIPO_CLIENTE == "1")
@@ -410,6 +404,7 @@ namespace Carga_Masiva_Suma
                         }
                         else
                         {
+                            //Si no se determina tipo de cliente, se coloca en la lista de malos. Continuar con siguiente 
                             throw new Exception("NO SE PUDO DETERMINAR TIPO DE AFILIACION");
                         }
                     }

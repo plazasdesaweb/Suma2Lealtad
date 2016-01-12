@@ -187,12 +187,13 @@ namespace Suma2Lealtad.Models
                     var query = (from a in db.Affiliates
                                  where a.SumaStatu.name.Equals(estadoAfiliacion)
                                  join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION
+                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION into PRUEBA
+                                 from prue in PRUEBA.DefaultIfEmpty()
                                  select new
                                  {
-                                     pan = t.NRO_TARJETA,
-                                     estatustarjeta = t.ESTATUS_TARJETA,
-                                     id = t.NRO_AFILIACION,
+                                     pan = prue == null ? new decimal() : prue.NRO_TARJETA,
+                                     estatustarjeta = prue == null ? "" : prue.ESTATUS_TARJETA,
+                                     id = a.id,
                                      docnumber = a.docnumber,
                                      typeid = a.typeid,
                                      sumastatusid = a.sumastatusid,
@@ -205,7 +206,7 @@ namespace Suma2Lealtad.Models
                                  join ty in db.Types on q.typeid equals ty.id
                                  select new AfiliadoSumaIndex()
                                  {
-                                     pan = q.pan.ToString(),
+                                     pan = q.pan == 0 ? "" : q.pan.ToString(),
                                      estatustarjeta = q.estatustarjeta,
                                      id = q.id,
                                      docnumber = q.docnumber,
@@ -224,12 +225,13 @@ namespace Suma2Lealtad.Models
                     var query = (from a in db.Affiliates
                                  where a.docnumber.Equals(numdoc)
                                  join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION
+                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION into PRUEBA
+                                 from prue in PRUEBA.DefaultIfEmpty()
                                  select new
                                  {
-                                     pan = t.NRO_TARJETA,
-                                     estatustarjeta = t.ESTATUS_TARJETA,
-                                     id = t.NRO_AFILIACION,
+                                     pan = prue == null ? new decimal() : prue.NRO_TARJETA,
+                                     estatustarjeta = prue == null ? "" : prue.ESTATUS_TARJETA,
+                                     id = a.id,
                                      docnumber = a.docnumber,
                                      typeid = a.typeid,
                                      sumastatusid = a.sumastatusid,
@@ -242,7 +244,7 @@ namespace Suma2Lealtad.Models
                                  join ty in db.Types on q.typeid equals ty.id
                                  select new AfiliadoSumaIndex()
                                  {
-                                     pan = q.pan.ToString(),
+                                     pan = q.pan == 0 ? "" : q.pan.ToString(),
                                      estatustarjeta = q.estatustarjeta,
                                      id = q.id,
                                      docnumber = q.docnumber,
@@ -261,12 +263,13 @@ namespace Suma2Lealtad.Models
                     var query = (from a in db.Affiliates
                                  join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
                                  where (c.NOMBRE_CLIENTE1.Contains(name) || c.APELLIDO_CLIENTE1.Contains(name) || c.E_MAIL.Equals(email))
-                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION
+                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION into PRUEBA
+                                 from prue in PRUEBA.DefaultIfEmpty()
                                  select new
                                  {
-                                     pan = t.NRO_TARJETA,
-                                     estatustarjeta = t.ESTATUS_TARJETA,
-                                     id = t.NRO_AFILIACION,
+                                     pan = prue == null ? new decimal() : prue.NRO_TARJETA,
+                                     estatustarjeta = prue == null ? "" : prue.ESTATUS_TARJETA,
+                                     id = a.id,
                                      docnumber = a.docnumber,
                                      typeid = a.typeid,
                                      sumastatusid = a.sumastatusid,
@@ -279,7 +282,7 @@ namespace Suma2Lealtad.Models
                                  join ty in db.Types on q.typeid equals ty.id
                                  select new AfiliadoSumaIndex()
                                  {
-                                     pan = q.pan.ToString(),
+                                     pan = q.pan == 0 ? "" : q.pan.ToString(),
                                      estatustarjeta = q.estatustarjeta,
                                      id = q.id,
                                      docnumber = q.docnumber,
@@ -297,12 +300,13 @@ namespace Suma2Lealtad.Models
                 {
                     var query = (from a in db.Affiliates
                                  join c in db.CLIENTES on a.docnumber equals c.TIPO_DOCUMENTO + "-" + c.NRO_DOCUMENTO
-                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION
+                                 join t in db.TARJETAS on a.id equals t.NRO_AFILIACION into PRUEBA
+                                 from prue in PRUEBA.DefaultIfEmpty()
                                  select new
                                  {
-                                     pan = t.NRO_TARJETA,
-                                     estatustarjeta = t.ESTATUS_TARJETA,
-                                     id = t.NRO_AFILIACION,
+                                     pan = prue == null ? new decimal() : prue.NRO_TARJETA,
+                                     estatustarjeta = prue == null ? "" : prue.ESTATUS_TARJETA,
+                                     id = a.id,
                                      docnumber = a.docnumber,
                                      typeid = a.typeid,
                                      sumastatusid = a.sumastatusid,
@@ -315,7 +319,7 @@ namespace Suma2Lealtad.Models
                                  join ty in db.Types on q.typeid equals ty.id
                                  select new AfiliadoSumaIndex()
                                  {
-                                     pan = q.pan.ToString(),
+                                     pan = q.pan == 0 ? "" : q.pan.ToString(),
                                      estatustarjeta = q.estatustarjeta,
                                      id = q.id,
                                      docnumber = q.docnumber,
