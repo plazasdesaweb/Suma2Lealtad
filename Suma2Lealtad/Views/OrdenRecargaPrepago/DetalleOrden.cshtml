@@ -24,7 +24,14 @@
     string indicadorGuardar;
     if (Session["RoleLevel"].ToString() == "3")
     {
-        indicadorGuardar = "Aprobar";
+        if (Model.First().statusOrden == "Nueva")
+        {
+            indicadorGuardar = "Aprobar";
+        }
+        else
+        {
+            indicadorGuardar = "Guardar";
+        }
     }
     else
     {
@@ -107,7 +114,7 @@
 
                 <div class="editor-form col-md-6">
                     @Html.TextBoxFor(model => model.First().documentoOrden, new { @class = "form-control Referencia" })
-                </div>  
+                </div>
 
                 <div class="editor-field col-md-6">
                     <br />
@@ -227,7 +234,7 @@
                 </div>
 
                 <div class="editor-form col-md-6">
-                    <input type="text" id="DocumentoReferencia" name="DocumentoReferencia" value="" maxlength="10" class="form-control" style="visibility:hidden">
+                    <input type="text" id="DocumentoReferencia" name="DocumentoReferencia" value="" maxlength="10" class="form-control" style="visibility: hidden">
                 </div>
 
                 <div class="editor-label col-md-4 control-label">
@@ -337,7 +344,7 @@
     };
 
     function actualizarRecargas() {
-        var TotalRecargas = 0;       
+        var TotalRecargas = 0;
         var MontoTotalRecargas = parseFloat("0");
         $("#detalleOrden tbody tr").each(function (index) {
             var campo3 = 0;

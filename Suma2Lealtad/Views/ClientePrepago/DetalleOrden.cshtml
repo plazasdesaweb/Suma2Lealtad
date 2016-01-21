@@ -24,7 +24,14 @@
     string indicadorGuardar;
     if (Session["RoleLevel"].ToString() == "3")
     {
-        indicadorGuardar = "Aprobar";
+        if (Model.First().statusOrden == "Nueva")
+        {
+            indicadorGuardar = "Aprobar";
+        }
+        else
+        {
+            indicadorGuardar = "Guardar";
+        }
     }
     else
     {

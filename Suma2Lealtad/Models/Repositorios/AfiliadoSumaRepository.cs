@@ -680,6 +680,8 @@ namespace Suma2Lealtad.Models
                     tarjeta.NRO_AFILIACION = afiliado.id;
                     tarjeta.ESTATUS_TARJETA = afiliado.estatustarjeta;
                     tarjeta.COD_USUARIO = (int)HttpContext.Current.Session["userid"];
+                    tarjeta.TRACK2 = afiliado.trackII;
+                    tarjeta.CVV2 = afiliado.cvv2;
                     tarjeta.FECHA_CREACION = afiliado.printed == null ? new DateTime?() : DateTime.ParseExact(afiliado.printed, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                 }
                 else if (afiliado.pan != null && afiliado.estatustarjeta != null)

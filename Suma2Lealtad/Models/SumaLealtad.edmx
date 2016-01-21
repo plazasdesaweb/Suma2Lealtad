@@ -401,7 +401,7 @@
           <Property Name="customerid" Type="int" Nullable="false" />
           <Property Name="amount" Type="money" Nullable="false" />
           <Property Name="comments" Type="varchar" MaxLength="120" />
-          <Property Name="cardsresponse" Type="varchar" MaxLength="100" />
+          <Property Name="cardsresponse" Type="varchar" MaxLength="300" />
           <Property Name="sumastatusid" Type="int" />
         </EntityType>
         <EntityType Name="OrdersHistory">
@@ -1182,7 +1182,7 @@
           <Property Name="customerid" Type="Int32" Nullable="false" />
           <Property Name="amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="comments" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
-          <Property Name="cardsresponse" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="cardsresponse" Type="String" MaxLength="300" Unicode="false" FixedLength="false" />
           <Property Name="sumastatusid" Type="Int32" />
           <NavigationProperty Name="Order" Relationship="SumaLealtad.FK_OrdersDetail_Order" FromRole="OrdersDetail" ToRole="Order" />
           <NavigationProperty Name="SumaStatu" Relationship="SumaLealtad.FK_OrdersDetail_SumaStatus" FromRole="OrdersDetail" ToRole="SumaStatu" />

@@ -362,18 +362,20 @@ namespace Suma2Lealtad.Models
             string RespuestaCardsJson = WSL.Cards.addBatch(detalleorden.docnumberAfiliado.Substring(2), montoSinSeparador, TRANSCODE_RECARGA_PREPAGO, "NULL");
             if (WSL.Cards.ExceptionServicioCards(RespuestaCardsJson))
             {
+                ExceptionJSON exceptionJson = (ExceptionJSON)JsonConvert.DeserializeObject<ExceptionJSON>(RespuestaCardsJson);
+                detalleorden.resultadoRecarga = exceptionJson.detail + "-" + exceptionJson.source;
                 return false;
             }
             RespuestaCards RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
-            if ((Convert.ToDecimal(RespuestaCards.excode) > 0))
+            if ((Convert.ToDecimal(RespuestaCards.excode) < 0))
             {
-                detalleorden.resultadoRecarga = "0";
-                return true;
+                detalleorden.resultadoRecarga = RespuestaCards.exdetail;
+                return false;
             }
             else
             {
                 detalleorden.resultadoRecarga = RespuestaCards.exdetail;
-                return false;
+                return true;
             }
         }
 
@@ -400,11 +402,15 @@ namespace Suma2Lealtad.Models
                             ordersdetail.cardsresponse = item.resultadoRecarga;
                         }
                     }
+                    db.SaveChanges();
+                    //Forzo espera de 1 seg antes de volver a invocar el servicio
+                    System.Threading.Thread.Sleep(2000);
                 }
                 //Actualizar estatus de la Orden
                 Order orden = db.Orders.Find(detalleOrden.First().idOrden);
                 orden.sumastatusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_ORDEN_PROCESADA) && (s.tablename == "Order")).id;
                 orden.documento = detalleOrden.First().documentoOrden;
+                orden.processdate = DateTime.Now;
                 //Entidad OrderHistory
                 int idOrderHistory = OrdersHistoryId();
                 OrdersHistory orderhistory = new OrdersHistory()
@@ -413,7 +419,7 @@ namespace Suma2Lealtad.Models
                     orderid = orden.id,
                     estatusid = orden.sumastatusid,
                     userid = (int)HttpContext.Current.Session["userid"],
-                    creationdate = DateTime.Now,
+                    creationdate = orden.processdate,
                     comments = "orden procesada"
                 };
                 db.OrdersHistories.Add(orderhistory);
