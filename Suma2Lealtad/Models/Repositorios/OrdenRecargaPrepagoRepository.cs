@@ -21,7 +21,7 @@ namespace Suma2Lealtad.Models
         private const int ID_ESTATUS_DETALLEORDEN_EXCLUIDO = 2;
         private const int ID_ESTATUS_DETALLEORDEN_PROCESADO = 3;
         private const string TRANSCODE_RECARGA_PREPAGO = "200";
-        
+
         private int OrderId()
         {
             using (LealtadEntities db = new LealtadEntities())
@@ -38,7 +38,7 @@ namespace Suma2Lealtad.Models
             {
                 if (db.OrdersDetails.Count() == 0)
                     return 1;
-                return (db.OrdersDetails.Max(c => c.id) +1);
+                return (db.OrdersDetails.Max(c => c.id) + 1);
             }
         }
 
@@ -48,7 +48,7 @@ namespace Suma2Lealtad.Models
             {
                 if (db.OrdersHistories.Count() == 0)
                     return 1;
-                return (db.OrdersHistories.Max(c => c.id)+1);
+                return (db.OrdersHistories.Max(c => c.id) + 1);
             }
         }
 
@@ -132,7 +132,7 @@ namespace Suma2Lealtad.Models
                     ordenes = (from o in db.Orders
                                join c in db.PrepaidCustomers on o.prepaidcustomerid equals c.id
                                join s in db.SumaStatuses on o.sumastatusid equals s.id
-                               where o.documento ==Referencia
+                               where o.documento == Referencia
                                select new OrdenRecargaPrepago()
                                {
                                    id = o.id,
@@ -264,17 +264,18 @@ namespace Suma2Lealtad.Models
                     if (item.statusDetalleOrden == "Excluido")
                     {
                         ordersdetail.sumastatusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_DETALLEORDEN_EXCLUIDO) && (s.tablename == "OrdersDetail")).id;
+                        ordersdetail.comments = item.observacionesExclusion;
                     }
                     else if (item.statusDetalleOrden == "Incluido")
                     {
                         ordersdetail.sumastatusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_DETALLEORDEN_INCLUIDO) && (s.tablename == "OrdersDetail")).id;
                     }
-                    ordersdetail.comments = item.observacionesExclusion;
                 }
                 //Actualizar estatus y monto de la Orden
                 Order orden = db.Orders.Find(detalleOrden.First().idOrden);
                 orden.totalamount = MontoTotalRecargas;
                 orden.documento = detalleOrden.First().documentoOrden;
+                orden.processdate = DateTime.Now;
                 //Entidad OrderHistory
                 int idOrderHistory = OrdersHistoryId();
                 OrdersHistory orderhistory = new OrdersHistory()
@@ -283,7 +284,7 @@ namespace Suma2Lealtad.Models
                     orderid = orden.id,
                     estatusid = orden.sumastatusid,
                     userid = (int)HttpContext.Current.Session["userid"],
-                    creationdate = DateTime.Now,
+                    creationdate = orden.processdate,
                     comments = "cambios en orden guardados"
                 };
                 db.OrdersHistories.Add(orderhistory);
@@ -315,6 +316,7 @@ namespace Suma2Lealtad.Models
                 orden.sumastatusid = db.SumaStatuses.FirstOrDefault(s => (s.value == ID_ESTATUS_ORDEN_APROBADA) && (s.tablename == "Order")).id;
                 orden.totalamount = MontoTotalRecargas;
                 orden.documento = detalleOrden.First().documentoOrden;
+                orden.processdate = DateTime.Now;
                 //Entidad OrderHistory
                 int idOrderHistory = OrdersHistoryId();
                 OrdersHistory orderhistory = new OrdersHistory()
@@ -323,7 +325,7 @@ namespace Suma2Lealtad.Models
                     orderid = orden.id,
                     estatusid = orden.sumastatusid,
                     userid = (int)HttpContext.Current.Session["userid"],
-                    creationdate = DateTime.Now,
+                    creationdate = orden.processdate,
                     comments = "orden aprobada"
                 };
                 db.OrdersHistories.Add(orderhistory);
@@ -347,7 +349,7 @@ namespace Suma2Lealtad.Models
                     orderid = orden.id,
                     estatusid = orden.sumastatusid,
                     userid = (int)HttpContext.Current.Session["userid"],
-                    creationdate = DateTime.Now,
+                    creationdate = orden.processdate,
                     comments = "orden rechazada"
                 };
                 db.OrdersHistories.Add(orderhistory);
@@ -358,25 +360,45 @@ namespace Suma2Lealtad.Models
 
         private bool Recargar(DetalleOrdenRecargaPrepago detalleorden)
         {
-            string montoSinSeparador = Math.Truncate(detalleorden.montoRecarga * 100).ToString();
-            string RespuestaCardsJson = WSL.Cards.addBatch(detalleorden.docnumberAfiliado.Substring(2), montoSinSeparador, TRANSCODE_RECARGA_PREPAGO, "NULL");
-            if (WSL.Cards.ExceptionServicioCards(RespuestaCardsJson))
+            int intentos;
+            //Se intenta la operación 3 veces, antes de fallar
+            for (intentos = 0; intentos <= 3; intentos++)
             {
-                ExceptionJSON exceptionJson = (ExceptionJSON)JsonConvert.DeserializeObject<ExceptionJSON>(RespuestaCardsJson);
-                detalleorden.resultadoRecarga = exceptionJson.detail + "-" + exceptionJson.source;
-                return false;
+                //Se llama al servicio para verificar q este activo
+                //SERVICIO WSL.Cards.getClient !
+                string clienteCardsJson = WSL.Cards.getClient(detalleorden.docnumberAfiliado.Substring(2));
+                if (WSL.Cards.ExceptionServicioCards(clienteCardsJson))
+                {
+                    intentos++;
+                }
+                else
+                {
+                    string montoSinSeparador = Math.Truncate(detalleorden.montoRecarga * 100).ToString();
+                    string RespuestaCardsJson = WSL.Cards.addBatch(detalleorden.docnumberAfiliado.Substring(2), montoSinSeparador, TRANSCODE_RECARGA_PREPAGO, "NULL");
+                    if (WSL.Cards.ExceptionServicioCards(RespuestaCardsJson))
+                    {
+                        ExceptionJSON exceptionJson = (ExceptionJSON)JsonConvert.DeserializeObject<ExceptionJSON>(RespuestaCardsJson);
+                        detalleorden.resultadoRecarga = exceptionJson.detail + "-" + exceptionJson.source;
+                        intentos++;
+                    }
+                    else
+                    {
+                        RespuestaCards RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
+                        if ((Convert.ToDecimal(RespuestaCards.excode) < 0))
+                        {
+                            detalleorden.resultadoRecarga = RespuestaCards.exdetail;
+                            return false;
+                        }
+                        else
+                        {
+                            detalleorden.resultadoRecarga = RespuestaCards.exdetail;
+                            return true;
+                        }
+                    }
+                }
+
             }
-            RespuestaCards RespuestaCards = (RespuestaCards)JsonConvert.DeserializeObject<RespuestaCards>(RespuestaCardsJson);
-            if ((Convert.ToDecimal(RespuestaCards.excode) < 0))
-            {
-                detalleorden.resultadoRecarga = RespuestaCards.exdetail;
-                return false;
-            }
-            else
-            {
-                detalleorden.resultadoRecarga = RespuestaCards.exdetail;
-                return true;
-            }
+            return (intentos < 3);                      
         }
 
         public bool ProcesarOrden(int id)
@@ -404,7 +426,7 @@ namespace Suma2Lealtad.Models
                     }
                     db.SaveChanges();
                     //Forzo espera de 1 seg antes de volver a invocar el servicio
-                    System.Threading.Thread.Sleep(2000);
+                    //System.Threading.Thread.Sleep(2000);
                 }
                 //Actualizar estatus de la Orden
                 Order orden = db.Orders.Find(detalleOrden.First().idOrden);
@@ -439,7 +461,7 @@ namespace Suma2Lealtad.Models
                     nameCliente = cliente.nameCliente,
                     rifCliente = cliente.rifCliente,
                     phoneCliente = cliente.phoneCliente,
-                    tipoOrden = "Orden de Recarga",                  
+                    tipoOrden = "Orden de Recarga",
                     idAfiliado = item.Afiliado.id,
                     docnumberAfiliado = item.Afiliado.docnumber,
                     nameAfiliado = item.Afiliado.name,
@@ -538,7 +560,7 @@ namespace Suma2Lealtad.Models
                 };
                 db.OrdersHistories.Add(orderhistory);
                 db.SaveChanges();
-                return idOrden; 
+                return idOrden;
             }
         }
 

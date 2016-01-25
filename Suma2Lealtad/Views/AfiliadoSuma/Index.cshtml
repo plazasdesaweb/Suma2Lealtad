@@ -20,6 +20,20 @@
     }
 </style>
 
+@{
+    string indicadorMostrar;
+    if (Session["RoleLevel"].ToString() == "1")
+    {
+        indicadorMostrar = "Ocultar";
+    }
+    else
+    {
+        indicadorMostrar = "Mostrar";
+    }
+}
+
+
+
 @*<form id="commentForm" method="post" action="@Url.Action("Index", "Afiliado")" class="form-horizontal">*@
 <div class="form-group">
 
@@ -114,7 +128,14 @@
                     <a id="BloquearTarjeta" class="btn btn-success btn-md" role="button">Bloquear Tarjeta</a>
                     <a id="SuspenderTarjeta" class="btn btn-success btn-md" role="button">Suspender Tarjeta</a>
                     <a id="ReactivarTarjeta" class="btn btn-success btn-md" role="button">Reactivar Tarjeta</a>
-                    <a id="SaldosMovimientos" class="btn btn-success btn-md" role="button">Saldos y Movimientos</a>
+                     @{ if (indicadorMostrar == "Mostrar")
+                     {
+                        @:<a id="SaldosMovimientos" class="btn btn-success btn-md" role="button">Saldos y Movimientos</a>
+                     }
+                     else{
+                        @:<a id="SaldosMovimientos" class="btn btn-success btn-md" role="button">Saldos</a>
+                     }
+                     }
                     <a id="Acreditar" class="btn btn-success btn-md" role="button">Acreditar</a>
                 </div>
                 <div class="pull-right">

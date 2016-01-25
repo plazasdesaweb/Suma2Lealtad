@@ -21,6 +21,19 @@
     }
 </style>
 
+@{
+    string indicadorMostrar;
+    if (Session["RoleLevel"].ToString() == "1")
+    {
+        indicadorMostrar = "Ocultar";
+    }
+    else
+    {
+        indicadorMostrar = "Mostrar";
+    }
+}
+
+
 <div class="form-group">
 
     <div class="panel panel-default">
@@ -67,11 +80,28 @@
             <div class="editor-label col-md-4 control-label">
             </div>
 
-            <div class="editor-field col-md-6">
-                <p class="text-left text-danger">
-                    Seleccione una cuenta para ver sus 3 últmos movimientos.
-                </p>
-            </div>
+            @{ if (indicadorMostrar == "Mostrar")
+               {
+                    @:<div class="editor-field col-md-6">
+                    @:    <p class="text-left text-danger">
+                    @:        Seleccione una cuenta para ver sus 3 últmos movimientos.
+                    @:    </p>
+                    @:</div>
+                    @:<div class="col-md-12">
+                    @:    <p class="text-left" id="Mostrar" style="display: none">Mostrar</p>
+                    @: </div> 
+               }
+               else
+               {
+                    @:<div class="editor-field col-md-6">
+                    @:    <p class="text-left text-danger"> 
+                    @:    </p>
+                    @:</div>
+                    @:<div class="col-md-12">
+                    @:    <p class="text-left" id="Mostrar" style="display: none">Ocultar</p>
+                    @:</div>                    
+               }                        
+            }
 
             @*<table class="table table-striped custab">*@
             <table id="cuentas" class="table table-hover">
@@ -135,10 +165,10 @@
             <!--// buttons -->
 
         </div>
-    <!-- panel-body -->
+        <!-- panel-body -->
 
-</div>
-<!-- panel -->
+    </div>
+    <!-- panel -->
 
 </div>
 <!-- columns -->
@@ -302,21 +332,26 @@
 
     $('#cuentas tr').click(function () {
         var TipoCuenta;
+        var Mostrar;
 
         $('.table tbody tr').removeClass("active");
         $(this).addClass("active");
         TipoCuenta = $(this).data("row-key");
 
-        if (TipoCuenta == "5") {
-            $("#MovimientosSuma").hide();
-            $("#MovimientosPrepago").show();
-        }
-        else if (TipoCuenta == "7") {
-            $("#MovimientosPrepago").hide();
-            $("#MovimientosSuma").show();
-        }
-        else {
-            alert("error tipo de cuenta no definido");
+        Mostrar = document.getElementById("Mostrar").innerHTML;
+
+        if (Mostrar == "Mostrar"){
+            if (TipoCuenta == "5") {
+                $("#MovimientosSuma").hide();
+                $("#MovimientosPrepago").show();
+            }
+            else if (TipoCuenta == "7") {
+                $("#MovimientosPrepago").hide();
+                $("#MovimientosSuma").show();
+            }
+            else {
+                alert("error tipo de cuenta no definido");
+            }
         }
     });
 
