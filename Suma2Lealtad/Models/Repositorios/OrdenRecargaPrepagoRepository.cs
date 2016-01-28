@@ -398,7 +398,7 @@ namespace Suma2Lealtad.Models
                 }
 
             }
-            return (intentos < 3);                      
+            return (intentos < 3);
         }
 
         public bool ProcesarOrden(int id)
@@ -569,12 +569,29 @@ namespace Suma2Lealtad.Models
             List<DetalleOrdenRecargaPrepago> detalleOrdenArchivo = LeerArchivoRecargas(fichero);
             if (detalleOrdenArchivo != null)
             {
-                foreach (var item in detalleOrdenArchivo)
+                //uso una copia de la lista para iterar en el foreach - que es de sólo lectura
+                List<DetalleOrdenRecargaPrepago> Listaparaiterar = detalleOrdenArchivo.ToList();
+                foreach (var item in Listaparaiterar)
                 {
-                    //Validación de filas devueltas en la lectura ciega del archivo
-                    if (item.docnumberAfiliado == null || Regex.IsMatch(item.docnumberAfiliado, @"^[JGVE][-][0-9]{8}[-][0-9]$") || Regex.IsMatch(item.montoRecarga.ToString(), @"^[JGVE][-][0-9]{8}[-][0-9]$"))
+                    //Validación de filas devueltas en la lectura ciega del archivo con expresiones regulares
+                    var RegExPattern = @"^([VvEeJjGg]){1}(-){1}(\d){3,10}$";
+                    //var RegExPattern2 = @"^([VvEeJjGg]){1}(\d){3,10}$";
+                    var RegExPattern3 = @"^([Pp]){1}(-){1}([A-Za-z0-9]){3,10}$";
+                    //var RegExPattern4 = @"^([Pp]){1}([A-Za-z0-9]){3,10}$";
+                    var RegExPattern5 = @"^(\d|-)?(\d|,)*\.?\d*$";
+                    if (item.docnumberAfiliado == null) 
                     {
-                        //si no cumple lavalidación, lo saco de la lista
+                        //si no cumple la validación, lo saco de la lista
+                        detalleOrdenArchivo.Remove(item);
+                    }
+                    else if (!Regex.IsMatch(item.docnumberAfiliado, RegExPattern) && !Regex.IsMatch(item.docnumberAfiliado, RegExPattern3))
+                    {
+                        //si no cumple la validación, lo saco de la lista
+                        detalleOrdenArchivo.Remove(item);
+                    }
+                    else if (!Regex.IsMatch(item.montoRecarga.ToString(), RegExPattern5))
+                    {
+                        //si no cumple la validación, lo saco de la lista
                         detalleOrdenArchivo.Remove(item);
                     }
                 }
@@ -589,39 +606,31 @@ namespace Suma2Lealtad.Models
 
         private List<DetalleOrdenRecargaPrepago> LeerArchivoRecargas(string pathDelArchivoExcel)
         {
-            ////Filter:("*.xls;*.xlsx)|*.xls;*.xlsx"); //le indicamos el tipo de filtro en este caso que busque solo los archivos excel
-            //try
-            //{
-            //    var book = new ExcelQueryFactory(pathDelArchivoExcel);
-            //    var resultado = (from row in book.Worksheet("Hoja1")
-            //                     select new DetalleOrdenRecargaPrepago()
-            //                     {
-            //                         docnumberAfiliado = row["Cedula"].Cast<string>(),
-            //                         montoRecarga = decimal.Parse(row["Monto"].Cast<string>())
-            //                     }).OrderBy(x => x.docnumberAfiliado).ToList();
-            //    book.Dispose();
-
-            //    return resultado;
-            //}
-            //catch (Exception ex)
-            //{               
-            //    return null;
-            //}
-
+            List<DetalleOrdenRecargaPrepago> registros = new List<DetalleOrdenRecargaPrepago>();
             try
             {
-                var book = new ExcelQueryFactory(pathDelArchivoExcel);
-                var resultado = (from row in book.Worksheet("Hoja1")
-                                 let item = new DetalleOrdenRecargaPrepago()
-                                 {
-                                     docnumberAfiliado = row["Cedula"].Cast<string>(),
-                                     montoRecarga = decimal.Parse(row["Monto"].Cast<string>())
-                                 }
-                                 select item).ToList();
-                book.Dispose();
-                if (resultado.Count != 0)
+                var excel = new ExcelQueryFactory(pathDelArchivoExcel);
+                var resultado = (from c in excel.Worksheet("Hoja1")
+                                 select c).ToList();
+                excel.Dispose();
+                //convertir lo leido en DetalleOrdenRecargaPrepago                
+                foreach (var item in resultado)
                 {
-                    return resultado.OrderBy(x => x.docnumberAfiliado).ToList();
+                    string cedula = item[0]; 
+                    string monto = item[1];
+                    if (cedula != "" && monto != "")
+                    {
+                        DetalleOrdenRecargaPrepago registro = new DetalleOrdenRecargaPrepago() 
+                        {
+                            docnumberAfiliado = cedula,
+                            montoRecarga = Convert.ToDecimal(monto)
+                        };
+                        registros.Add(registro);
+                    }
+                }
+                if (registros.Count != 0)
+                {
+                    return registros.OrderBy(x => x.docnumberAfiliado).ToList();
                 }
                 else
                 {
@@ -631,7 +640,7 @@ namespace Suma2Lealtad.Models
             catch (Exception ex)
             {
                 return null;
-            }
+            }            
         }
 
         public List<PrepaidCustomer> GetClientes()
