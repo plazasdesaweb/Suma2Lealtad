@@ -49,14 +49,19 @@ namespace Suma2Lealtad.Models
             //Primero se buscan los datos de CLIENTE en WebPlazas
             //SERVICIO WSL.WebPlazas.getClientByNumDoc 
             string clienteWebPlazasJson = WSL.WebPlazas.getClientByNumDoc(afiliado.docnumber);
+            ClienteWebPlazas clienteWebPlazas;
             if (WSL.WebPlazas.ExceptionServicioWebPlazas(clienteWebPlazasJson))
             {
-                return null;
+                //return null;
+                clienteWebPlazas = null;
             }
-            ClienteWebPlazas clienteWebPlazas = (ClienteWebPlazas)JsonConvert.DeserializeObject<ClienteWebPlazas>(clienteWebPlazasJson);
+            else
+            {
+                clienteWebPlazas = (ClienteWebPlazas)JsonConvert.DeserializeObject<ClienteWebPlazas>(clienteWebPlazasJson);
+            }
             if (clienteWebPlazas == null)
             {
-                //No está en WebPlazas
+                //No está en WebPlazas ó no se pudo leer desde la web
                 afiliado.clientid = 0;
                 afiliado.ListaEstados = GetEstados();
             }

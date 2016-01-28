@@ -358,30 +358,36 @@ namespace Suma2Lealtad.Controllers.Prepago
                 Afiliado = repAfiliado.Find(idBeneficiario),
                 Cliente = repCliente.Find(id)
             };
-            //SI ES AFILIADO SUMA, SE CAMBIA EL TIPO Y SE BLOQUEA LA TARJETA ACTUAL
+            //SI ES AFILIADO SUMA, SE CAMBIA EL TIPO Y YA NO SE BLOQUEA LA TARJETA ACTUAL
             if (beneficiario.Afiliado.type == "Suma")
             {
                 if (repAfiliado.Aprobar(beneficiario.Afiliado))
                 {
                     beneficiario.Afiliado = repAfiliado.CambiarAPrepago(beneficiario.Afiliado);
-                    if (repAfiliado.BloquearTarjeta(beneficiario.Afiliado) == false)
-                    {
-                        repAfiliado.SaveChanges(beneficiario.Afiliado);
-                        viewmodel.Title = "Prepago / Cliente / Beneficiario / Aprobar Afiliación:";
-                        viewmodel.Message = "Afiliación Aprobada. Se creó una nueva tarjeta Prepago Plaza's";
-                        viewmodel.ControllerName = "ClientePrepago";
-                        viewmodel.ActionName = "FilterReviewBeneficiarios";
-                        viewmodel.RouteValues = beneficiario.Cliente.idCliente.ToString();
-                    }
-                    else
-                    {
-                        repAfiliado.SaveChanges(beneficiario.Afiliado);
-                        viewmodel.Title = "Prepago / Cliente / Beneficiario / Eliminar Beneficiario";
-                        viewmodel.Message = "Afiliación Aprobada. No se pudo crear una nueva tarjeta Prepago Plaza's";
-                        viewmodel.ControllerName = "ClientePrepago";
-                        viewmodel.ActionName = "FilterReviewBeneficiarios";
-                        viewmodel.RouteValues = beneficiario.Cliente.idCliente.ToString();
-                    }
+                    //if (repAfiliado.BloquearTarjeta(beneficiario.Afiliado) == true)
+                    //{
+                    //    repAfiliado.SaveChanges(beneficiario.Afiliado);
+                    //    viewmodel.Title = "Prepago / Cliente / Beneficiario / Aprobar Afiliación:";
+                    //    viewmodel.Message = "Afiliación Aprobada. Se creó una nueva tarjeta Prepago Plaza's";
+                    //    viewmodel.ControllerName = "ClientePrepago";
+                    //    viewmodel.ActionName = "FilterReviewBeneficiarios";
+                    //    viewmodel.RouteValues = beneficiario.Cliente.idCliente.ToString();
+                    //}
+                    //else
+                    //{
+                    //    repAfiliado.SaveChanges(beneficiario.Afiliado);
+                    //    viewmodel.Title = "Prepago / Cliente / Beneficiario / Eliminar Beneficiario";
+                    //    viewmodel.Message = "Afiliación Aprobada. No se pudo crear una nueva tarjeta Prepago Plaza's";
+                    //    viewmodel.ControllerName = "ClientePrepago";
+                    //    viewmodel.ActionName = "FilterReviewBeneficiarios";
+                    //    viewmodel.RouteValues = beneficiario.Cliente.idCliente.ToString();
+                    //}
+                    repAfiliado.SaveChanges(beneficiario.Afiliado);
+                    viewmodel.Title = "Prepago / Cliente / Beneficiario / Aprobar Afiliación:";
+                    viewmodel.Message = "Afiliación Prepago Aprobada.";
+                    viewmodel.ControllerName = "ClientePrepago";
+                    viewmodel.ActionName = "FilterReviewBeneficiarios";
+                    viewmodel.RouteValues = beneficiario.Cliente.idCliente.ToString();
                 }
                 else
                 {
@@ -397,7 +403,7 @@ namespace Suma2Lealtad.Controllers.Prepago
                 if (repAfiliado.Aprobar(beneficiario.Afiliado))
                 {
                     viewmodel.Title = "Prepago / Cliente / Beneficiario / Aprobar Afiliación:";
-                    viewmodel.Message = "Afiliación Aprobada.";
+                    viewmodel.Message = "Afiliación Prepago Aprobada.";
                     viewmodel.ControllerName = "ClientePrepago";
                     viewmodel.ActionName = "FilterReviewBeneficiarios";
                     viewmodel.RouteValues = beneficiario.Cliente.idCliente.ToString();
@@ -425,24 +431,31 @@ namespace Suma2Lealtad.Controllers.Prepago
             if (repBeneficiario.Delete(beneficiario))
             {
                 beneficiario.Afiliado = repAfiliado.CambiarASuma(beneficiario.Afiliado);
-                if (repAfiliado.BloquearTarjeta(beneficiario.Afiliado))
-                {
-                    repAfiliado.SaveChanges(beneficiario.Afiliado);
-                    viewmodel.Title = "Prepago / Cliente / Beneficiario / Eliminar Beneficiario";
-                    viewmodel.Message = "Beneficiario eliminado con éxito. Se creó una nueva tarjeta Suma Plaza's";
-                    viewmodel.ControllerName = "ClientePrepago";
-                    viewmodel.ActionName = "FilterReviewBeneficiarios";
-                    viewmodel.RouteValues = beneficiario.Cliente.idCliente.ToString();
-                }
-                else
-                {
-                    repAfiliado.SaveChanges(beneficiario.Afiliado);
-                    viewmodel.Title = "Prepago / Cliente / Beneficiario / Eliminar Beneficiario";
-                    viewmodel.Message = "Beneficiario eliminado con éxito. No se pudo crear una nueva tarjeta Suma Plaza's";
-                    viewmodel.ControllerName = "ClientePrepago";
-                    viewmodel.ActionName = "FilterReviewBeneficiarios";
-                    viewmodel.RouteValues = beneficiario.Cliente.idCliente.ToString();
-                }
+                //YA NO SE CAMBIA LA TARJETA AL DAR DE BAJA
+                //if (repAfiliado.BloquearTarjeta(beneficiario.Afiliado))
+                //{
+                //    repAfiliado.SaveChanges(beneficiario.Afiliado);
+                //    viewmodel.Title = "Prepago / Cliente / Beneficiario / Eliminar Beneficiario";
+                //    viewmodel.Message = "Beneficiario eliminado con éxito. Se creó una nueva tarjeta Suma Plaza's";
+                //    viewmodel.ControllerName = "ClientePrepago";
+                //    viewmodel.ActionName = "FilterReviewBeneficiarios";
+                //    viewmodel.RouteValues = beneficiario.Cliente.idCliente.ToString();
+                //}
+                //else
+                //{
+                //    repAfiliado.SaveChanges(beneficiario.Afiliado);
+                //    viewmodel.Title = "Prepago / Cliente / Beneficiario / Eliminar Beneficiario";
+                //    viewmodel.Message = "Beneficiario eliminado con éxito. No se pudo crear una nueva tarjeta Suma Plaza's";
+                //    viewmodel.ControllerName = "ClientePrepago";
+                //    viewmodel.ActionName = "FilterReviewBeneficiarios";
+                //    viewmodel.RouteValues = beneficiario.Cliente.idCliente.ToString();
+                //}
+                repAfiliado.SaveChanges(beneficiario.Afiliado);
+                viewmodel.Title = "Prepago / Cliente / Beneficiario / Eliminar Beneficiario";
+                viewmodel.Message = "Beneficiario eliminado con éxito.";
+                viewmodel.ControllerName = "ClientePrepago";
+                viewmodel.ActionName = "FilterReviewBeneficiarios";
+                viewmodel.RouteValues = beneficiario.Cliente.idCliente.ToString();
             }
             else
             {
